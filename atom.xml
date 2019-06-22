@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-22T18:42:04.245Z</updated>
+    <updated>2019-06-22T18:43:17.578Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,11 +11,11 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
     <entry>
-        <title type="html"><![CDATA[Publishing personal programming blogs on Github.io using Gridea]]></title>
+        <title type="html"><![CDATA[Publishing a personal programming blog on Github.io using Gridea]]></title>
         <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
         <link href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
         </link>
-        <updated>2019-06-16T18:44:23.000Z</updated>
+        <updated>2019-06-15T16:44:23.000Z</updated>
         <content type="html"><![CDATA[<p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
 <p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
 <p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use** repo scope** access token to reduce vulnerability.
