@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LeetCode 929. Unique Email Addresses  String.replace() vs String.replaceAll() | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561268010125">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561268096389">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1561268010125" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1561268096389" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,13 +78,13 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-06-22 ·
+                · 2019-06-21 ·
               </time>
               
             </div>
             
             <div class="post-content">
-              <p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recongnized as &quot;any character&quot;. It is fine to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
+              <p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recongnized as &quot;any character&quot;. Two backward slashes will escape dot character. It is fine to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
 <p><em>JDK7</em></p>
 <pre><code>String	replace(char oldChar, char newChar)
 Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
