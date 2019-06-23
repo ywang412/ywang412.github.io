@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>About | Yu&#39;s Github</title>
+<title>LeetCode 929. Unique Email Addresses  String.replace() vs String.replaceAll() | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561268010125">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -74,23 +74,61 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              About
+              LeetCode 929. Unique Email Addresses  String.replace() vs String.replaceAll()
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-01-22 ·
+                · 2019-06-22 ·
               </time>
               
             </div>
             
             <div class="post-content">
-              <p><a href="https://www.linkedin.com/in/ywang412/">Yu Wang</a></p>
-<p>App Developer at JPMorgan Chase &amp; Co.</p>
+              <p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recongnized as &quot;any character&quot;. It is fine to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
+<p><em>JDK7</em></p>
+<pre><code>String	replace(char oldChar, char newChar)
+Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
+String	replaceAll(String regex, String replacement)
+Replaces each substring of this string that matches the given regular expression with the given replacement.
+String	replaceFirst(String regex, String replacement)
+Replaces the first substring of this string that matches the given regular expression with the given replacement.
+</code></pre>
+<p>The solution is below,</p>
+<pre><code>class Solution {
+    public static int numUniqueEmails(String[] emails) {
+        if (emails.length &lt; 1) return 0;
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        for (String email : emails) {
+            String[] adds = email.split(&quot;@&quot;);
+            String name = adds[0]; 
+            if (name.indexOf(&quot;+&quot;) &gt;= 0) name = name.substring(0, name.indexOf(&quot;+&quot;));
+            name = name.replaceAll(&quot;\\.&quot;,&quot;&quot;);
+            set.add(name + &quot;@&quot; + adds[1]);
+        }
+        return set.size();
+    }
+
+    public static void main(String[] args) {
+        String[] t = new String[]{&quot;testemail@leetcode.com&quot;,&quot;testemail1@leetcode.com&quot;,&quot;testemail+david@lee.tcode.com&quot;};
+        System.out.println(numUniqueEmails(t));
+    }
+}
+</code></pre>
 
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
+              <h3 class="post-title">
+                Publishing a personal programming blog on Github.io using Gridea
+              </h3>
+            </a>
+          </div>
         
 
         

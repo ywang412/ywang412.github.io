@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-23T02:13:42.622Z</updated>
+    <updated>2019-06-23T05:33:35.409Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,45 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[LeetCode 929. Unique Email Addresses  String.replace() vs String.replaceAll()]]></title>
+        <id>https://ywang412.github.io/post/leetcode-929-unique-email-addresses-stringreplace-vs-stringreplaceall</id>
+        <link href="https://ywang412.github.io/post/leetcode-929-unique-email-addresses-stringreplace-vs-stringreplaceall">
+        </link>
+        <updated>2019-06-22T16:26:12.000Z</updated>
+        <content type="html"><![CDATA[<p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recongnized as &quot;any character&quot;. It is fine to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
+<p><em>JDK7</em></p>
+<pre><code>String	replace(char oldChar, char newChar)
+Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
+String	replaceAll(String regex, String replacement)
+Replaces each substring of this string that matches the given regular expression with the given replacement.
+String	replaceFirst(String regex, String replacement)
+Replaces the first substring of this string that matches the given regular expression with the given replacement.
+</code></pre>
+<p>The solution is below,</p>
+<pre><code>class Solution {
+    public static int numUniqueEmails(String[] emails) {
+        if (emails.length &lt; 1) return 0;
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        for (String email : emails) {
+            String[] adds = email.split(&quot;@&quot;);
+            String name = adds[0]; 
+            if (name.indexOf(&quot;+&quot;) &gt;= 0) name = name.substring(0, name.indexOf(&quot;+&quot;));
+            name = name.replaceAll(&quot;\\.&quot;,&quot;&quot;);
+            set.add(name + &quot;@&quot; + adds[1]);
+        }
+        return set.size();
+    }
+
+    public static void main(String[] args) {
+        String[] t = new String[]{&quot;testemail@leetcode.com&quot;,&quot;testemail1@leetcode.com&quot;,&quot;testemail+david@lee.tcode.com&quot;};
+        System.out.println(numUniqueEmails(t));
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Publishing a personal programming blog on Github.io using Gridea]]></title>
         <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
