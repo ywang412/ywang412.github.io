@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-23T05:37:58.846Z</updated>
+    <updated>2019-06-23T06:00:41.248Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,8 @@
         <id>https://ywang412.github.io/post/leetcode-929-unique-email-addresses-stringreplace-vs-stringreplaceall</id>
         <link href="https://ywang412.github.io/post/leetcode-929-unique-email-addresses-stringreplace-vs-stringreplaceall">
         </link>
-        <updated>2019-06-21T01:26:12.000Z</updated>
-        <content type="html"><![CDATA[<p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. It is fine to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
+        <updated>2019-06-20T12:26:12.000Z</updated>
+        <content type="html"><![CDATA[<p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
 <p><em>JDK7</em></p>
 <pre><code>String	replace(char oldChar, char newChar)
 Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
