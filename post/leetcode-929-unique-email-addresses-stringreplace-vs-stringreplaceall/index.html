@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561269639387">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561301558199">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561269639387" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561301558199" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,10 +103,10 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">LeetCode 929. Unique Email Addresses  String.replace() vs String.replaceAll()</h2>
-            <div class="post-date">2019-06-20</div>
+            <div class="post-date">2019-06-19</div>
             
             <div class="post-content">
-              <p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which will treat the &quot;.&quot; as a dot character.</p>
+              <p>LeetCode 929 requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which can treat the &quot;.&quot; as a dot character.</p>
 <p><em>JDK7</em></p>
 <pre><code>String	replace(char oldChar, char newChar)
 Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
