@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-24T05:19:16.118Z</updated>
+    <updated>2019-06-24T05:21:30.385Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,12 +11,13 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
     <entry>
-        <title type="html"><![CDATA[DFS/BFS algorithm]]></title>
+        <title type="html"><![CDATA[Pitfalls in DFS/BFS algorithm]]></title>
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
         <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
         </link>
-        <updated>2019-06-22T14:03:19.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Leetcode 542. 01 Matrix</strong></p>
+        <updated>2019-06-22T01:03:19.000Z</updated>
+        <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
+<p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
 <pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
         if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;

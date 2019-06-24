@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>DFS/BFS algorithm | Yu&#39;s Github</title>
+<title>Pitfalls in DFS/BFS algorithm | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353554950">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353689283">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561353554950" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561353689283" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -102,11 +102,12 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">DFS/BFS algorithm</h2>
-            <div class="post-date">2019-06-22</div>
+            <h2 class="post-title">Pitfalls in DFS/BFS algorithm</h2>
+            <div class="post-date">2019-06-21</div>
             
             <div class="post-content">
-              <p><strong>Leetcode 542. 01 Matrix</strong></p>
+              <p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
+<p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
 <pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
         if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
