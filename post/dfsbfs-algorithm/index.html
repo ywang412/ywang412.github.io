@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561352802013">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353039026">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561352802013" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561353039026" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">DFS/BFS algorithm</h2>
-            <div class="post-date">2019-06-23</div>
+            <div class="post-date">2019-06-22</div>
             
             <div class="post-content">
               <p><strong>Leetcode 542. 01 Matrix</strong></p>
@@ -118,6 +118,21 @@
         dfs(res, visited, i, j + 1, dist + 1); 
         visited[i][j] = false;
     }
+</code></pre>
+<p><strong>LeetCode 39. Combination Sum</strong>
+Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
+<pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
+     if (cur &gt; target) return;
+     if (cur == target) { 
+         List&lt;Integer&gt; pathToAdd = new LinkedList&lt;&gt;(path);
+         res.add(pathToAdd);
+         return;
+     }
+     for (int i = start; i &lt; candidates.length; i++) {
+         path.add(candidates[i]);
+         dfs(candidates, i, cur + candidates[i], target, path, res);
+         path.remove(path.size() - 1);
+     }
 </code></pre>
 
             </div>

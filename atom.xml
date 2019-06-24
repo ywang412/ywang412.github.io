@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-24T05:06:43.561Z</updated>
+    <updated>2019-06-24T05:10:40.638Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
         <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
         </link>
-        <updated>2019-06-23T16:03:19.000Z</updated>
+        <updated>2019-06-23T03:03:19.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
 <pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
@@ -28,6 +28,21 @@
         dfs(res, visited, i, j + 1, dist + 1); 
         visited[i][j] = false;
     }
+</code></pre>
+<p><strong>LeetCode 39. Combination Sum</strong>
+Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
+<pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
+     if (cur &gt; target) return;
+     if (cur == target) { 
+         List&lt;Integer&gt; pathToAdd = new LinkedList&lt;&gt;(path);
+         res.add(pathToAdd);
+         return;
+     }
+     for (int i = start; i &lt; candidates.length; i++) {
+         path.add(candidates[i]);
+         dfs(candidates, i, cur + candidates[i], target, path, res);
+         path.remove(path.size() - 1);
+     }
 </code></pre>
 ]]></content>
     </entry>
