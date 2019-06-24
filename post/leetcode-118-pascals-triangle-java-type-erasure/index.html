@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>LeetCode 118. Pascal&#39;s Triangle Java type erasure | Yu&#39;s Github</title>
+<title>Coding tricks in Java syntax  | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561351951497">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561352334450">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561351951497" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561352334450" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -102,15 +102,48 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">LeetCode 118. Pascal&#39;s Triangle Java type erasure</h2>
-            <div class="post-date">2019-06-23</div>
+            <h2 class="post-title">Coding tricks in Java syntax </h2>
+            <div class="post-date">2019-06-22</div>
             
             <div class="post-content">
-              <p>Due to Java type erasure, in order to instantiate a list of list, one can use
+              <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
+<p><strong>LeetCode 118</strong> Pascal's Triangle<br>
+Due to Java type erasure, in order to instantiate a list of list, one can use
 <code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</code>
 or
 <code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;List&lt;Integer&gt;&gt;();</code>
 Here <code>List&lt;Integer&gt;</code> becomes type definition.</p>
+<p><strong>LeetCode 929</strong> requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which can treat the &quot;.&quot; as a dot character.</p>
+<p><em>JDK7</em></p>
+<pre><code>String	replace(char oldChar, char newChar)
+Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
+String	replaceAll(String regex, String replacement)
+Replaces each substring of this string that matches the given regular expression with the given replacement.
+String	replaceFirst(String regex, String replacement)
+Replaces the first substring of this string that matches the given regular expression with the given replacement.
+</code></pre>
+<p>The solution is below,</p>
+<pre><code>class Solution {
+    public static int numUniqueEmails(String[] emails) {
+        if (emails.length &lt; 1) return 0;
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        for (String email : emails) {
+            String[] adds = email.split(&quot;@&quot;);
+            String name = adds[0]; 
+            if (name.indexOf(&quot;+&quot;) &gt;= 0) name = name.substring(0, name.indexOf(&quot;+&quot;));
+            name = name.replaceAll(&quot;\\.&quot;,&quot;&quot;);
+            set.add(name + &quot;@&quot; + adds[1]);
+        }
+        return set.size();
+    }
+
+    public static void main(String[] args) {
+        String[] t = new String[]{&quot;testemail@leetcode.com&quot;,&quot;testemail1@leetcode.com&quot;,&quot;testemail+david@lee.tcode.com&quot;};
+        System.out.println(numUniqueEmails(t));
+    }
+}
+</code></pre>
 
             </div>
             
