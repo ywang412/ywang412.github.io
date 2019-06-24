@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-24T05:01:16.407Z</updated>
+    <updated>2019-06-24T05:06:43.561Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,11 +11,32 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
     <entry>
+        <title type="html"><![CDATA[DFS/BFS algorithm]]></title>
+        <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
+        <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
+        </link>
+        <updated>2019-06-23T16:03:19.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Leetcode 542. 01 Matrix</strong></p>
+<p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
+<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
+        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
+        res[i][j] = Math.min(dist, res[i][j]);
+        visited[i][j] = true;
+        dfs(res, visited, i - 1, j, dist + 1);
+        dfs(res, visited, i + 1, j, dist + 1);
+        dfs(res, visited, i, j - 1, dist + 1);
+        dfs(res, visited, i, j + 1, dist + 1); 
+        visited[i][j] = false;
+    }
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Coding tricks in Java syntax ]]></title>
         <id>https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure</id>
         <link href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
         </link>
-        <updated>2019-06-22T00:49:32.000Z</updated>
+        <updated>2019-06-21T11:49:32.000Z</updated>
         <content type="html"><![CDATA[<p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
 Due to Java type erasure, in order to instantiate a list of list, one can use

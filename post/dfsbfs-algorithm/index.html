@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | Yu&#39;s Github</title>
+<title>DFS/BFS algorithm | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -95,12 +101,48 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">DFS/BFS algorithm</h2>
+            <div class="post-date">2019-06-23</div>
             
-              <a class="tag" href="https://ywang412.github.io/tag/WwpuuqDmO">Gadget</a>
+            <div class="post-content">
+              <p><strong>Leetcode 542. 01 Matrix</strong></p>
+<p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
+<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
+        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
+        res[i][j] = Math.min(dist, res[i][j]);
+        visited[i][j] = true;
+        dfs(res, visited, i - 1, j, dist + 1);
+        dfs(res, visited, i + 1, j, dist + 1);
+        dfs(res, visited, i, j - 1, dist + 1);
+        dfs(res, visited, i, j + 1, dist + 1); 
+        visited[i][j] = false;
+    }
+</code></pre>
+
+            </div>
             
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
+                  <h3 class="post-title">
+                    Coding tricks in Java syntax 
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
           </div>
+
         </div>
       </div>
     </div>
@@ -121,6 +163,26 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: 'ywang412',
+      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
 
 
 
