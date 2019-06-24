@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353039026">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353554950">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561353039026" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561353554950" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Coding tricks in Java syntax </h2>
-            <div class="post-date">2019-06-21</div>
+            <div class="post-date">2019-06-20</div>
             
             <div class="post-content">
               <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
@@ -151,6 +151,21 @@ Below is the code snippet to create a priorityqueue with custom comparator.</p>
 							return Integer.compare(map.getOrDefault(a, Integer.MAX_VALUE), map.getOrDefault(b, Integer.MAX_VALUE));
 					}
 			});
+</code></pre>
+<p><strong>LeetCode 957. Prison Cells After N Days</strong></p>
+<p>The state change cycle might start at a state that is not the initital state, therefore a map is used to record past state at each day. When fastforward the N using N % cycle, the N could already be 0 and the last state change should be skipped.</p>
+<pre><code>while (N &gt; 0) { 
+		StringBuilder sb = new StringBuilder();
+		for (int j : cells) sb.append(j);
+		if (map.containsKey(sb.toString())) {
+				N %= (N - map.get(sb.toString()));
+		}
+		map.put(sb.toString(), N);
+		if (N &gt;= 1) {
+				N--;
+				cells = prisonAfter1Day(cells);
+		}
+}
 </code></pre>
 
             </div>
