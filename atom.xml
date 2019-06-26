@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-26T14:52:14.164Z</updated>
+    <updated>2019-06-26T14:53:21.473Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,8 @@
         <id>https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list</id>
         <link href="https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list">
         </link>
-        <updated>2019-06-25T08:37:51.000Z</updated>
-        <content type="html"><![CDATA[<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the elements into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
+        <updated>2019-06-24T17:37:51.000Z</updated>
+        <content type="html"><![CDATA[<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
 <p>Foldleft</p>
 <pre><code>object FlattenArray {
   def flatten(list : List[Any]) : List[Int] = {
