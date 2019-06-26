@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561353755187">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561523979087">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561353755187" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561523979087" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Coding tricks of Java syntax </h2>
-            <div class="post-date">2019-06-20</div>
+            <div class="post-date">2019-06-19</div>
             
             <div class="post-content">
               <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
@@ -166,6 +166,14 @@ Below is the code snippet to create a priorityqueue with custom comparator.</p>
 				cells = prisonAfter1Day(cells);
 		}
 }
+</code></pre>
+<p><strong>LeetCode 957. K Empty Slots</strong></p>
+<p>Java Primitive types such as &quot;int&quot; are not nullable. Boxed version such as &quot;Integer&quot; are nullable. Therefore, when get nullable value from Java collections, the null check can only performed on the boxed data type.</p>
+<pre><code>TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
+Integer low = set.floor(bulbs[i]);
+Integer high = set.ceiling(bulbs[i]);
+if (low != null &amp;&amp; bulbs[i] - low - 1 == K) return i + 1;
+if (high != null &amp;&amp; high - bulbs[i] - 1 == K) return i + 1;            
 </code></pre>
 
             </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-24T05:22:36.640Z</updated>
+    <updated>2019-06-26T04:39:40.831Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -52,7 +52,7 @@ Because of passing by reference, when adding a path to result list, the added pa
         <id>https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure</id>
         <link href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
         </link>
-        <updated>2019-06-20T09:49:32.000Z</updated>
+        <updated>2019-06-19T18:49:32.000Z</updated>
         <content type="html"><![CDATA[<p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
 Due to Java type erasure, in order to instantiate a list of list, one can use
@@ -113,6 +113,14 @@ Below is the code snippet to create a priorityqueue with custom comparator.</p>
 				cells = prisonAfter1Day(cells);
 		}
 }
+</code></pre>
+<p><strong>LeetCode 957. K Empty Slots</strong></p>
+<p>Java Primitive types such as &quot;int&quot; are not nullable. Boxed version such as &quot;Integer&quot; are nullable. Therefore, when get nullable value from Java collections, the null check can only performed on the boxed data type.</p>
+<pre><code>TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
+Integer low = set.floor(bulbs[i]);
+Integer high = set.ceiling(bulbs[i]);
+if (low != null &amp;&amp; bulbs[i] - low - 1 == K) return i + 1;
+if (high != null &amp;&amp; high - bulbs[i] - 1 == K) return i + 1;            
 </code></pre>
 ]]></content>
     </entry>
