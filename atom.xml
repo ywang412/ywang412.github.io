@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-26T04:39:40.831Z</updated>
+    <updated>2019-06-26T06:39:06.905Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
         <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
         </link>
-        <updated>2019-06-22T01:03:19.000Z</updated>
+        <updated>2019-06-21T10:03:19.000Z</updated>
         <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
 <p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
@@ -44,6 +44,35 @@ Because of passing by reference, when adding a path to result list, the added pa
          dfs(candidates, i, cur + candidates[i], target, path, res);
          path.remove(path.size() - 1);
      }
+</code></pre>
+<p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong>
+Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
+<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {
+		int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
+		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+		pre[2] = 0;
+		q.offer(pre); 
+		visited.add(pre[0] + &quot;#&quot; + pre[1]);
+		while (!q.isEmpty()) {   
+				int[] temp = q.poll(); 
+				// if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) { will TLE
+				if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
+						return temp[2];
+				}
+				else {
+						for (int[] dir : dirs) {
+								int i = temp[0] + dir[0];
+								int j = temp[1] + dir[1];
+								if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
+										q.offer(new int[]{i, j, temp[2] + 1});
+										visited.add(i + &quot;#&quot; + j);
+								}
+						}
+				} 
+		}
+		return -1;
+}
 </code></pre>
 ]]></content>
     </entry>
