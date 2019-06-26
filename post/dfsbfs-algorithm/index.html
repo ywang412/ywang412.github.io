@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561560868405">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561561592156">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561560868405" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561561592156" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Pitfalls in DFS and BFS algorithm</h2>
-            <div class="post-date">2019-06-19</div>
+            <div class="post-date">2019-06-09</div>
             
             <div class="post-content">
               <p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
@@ -137,8 +137,7 @@ Because of passing by reference, when adding a path to result list, the added pa
 </code></pre>
 <p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong>
 Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
-<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {
-		int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {  
 		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
 		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
 		pre[2] = 0;
@@ -178,9 +177,9 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
+                <a href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
                   <h3 class="post-title">
-                    Coding tricks of Java syntax 
+                    Publishing a personal programming blog on Github.io using Gridea
                   </h3>
                 </a>
               </div>
