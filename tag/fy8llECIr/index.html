@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>[Scala] Flat a arbitrarily-deep nested list  | Yu&#39;s Github</title>
+<title>LeetCode | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,12 +13,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
-
-  
-
-  
-    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
-  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -101,69 +95,43 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">[Scala] Flat a arbitrarily-deep nested list </h2>
-            <div class="post-date">2019-06-25</div>
-            
-            <div class="post-content">
-              <p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the elements into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
-<p>Foldleft</p>
-<pre><code>object FlattenArray {
-  def flatten(list : List[Any]) : List[Int] = {
-    list.foldLeft(List[Int]()){
-      (res, cur) =&gt; {
-        cur match {
-          case null =&gt; res
-          case cur: Int =&gt; res :+ cur
-          case cur: List[Any] =&gt; res ::: flatten(cur)
-        }
-      }
-    }
-  }
-}
-</code></pre>
-<p>Create single element list</p>
-<pre><code>object FlattenArray {
-  def flatten(input: List[_]): List[_] =
-    input
-      .filterNot(_ == null)
-      .flatMap {
-        case list: List[_] =&gt; flatten(list)
-        case elem =&gt; List(elem)
-      }
-}
-</code></pre>
-
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/mppVQr2L4" class="tag">
-                    Scala
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
+          <h2 class="current-tag">标签: LeetCode</h2>
+          
+            <article class="post-item">
+              <div class="left">
                 <a href="https://ywang412.github.io/post/dfsbfs-algorithm">
-                  <h3 class="post-title">
-                    Pitfalls in DFS/BFS algorithm
-                  </h3>
+                  <h2 class="post-title">Pitfalls in DFS/BFS algorithm</h2>
                 </a>
+                <div class="post-date">
+                  2019-06-19
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
               </div>
-            
-
-            
               
-
+            </article>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
+                  <h2 class="post-title">Coding tricks of Java syntax </h2>
+                </a>
+                <div class="post-date">
+                  2019-06-18
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
+              </div>
               
-                <div id="disqus_thread" data-aos="fade-in"></div>
-              
-            
+            </article>
+          
 
-          </div>
+          <div class="pagination-container">
+  
+  
+</div>
 
         </div>
       </div>
@@ -185,26 +153,6 @@ var app = new Vue({
 })
 
 </script>
-
-
-
-  
-
-  
-    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
-    <script>
-
-    var options = {
-      shortname: 'ywang412',
-      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
-    }
-    if ('') {
-      options.api = ''
-    }
-    var dsqjs = new DisqusJS(options)
-
-    </script>
-  
 
 
 
