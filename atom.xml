@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-26T06:39:06.905Z</updated>
+    <updated>2019-06-26T14:46:49.350Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,41 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[[Scala] Flat a arbitrarily-deep nested list ]]></title>
+        <id>https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list</id>
+        <link href="https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list">
+        </link>
+        <updated>2019-06-25T23:37:51.000Z</updated>
+        <content type="html"><![CDATA[<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the elements into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
+<p>Foldleft</p>
+<pre><code>object FlattenArray {
+  def flatten(list : List[Any]) : List[Int] = {
+    list.foldLeft(List[Int]()){
+      (res, cur) =&gt; {
+        cur match {
+          case null =&gt; res
+          case cur: Int =&gt; res :+ cur
+          case cur: List[Any] =&gt; res ::: flatten(cur)
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Create single element list</p>
+<pre><code>object FlattenArray {
+  def flatten(input: List[_]): List[_] =
+    input
+      .filterNot(_ == null)
+      .flatMap {
+        case list: List[_] =&gt; flatten(list)
+        case elem =&gt; List(elem)
+      }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Pitfalls in DFS/BFS algorithm]]></title>
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
