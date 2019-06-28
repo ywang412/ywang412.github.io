@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-28T04:49:43.171Z</updated>
+    <updated>2019-06-28T04:52:16.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,140 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Resume]]></title>
+        <id>https://ywang412.github.io/post/resume</id>
+        <link href="https://ywang412.github.io/post/resume">
+        </link>
+        <updated>2019-06-26T00:50:42.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p><a href="https://stephencorwin.me">stephencorwin.me</a> |
+<a href="mailto:stephenjcorwin@gmail.com">stephenjcorwin@gmail.com</a> |
+<a href="tel:9194781889">919.478.1889</a></p>
+</blockquote>
+<h1 id="stephen-corwin-senior-front-end-engineer">Stephen Corwin – Senior Front-End Engineer</h1>
+<ul>
+<li>6+ years of experience as a software engineer in various industries</li>
+<li>Full stack skill-set with a concentration on front-end engineering</li>
+<li>Owns a small consulting company to channel mid-range freelance work</li>
+<li>Mentors several apprentices and manages their online curriculum</li>
+<li>Published several modules on GitHub, NPM, and Packagist</li>
+</ul>
+<h2 id="education">Education</h2>
+<p><strong>ECPI University, VA Beach, VA</strong><br>
+B.S. in Computer and Information Sciences<br>
+<em>Major in Simulation and Game Programming</em><br>
+<em>July 2013</em></p>
+<h2 id="skills">Skills</h2>
+<ul>
+<li>Architectural Pattern – Model View Controller, Server Side Rendering, Finite State Machine</li>
+<li>Methodology – Agile, Scrum, Cross-platform Development, Object-Oriented Programming, Composition, Rapid Application Development</li>
+<li>Programming Language – JavaScript, TypeScript, CSS, LESS, SASS, HTML, PHP, C#</li>
+<li>UI – Mobile-first Design, Responsive Web Design</li>
+<li>UX – Information Architecture, Persona Classification</li>
+</ul>
+<h2 id="tools">Tools</h2>
+<ul>
+<li>Framework – Angular, React, Redux, Node.js, Express, Handlebars, Styled Components, Bootstrap, Axios, Bluebird, jQuery, AJAX</li>
+<li>Automation Software – Webpack, Gulp, Jenkins</li>
+<li>Content Management System – SilverStripe, WordPress</li>
+<li>Graphic Editor – Adobe Illustrator, Adobe Photoshop, Sketch</li>
+<li>Prototyping – Balsamiq, InVision</li>
+<li>Email Distribution System – HubSpot</li>
+</ul>
+<h2 id="experience">Experience</h2>
+<p><strong>Koto, Tyson's Corner, VA</strong><br>
+Software Engineer<br>
+<em>April 2018 – Present</em></p>
+<p><strong>ScoreWin LLC</strong><br>
+Owner<br>
+<em>October 2016 – Present</em></p>
+<ul>
+<li>Led a small team of innovative engineers</li>
+<li>Engaged with business stakeholders for contract acquisition and agile ceremonies</li>
+<li>Created an Art Portal for Holiday Retirement (Angular, Node.js, SASS)</li>
+<li>Created a custom WordPress Theme for PackHealth (PHP, SASS, WordPress)</li>
+<li>Engineered a custom SASS framework (SASS)</li>
+<li>Performed numerous site migrations (MySQL, Node.js, SilverStripe, WordPress)</li>
+<li>Developed reusable components and modules (AngularJS, Angular, PHP, SASS)</li>
+<li>Created wireframes (Balsamiq, InVision)</li>
+<li>Designed mockups (Adobe Photoshop, Adobe Illustrator, Sketch)</li>
+</ul>
+<p><strong>Under Armour, Baltimore, MD</strong><br>
+Software Engineer – Contractor<br>
+<em>June 2017 – March 2018</em></p>
+<ul>
+<li>Developed site manager portal which housed tooling used by customer service representatives (Node.js, Styled Components, React, Redux)</li>
+<li>Migrated existing LESS styling to use Styled Components (React, Styled Components, LESS)</li>
+<li>Developed API and Service endpoints (Node.js, Sequelize, Protobuf, Swagger)</li>
+<li>Integrated Auth0 flow into the site manager portal (React, Redux)</li>
+<li>Created wireframes (Balsamiq, InVision)</li>
+</ul>
+<p><strong>RainKing Solutions, Bethesda, MD</strong><br>
+Senior Front-End Engineer – Contractor<br>
+<em>February 2017 – June 2017</em></p>
+<ul>
+<li>Developed pages and components to support a new major release (v4.0) for the RainKing platform (AngularJS, GSP, SASS)</li>
+<li>Integrated Gulp and NPM with the existing Jenkins build pipeline (Gulp, NPM, Jenkins)</li>
+<li>Created wireframes (Balsamiq, InVision)</li>
+<li>Collaborated with a third-party consulting agency to communicate design requests and revisions (InVision)</li>
+</ul>
+<p><strong>Becton Dickinson, Reston VA</strong><br>
+Senior UI Developer – Contractor<br>
+<em>July 2016 – February 2017</em></p>
+<ul>
+<li>Lead UI Developer on a distributed team including 6 offshore resources</li>
+<li>Performed code reviews and provided technical analysis</li>
+<li>Developed a medical hybrid application (AngularJS, TypeScript, Xamarin)</li>
+<li>Integrated a medical hybrid application with bluetooth pairing, bluetooth printers, and barcode scanners</li>
+</ul>
+<p><strong>Acuity Systems LLC, Herndon, VA</strong><br>
+UI Developer – Contractor<br>
+<em>April 2016 – July 2016</em></p>
+<ul>
+<li>Created wireframes (Balsamiq, InVision)</li>
+<li>Designed mockups (Adobe Photoshop, Adobe Illustrator)</li>
+<li>Developed API service container in Node.js connecting custom Web Portal to MicroStrategy Intelligence Server (Node.js)</li>
+<li>Integrated Web Portal with GSA common components</li>
+</ul>
+<p><strong>Folio Investing, McLean, VA</strong><br>
+UI Developer<br>
+<em>April 2015 – April 2016</em></p>
+<ul>
+<li>Developed private placements platform application (AngularJS, SASS, JavaScript, JSP, JSTL)</li>
+<li>Developed an SVG signature pad for JSP templates and ported it as an Angular directive (AngularJS, SASS, JavaScript, JSP, JSTL)</li>
+<li>Redesigned and implemented a new account opening path (SASS, JavaScript, JSP, JSTL)</li>
+<li>Designed wireframes mockups (Adobe Illustrator, Adobe Photoshop)</li>
+<li>Created numerous utility plugins (AngularJS, JavaScript, jQuery)</li>
+</ul>
+<p><strong>Millennial Media, Baltimore, MD</strong><br>
+Web Developer<br>
+<em>February 2014 – April 2015</em></p>
+<ul>
+<li>Extended the capabilities of the existing CMS powering millennialmedia.com by creating modules and templates (CSS, JavaScript, MySQL)</li>
+<li>Integrated Smartling as a multilingual translation solution for millennialmedia.com (CSS, JavaScript, PHP)</li>
+<li>Developed IOS and Android mobile applications (AngularJS, JavaScript, SASS)</li>
+<li>Developed event portal that enables users to create RSVP and information landing pages (AngularJS, JavaScript, MySQL, SASS, SilverStripe)</li>
+<li>Developed movewithmobile.com as part of an ongoing marketing campaign (AngularJS, JavaScript, MySQL, SASS, SilverStripe)</li>
+</ul>
+<p><strong>BLDG-25, Durham, NC</strong><br>
+Web Developer<br>
+<em>August 2013 – February 2014</em></p>
+<ul>
+<li>Developed a virtual simulation for a German real estate company (C#, JavaScript, Unity 3D)</li>
+<li>Created UI visualizations for a consumed web service (AJAX, CSS, JavaScript)</li>
+<li>Developed an e-learning web application for Blue Cross Blue Shield of Louisiana (CSS, PHP, JavaScript, MySQL, SilverStripe)</li>
+</ul>
+<p><strong>System Technologies Advanced Research, VA Beach, VA</strong><br>
+Software Engineer<br>
+<em>November 2012 – July 2013</em></p>
+<ul>
+<li>Developed a virtual simulation running in a touch-enabled kiosk of the US Battleship Wisconsin for the Nauticus museum in Norfolk, VA (C#, JavaScript, Unity 3D)</li>
+<li>Developed IOS and Android mobile applications (Action Script 3, Adobe Air, Adobe Flex, Starling)</li>
+<li>Developed sound software for the Raspberry Pi which interfaced with IO hardware modules (C#, C++)</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Examples of OOD class diagrams]]></title>
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
@@ -221,140 +355,6 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
 <p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
 Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
 <p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[About]]></title>
-        <id>https://ywang412.github.io/post/about</id>
-        <link href="https://ywang412.github.io/post/about">
-        </link>
-        <updated>2019-01-17T21:09:48.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p><a href="https://stephencorwin.me">stephencorwin.me</a> |
-<a href="mailto:stephenjcorwin@gmail.com">stephenjcorwin@gmail.com</a> |
-<a href="tel:9194781889">919.478.1889</a></p>
-</blockquote>
-<h1 id="stephen-corwin-senior-front-end-engineer">Stephen Corwin – Senior Front-End Engineer</h1>
-<ul>
-<li>6+ years of experience as a software engineer in various industries</li>
-<li>Full stack skill-set with a concentration on front-end engineering</li>
-<li>Owns a small consulting company to channel mid-range freelance work</li>
-<li>Mentors several apprentices and manages their online curriculum</li>
-<li>Published several modules on GitHub, NPM, and Packagist</li>
-</ul>
-<h2 id="education">Education</h2>
-<p><strong>ECPI University, VA Beach, VA</strong><br>
-B.S. in Computer and Information Sciences<br>
-<em>Major in Simulation and Game Programming</em><br>
-<em>July 2013</em></p>
-<h2 id="skills">Skills</h2>
-<ul>
-<li>Architectural Pattern – Model View Controller, Server Side Rendering, Finite State Machine</li>
-<li>Methodology – Agile, Scrum, Cross-platform Development, Object-Oriented Programming, Composition, Rapid Application Development</li>
-<li>Programming Language – JavaScript, TypeScript, CSS, LESS, SASS, HTML, PHP, C#</li>
-<li>UI – Mobile-first Design, Responsive Web Design</li>
-<li>UX – Information Architecture, Persona Classification</li>
-</ul>
-<h2 id="tools">Tools</h2>
-<ul>
-<li>Framework – Angular, React, Redux, Node.js, Express, Handlebars, Styled Components, Bootstrap, Axios, Bluebird, jQuery, AJAX</li>
-<li>Automation Software – Webpack, Gulp, Jenkins</li>
-<li>Content Management System – SilverStripe, WordPress</li>
-<li>Graphic Editor – Adobe Illustrator, Adobe Photoshop, Sketch</li>
-<li>Prototyping – Balsamiq, InVision</li>
-<li>Email Distribution System – HubSpot</li>
-</ul>
-<h2 id="experience">Experience</h2>
-<p><strong>Koto, Tyson's Corner, VA</strong><br>
-Software Engineer<br>
-<em>April 2018 – Present</em></p>
-<p><strong>ScoreWin LLC</strong><br>
-Owner<br>
-<em>October 2016 – Present</em></p>
-<ul>
-<li>Led a small team of innovative engineers</li>
-<li>Engaged with business stakeholders for contract acquisition and agile ceremonies</li>
-<li>Created an Art Portal for Holiday Retirement (Angular, Node.js, SASS)</li>
-<li>Created a custom WordPress Theme for PackHealth (PHP, SASS, WordPress)</li>
-<li>Engineered a custom SASS framework (SASS)</li>
-<li>Performed numerous site migrations (MySQL, Node.js, SilverStripe, WordPress)</li>
-<li>Developed reusable components and modules (AngularJS, Angular, PHP, SASS)</li>
-<li>Created wireframes (Balsamiq, InVision)</li>
-<li>Designed mockups (Adobe Photoshop, Adobe Illustrator, Sketch)</li>
-</ul>
-<p><strong>Under Armour, Baltimore, MD</strong><br>
-Software Engineer – Contractor<br>
-<em>June 2017 – March 2018</em></p>
-<ul>
-<li>Developed site manager portal which housed tooling used by customer service representatives (Node.js, Styled Components, React, Redux)</li>
-<li>Migrated existing LESS styling to use Styled Components (React, Styled Components, LESS)</li>
-<li>Developed API and Service endpoints (Node.js, Sequelize, Protobuf, Swagger)</li>
-<li>Integrated Auth0 flow into the site manager portal (React, Redux)</li>
-<li>Created wireframes (Balsamiq, InVision)</li>
-</ul>
-<p><strong>RainKing Solutions, Bethesda, MD</strong><br>
-Senior Front-End Engineer – Contractor<br>
-<em>February 2017 – June 2017</em></p>
-<ul>
-<li>Developed pages and components to support a new major release (v4.0) for the RainKing platform (AngularJS, GSP, SASS)</li>
-<li>Integrated Gulp and NPM with the existing Jenkins build pipeline (Gulp, NPM, Jenkins)</li>
-<li>Created wireframes (Balsamiq, InVision)</li>
-<li>Collaborated with a third-party consulting agency to communicate design requests and revisions (InVision)</li>
-</ul>
-<p><strong>Becton Dickinson, Reston VA</strong><br>
-Senior UI Developer – Contractor<br>
-<em>July 2016 – February 2017</em></p>
-<ul>
-<li>Lead UI Developer on a distributed team including 6 offshore resources</li>
-<li>Performed code reviews and provided technical analysis</li>
-<li>Developed a medical hybrid application (AngularJS, TypeScript, Xamarin)</li>
-<li>Integrated a medical hybrid application with bluetooth pairing, bluetooth printers, and barcode scanners</li>
-</ul>
-<p><strong>Acuity Systems LLC, Herndon, VA</strong><br>
-UI Developer – Contractor<br>
-<em>April 2016 – July 2016</em></p>
-<ul>
-<li>Created wireframes (Balsamiq, InVision)</li>
-<li>Designed mockups (Adobe Photoshop, Adobe Illustrator)</li>
-<li>Developed API service container in Node.js connecting custom Web Portal to MicroStrategy Intelligence Server (Node.js)</li>
-<li>Integrated Web Portal with GSA common components</li>
-</ul>
-<p><strong>Folio Investing, McLean, VA</strong><br>
-UI Developer<br>
-<em>April 2015 – April 2016</em></p>
-<ul>
-<li>Developed private placements platform application (AngularJS, SASS, JavaScript, JSP, JSTL)</li>
-<li>Developed an SVG signature pad for JSP templates and ported it as an Angular directive (AngularJS, SASS, JavaScript, JSP, JSTL)</li>
-<li>Redesigned and implemented a new account opening path (SASS, JavaScript, JSP, JSTL)</li>
-<li>Designed wireframes mockups (Adobe Illustrator, Adobe Photoshop)</li>
-<li>Created numerous utility plugins (AngularJS, JavaScript, jQuery)</li>
-</ul>
-<p><strong>Millennial Media, Baltimore, MD</strong><br>
-Web Developer<br>
-<em>February 2014 – April 2015</em></p>
-<ul>
-<li>Extended the capabilities of the existing CMS powering millennialmedia.com by creating modules and templates (CSS, JavaScript, MySQL)</li>
-<li>Integrated Smartling as a multilingual translation solution for millennialmedia.com (CSS, JavaScript, PHP)</li>
-<li>Developed IOS and Android mobile applications (AngularJS, JavaScript, SASS)</li>
-<li>Developed event portal that enables users to create RSVP and information landing pages (AngularJS, JavaScript, MySQL, SASS, SilverStripe)</li>
-<li>Developed movewithmobile.com as part of an ongoing marketing campaign (AngularJS, JavaScript, MySQL, SASS, SilverStripe)</li>
-</ul>
-<p><strong>BLDG-25, Durham, NC</strong><br>
-Web Developer<br>
-<em>August 2013 – February 2014</em></p>
-<ul>
-<li>Developed a virtual simulation for a German real estate company (C#, JavaScript, Unity 3D)</li>
-<li>Created UI visualizations for a consumed web service (AJAX, CSS, JavaScript)</li>
-<li>Developed an e-learning web application for Blue Cross Blue Shield of Louisiana (CSS, PHP, JavaScript, MySQL, SilverStripe)</li>
-</ul>
-<p><strong>System Technologies Advanced Research, VA Beach, VA</strong><br>
-Software Engineer<br>
-<em>November 2012 – July 2013</em></p>
-<ul>
-<li>Developed a virtual simulation running in a touch-enabled kiosk of the US Battleship Wisconsin for the Nauticus museum in Norfolk, VA (C#, JavaScript, Unity 3D)</li>
-<li>Developed IOS and Android mobile applications (Action Script 3, Adobe Air, Adobe Flex, Starling)</li>
-<li>Developed sound software for the Raspberry Pi which interfaced with IO hardware modules (C#, C++)</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
