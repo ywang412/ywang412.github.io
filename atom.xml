@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-28T04:36:58.479Z</updated>
+    <updated>2019-06-28T04:43:27.726Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -221,6 +221,91 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
 <p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
 Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
 <p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[About]]></title>
+        <id>https://ywang412.github.io/post/about</id>
+        <link href="https://ywang412.github.io/post/about">
+        </link>
+        <updated>2019-01-19T15:09:48.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="yu-wang">Yu Wang</h1>
+<hr>
+<p>Houston TX                ywang412 AT gmail.com</p>
+<hr>
+<h2 id="education">Education</h2>
+<p>2010-2014 (expected)
+:   <strong>PhD, Computer Science</strong>; Awesome University (MyTown)</p>
+<pre><code>*Thesis title: Deep Learning Approaches to the Self-Awesomeness
+ Estimation Problem*
+</code></pre>
+<p>2007-2010
+:   <strong>BSc, Computer Science and Electrical Engineering</strong>; University of
+HomeTown (HomeTown)</p>
+<pre><code>*Minor: Awesomeology*
+</code></pre>
+<h2 id="experience">Experience</h2>
+<p><strong>Your Most Recent Work Experience:</strong></p>
+<p>Short text containing the type of work done, results obtained,
+lessons learned and other remarks. Can also include lists and
+links:</p>
+<ul>
+<li>
+<p>First item</p>
+</li>
+<li>
+<p>Item with <a href="http://www.example.com">link</a>. Links will work both in
+the html and pdf versions.</p>
+</li>
+</ul>
+<p><strong>That Other Job You Had</strong></p>
+<p>Also with a short description.</p>
+<h2 id="technical-experience">Technical Experience</h2>
+<p>My Cool Side Project
+:   For items which don't have a clear time ordering, a definition
+list can be used to have named items.</p>
+<pre><code>* These items can also contain lists, but you need to mind the
+  indentation levels in the markdown source.
+* Second item.
+</code></pre>
+<p>Open Source
+:   List open source contributions here, perhaps placing emphasis on
+the project names, for example the <strong>Linux Kernel</strong>, where you
+implemented multithreading over a long weekend, or <strong>node.js</strong>
+(with <a href="http://nodejs.org">link</a>) which was actually totally
+your idea...</p>
+<p>Programming Languages
+:   <strong>first-lang:</strong> Here, we have an itemization, where we only want
+to add descriptions to the first few items, but still want to
+mention some others together at the end. A format that works well
+here is a description list where the first few items have their
+first word emphasized, and the last item contains the final few
+emphasized terms. Notice the reasonably nice page break in the pdf
+version, which wouldn't happen if we generated the pdf via html.</p>
+<p>:   <strong>second-lang:</strong> Description of your experience with second-lang,
+perhaps again including a [link] <a href="https://github.com/githubuser/superlongprojectname">ref</a>, this time placing the url
+reference elsewhere in the document to reduce clutter (see source
+file).</p>
+<p>:   <strong>obscure-but-impressive-lang:</strong> We both know this one's pushing
+it.</p>
+<p>:   Basic knowledge of <strong>C</strong>, <strong>x86 assembly</strong>, <strong>forth</strong>, <strong>Common Lisp</strong></p>
+<h2 id="extra-section-call-it-whatever-you-want">Extra Section, Call it Whatever You Want</h2>
+<ul>
+<li>
+<p>Human Languages:</p>
+<ul>
+<li>English (native speaker)</li>
+<li>???</li>
+<li>This is what a nested list looks like.</li>
+</ul>
+</li>
+<li>
+<p>Random tidbit</p>
+</li>
+<li>
+<p>Other sort of impressive-sounding thing you did</p>
+</li>
+</ul>
 ]]></content>
     </entry>
 </feed>
