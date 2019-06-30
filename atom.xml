@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-30T21:00:16.433Z</updated>
+    <updated>2019-06-30T21:35:00.298Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,8 @@
         <id>https://ywang412.github.io/post/non-trival-textbook-algorithms</id>
         <link href="https://ywang412.github.io/post/non-trival-textbook-algorithms">
         </link>
-        <updated>2019-06-28T03:47:15.000Z</updated>
-        <content type="html"><![CDATA[<p>**229. Majority Element II  Moore's Voting Algorithm **</p>
+        <updated>2019-06-27T14:47:15.000Z</updated>
+        <content type="html"><![CDATA[<p>**229. Majority Element II  - Moore's Voting Algorithm **</p>
 <p>The trick in Moore voting algorithm is to aggregate the top n more frequent elements when counting. If the element in iteration is not equal to any of the top n elements, the counts of each top n elements will decrease by one. Moreover, top n elements are different as a result of the initialization order.</p>
 <pre><code>int first = nums[0];
 int c1 = 1;
@@ -38,6 +38,38 @@ for (int i = 1; i &lt; nums.length; i++) {
 				c1--;
 				c2--;
 		}
+}
+</code></pre>
+<p><strong>973. K Closest Points to Origin - quick find</strong>
+To find the kth smallest element, Arrays.sort() will take Nlog(N). Min priority queue can reduce it to Nlog(k). However, if we don't care about the order of the K closest points, quick find can return it in O(N) average time and O(N*N) worst time.</p>
+<pre><code>public int[][] kClosest(int[][] points, int K) {
+    int len =  points.length, l = 0, r = len - 1;
+    while (l &lt;= r) {
+        int mid = helper(points, l, r);
+        if (mid == K) break;
+        if (mid &lt; K) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return Arrays.copyOfRange(points, 0, K);
+}
+
+private int helper(int[][] A, int l, int r) {
+    int[] pivot = A[l];
+    while (l &lt; r) {
+        while (l &lt; r &amp;&amp; compare(A[r], pivot) &gt;= 0) r--;
+        A[l] = A[r];
+        while (l &lt; r &amp;&amp; compare(A[l], pivot) &lt;= 0) l++;
+        A[r] = A[l];
+    }
+    A[l] = pivot;
+    return l;
+}
+
+private int compare(int[] p1, int[] p2) {
+    return p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1];
 }
 </code></pre>
 ]]></content>
