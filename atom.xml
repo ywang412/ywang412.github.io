@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-30T06:29:41.217Z</updated>
+    <updated>2019-06-30T06:31:45.912Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -67,7 +67,7 @@ The second one is to find a bug as a result of different Windows/Linux file sepe
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
         <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
         </link>
-        <updated>2019-06-22T11:38:58.000Z</updated>
+        <updated>2019-05-14T22:38:58.000Z</updated>
         <content type="html"><![CDATA[<p>Shopping
 <img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
 Parking
@@ -81,7 +81,7 @@ Library
         <id>https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure</id>
         <link href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
         </link>
-        <updated>2019-06-19T03:49:32.000Z</updated>
+        <updated>2019-04-17T01:49:32.000Z</updated>
         <content type="html"><![CDATA[<p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
 Due to Java type erasure, in order to instantiate a list of list, one can use
@@ -158,7 +158,7 @@ if (high != null &amp;&amp; high - bulbs[i] - 1 == K) return i + 1;
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
         <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
         </link>
-        <updated>2019-06-07T22:03:19.000Z</updated>
+        <updated>2019-03-12T09:03:19.000Z</updated>
         <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
 <p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
@@ -223,7 +223,7 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
         <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
         <link href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
         </link>
-        <updated>2019-06-07T00:44:23.000Z</updated>
+        <updated>2019-02-01T11:44:23.000Z</updated>
         <content type="html"><![CDATA[<p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
 <p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
 <p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.
@@ -245,7 +245,7 @@ Register a free account on disqus and create a new application. The public api k
         <id>https://ywang412.github.io/post/resume</id>
         <link href="https://ywang412.github.io/post/resume">
         </link>
-        <updated>2019-05-20T18:50:42.000Z</updated>
+        <updated>2018-12-21T05:50:42.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
 <p><a href="https://ywang412.github.io/post/resume/">Yu Wang</a> |
 <a href="https://www.linkedin.com/in/ywang412/">LinkedIn</a>  |
