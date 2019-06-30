@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-30T20:53:46.420Z</updated>
+    <updated>2019-06-30T20:57:01.892Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,11 +15,11 @@
         <id>https://ywang412.github.io/post/non-trival-textbook-algorithms</id>
         <link href="https://ywang412.github.io/post/non-trival-textbook-algorithms">
         </link>
-        <updated>2019-06-30T07:47:15.000Z</updated>
+        <updated>2019-06-29T18:47:15.000Z</updated>
         <content type="html"><![CDATA[<ol start="229">
 <li>Majority Element II  Moore's Voting Algorithm</li>
 </ol>
-<p>The trick in Moore voting algorithm is to aggregate the top n more frequent elements when counting. Only if element is not equal to any of the top n, the counts of each top n will decrease by one. And top n elements are different as a result of the initialization order.</p>
+<p>The trick in Moore voting algorithm is to aggregate the top n more frequent elements when counting. If the element in iteration is not equal to any of the top n elements, the counts of each top n elements will decrease by one. Moreover, top n elements are different as a result of the initialization order.</p>
 <pre><code>int first = nums[0];
 int c1 = 1;
 int second = Integer.MIN_VALUE;
