@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-06-30T06:23:29.009Z</updated>
+    <updated>2019-06-30T06:27:06.263Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -245,11 +245,10 @@ Register a free account on disqus and create a new application. The public api k
         <id>https://ywang412.github.io/post/resume</id>
         <link href="https://ywang412.github.io/post/resume">
         </link>
-        <updated>2019-05-21T20:50:42.000Z</updated>
+        <updated>2019-05-21T07:50:42.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
 <p><a href="https://ywang412.github.io">Yu Wang</a> |
-<a href="mailto:ywang412@gmail.com">ywang412@gmail.com</a> |
-<a href="tel:9194781889">314.662.3230</a></p>
+<a href="https://www.linkedin.com/in/ywang412/">LinkedIn</a></p>
 </blockquote>
 <h1 id="yu-wang-application-developer">Yu Wang – Application Developer</h1>
 <ul>
