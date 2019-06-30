@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>[Scala] Flatten an arbitrarily-deep nested list  | Yu&#39;s Github</title>
+<title>Contributing to a scala zio, a github open source project | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,37 +102,22 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">[Scala] Flatten an arbitrarily-deep nested list </h2>
-            <div class="post-date">2019-06-22</div>
+            <h2 class="post-title">Contributing to a scala zio, a github open source project</h2>
+            <div class="post-date">2019-06-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/contributing-to-a-scala-zio-a-github-open-source-project.png')">
+              </div>
             
             <div class="post-content">
-              <p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
-<p>Foldleft</p>
-<pre><code>object FlattenArray {
-  def flatten(list : List[Any]) : List[Int] = {
-    list.foldLeft(List[Int]()){
-      (res, cur) =&gt; {
-        cur match {
-          case null =&gt; res
-          case cur: Int =&gt; res :+ cur
-          case cur: List[Any] =&gt; res ::: flatten(cur)
-        }
-      }
-    }
-  }
-}
-</code></pre>
-<p>Create single element list</p>
-<pre><code>object FlattenArray {
-  def flatten(input: List[_]): List[_] =
-    input
-      .filterNot(_ == null)
-      .flatMap {
-        case list: List[_] =&gt; flatten(list)
-        case elem =&gt; List(elem)
-      }
-}
-</code></pre>
+              <p>I've hoped to contribute to open source project on github to be part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, get approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
+<p>These are the two pull requests that I made.
+https://github.com/zio/zio/pull/1109
+https://github.com/zio/zio/pull/1106</p>
+<p>The first one is to deprecate a FiberLocal class.
+<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
+The second one is to find a bug as a result of different Windows/Linux file seperator.
+<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
+<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
 
             </div>
             
@@ -147,9 +132,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
+                <a href="https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list">
                   <h3 class="post-title">
-                    Examples of OOD class diagrams
+                    [Scala] Flatten an arbitrarily-deep nested list 
                   </h3>
                 </a>
               </div>
