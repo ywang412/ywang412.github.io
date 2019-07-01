@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-01T05:22:09.860Z</updated>
+    <updated>2019-07-01T05:22:35.627Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,62 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Coding tricks using Scala syntax]]></title>
+        <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
+        <link href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
+        </link>
+        <updated>2019-06-28T17:49:08.000Z</updated>
+        <content type="html"><![CDATA[<p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
+<pre><code>class Test {
+   private var a = 0
+   def age = a
+   def age_=(n:Int) = {
+      require(n&gt;0)
+      a = n
+   }
+}
+val t = new Test
+t.age = 5
+</code></pre>
+<p>_ can convert a method to a function variable without actually invoking the method.</p>
+<pre><code>class Test {
+  def fun = {
+    // some code
+  }
+  val funLike = fun _
+}
+</code></pre>
+<p>To sort a List of object, java provide Comparator<T> interface to compare two objects. Scala used the Ordering[T] trait.</p>
+<pre><code>case class Employee(id: Int, firstName: String, lastName: String)
+object Employee {
+  // Note that because `Ordering[A]` is not contravariant, the declaration
+  // must be type-parametrized in the event that you want the implicit
+  // ordering to apply to subclasses of `Employee`.
+  implicit def orderingByName[A &lt;: Employee]: Ordering[A] = Ordering.by(e =&gt; (e.lastName, e.firstName))
+  val orderingById: Ordering[Employee] = Ordering.by(e =&gt; e.id)
+}
+</code></pre>
+<p>Given es: SeqLike[Employee], es.sorted() will sort by name, and es.sorted(Employee.orderingById) will sort by id.</p>
+<p>Implicit val can be used to define the ordering mechanism as below,
+implicit val timestampordering: ordering[Timestamp] = Ordering.by(_.ts)</p>
+<p>Scala flatmap() and for-comprehension are interchangable. For example,</p>
+<pre><code>```
+</code></pre>
+<p>// The following ...
+for {
+bound &lt;- list
+out &lt;- f(bound)
+} yield out</p>
+<p>// ... is translated by the Scala compiler as ...
+list.flatMap { bound =&gt;
+f(bound).map { out =&gt;
+out
+}
+}</p>
+<pre><code></code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Non-trival textbook algorithms]]></title>
         <id>https://ywang412.github.io/post/non-trival-textbook-algorithms</id>
