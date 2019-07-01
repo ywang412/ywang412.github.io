@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-01T05:23:24.234Z</updated>
+    <updated>2019-07-01T05:26:34.007Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
         <link href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
         </link>
-        <updated>2019-06-28T17:49:08.000Z</updated>
+        <updated>2019-06-28T04:49:08.000Z</updated>
         <content type="html"><![CDATA[<p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
 <pre><code>class Test {
    private var a = 0
@@ -47,23 +47,22 @@ object Employee {
 }
 </code></pre>
 <p>Given es: SeqLike[Employee], es.sorted() will sort by name, and es.sorted(Employee.orderingById) will sort by id.</p>
-<p>Implicit val can be used to define the ordering mechanism as below,
-implicit val timestampordering: ordering[Timestamp] = Ordering.by(_.ts)</p>
-<p>Scala flatmap() and for-comprehension are interchangable. For example,</p>
-<pre><code>```
+<p>Implicit val can be used to define the ordering mechanism as below,</p>
+<pre><code>implicit val timestampordering: ordering[Timestamp] = Ordering.by(_.ts)
 </code></pre>
-<p>// The following ...
-for {
-bound &lt;- list
-out &lt;- f(bound)
-} yield out</p>
-<p>// ... is translated by the Scala compiler as ...
+<p>Scala flatmap() and for-comprehension are interchangable. For example,</p>
+<pre><code>for {
+  bound &lt;- list
+  out &lt;- f(bound)
+} yield out
+
+// is translated by the Scala compiler as  
 list.flatMap { bound =&gt;
-f(bound).map { out =&gt;
-out
+  f(bound).map { out =&gt;
+    out
+  }
 }
-}</p>
-<pre><code></code></pre>
+</code></pre>
 ]]></content>
     </entry>
     <entry>
@@ -298,7 +297,7 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
         <id>https://ywang412.github.io/post/non-trival-textbook-algorithms</id>
         <link href="https://ywang412.github.io/post/non-trival-textbook-algorithms">
         </link>
-        <updated>2019-02-14T12:47:15.000Z</updated>
+        <updated>2019-02-13T22:47:15.000Z</updated>
         <content type="html"><![CDATA[<p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
 <p>The trick in Moore voting algorithm is to aggregate the top n more frequent elements when counting. If the element in iteration is not equal to any of the top n elements, the counts of each top n elements will decrease by one. Moreover, top n elements are different as a result of the initialization order.</p>
 <pre><code>int first = nums[0];
