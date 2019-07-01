@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561958834570">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1561958996983">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1561958834570" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1561958996983" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -151,6 +151,33 @@ list.flatMap { bound =&gt;
   f(bound).map { out =&gt;
     out
   }
+}
+</code></pre>
+<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
+<p>Foldleft</p>
+<pre><code>object FlattenArray {
+  def flatten(list : List[Any]) : List[Int] = {
+    list.foldLeft(List[Int]()){
+      (res, cur) =&gt; {
+        cur match {
+          case null =&gt; res
+          case cur: Int =&gt; res :+ cur
+          case cur: List[Any] =&gt; res ::: flatten(cur)
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Create single element list</p>
+<pre><code>object FlattenArray {
+  def flatten(input: List[_]): List[_] =
+    input
+      .filterNot(_ == null)
+      .flatMap {
+        case list: List[_] =&gt; flatten(list)
+        case elem =&gt; List(elem)
+      }
 }
 </code></pre>
 

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-01T05:27:16.767Z</updated>
+    <updated>2019-07-01T05:29:59.560Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
         <link href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
         </link>
-        <updated>2019-06-28T04:49:08.000Z</updated>
+        <updated>2019-06-27T15:49:08.000Z</updated>
         <content type="html"><![CDATA[<p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
 <pre><code>class Test {
    private var a = 0
@@ -63,33 +63,7 @@ list.flatMap { bound =&gt;
   }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
-        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
-        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
-        </link>
-        <updated>2019-06-24T06:54:56.000Z</updated>
-        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.
-https://github.com/zio/zio/pull/1109
-and
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
-The second one is to find a bug as a result of different Windows/Linux file seperator.
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Scala to flatten an arbitrarily-deep nested list ]]></title>
-        <id>https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list</id>
-        <link href="https://ywang412.github.io/post/scala-flat-a-arbitrarily-deep-nested-list">
-        </link>
-        <updated>2019-06-22T11:37:51.000Z</updated>
-        <content type="html"><![CDATA[<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
+<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
 <p>Foldleft</p>
 <pre><code>object FlattenArray {
   def flatten(list : List[Any]) : List[Int] = {
@@ -116,6 +90,24 @@ The second one is to find a bug as a result of different Windows/Linux file sepe
       }
 }
 </code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
+        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
+        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
+        </link>
+        <updated>2019-06-24T06:54:56.000Z</updated>
+        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
+<p>These are the two pull requests that I made.
+https://github.com/zio/zio/pull/1109
+and
+https://github.com/zio/zio/pull/1106</p>
+<p>The first one is to deprecate a FiberLocal class.
+<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
+The second one is to find a bug as a result of different Windows/Linux file seperator.
+<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
+<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
 ]]></content>
     </entry>
     <entry>
