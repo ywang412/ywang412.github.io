@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-03T03:58:56.202Z</updated>
+    <updated>2019-07-03T04:18:11.992Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -115,7 +115,7 @@ The second one is to find a bug as a result of different Windows/Linux file sepe
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
         <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
         </link>
-        <updated>2019-05-12T18:38:58.000Z</updated>
+        <updated>2019-05-12T05:38:58.000Z</updated>
         <content type="html"><![CDATA[<p>Shopping
 <img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
 Parking
@@ -129,7 +129,9 @@ Movie
 Flight
 <img src="https://ywang412.github.io/post-images/1562126309435.png" alt="">
 ATM
-<img src="https://ywang412.github.io/post-images/1562126330414.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1562126330414.png" alt="">
+BlackJack
+<img src="https://ywang412.github.io/post-images/1562127485970.jpg" alt=""></p>
 ]]></content>
     </entry>
     <entry>
