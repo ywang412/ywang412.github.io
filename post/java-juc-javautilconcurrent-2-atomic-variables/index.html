@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562532132963">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562532686480">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562532132963" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562532686480" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collections</h2>
-            <div class="post-date">2019-07-06</div>
+            <div class="post-date">2019-07-05</div>
             
             <div class="post-content">
               <p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
@@ -141,6 +141,39 @@ private static void add() {
 		// count.getAndIncrement();
 }
 </code></pre>
+<p>Another way to acheive correct counting result like above is <code>synchronized</code> keyword.</p>
+<pre><code>// 请求总数
+public static int clientTotal = 5000;
+// 同时并发执行的线程数
+public static int threadTotal = 200;
+public static int count = 0;
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		final Semaphore semaphore = new Semaphore(threadTotal);
+		final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		for (int i = 0; i &lt; clientTotal ; i++) {
+				executorService.execute(() -&gt; {
+						try {
+								semaphore.acquire();
+								add();
+								semaphore.release();
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+						countDownLatch.countDown();
+				});
+		}
+		countDownLatch.await();
+		executorService.shutdown();
+		log.info(&quot;count:{}&quot;, count);
+}
+
+private synchronized static void add() {
+		count++;
+}
+</code></pre>
+<p>However, volatile keyword as in <code>public static volatile int count = 0;</code> will not be able to ensure threadsafety to due CPU instruction reorder.</p>
 <p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are concurrency collections class in Java 8.</p>
 <p><strong>CopyOnWriteArrayList</strong></p>
 <pre><code>// 请求总数
