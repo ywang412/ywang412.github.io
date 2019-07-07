@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T19:58:59.865Z</updated>
+    <updated>2019-07-07T20:04:54.275Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -196,11 +196,29 @@ Thread.sleep(1000);
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
+        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
+        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
+        </link>
+        <updated>2019-06-24T06:54:56.000Z</updated>
+        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
+<p>These are the two pull requests that I made.
+https://github.com/zio/zio/pull/1109
+and
+https://github.com/zio/zio/pull/1106</p>
+<p>The first one is to deprecate a FiberLocal class.
+<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
+The second one is to find a bug as a result of different Windows/Linux file seperator.
+<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
+<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Coding tricks using Scala syntax]]></title>
         <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
         <link href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
         </link>
-        <updated>2019-06-27T15:49:08.000Z</updated>
+        <updated>2019-01-17T02:49:08.000Z</updated>
         <content type="html"><![CDATA[<p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
 <pre><code>class Test {
    private var a = 0
@@ -278,29 +296,11 @@ list.flatMap { bound =&gt;
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
-        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
-        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
-        </link>
-        <updated>2019-06-24T06:54:56.000Z</updated>
-        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.
-https://github.com/zio/zio/pull/1109
-and
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
-The second one is to find a bug as a result of different Windows/Linux file seperator.
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Examples of OOD class diagrams]]></title>
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
         <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
         </link>
-        <updated>2019-05-11T16:38:58.000Z</updated>
+        <updated>2018-07-12T03:38:58.000Z</updated>
         <content type="html"><![CDATA[<p>Shopping
 <img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
 Parking
@@ -324,7 +324,7 @@ BlackJack
         <id>https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure</id>
         <link href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
         </link>
-        <updated>2019-04-12T17:49:32.000Z</updated>
+        <updated>2018-06-13T04:49:32.000Z</updated>
         <content type="html"><![CDATA[<p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
 Due to Java type erasure, in order to instantiate a list of list, one can use
@@ -443,7 +443,7 @@ if (s.isEmpty()) s = &quot;0&quot;;
         <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
         <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
         </link>
-        <updated>2019-03-12T09:03:19.000Z</updated>
+        <updated>2018-05-17T20:03:19.000Z</updated>
         <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
 <p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
@@ -508,7 +508,7 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
         <id>https://ywang412.github.io/post/non-trival-textbook-algorithms</id>
         <link href="https://ywang412.github.io/post/non-trival-textbook-algorithms">
         </link>
-        <updated>2019-02-13T22:47:15.000Z</updated>
+        <updated>2018-04-19T08:47:15.000Z</updated>
         <content type="html"><![CDATA[<p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
 <p>The trick in Moore voting algorithm is to aggregate the top n more frequent elements when counting. If the element in iteration is not equal to any of the top n elements, the counts of each top n elements will decrease by one. Moreover, top n elements are different as a result of the initialization order.</p>
 <pre><code>int first = nums[0];
@@ -568,33 +568,11 @@ private int compare(int[] p1, int[] p2) {
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Publishing a personal programming blog on Github.io using Gridea]]></title>
-        <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
-        <link href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
-        </link>
-        <updated>2019-02-01T11:44:23.000Z</updated>
-        <content type="html"><![CDATA[<p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
-<p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
-<p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.
-<img src="https://ywang412.github.io/post-images/1561227595716.png" alt=""></p>
-<p>The best thing about Gridea is auto-generation of markdown tags and corresponding hotkeys. <img src="https://ywang412.github.io/post-images/1561227880490.png" alt=""></p>
-<pre><code>object SumOfMultiples {
-  def sum(factors: Set[Int], limit: Int): Int = {
-    factors.map(x =&gt; Stream.range(1, limit / x + 1).map(_ * x).takeWhile(_ &lt; limit).toList).flatMap(x =&gt; x).sum
-  }
-}
-</code></pre>
-<p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
-Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
-<p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
-]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Resume]]></title>
         <id>https://ywang412.github.io/post/resume</id>
         <link href="https://ywang412.github.io/post/resume">
         </link>
-        <updated>2019-01-17T17:50:42.000Z</updated>
+        <updated>2018-03-14T03:50:42.000Z</updated>
         <content type="html"><![CDATA[<blockquote>
 <p><a href="https://ywang412.github.io/post/resume/">Resume</a> |
 <a href="https://www.linkedin.com/in/ywang412/">LinkedIn</a>  |
@@ -657,6 +635,28 @@ Staff Seismic Data Analyst<br>
 <li>Developed a python platform to create and update geoscience data models that closely represent subsurface geology.</li>
 <li>Wrote statistics and domain transformations python algorithms to analyzed subsurface image data.</li>
 </ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Publishing a personal programming blog on Github.io using Gridea]]></title>
+        <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
+        <link href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
+        </link>
+        <updated>2018-02-28T07:44:23.000Z</updated>
+        <content type="html"><![CDATA[<p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
+<p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
+<p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.
+<img src="https://ywang412.github.io/post-images/1561227595716.png" alt=""></p>
+<p>The best thing about Gridea is auto-generation of markdown tags and corresponding hotkeys. <img src="https://ywang412.github.io/post-images/1561227880490.png" alt=""></p>
+<pre><code>object SumOfMultiples {
+  def sum(factors: Set[Int], limit: Int): Int = {
+    factors.map(x =&gt; Stream.range(1, limit / x + 1).map(_ * x).takeWhile(_ &lt; limit).toList).flatMap(x =&gt; x).sum
+  }
+}
+</code></pre>
+<p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
+Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
+<p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
 ]]></content>
     </entry>
 </feed>
