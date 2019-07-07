@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>标签列表 | Yu&#39;s Github</title>
+<title>JAVA JUC (java.util.concurrent) 2 - Atomic Variables | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -95,18 +101,70 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="tag-list-title">标签列表</h2>
-          <div class="tags-container">
+          <div class="post-detail">
+            <h2 class="post-title">JAVA JUC (java.util.concurrent) 2 - Atomic Variables</h2>
+            <div class="post-date">2019-07-07</div>
             
-              <a class="tag" href="https://ywang412.github.io/tag/mppVQr2L4">Scala</a>
+            <div class="post-content">
+              <p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
+<p>AtomicInteger, AtomicLong, LongAdder, AtomicBoolean, and AtomicReference<Integer> are some of the most used Atomic classes.</p>
+<p><strong>AtomicInteger</strong></p>
+<pre><code>// 请求总数
+public static int clientTotal = 5000;
+// 同时并发执行的线程数
+public static int threadTotal = 200;
+public static AtomicInteger count = new AtomicInteger(0);
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		final Semaphore semaphore = new Semaphore(threadTotal);
+		final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		for (int i = 0; i &lt; clientTotal ; i++) {
+				executorService.execute(() -&gt; {
+						try {
+								semaphore.acquire();
+								add();
+								semaphore.release();
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+						countDownLatch.countDown();
+				});
+		}
+		countDownLatch.await();
+		executorService.shutdown();
+		log.info(&quot;count:{}&quot;, count.get());
+}
+
+private static void add() {
+		count.incrementAndGet();
+		// count.getAndIncrement();
+}
+</code></pre>
+
+            </div>
             
-              <a class="tag" href="https://ywang412.github.io/tag/naQ7xxWut">OOD</a>
             
-              <a class="tag" href="https://ywang412.github.io/tag/fy8llECIr">LeetCode</a>
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
+                  <h3 class="post-title">
+                    JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer
+                  </h3>
+                </a>
+              </div>
             
-              <a class="tag" href="https://ywang412.github.io/tag/WwpuuqDmO">Gadget</a>
+
             
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
           </div>
+
         </div>
       </div>
     </div>
@@ -127,6 +185,26 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: 'ywang412',
+      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
 
 
 
