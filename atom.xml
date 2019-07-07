@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T21:06:56.227Z</updated>
+    <updated>2019-07-07T21:21:09.823Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,77 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 2 - Lock]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
+        </link>
+        <updated>2019-07-07T08:07:58.000Z</updated>
+        <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
+<p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
+<pre><code>private synchronized static void add() {
+        count++;
+}
+</code></pre>
+<pre><code>private final static Lock lock = new ReentrantLock();
+private static void add() {
+		lock.lock();
+		try {
+				count++;
+		} finally {
+				lock.unlock();
+		}
+}
+</code></pre>
+<p>Therefore, it is possible for both <code>synchronized</code> and Lock to introduce the well-know deadlock problem like below.</p>
+<pre><code>public class DeadLock implements Runnable {
+    public int flag = 1;
+    //静态对象是类的所有对象共享的
+    private static Object o1 = new Object(), o2 = new Object();
+
+    @Override
+    public void run() {
+        log.info(&quot;flag:{}&quot;, flag);
+        if (flag == 1) {
+            synchronized (o1) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                synchronized (o2) {
+                    log.info(&quot;1&quot;);
+                }
+            }
+        }
+        if (flag == 0) {
+            synchronized (o2) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                synchronized (o1) {
+                    log.info(&quot;0&quot;);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        DeadLock td1 = new DeadLock();
+        DeadLock td2 = new DeadLock();
+        td1.flag = 1;
+        td2.flag = 0;
+        //td1,td2都处于可执行状态，但JVM线程调度先执行哪个线程是不确定的。
+        //td2的run()可能在td1的run()之前运行
+        new Thread(td1).start();
+        new Thread(td2).start();
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables</id>
@@ -745,28 +816,6 @@ Staff Seismic Data Analyst<br>
 <li>Developed a python platform to create and update geoscience data models that closely represent subsurface geology.</li>
 <li>Wrote statistics and domain transformations python algorithms to analyzed subsurface image data.</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Publishing a personal programming blog on Github.io using Gridea]]></title>
-        <id>https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea</id>
-        <link href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
-        </link>
-        <updated>2018-02-28T07:44:23.000Z</updated>
-        <content type="html"><![CDATA[<p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
-<p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
-<p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.
-<img src="https://ywang412.github.io/post-images/1561227595716.png" alt=""></p>
-<p>The best thing about Gridea is auto-generation of markdown tags and corresponding hotkeys. <img src="https://ywang412.github.io/post-images/1561227880490.png" alt=""></p>
-<pre><code>object SumOfMultiples {
-  def sum(factors: Set[Int], limit: Int): Int = {
-    factors.map(x =&gt; Stream.range(1, limit / x + 1).map(_ * x).takeWhile(_ &lt; limit).toList).flatMap(x =&gt; x).sum
-  }
-}
-</code></pre>
-<p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
-Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
-<p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
 ]]></content>
     </entry>
 </feed>
