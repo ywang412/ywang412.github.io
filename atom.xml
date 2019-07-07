@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T06:01:30.658Z</updated>
+    <updated>2019-07-07T06:15:11.157Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
         </link>
-        <updated>2019-07-05T01:02:16.000Z</updated>
+        <updated>2019-07-04T12:02:16.000Z</updated>
         <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
 <p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
 <p>CountDownLatch</p>
@@ -93,6 +93,103 @@ exec.shutdown();
 private static void test(int threadNum) throws Exception {
 log.info(&quot;{}&quot;, threadNum);
 Thread.sleep(1000);
+}
+</code></pre>
+<p>ForkJoinTask</p>
+<pre><code>public class ForkJoinTaskExample extends RecursiveTask&lt;Integer&gt; {
+
+    public static final int threshold = 2;
+    private int start;
+    private int end;
+
+    public ForkJoinTaskExample(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    protected Integer compute() {
+        int sum = 0;
+
+        //如果任务足够小就计算任务
+        boolean canCompute = (end - start) &lt;= threshold;
+        if (canCompute) {
+            for (int i = start; i &lt;= end; i++) {
+                sum += i;
+            }
+        } else {
+            // 如果任务大于阈值，就分裂成两个子任务计算
+            int middle = (start + end) / 2;
+            ForkJoinTaskExample leftTask = new ForkJoinTaskExample(start, middle);
+            ForkJoinTaskExample rightTask = new ForkJoinTaskExample(middle + 1, end);
+
+            // 执行子任务
+            leftTask.fork();
+            rightTask.fork();
+
+            // 等待任务执行结束合并其结果
+            int leftResult = leftTask.join();
+            int rightResult = rightTask.join();
+
+            // 合并子任务
+            sum = leftResult + rightResult;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        ForkJoinPool forkjoinPool = new ForkJoinPool();
+
+        //生成一个计算任务，计算1+2+3+4
+        ForkJoinTaskExample task = new ForkJoinTaskExample(1, 100);
+
+        //执行一个任务
+        Future&lt;Integer&gt; result = forkjoinPool.submit(task);
+
+        try {
+            log.info(&quot;result:{}&quot;, result.get());
+        } catch (Exception e) {
+            log.error(&quot;exception&quot;, e);
+        }
+    }
+}
+</code></pre>
+<p>Future</p>
+<pre><code>static class MyCallable implements Callable&lt;String&gt; {
+
+        @Override
+        public String call() throws Exception {
+            log.info(&quot;do something in callable&quot;);
+            Thread.sleep(5000);
+            return &quot;Done&quot;;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Future&lt;String&gt; future = executorService.submit(new MyCallable());
+        log.info(&quot;do something in main&quot;);
+        Thread.sleep(1000);
+        String result = future.get();
+        log.info(&quot;result：{}&quot;, result);
+    }
+</code></pre>
+<p>FutureTask</p>
+<pre><code>public static void main(String[] args) throws Exception {
+		FutureTask&lt;String&gt; futureTask = new FutureTask&lt;String&gt;(new Callable&lt;String&gt;() {
+				@Override
+				public String call() throws Exception {
+						log.info(&quot;do something in callable&quot;);
+						Thread.sleep(5000);
+						return &quot;Done&quot;;
+				}
+		});
+
+		new Thread(futureTask).start();
+		log.info(&quot;do something in main&quot;);
+		Thread.sleep(1000);
+		String result = futureTask.get();
+		log.info(&quot;result：{}&quot;, result);
 }
 </code></pre>
 ]]></content>
