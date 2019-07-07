@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T05:14:06.843Z</updated>
+    <updated>2019-07-07T06:01:30.658Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
         </link>
-        <updated>2019-07-06T03:02:16.000Z</updated>
+        <updated>2019-07-05T01:02:16.000Z</updated>
         <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
 <p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
 <p>CountDownLatch</p>
@@ -68,6 +68,31 @@ private static void race(int threadNum) throws Exception {
 		log.info(&quot;{} is ready&quot;, threadNum);
 		barrier.await();
 		log.info(&quot;{} continue&quot;, threadNum);
+}
+</code></pre>
+<p>Semaphore</p>
+<pre><code>ExecutorService exec = Executors.newCachedThreadPool();
+final Semaphore semaphore = new Semaphore(3);
+
+for (int i = 0; i &lt; threadCount; i++) {
+		final int threadNum = i;
+		exec.execute(() -&gt; {
+				try {
+						if (semaphore.tryAcquire(5000, TimeUnit.MILLISECONDS)) { // 尝试获取一个许可
+								test(threadNum);
+								semaphore.release(); // 释放一个许可
+						}
+				} catch (Exception e) {
+						log.error(&quot;exception&quot;, e);
+				}
+		});
+}
+exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+log.info(&quot;{}&quot;, threadNum);
+Thread.sleep(1000);
 }
 </code></pre>
 ]]></content>

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562476445120">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562479288929">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562476445120" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562479288929" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,10 +103,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer</h2>
-            <div class="post-date">2019-07-05</div>
-            
-              <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer.png')">
-              </div>
+            <div class="post-date">2019-07-04</div>
             
             <div class="post-content">
               <p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
@@ -161,6 +158,31 @@ private static void race(int threadNum) throws Exception {
 		log.info(&quot;{} is ready&quot;, threadNum);
 		barrier.await();
 		log.info(&quot;{} continue&quot;, threadNum);
+}
+</code></pre>
+<p>Semaphore</p>
+<pre><code>ExecutorService exec = Executors.newCachedThreadPool();
+final Semaphore semaphore = new Semaphore(3);
+
+for (int i = 0; i &lt; threadCount; i++) {
+		final int threadNum = i;
+		exec.execute(() -&gt; {
+				try {
+						if (semaphore.tryAcquire(5000, TimeUnit.MILLISECONDS)) { // 尝试获取一个许可
+								test(threadNum);
+								semaphore.release(); // 释放一个许可
+						}
+				} catch (Exception e) {
+						log.error(&quot;exception&quot;, e);
+				}
+		});
+}
+exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+log.info(&quot;{}&quot;, threadNum);
+Thread.sleep(1000);
 }
 </code></pre>
 
