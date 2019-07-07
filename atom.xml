@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T20:51:28.490Z</updated>
+    <updated>2019-07-07T20:54:27.324Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,11 +11,11 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
     <entry>
-        <title type="html"><![CDATA[JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collections]]></title>
+        <title type="html"><![CDATA[JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables">
         </link>
-        <updated>2019-07-05T16:22:48.000Z</updated>
+        <updated>2019-07-05T03:22:48.000Z</updated>
         <content type="html"><![CDATA[<p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
 <p>AtomicInteger, AtomicLong, LongAdder, AtomicBoolean, and AtomicReference<Integer> are some of the most used Atomic classes.</p>
 <p><strong>AtomicInteger</strong></p>
@@ -84,7 +84,7 @@ private synchronized static void add() {
 }
 </code></pre>
 <p>However, volatile keyword as in <code>public static volatile int count = 0;</code> will not be able to ensure threadsafety to due CPU instruction reorder.</p>
-<p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are concurrency collections class in Java 8.</p>
+<p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are some typical concurrency collection classes in Java 8.</p>
 <p><strong>CopyOnWriteArrayList</strong></p>
 <pre><code>// 请求总数
 public static int clientTotal = 5000;

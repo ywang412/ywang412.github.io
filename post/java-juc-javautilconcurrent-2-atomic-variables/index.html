@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collections | Yu&#39;s Github</title>
+<title>JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562532686480">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562532865509">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562532686480" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562532865509" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -102,8 +102,8 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collections</h2>
-            <div class="post-date">2019-07-05</div>
+            <h2 class="post-title">JAVA JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection</h2>
+            <div class="post-date">2019-07-04</div>
             
             <div class="post-content">
               <p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
@@ -174,7 +174,7 @@ private synchronized static void add() {
 }
 </code></pre>
 <p>However, volatile keyword as in <code>public static volatile int count = 0;</code> will not be able to ensure threadsafety to due CPU instruction reorder.</p>
-<p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are concurrency collections class in Java 8.</p>
+<p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are some typical concurrency collection classes in Java 8.</p>
 <p><strong>CopyOnWriteArrayList</strong></p>
 <pre><code>// 请求总数
 public static int clientTotal = 5000;
