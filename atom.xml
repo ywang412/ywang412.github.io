@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T21:21:09.823Z</updated>
+    <updated>2019-07-07T21:22:10.458Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,11 +11,11 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
     <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 2 - Lock]]></title>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 4 - Lock]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
         </link>
-        <updated>2019-07-07T08:07:58.000Z</updated>
+        <updated>2019-07-06T19:07:58.000Z</updated>
         <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
 <p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
 <pre><code>private synchronized static void add() {
