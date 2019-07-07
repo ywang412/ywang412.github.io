@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Examples of OOD class diagrams | Yu&#39;s Github</title>
+<title>JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -102,43 +102,47 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Examples of OOD class diagrams</h2>
-            <div class="post-date">2019-05-11</div>
+            <h2 class="post-title">JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer</h2>
+            <div class="post-date">2019-07-06</div>
             
             <div class="post-content">
-              <p>Shopping
-<img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
-Parking
-<img src="https://ywang412.github.io/post-images/1561693897171.png" alt="">
-Library
-<img src="https://ywang412.github.io/post-images/1561693905367.png" alt="">
-StackOverflow
-<img src="https://ywang412.github.io/post-images/1562126076022.png" alt="">
-Movie
-<img src="https://ywang412.github.io/post-images/1562126239722.png" alt="">
-Flight
-<img src="https://ywang412.github.io/post-images/1562126309435.png" alt="">
-ATM
-<img src="https://ywang412.github.io/post-images/1562126330414.png" alt="">
-BlackJack
-<img src="https://ywang412.github.io/post-images/1562127573365.png" alt=""></p>
+              <p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
+<p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
+<p>CountDownLatch</p>
+<pre><code>public static void main(String[] args) throws Exception {
+		ExecutorService exec = Executors.newCachedThreadPool();
+		final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+		for (int i = 0; i &lt; threadCount; i++) {
+				final int threadNum = i;
+				exec.execute(() -&gt; {
+						try {
+								test(threadNum);
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						} finally {
+								countDownLatch.countDown();
+						}
+				});
+		}
+		countDownLatch.await(10, TimeUnit.MILLISECONDS);
+		log.info(&quot;finish&quot;);
+		exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+		Thread.sleep(100);
+		log.info(&quot;{}&quot;, threadNum);
+}
+</code></pre>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/naQ7xxWut" class="tag">
-                    OOD
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
+                <a href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
                   <h3 class="post-title">
-                    Coding tricks using Java syntax 
+                    Coding tricks using Scala syntax
                   </h3>
                 </a>
               </div>

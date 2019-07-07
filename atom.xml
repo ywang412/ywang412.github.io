@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-05T04:09:43.056Z</updated>
+    <updated>2019-07-07T05:10:11.650Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,42 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
+        </link>
+        <updated>2019-07-06T16:02:16.000Z</updated>
+        <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
+<p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
+<p>CountDownLatch</p>
+<pre><code>public static void main(String[] args) throws Exception {
+		ExecutorService exec = Executors.newCachedThreadPool();
+		final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+		for (int i = 0; i &lt; threadCount; i++) {
+				final int threadNum = i;
+				exec.execute(() -&gt; {
+						try {
+								test(threadNum);
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						} finally {
+								countDownLatch.countDown();
+						}
+				});
+		}
+		countDownLatch.await(10, TimeUnit.MILLISECONDS);
+		log.info(&quot;finish&quot;);
+		exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+		Thread.sleep(100);
+		log.info(&quot;{}&quot;, threadNum);
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Coding tricks using Scala syntax]]></title>
         <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
