@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T21:38:44.295Z</updated>
+    <updated>2019-07-07T21:51:03.301Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -252,7 +252,7 @@ private static void update(int i) {
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
         </link>
-        <updated>2019-07-03T15:31:10.000Z</updated>
+        <updated>2019-07-03T02:31:10.000Z</updated>
         <content type="html"><![CDATA[<p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
 <pre><code>// 修饰一个代码块
 public void test1(int j) {
