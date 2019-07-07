@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T21:30:58.645Z</updated>
+    <updated>2019-07-07T21:32:47.606Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -135,6 +135,15 @@ public Data put(String key, Data value) {
 		}).start();
 }
 </code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
+        </link>
+        <updated>2019-07-04T17:31:10.000Z</updated>
+        <content type="html"><![CDATA[<p>d</p>
 ]]></content>
     </entry>
     <entry>
@@ -802,76 +811,6 @@ private int compare(int[] p1, int[] p2) {
     return p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1];
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Resume]]></title>
-        <id>https://ywang412.github.io/post/resume</id>
-        <link href="https://ywang412.github.io/post/resume">
-        </link>
-        <updated>2018-03-14T03:50:42.000Z</updated>
-        <content type="html"><![CDATA[<blockquote>
-<p><a href="https://ywang412.github.io/post/resume/">Resume</a> |
-<a href="https://www.linkedin.com/in/ywang412/">LinkedIn</a>  |
-<a href="https://ywang412.github.io/">Blog</a></p>
-</blockquote>
-<h1 id="yu-wang-application-developer">Yu Wang – Application Developer</h1>
-<ul>
-<li>6+ years of experience as a software engineer in various industries</li>
-<li>Full stack skill-set with a concentration on back-end engineering</li>
-<li>Contributed actively to open source projects on GitHub</li>
-</ul>
-<h2 id="education">Education</h2>
-<p><strong>Georgia Institute of Technology, Atlanta, GA</strong><br>
-M.S. in Computer Sciences<br>
-<em>Dec 2017</em><br>
-<strong>Washington University in St. Louis, St. Louis, MO</strong><br>
-Ph.D. in Biomedical Engineering<br>
-<em>May 2013</em><br>
-<strong>University of Science and Technology of China, Hefei, China</strong><br>
-B.S. in Physics<br>
-<em>May 2008</em></p>
-<h2 id="skills">Skills</h2>
-<ul>
-<li>Java, Scala, Python, Oracle SQL, Javascript</li>
-</ul>
-<h2 id="tools">Tools</h2>
-<ul>
-<li>Spring/Springboot for web application, Scala Akka, Python flask, Hibernate ORM,
-Docker/Docker Swarm, AWS, Azure</li>
-</ul>
-<h2 id="experience">Experience</h2>
-<p><strong>JPMorgan Chase, Houston, TX</strong><br>
-Software Engineer<br>
-<em>May 2018 – Present</em></p>
-<p><strong>Accenture, Houston, TX</strong><br>
-Software Engineer<br>
-<em>December 2017 – May 2018</em></p>
-<ul>
-<li>Developed Internet of Things platform that enables real-time streaming of well performance data and device health data from edge devices deployed in oilfields to central dashboard.</li>
-<li>Built a docker trusted registry to serve application docker images and implemented docker container Jenkins CD/CI workflow.</li>
-</ul>
-<p><strong>Georgia Institute of Technology</strong><br>
-Graduate Teaching Assistant<br>
-<em>August 2017 – December 2017</em></p>
-<ul>
-<li>Reviewed student projects covering TCP/IP communication, multithreaded C programming, shared memory communications, and remote procedure calls in CS6200 Introduction to Operating Systems.</li>
-</ul>
-<p><strong>In-Depth Geophysical, Houston, TX</strong><br>
-Sr. Processing Geophysicist<br>
-<em>December 2014 – August 2016</em></p>
-<ul>
-<li>Lead several advanced seismic data modeling and analysis projects and organized client meetings with
-major oil companies.</li>
-<li>Implemented image processing and large-scale geoscience data analysis python modules in workflow.</li>
-</ul>
-<p><strong>CGG, Houston TX</strong><br>
-Staff Seismic Data Analyst<br>
-<em>June 2013 – December 2014</em></p>
-<ul>
-<li>Developed a python platform to create and update geoscience data models that closely represent subsurface geology.</li>
-<li>Wrote statistics and domain transformations python algorithms to analyzed subsurface image data.</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
