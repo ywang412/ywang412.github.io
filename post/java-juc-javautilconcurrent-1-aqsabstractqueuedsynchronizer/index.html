@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562476209438">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562476445120">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562476209438" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562476445120" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -103,7 +103,10 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">JAVA JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer</h2>
-            <div class="post-date">2019-07-06</div>
+            <div class="post-date">2019-07-05</div>
+            
+              <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer.png')">
+              </div>
             
             <div class="post-content">
               <p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
@@ -132,6 +135,32 @@
 private static void test(int threadNum) throws Exception {
 		Thread.sleep(100);
 		log.info(&quot;{}&quot;, threadNum);
+}
+</code></pre>
+<p>CyclicBarrier</p>
+<pre><code>private static CyclicBarrier barrier = new CyclicBarrier(5);
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executor = Executors.newCachedThreadPool();
+		for (int i = 0; i &lt; 10; i++) {
+				final int threadNum = i;
+				Thread.sleep(1000);
+				executor.execute(() -&gt; {
+						try {
+								race(threadNum);
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+				});
+		}
+		executor.shutdown();
+}
+
+private static void race(int threadNum) throws Exception {
+		Thread.sleep(1000);
+		log.info(&quot;{} is ready&quot;, threadNum);
+		barrier.await();
+		log.info(&quot;{} continue&quot;, threadNum);
 }
 </code></pre>
 
