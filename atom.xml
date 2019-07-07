@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T21:22:10.458Z</updated>
+    <updated>2019-07-07T21:30:08.605Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
         </link>
-        <updated>2019-07-06T19:07:58.000Z</updated>
+        <updated>2019-07-06T06:07:58.000Z</updated>
         <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
 <p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
 <pre><code>private synchronized static void add() {
@@ -77,6 +77,62 @@ private static void add() {
         new Thread(td1).start();
         new Thread(td2).start();
     }
+}
+</code></pre>
+<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
+<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
+
+private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+private final Lock readLock = lock.readLock();
+private final Lock writeLock = lock.writeLock();
+
+public Data get(String key) {
+		readLock.lock();
+		try {
+				return map.get(key);
+		} finally {
+				readLock.unlock();
+		}
+}
+
+public Data put(String key, Data value) {
+		writeLock.lock();
+		try {
+				return map.put(key, value);
+		} finally {
+				writeLock.unlock();
+		}
+}
+</code></pre>
+<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
+<pre><code>public static void main(String[] args) {
+		ReentrantLock reentrantLock = new ReentrantLock();
+		Condition condition = reentrantLock.newCondition();
+
+		new Thread(() -&gt; {
+				try {
+						reentrantLock.lock();
+						log.info(&quot;wait signal&quot;); // 1
+						condition.await();
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				log.info(&quot;get signal&quot;); // 4
+				reentrantLock.unlock();
+		}).start();
+
+		new Thread(() -&gt; {
+				reentrantLock.lock();
+				log.info(&quot;get lock&quot;); // 2
+				try {
+						Thread.sleep(3000);
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				condition.signalAll();
+				log.info(&quot;send signal ~ &quot;); // 3
+				reentrantLock.unlock();
+		}).start();
 }
 </code></pre>
 ]]></content>

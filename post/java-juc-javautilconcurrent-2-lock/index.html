@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562534482418">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562535006922">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562534482418" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562535006922" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -167,6 +167,62 @@ private static void add() {
         new Thread(td1).start();
         new Thread(td2).start();
     }
+}
+</code></pre>
+<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
+<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
+
+private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+private final Lock readLock = lock.readLock();
+private final Lock writeLock = lock.writeLock();
+
+public Data get(String key) {
+		readLock.lock();
+		try {
+				return map.get(key);
+		} finally {
+				readLock.unlock();
+		}
+}
+
+public Data put(String key, Data value) {
+		writeLock.lock();
+		try {
+				return map.put(key, value);
+		} finally {
+				writeLock.unlock();
+		}
+}
+</code></pre>
+<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
+<pre><code>public static void main(String[] args) {
+		ReentrantLock reentrantLock = new ReentrantLock();
+		Condition condition = reentrantLock.newCondition();
+
+		new Thread(() -&gt; {
+				try {
+						reentrantLock.lock();
+						log.info(&quot;wait signal&quot;); // 1
+						condition.await();
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				log.info(&quot;get signal&quot;); // 4
+				reentrantLock.unlock();
+		}).start();
+
+		new Thread(() -&gt; {
+				reentrantLock.lock();
+				log.info(&quot;get lock&quot;); // 2
+				try {
+						Thread.sleep(3000);
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				condition.signalAll();
+				log.info(&quot;send signal ~ &quot;); // 3
+				reentrantLock.unlock();
+		}).start();
 }
 </code></pre>
 
