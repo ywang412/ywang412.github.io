@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-07T06:15:11.157Z</updated>
+    <updated>2019-07-07T06:21:36.706Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,8 @@
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
         </link>
-        <updated>2019-07-04T12:02:16.000Z</updated>
-        <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of JUC package. Classes that concurrency programming are widely using Sync class that extends from AQS.</p>
+        <updated>2019-07-03T23:02:16.000Z</updated>
+        <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of java JUC programming. Concurrency classes are extensively using Sync class which extends from AQS as shown below. Some example code snippet of CountDownLatch, CyclicBarrier, Semaphore, ForkJoinTask, and FutureTask are explained here.</p>
 <p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
 <p>CountDownLatch</p>
 <pre><code>public static void main(String[] args) throws Exception {
