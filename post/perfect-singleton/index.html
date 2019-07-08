@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Perfect Singleton? | Yu&#39;s Github</title>
+<meta name="description" content="Java by day, Scala by night">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562557886604">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143424668-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://ywang412.github.io">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562557886604" class="site-logo">
+        <h1 class="site-title">Yu&#39;s Github</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            Home
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            Archive
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            Tag
+          </a>
+        
+      
+        
+          <a href="/post/resume" class="site-nav">
+            Resume
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/ywang412/" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Java by day, Scala by night
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Perfect Singleton?</h2>
+            <div class="post-date">2019-07-07</div>
+            
+            <div class="post-content">
+              <p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
+<p><strong>Eager initialization</strong> is mostly straightforward.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample2 {
+
+    // 私有构造函数
+    private SingletonExample2() {}
+
+    // 单例对象
+    private static SingletonExample2 instance = new SingletonExample2();
+
+    // 静态的工厂方法
+    public static SingletonExample2 getInstance() {
+        return instance;
+    }
+}
+</code></pre>
+<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
+<pre><code>@ThreadSafe
+@NotRecommend
+public class SingletonExample3 {
+
+    // 私有构造函数
+    private SingletonExample3() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample3 instance = null;
+
+    // 静态的工厂方法
+    public static synchronized SingletonExample3 getInstance() {
+        if (instance == null) {
+            instance = new SingletonExample3();
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>We can move the initialization into a static block.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample6 {
+
+    // 私有构造函数
+    private SingletonExample6() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample6 instance = null;
+
+    static {
+        instance = new SingletonExample6();
+    }
+
+    // 静态的工厂方法
+    public static SingletonExample6 getInstance() {
+        return instance;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getInstance().hashCode());
+        System.out.println(getInstance().hashCode());
+    }
+}
+</code></pre>
+<pre><code>@ThreadSafe
+public class SingletonExample5 {
+
+    // 私有构造函数
+    private SingletonExample5() {
+
+    }
+
+    // 1、memory = allocate() 分配对象的内存空间
+    // 2、ctorInstance() 初始化对象
+    // 3、instance = memory 设置instance指向刚分配的内存
+
+    // 单例对象 volatile + 双重检测机制 -&gt; 禁止指令重排
+    private volatile static SingletonExample5 instance = null;
+
+    // 静态的工厂方法
+    public static SingletonExample5 getInstance() {
+        if (instance == null) { // 双重检测机制        // B
+            synchronized (SingletonExample5.class) { // 同步锁
+                if (instance == null) {
+                    instance = new SingletonExample5(); // A - 3
+                }
+            }
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
+<p>Finally, we can use enumeration approach. It has serialization and thread-safety guaranteed by the enum implementation itself, which ensures internally that only the single instance is available, correcting the problems pointed out in the class-based implementation.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
+                  <h3 class="post-title">
+                    Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: 'ywang412',
+      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
+
+
+
+
+  </body>
+</html>

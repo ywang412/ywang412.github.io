@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-08T03:27:23.069Z</updated>
+    <updated>2019-07-08T03:51:28.043Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,168 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Perfect Singleton?]]></title>
+        <id>https://ywang412.github.io/post/perfect-singleton</id>
+        <link href="https://ywang412.github.io/post/perfect-singleton">
+        </link>
+        <updated>2019-07-07T14:30:24.000Z</updated>
+        <content type="html"><![CDATA[<p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
+<p><strong>Eager initialization</strong> is mostly straightforward.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample2 {
+
+    // 私有构造函数
+    private SingletonExample2() {}
+
+    // 单例对象
+    private static SingletonExample2 instance = new SingletonExample2();
+
+    // 静态的工厂方法
+    public static SingletonExample2 getInstance() {
+        return instance;
+    }
+}
+</code></pre>
+<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
+<pre><code>@ThreadSafe
+@NotRecommend
+public class SingletonExample3 {
+
+    // 私有构造函数
+    private SingletonExample3() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample3 instance = null;
+
+    // 静态的工厂方法
+    public static synchronized SingletonExample3 getInstance() {
+        if (instance == null) {
+            instance = new SingletonExample3();
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>We can move the initialization into a static block.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample6 {
+
+    // 私有构造函数
+    private SingletonExample6() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample6 instance = null;
+
+    static {
+        instance = new SingletonExample6();
+    }
+
+    // 静态的工厂方法
+    public static SingletonExample6 getInstance() {
+        return instance;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getInstance().hashCode());
+        System.out.println(getInstance().hashCode());
+    }
+}
+</code></pre>
+<pre><code>@ThreadSafe
+public class SingletonExample5 {
+
+    // 私有构造函数
+    private SingletonExample5() {
+
+    }
+
+    // 1、memory = allocate() 分配对象的内存空间
+    // 2、ctorInstance() 初始化对象
+    // 3、instance = memory 设置instance指向刚分配的内存
+
+    // 单例对象 volatile + 双重检测机制 -&gt; 禁止指令重排
+    private volatile static SingletonExample5 instance = null;
+
+    // 静态的工厂方法
+    public static SingletonExample5 getInstance() {
+        if (instance == null) { // 双重检测机制        // B
+            synchronized (SingletonExample5.class) { // 同步锁
+                if (instance == null) {
+                    instance = new SingletonExample5(); // A - 3
+                }
+            }
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
+<p>Finally, we can use enumeration approach. It has serialization and thread-safety guaranteed by the enum implementation itself, which ensures internally that only the single instance is available, correcting the problems pointed out in the class-based implementation.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
@@ -790,71 +952,6 @@ if (s.isEmpty()) s = &quot;0&quot;;
 				}
 		}
 		return sb.length() == 0? &quot;0&quot;:sb.toString();
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Pitfalls in DFS and BFS algorithm]]></title>
-        <id>https://ywang412.github.io/post/dfsbfs-algorithm</id>
-        <link href="https://ywang412.github.io/post/dfsbfs-algorithm">
-        </link>
-        <updated>2018-05-17T20:03:19.000Z</updated>
-        <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
-<p><strong>Leetcode 542. 01 Matrix</strong></p>
-<p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
-<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
-        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
-        res[i][j] = Math.min(dist, res[i][j]);
-        visited[i][j] = true;
-        dfs(res, visited, i - 1, j, dist + 1);
-        dfs(res, visited, i + 1, j, dist + 1);
-        dfs(res, visited, i, j - 1, dist + 1);
-        dfs(res, visited, i, j + 1, dist + 1); 
-        visited[i][j] = false;
-    }
-</code></pre>
-<p><strong>LeetCode 39. Combination Sum</strong>
-Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
-<pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
-     if (cur &gt; target) return;
-     if (cur == target) { 
-         List&lt;Integer&gt; pathToAdd = new LinkedList&lt;&gt;(path);
-         res.add(pathToAdd);
-         return;
-     }
-     for (int i = start; i &lt; candidates.length; i++) {
-         path.add(candidates[i]);
-         dfs(candidates, i, cur + candidates[i], target, path, res);
-         path.remove(path.size() - 1);
-     }
-</code></pre>
-<p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong>
-Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
-<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {  
-		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
-		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
-		pre[2] = 0;
-		q.offer(pre); 
-		visited.add(pre[0] + &quot;#&quot; + pre[1]);
-		while (!q.isEmpty()) {   
-				int[] temp = q.poll(); 
-				// if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) { this will cause timeout
-				if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
-						return temp[2];
-				}
-				else {
-						for (int[] dir : dirs) {
-								int i = temp[0] + dir[0];
-								int j = temp[1] + dir[1];
-								if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
-										q.offer(new int[]{i, j, temp[2] + 1});
-										visited.add(i + &quot;#&quot; + j);
-								}
-						}
-				} 
-		}
-		return -1;
 }
 </code></pre>
 ]]></content>
