@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562555793505">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562556156771">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562555793505" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562556156771" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container</h2>
-            <div class="post-date">2019-07-02</div>
+            <div class="post-date">2019-07-01</div>
             
             <div class="post-content">
               <p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
@@ -172,12 +172,30 @@ public static void main(String[] args) {
 		});
 }
 </code></pre>
-<p>Java also provide several thread safe synchronized containers out of the box.</p>
+<p>Java provide several thread safe synchronized containers out of the box.</p>
 <pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
 private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
 private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
 private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
 private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
+</code></pre>
+<p>Java and Guava also provide several immutable containers out of the box.</p>
+<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
+static {
+		map.put(1, 2);
+		map.put(3, 4);
+		map.put(5, 6);
+		map = Collections.unmodifiableMap(map);
+}
+</code></pre>
+<pre><code>import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
+private final static ImmutableSet set = ImmutableSet.copyOf(list);
+private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
+private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
+				.put(1, 2).put(3, 4).put(5, 6).build();
 </code></pre>
 
             </div>
@@ -185,9 +203,9 @@ private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
+                <a href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
                   <h3 class="post-title">
-                    Java JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer
+                    Contributing to Scala zio, a github open source project
                   </h3>
                 </a>
               </div>
