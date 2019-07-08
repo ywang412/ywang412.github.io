@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562558002925">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562558182060">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562558002925" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562558182060" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -116,7 +116,7 @@
             
             <div class="post-content">
               <p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
-<p><strong>Eager initialization</strong> is mostly straightforward.</p>
+<p><strong>Eager initialization</strong> is the mostly straightforward approach.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample2 {
 
@@ -132,7 +132,7 @@ public class SingletonExample2 {
     }
 }
 </code></pre>
-<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
+<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to the getInstance method is quite inefficient.</p>
 <pre><code>@ThreadSafe
 @NotRecommend
 public class SingletonExample3 {
@@ -154,7 +154,7 @@ public class SingletonExample3 {
     }
 }
 </code></pre>
-<p>We can move the initialization into a static block.</p>
+<p>However, we can move the initialization into a static block so instance is created with class loading.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample6 {
 
@@ -181,6 +181,7 @@ public class SingletonExample6 {
     }
 }
 </code></pre>
+<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample5 {
 
@@ -206,36 +207,6 @@ public class SingletonExample5 {
             }
         }
         return instance;
-    }
-}
-</code></pre>
-<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
-<pre><code>@ThreadSafe
-@Recommend
-public class SingletonExample7 {
-
-    // 私有构造函数
-    private SingletonExample7() {
-
-    }
-
-    public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    private enum Singleton {
-        INSTANCE;
-
-        private SingletonExample7 singleton;
-
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
-
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
     }
 }
 </code></pre>

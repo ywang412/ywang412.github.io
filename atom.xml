@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-08T03:53:29.804Z</updated>
+    <updated>2019-07-08T03:56:23.775Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -574,9 +574,9 @@ Thread.sleep(1000);
         <id>https://ywang412.github.io/post/perfect-singleton</id>
         <link href="https://ywang412.github.io/post/perfect-singleton">
         </link>
-        <updated>2019-03-21T01:30:24.000Z</updated>
+        <updated>2019-03-20T12:30:24.000Z</updated>
         <content type="html"><![CDATA[<p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
-<p><strong>Eager initialization</strong> is mostly straightforward.</p>
+<p><strong>Eager initialization</strong> is the mostly straightforward approach.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample2 {
 
@@ -592,7 +592,7 @@ public class SingletonExample2 {
     }
 }
 </code></pre>
-<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
+<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to the getInstance method is quite inefficient.</p>
 <pre><code>@ThreadSafe
 @NotRecommend
 public class SingletonExample3 {
@@ -614,7 +614,7 @@ public class SingletonExample3 {
     }
 }
 </code></pre>
-<p>We can move the initialization into a static block.</p>
+<p>However, we can move the initialization into a static block so instance is created with class loading.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample6 {
 
@@ -641,6 +641,7 @@ public class SingletonExample6 {
     }
 }
 </code></pre>
+<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
 <pre><code>@ThreadSafe
 public class SingletonExample5 {
 
@@ -666,36 +667,6 @@ public class SingletonExample5 {
             }
         }
         return instance;
-    }
-}
-</code></pre>
-<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
-<pre><code>@ThreadSafe
-@Recommend
-public class SingletonExample7 {
-
-    // 私有构造函数
-    private SingletonExample7() {
-
-    }
-
-    public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    private enum Singleton {
-        INSTANCE;
-
-        private SingletonExample7 singleton;
-
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
-
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
     }
 }
 </code></pre>
