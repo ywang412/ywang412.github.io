@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-08T03:51:28.043Z</updated>
+    <updated>2019-07-08T03:52:14.951Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,168 +10,6 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
-    <entry>
-        <title type="html"><![CDATA[Perfect Singleton?]]></title>
-        <id>https://ywang412.github.io/post/perfect-singleton</id>
-        <link href="https://ywang412.github.io/post/perfect-singleton">
-        </link>
-        <updated>2019-07-07T14:30:24.000Z</updated>
-        <content type="html"><![CDATA[<p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
-<p><strong>Eager initialization</strong> is mostly straightforward.</p>
-<pre><code>@ThreadSafe
-public class SingletonExample2 {
-
-    // 私有构造函数
-    private SingletonExample2() {}
-
-    // 单例对象
-    private static SingletonExample2 instance = new SingletonExample2();
-
-    // 静态的工厂方法
-    public static SingletonExample2 getInstance() {
-        return instance;
-    }
-}
-</code></pre>
-<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
-<pre><code>@ThreadSafe
-@NotRecommend
-public class SingletonExample3 {
-
-    // 私有构造函数
-    private SingletonExample3() {
-
-    }
-
-    // 单例对象
-    private static SingletonExample3 instance = null;
-
-    // 静态的工厂方法
-    public static synchronized SingletonExample3 getInstance() {
-        if (instance == null) {
-            instance = new SingletonExample3();
-        }
-        return instance;
-    }
-}
-</code></pre>
-<p>We can move the initialization into a static block.</p>
-<pre><code>@ThreadSafe
-public class SingletonExample6 {
-
-    // 私有构造函数
-    private SingletonExample6() {
-
-    }
-
-    // 单例对象
-    private static SingletonExample6 instance = null;
-
-    static {
-        instance = new SingletonExample6();
-    }
-
-    // 静态的工厂方法
-    public static SingletonExample6 getInstance() {
-        return instance;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getInstance().hashCode());
-        System.out.println(getInstance().hashCode());
-    }
-}
-</code></pre>
-<pre><code>@ThreadSafe
-public class SingletonExample5 {
-
-    // 私有构造函数
-    private SingletonExample5() {
-
-    }
-
-    // 1、memory = allocate() 分配对象的内存空间
-    // 2、ctorInstance() 初始化对象
-    // 3、instance = memory 设置instance指向刚分配的内存
-
-    // 单例对象 volatile + 双重检测机制 -&gt; 禁止指令重排
-    private volatile static SingletonExample5 instance = null;
-
-    // 静态的工厂方法
-    public static SingletonExample5 getInstance() {
-        if (instance == null) { // 双重检测机制        // B
-            synchronized (SingletonExample5.class) { // 同步锁
-                if (instance == null) {
-                    instance = new SingletonExample5(); // A - 3
-                }
-            }
-        }
-        return instance;
-    }
-}
-</code></pre>
-<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
-<pre><code>@ThreadSafe
-@Recommend
-public class SingletonExample7 {
-
-    // 私有构造函数
-    private SingletonExample7() {
-
-    }
-
-    public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    private enum Singleton {
-        INSTANCE;
-
-        private SingletonExample7 singleton;
-
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
-
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
-    }
-}
-</code></pre>
-<p>Finally, we can use enumeration approach. It has serialization and thread-safety guaranteed by the enum implementation itself, which ensures internally that only the single instance is available, correcting the problems pointed out in the class-based implementation.</p>
-<pre><code>@ThreadSafe
-@Recommend
-public class SingletonExample7 {
-
-    // 私有构造函数
-    private SingletonExample7() {
-
-    }
-
-    public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    private enum Singleton {
-        INSTANCE;
-
-        private SingletonExample7 singleton;
-
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
-
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
@@ -729,6 +567,168 @@ https://github.com/zio/zio/pull/1106</p>
 The second one is to fix a bug resulting from different Windows/Linux file seperator.
 <img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
 <p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Perfect Singleton?]]></title>
+        <id>https://ywang412.github.io/post/perfect-singleton</id>
+        <link href="https://ywang412.github.io/post/perfect-singleton">
+        </link>
+        <updated>2019-03-21T01:30:24.000Z</updated>
+        <content type="html"><![CDATA[<p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
+<p><strong>Eager initialization</strong> is mostly straightforward.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample2 {
+
+    // 私有构造函数
+    private SingletonExample2() {}
+
+    // 单例对象
+    private static SingletonExample2 instance = new SingletonExample2();
+
+    // 静态的工厂方法
+    public static SingletonExample2 getInstance() {
+        return instance;
+    }
+}
+</code></pre>
+<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to getInstance method is quite inefficient.</p>
+<pre><code>@ThreadSafe
+@NotRecommend
+public class SingletonExample3 {
+
+    // 私有构造函数
+    private SingletonExample3() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample3 instance = null;
+
+    // 静态的工厂方法
+    public static synchronized SingletonExample3 getInstance() {
+        if (instance == null) {
+            instance = new SingletonExample3();
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>We can move the initialization into a static block.</p>
+<pre><code>@ThreadSafe
+public class SingletonExample6 {
+
+    // 私有构造函数
+    private SingletonExample6() {
+
+    }
+
+    // 单例对象
+    private static SingletonExample6 instance = null;
+
+    static {
+        instance = new SingletonExample6();
+    }
+
+    // 静态的工厂方法
+    public static SingletonExample6 getInstance() {
+        return instance;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getInstance().hashCode());
+        System.out.println(getInstance().hashCode());
+    }
+}
+</code></pre>
+<pre><code>@ThreadSafe
+public class SingletonExample5 {
+
+    // 私有构造函数
+    private SingletonExample5() {
+
+    }
+
+    // 1、memory = allocate() 分配对象的内存空间
+    // 2、ctorInstance() 初始化对象
+    // 3、instance = memory 设置instance指向刚分配的内存
+
+    // 单例对象 volatile + 双重检测机制 -&gt; 禁止指令重排
+    private volatile static SingletonExample5 instance = null;
+
+    // 静态的工厂方法
+    public static SingletonExample5 getInstance() {
+        if (instance == null) { // 双重检测机制        // B
+            synchronized (SingletonExample5.class) { // 同步锁
+                if (instance == null) {
+                    instance = new SingletonExample5(); // A - 3
+                }
+            }
+        }
+        return instance;
+    }
+}
+</code></pre>
+<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
+<p>Finally, we can use enumeration approach. It has serialization and thread-safety guaranteed by the enum implementation itself, which ensures internally that only the single instance is available, correcting the problems pointed out in the class-based implementation.</p>
+<pre><code>@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+    // 私有构造函数
+    private SingletonExample7() {
+
+    }
+
+    public static SingletonExample7 getInstance() {
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton {
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        // JVM保证这个方法绝对只调用一次
+        Singleton() {
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance() {
+            return singleton;
+        }
+    }
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
