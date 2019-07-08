@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562554055182">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1562555793505">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1562554055182" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1562555793505" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -171,6 +171,13 @@ public static void main(String[] args) {
 				example2.test1(2);
 		});
 }
+</code></pre>
+<p>Java also provide several thread safe synchronized containers out of the box.</p>
+<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
+private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
+private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
+private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
+private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
 </code></pre>
 
             </div>
