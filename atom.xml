@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-08T03:52:14.951Z</updated>
+    <updated>2019-07-08T03:53:29.804Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -44,7 +44,7 @@ ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
         </link>
-        <updated>2019-07-06T06:07:58.000Z</updated>
+        <updated>2019-07-03T17:07:58.000Z</updated>
         <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
 <p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
 <pre><code>private synchronized static void add() {
@@ -167,11 +167,119 @@ public Data put(String key, Data value) {
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
+        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
+        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
+        </link>
+        <updated>2019-06-23T04:54:56.000Z</updated>
+        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
+<p>These are the two pull requests that I made.</p>
+<p>https://github.com/zio/zio/pull/1109
+and
+https://github.com/zio/zio/pull/1106</p>
+<p>The first one is to deprecate a FiberLocal class.
+<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
+The second one is to fix a bug resulting from different Windows/Linux file seperator.
+<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
+<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
+        </link>
+        <updated>2019-05-14T11:31:10.000Z</updated>
+        <content type="html"><![CDATA[<p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
+<pre><code>// 修饰一个代码块
+public void test1(int j) {
+		synchronized (this) {
+				for (int i = 0; i &lt; 10; i++) {
+						log.info(&quot;test1 {} - {}&quot;, j, i);
+				}
+		}
+}
+
+// 修饰一个方法
+public synchronized void test2(int j) {
+		for (int i = 0; i &lt; 10; i++) {
+				log.info(&quot;test2 {} - {}&quot;, j, i);
+		}
+}
+
+public static void main(String[] args) {
+		SynchronizedExample1 example1 = new SynchronizedExample1();
+		SynchronizedExample1 example2 = new SynchronizedExample1();
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.execute(() -&gt; {
+				example1.test2(1);
+		});
+		executorService.execute(() -&gt; {
+				example2.test2(2);
+		});
+}
+</code></pre>
+<pre><code>// 修饰一个类
+public static void test1(int j) {
+		synchronized (SynchronizedExample2.class) {
+				for (int i = 0; i &lt; 10; i++) {
+						log.info(&quot;test1 {} - {}&quot;, j, i);
+				}
+		}
+}
+
+// 修饰一个静态方法
+public static synchronized void test2(int j) {
+		for (int i = 0; i &lt; 10; i++) {
+				log.info(&quot;test2 {} - {}&quot;, j, i);
+		}
+}
+
+public static void main(String[] args) {
+		SynchronizedExample2 example1 = new SynchronizedExample2();
+		SynchronizedExample2 example2 = new SynchronizedExample2();
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.execute(() -&gt; {
+				example1.test1(1);
+		});
+		executorService.execute(() -&gt; {
+				example2.test1(2);
+		});
+}
+</code></pre>
+<p>Java provide several thread safe synchronized containers out of the box.</p>
+<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
+private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
+private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
+private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
+private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
+</code></pre>
+<p>Java and Guava also provide several immutable containers out of the box.</p>
+<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
+static {
+		map.put(1, 2);
+		map.put(3, 4);
+		map.put(5, 6);
+		map = Collections.unmodifiableMap(map);
+}
+</code></pre>
+<pre><code>import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
+private final static ImmutableSet set = ImmutableSet.copyOf(list);
+private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
+private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
+				.put(1, 2).put(3, 4).put(5, 6).build();
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Java JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection]]></title>
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables">
         </link>
-        <updated>2019-07-04T14:22:48.000Z</updated>
+        <updated>2019-04-25T01:22:48.000Z</updated>
         <content type="html"><![CDATA[<p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
 <p>AtomicInteger, AtomicLong, LongAdder, AtomicBoolean, and AtomicReference<Integer> are some of the most used Atomic classes.</p>
 <p><strong>AtomicInteger</strong></p>
@@ -281,7 +389,7 @@ private static void update(int i) {
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-1-aqsabstractqueuedsynchronizer">
         </link>
-        <updated>2019-07-02T08:02:16.000Z</updated>
+        <updated>2019-04-09T19:02:16.000Z</updated>
         <content type="html"><![CDATA[<p>AbstractQueuedSynchronizer lays the foundation of java JUC programming. Concurrency classes are extensively using Sync class which extends from AQS as shown below.</p>
 <p><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></p>
 <p>Some example code snippets of CountDownLatch, CyclicBarrier, Semaphore, ForkJoinTask, and FutureTask are explained here.</p>
@@ -459,114 +567,6 @@ Thread.sleep(1000);
 		log.info(&quot;result：{}&quot;, result);
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
-        </link>
-        <updated>2019-07-02T00:31:10.000Z</updated>
-        <content type="html"><![CDATA[<p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
-<pre><code>// 修饰一个代码块
-public void test1(int j) {
-		synchronized (this) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个方法
-public synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample1 example1 = new SynchronizedExample1();
-		SynchronizedExample1 example2 = new SynchronizedExample1();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test2(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test2(2);
-		});
-}
-</code></pre>
-<pre><code>// 修饰一个类
-public static void test1(int j) {
-		synchronized (SynchronizedExample2.class) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个静态方法
-public static synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample2 example1 = new SynchronizedExample2();
-		SynchronizedExample2 example2 = new SynchronizedExample2();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test1(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test1(2);
-		});
-}
-</code></pre>
-<p>Java provide several thread safe synchronized containers out of the box.</p>
-<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
-private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
-private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
-private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
-private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
-</code></pre>
-<p>Java and Guava also provide several immutable containers out of the box.</p>
-<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
-static {
-		map.put(1, 2);
-		map.put(3, 4);
-		map.put(5, 6);
-		map = Collections.unmodifiableMap(map);
-}
-</code></pre>
-<pre><code>import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
-private final static ImmutableSet set = ImmutableSet.copyOf(list);
-private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
-private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
-				.put(1, 2).put(3, 4).put(5, 6).build();
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
-        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
-        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
-        </link>
-        <updated>2019-06-23T04:54:56.000Z</updated>
-        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.</p>
-<p>https://github.com/zio/zio/pull/1109
-and
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
-The second one is to fix a bug resulting from different Windows/Linux file seperator.
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
 ]]></content>
     </entry>
     <entry>
