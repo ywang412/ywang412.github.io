@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-08T03:56:23.775Z</updated>
+    <updated>2019-07-11T04:24:06.125Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -789,7 +789,7 @@ list.flatMap { bound =&gt;
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
         <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
         </link>
-        <updated>2018-07-12T03:38:58.000Z</updated>
+        <updated>2018-07-11T14:38:58.000Z</updated>
         <content type="html"><![CDATA[<p>Shopping
 <img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
 Parking
@@ -805,7 +805,21 @@ Flight
 ATM
 <img src="https://ywang412.github.io/post-images/1562126330414.png" alt="">
 BlackJack
-<img src="https://ywang412.github.io/post-images/1562127573365.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1562127573365.png" alt="">
+Car rental
+<img src="https://ywang412.github.io/post-images/1562818933938.png" alt="">
+Chess
+<img src="https://ywang412.github.io/post-images/1562818948581.png" alt="">
+Stock
+<img src="https://ywang412.github.io/post-images/1562818966353.png" alt="">
+Cric Info
+<img src="https://ywang412.github.io/post-images/1562818980878.png" alt="">
+Hotel
+<img src="https://ywang412.github.io/post-images/1562818993543.png" alt="">
+Linkedin
+<img src="https://ywang412.github.io/post-images/1562819007254.png" alt="">
+Facebook
+<img src="https://ywang412.github.io/post-images/1562819025938.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>
