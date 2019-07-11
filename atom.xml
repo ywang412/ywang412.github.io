@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-11T04:24:06.125Z</updated>
+    <updated>2019-07-11T04:26:18.430Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -789,7 +789,7 @@ list.flatMap { bound =&gt;
         <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
         <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
         </link>
-        <updated>2018-07-11T14:38:58.000Z</updated>
+        <updated>2018-07-11T01:38:58.000Z</updated>
         <content type="html"><![CDATA[<p>Shopping
 <img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
 Parking
@@ -819,7 +819,9 @@ Hotel
 Linkedin
 <img src="https://ywang412.github.io/post-images/1562819007254.png" alt="">
 Facebook
-<img src="https://ywang412.github.io/post-images/1562819025938.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1562819025938.png" alt="">
+Restaurants
+<img src="https://ywang412.github.io/post-images/1562819148411.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>
