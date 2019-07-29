@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Java JUC (java.util.concurrent) 4 - Lock | Yu&#39;s Github</title>
+<title>Quick sort, quick select and merge sort | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,127 +111,36 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Java JUC (java.util.concurrent) 4 - Lock</h2>
-            <div class="post-date">2019-07-03</div>
+            <h2 class="post-title">Quick sort, quick select and merge sort</h2>
+            <div class="post-date">2019-07-27</div>
             
             <div class="post-content">
-              <p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
-<p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
-<pre><code>private synchronized static void add() {
-        count++;
-}
-</code></pre>
-<pre><code>private final static Lock lock = new ReentrantLock();
-private static void add() {
-		lock.lock();
-		try {
-				count++;
-		} finally {
-				lock.unlock();
-		}
-}
-</code></pre>
-<p>Therefore, it is possible for both <code>synchronized</code> and Lock to introduce the well-know deadlock problem like below.</p>
-<pre><code>public class DeadLock implements Runnable {
-    public int flag = 1;
-    //静态对象是类的所有对象共享的
-    private static Object o1 = new Object(), o2 = new Object();
-
-    @Override
-    public void run() {
-        log.info(&quot;flag:{}&quot;, flag);
-        if (flag == 1) {
-            synchronized (o1) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o2) {
-                    log.info(&quot;1&quot;);
-                }
-            }
-        }
-        if (flag == 0) {
-            synchronized (o2) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o1) {
-                    log.info(&quot;0&quot;);
-                }
-            }
-        }
+              <p><strong>215. Kth Largest Element in an Array</strong></p>
+<pre><code>class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        return quickSelectK(nums, 0, nums.length - 1, nums.length - k);
     }
-
-    public static void main(String[] args) {
-        DeadLock td1 = new DeadLock();
-        DeadLock td2 = new DeadLock();
-        td1.flag = 1;
-        td2.flag = 0;
-        //td1,td2都处于可执行状态，但JVM线程调度先执行哪个线程是不确定的。
-        //td2的run()可能在td1的run()之前运行
-        new Thread(td1).start();
-        new Thread(td2).start();
-    }
-}
-</code></pre>
-<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
-<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
-
-private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-private final Lock readLock = lock.readLock();
-private final Lock writeLock = lock.writeLock();
-
-public Data get(String key) {
-		readLock.lock();
-		try {
-				return map.get(key);
-		} finally {
-				readLock.unlock();
-		}
-}
-
-public Data put(String key, Data value) {
-		writeLock.lock();
-		try {
-				return map.put(key, value);
-		} finally {
-				writeLock.unlock();
-		}
-}
-</code></pre>
-<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
-<pre><code>public static void main(String[] args) {
-		ReentrantLock reentrantLock = new ReentrantLock();
-		Condition condition = reentrantLock.newCondition();
-
-		new Thread(() -&gt; {
-				try {
-						reentrantLock.lock();
-						log.info(&quot;wait signal&quot;); // 1
-						condition.await();
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				log.info(&quot;get signal&quot;); // 4
-				reentrantLock.unlock();
-		}).start();
-
-		new Thread(() -&gt; {
-				reentrantLock.lock();
-				log.info(&quot;get lock&quot;); // 2
-				try {
-						Thread.sleep(3000);
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				condition.signalAll();
-				log.info(&quot;send signal ~ &quot;); // 3
-				reentrantLock.unlock();
-		}).start();
+    
+    public int quickSelectK(int[] nums, int start, int end, int k) { 
+        
+        int pivot = nums[start];
+        int i = start;
+        int j = end;
+        while (i &lt; j) { 
+            while (i &lt; end &amp;&amp; nums[i] &lt;= pivot) i++;
+            while (j &gt; start &amp;&amp; nums[j] &gt;= pivot) j--; 
+            if (i &lt; j) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }   
+        } 
+        nums[start] = nums[j];
+        nums[j] = pivot;
+        if (j == k) return nums[j];
+        else if (j &lt; k) return quickSelectK(nums, j + 1, end, k);
+        else return quickSelectK(nums, start, j, k);
+    } 
 }
 </code></pre>
 
@@ -240,9 +149,9 @@ public Data put(String key, Data value) {
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
+                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
                   <h3 class="post-title">
-                    Contributing to Scala zio, a github open source project
+                    Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal
                   </h3>
                 </a>
               </div>
