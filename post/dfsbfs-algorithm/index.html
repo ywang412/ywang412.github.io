@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1564366284227">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1564366902174">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1564366284227" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1564366902174" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -173,6 +173,39 @@ Whenever a new position is added to the BFS queue, the visited matrix or set nee
 				} 
 		}
 		return -1;
+}
+</code></pre>
+<p><strong>323. Number of Connected Components in an Undirected Graph</strong>
+To build the adjacent matrix or adjacent list, it is important to create a bi-directional connection like below so that DFS can connect nodes bi-directionally.</p>
+<pre><code>public class Solution {
+    public int countComponents(int n, int[][] edges) {
+        if (n &lt;= 1)
+            return n;
+        Map&lt;Integer, List&lt;Integer&gt;&gt; map = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            map.put(i, new ArrayList&lt;&gt;());
+        }
+        for (int[] edge : edges) {
+            map.get(edge[0]).add(edge[1]);
+            map.get(edge[1]).add(edge[0]);
+        }
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        int count = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (visited.add(i)) {
+                dfsVisit(i, map, visited);
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    private void dfsVisit(int i, Map&lt;Integer, List&lt;Integer&gt;&gt; map, Set&lt;Integer&gt; visited) {
+        for (int j : map.get(i)) {
+            if (visited.add(j))
+                dfsVisit(j, map, visited);
+        }
+    }
 }
 </code></pre>
 
