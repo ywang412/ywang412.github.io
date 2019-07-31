@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-29T03:33:22.104Z</updated>
+    <updated>2019-07-31T04:42:00.642Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,30 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Monotonic Stack]]></title>
+        <id>https://ywang412.github.io/post/monotonic-stack</id>
+        <link href="https://ywang412.github.io/post/monotonic-stack">
+        </link>
+        <updated>2019-07-30T15:40:22.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
+<pre><code>class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        int[] ret = new int[temperatures.length];
+        for(int i = 0; i &lt; temperatures.length; i++) {
+            while(!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
+                int idx = stack.pop();
+                ret[idx] = i - idx;
+            }
+            stack.push(i);
+        }
+        return ret;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Quick sort, quick select and merge sort]]></title>
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
@@ -818,46 +842,6 @@ list.flatMap { bound =&gt;
       }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Examples of OOD class diagrams]]></title>
-        <id>https://ywang412.github.io/post/examples-of-ood-class-diagrams</id>
-        <link href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
-        </link>
-        <updated>2018-07-10T12:38:58.000Z</updated>
-        <content type="html"><![CDATA[<p>Shopping
-<img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
-Parking
-<img src="https://ywang412.github.io/post-images/1561693897171.png" alt="">
-Library
-<img src="https://ywang412.github.io/post-images/1561693905367.png" alt="">
-StackOverflow
-<img src="https://ywang412.github.io/post-images/1562126076022.png" alt="">
-Movie
-<img src="https://ywang412.github.io/post-images/1562126239722.png" alt="">
-Flight
-<img src="https://ywang412.github.io/post-images/1562126309435.png" alt="">
-ATM
-<img src="https://ywang412.github.io/post-images/1562126330414.png" alt="">
-BlackJack
-<img src="https://ywang412.github.io/post-images/1562127573365.png" alt="">
-Car rental
-<img src="https://ywang412.github.io/post-images/1562818933938.png" alt="">
-Chess
-<img src="https://ywang412.github.io/post-images/1562818948581.png" alt="">
-Stock
-<img src="https://ywang412.github.io/post-images/1562818966353.png" alt="">
-Cric Info
-<img src="https://ywang412.github.io/post-images/1562818980878.png" alt="">
-Hotel
-<img src="https://ywang412.github.io/post-images/1562818993543.png" alt="">
-Linkedin
-<img src="https://ywang412.github.io/post-images/1562819007254.png" alt="">
-Facebook
-<img src="https://ywang412.github.io/post-images/1562819025938.png" alt="">
-Restaurants
-<img src="https://ywang412.github.io/post-images/1562819148411.png" alt=""></p>
 ]]></content>
     </entry>
 </feed>
