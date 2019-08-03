@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-07-31T04:49:38.183Z</updated>
+    <updated>2019-08-03T22:38:23.300Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[DP summary]]></title>
+        <id>https://ywang412.github.io/post/dp-summary</id>
+        <link href="https://ywang412.github.io/post/dp-summary">
+        </link>
+        <updated>2019-08-03T09:37:53.000Z</updated>
+        <content type="html"><![CDATA[<ol start="375">
+<li>Guess Number Higher or Lower II</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Monotonic Stack]]></title>
         <id>https://ywang412.github.io/post/monotonic-stack</id>
@@ -780,88 +791,6 @@ public class SingletonExample7 {
             return singleton;
         }
     }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Coding tricks using Scala syntax]]></title>
-        <id>https://ywang412.github.io/post/coding-tricks-of-scala-syntax</id>
-        <link href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
-        </link>
-        <updated>2019-01-17T02:49:08.000Z</updated>
-        <content type="html"><![CDATA[<p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
-<pre><code>class Test {
-   private var a = 0
-   def age = a
-   def age_=(n:Int) = {
-      require(n&gt;0)
-      a = n
-   }
-}
-val t = new Test
-t.age = 5
-</code></pre>
-<p>_ can convert a method to a function variable without actually invoking the method.</p>
-<pre><code>class Test {
-  def fun = {
-    // some code
-  }
-  val funLike = fun _
-}
-</code></pre>
-<p>To sort a List of object, java provide Comparator<T> interface to compare two objects. Scala used the Ordering[T] trait.</p>
-<pre><code>case class Employee(id: Int, firstName: String, lastName: String)
-object Employee {
-  // Note that because `Ordering[A]` is not contravariant, the declaration
-  // must be type-parametrized in the event that you want the implicit
-  // ordering to apply to subclasses of `Employee`.
-  implicit def orderingByName[A &lt;: Employee]: Ordering[A] = Ordering.by(e =&gt; (e.lastName, e.firstName))
-  val orderingById: Ordering[Employee] = Ordering.by(e =&gt; e.id)
-}
-</code></pre>
-<p>Given es: SeqLike[Employee], es.sorted() will sort by name, and es.sorted(Employee.orderingById) will sort by id.</p>
-<p>Implicit val can be used to define the ordering mechanism as below,</p>
-<pre><code>implicit val timestampordering: ordering[Timestamp] = Ordering.by(_.ts)
-</code></pre>
-<p>Scala flatmap() and for-comprehension are interchangable. For example,</p>
-<pre><code>for {
-  bound &lt;- list
-  out &lt;- f(bound)
-} yield out
-
-// is translated by the Scala compiler as  
-list.flatMap { bound =&gt;
-  f(bound).map { out =&gt;
-    out
-  }
-}
-</code></pre>
-<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
-<p>Foldleft</p>
-<pre><code>object FlattenArray {
-  def flatten(list : List[Any]) : List[Int] = {
-    list.foldLeft(List[Int]()){
-      (res, cur) =&gt; {
-        cur match {
-          case null =&gt; res
-          case cur: Int =&gt; res :+ cur
-          case cur: List[Any] =&gt; res ::: flatten(cur)
-        }
-      }
-    }
-  }
-}
-</code></pre>
-<p>Create single element list</p>
-<pre><code>object FlattenArray {
-  def flatten(input: List[_]): List[_] =
-    input
-      .filterNot(_ == null)
-      .flatMap {
-        case list: List[_] =&gt; flatten(list)
-        case elem =&gt; List(elem)
-      }
 }
 </code></pre>
 ]]></content>
