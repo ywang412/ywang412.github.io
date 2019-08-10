@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1564871901071">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565408891259">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1564871901071" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565408891259" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-19</div>
+            <div class="post-date">2018-04-18</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -171,6 +171,97 @@ private int compare(int[] p1, int[] p2) {
     return p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1];
 }
 </code></pre>
+<p><strong>Morris traversal</strong></p>
+<p>Inorder morris traversal will visit root node right before reverting the right child change.</p>
+<pre><code>class BinaryTree { 
+    tNode root; 
+  
+    /* Function to traverse a binary tree without recursion and  
+       without stack */
+    void MorrisTraversal(tNode root) 
+    { 
+        tNode current, pre; 
+  
+        if (root == null) 
+            return; 
+  
+        current = root; 
+        while (current != null) { 
+            if (current.left == null) { 
+                System.out.print(current.data + &quot; &quot;); 
+                current = current.right; 
+            } 
+            else { 
+                /* Find the inorder predecessor of current */
+                pre = current.left; 
+                while (pre.right != null &amp;&amp; pre.right != current) 
+                    pre = pre.right; 
+  
+                /* Make current as right child of its inorder predecessor */
+                if (pre.right == null) { 
+                    pre.right = current; 
+                    current = current.left; 
+                } 
+  
+                /* Revert the changes made in the 'if' part to restore the  
+                    original tree i.e., fix the right child of predecessor*/
+                else { 
+                    pre.right = null; 
+                    System.out.print(current.data + &quot; &quot;); 
+                    current = current.right; 
+                } /* End of if condition pre-&gt;right == NULL */
+  
+            } /* End of if condition current-&gt;left == NULL*/
+  
+        } /* End of while */
+    } 
+}
+</code></pre>
+<p>Pre-order morris traversal will visit root node during right before the right child change.</p>
+<p>class BinaryTree {</p>
+<pre><code>Node root; 
+  
+void morrisTraversalPreorder() 
+{ 
+    morrisTraversalPreorder(root); 
+} 
+
+// Preorder traversal without recursion and without stack 
+void morrisTraversalPreorder(Node node) { 
+    while (node != null) { 
+
+        // If left child is null, print the current node data. Move to 
+        // right child. 
+        if (node.left == null) { 
+            System.out.print(node.data + &quot; &quot;); 
+            node = node.right; 
+        } else { 
+
+            // Find inorder predecessor 
+            Node current = node.left; 
+            while (current.right != null &amp;&amp; current.right != node) { 
+                current = current.right; 
+            } 
+
+            // If the right child of inorder predecessor  
+            // already points to this node 
+            if (current.right == node) { 
+                current.right = null; 
+                node = node.right; 
+            } 
+
+            // If right child doesn't point to this node, then print 
+            // this node and make right child point to this node 
+            else { 
+                System.out.print(node.data + &quot; &quot;); 
+                current.right = node; 
+                node = node.left; 
+            } 
+        } 
+    } 
+} 
+</code></pre>
+<p>}</p>
 
             </div>
             
