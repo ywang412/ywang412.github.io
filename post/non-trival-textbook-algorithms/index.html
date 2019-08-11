@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565559496933">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565562447270">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565559496933" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565562447270" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-17</div>
+            <div class="post-date">2018-04-16</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -342,6 +342,56 @@ Representation of Segment trees</p>
                 return sumRange(root.right, mid+1, end) + sumRange(root.left, start, mid);
             }
         }
+    }
+}
+</code></pre>
+<p><strong>LFU</strong>
+Use three HashMap to save &lt;key, value&gt; pair, &lt;key, count&gt; pair and &lt;key, LinkedHashSet&gt; pair. LinkedHashSet keep track of keys of the same count.</p>
+<pre><code>public class LFUCache {
+    HashMap&lt;Integer, Integer&gt; vals;
+    HashMap&lt;Integer, Integer&gt; counts;
+    HashMap&lt;Integer, LinkedHashSet&lt;Integer&gt;&gt; lists;
+    int cap;
+    int min = -1;
+    public LFUCache(int capacity) {
+        cap = capacity;
+        vals = new HashMap&lt;&gt;();
+        counts = new HashMap&lt;&gt;();
+        lists = new HashMap&lt;&gt;();
+        lists.put(1, new LinkedHashSet&lt;&gt;());
+    }
+    
+    public int get(int key) {
+        if(!vals.containsKey(key))
+            return -1;
+        int count = counts.get(key);
+        counts.put(key, count+1);
+        lists.get(count).remove(key);
+        if(count==min &amp;&amp; lists.get(count).size()==0)
+            min++;
+        if(!lists.containsKey(count+1))
+            lists.put(count+1, new LinkedHashSet&lt;&gt;());
+        lists.get(count+1).add(key);
+        return vals.get(key);
+    }
+    
+    public void put(int key, int value) {
+        if(cap&lt;=0)
+            return;
+        if(vals.containsKey(key)) {
+            vals.put(key, value);
+            get(key);
+            return;
+        } 
+        if(vals.size() &gt;= cap) {
+            int evit = lists.get(min).iterator().next();
+            lists.get(min).remove(evit);
+            vals.remove(evit);
+        }
+        vals.put(key, value);
+        counts.put(key, 1);
+        min = 1;
+        lists.get(1).add(key);
     }
 }
 </code></pre>
