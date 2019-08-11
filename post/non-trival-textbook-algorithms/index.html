@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565557598321">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565559496933">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565557598321" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565559496933" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-18</div>
+            <div class="post-date">2018-04-17</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -268,67 +268,80 @@ Representation of Segment trees</p>
 <li>Leaf Nodes are the elements of the input array.</li>
 <li>Each internal node represents some merging of the leaf nodes. The merging may be different for different problems.</li>
 </ol>
-<pre><code>class SegmentTree{
-    int[] tree;
+<pre><code>public class NumArray {
 
-    SegmentTree(int n){
-        tree = new int[n];
-    }
+    class SegmentTreeNode {
+        int start, end;
+        SegmentTreeNode left, right;
+        int sum;
 
-    void build(int[] arr, int node, int start, int end){
-        if(start == end){
-            tree[node] = arr[start];
-        }
-        else{
-            int mid = (start + end)/2;
-            build(arr, 2*node + 1, start, mid);
-            build(arr, 2*node + 2, mid + 1, end);
-            tree[node] = tree[2*node + 1] + tree[2*node + 2];
+        public SegmentTreeNode(int start, int end) {
+            this.start = start;
+            this.end = end;
+            this.left = null;
+            this.right = null;
+            this.sum = 0;
         }
     }
+      
+    SegmentTreeNode root = null;
+   
+    public NumArray(int[] nums) {
+        root = buildTree(nums, 0, nums.length-1);
+    }
 
-    void update(int[] arr, int node, int index, int val, int start, int end){
-        if(start == end){
-            tree[node] += val;
-            arr[start] += val;
+    private SegmentTreeNode buildTree(int[] nums, int start, int end) {
+        if (start &gt; end) {
+            return null;
+        } else {
+            SegmentTreeNode ret = new SegmentTreeNode(start, end);
+            if (start == end) {
+                ret.sum = nums[start];
+            } else {
+                int mid = start  + (end - start) / 2;             
+                ret.left = buildTree(nums, start, mid);
+                ret.right = buildTree(nums, mid + 1, end);
+                ret.sum = ret.left.sum + ret.right.sum;
+            }         
+            return ret;
         }
-        else{
-            int mid = (start + end)/2;
-            if(start &lt;= index &amp;&amp; index &lt;= mid){
-                update(arr, 2*node + 1, index, val, start, mid);
+    }
+   
+    void update(int i, int val) {
+        update(root, i, val);
+    }
+   
+    void update(SegmentTreeNode root, int pos, int val) {
+        if (root.start == root.end) {
+           root.sum = val;
+        } else {
+            int mid = root.start + (root.end - root.start) / 2;
+            if (pos &lt;= mid) {
+                 update(root.left, pos, val);
+            } else {
+                 update(root.right, pos, val);
             }
-            else{
-                update(arr, 2*node + 2, index, val, mid + 1, end);
+            root.sum = root.left.sum + root.right.sum;
+        }
+    }
+
+    public int sumRange(int i, int j) {
+        return sumRange(root, i, j);
+    }
+    
+    public int sumRange(SegmentTreeNode root, int start, int end) {
+        if (root.end == end &amp;&amp; root.start == start) {
+            return root.sum;
+        } else {
+            int mid = root.start + (root.end - root.start) / 2;
+            if (end &lt;= mid) {
+                return sumRange(root.left, start, end);
+            } else if (start &gt;= mid+1) {
+                return sumRange(root.right, start, end);
+            }  else {    
+                return sumRange(root.right, mid+1, end) + sumRange(root.left, start, mid);
             }
-            tree[node] = tree[2*node + 1] + tree[2*node + 2];
         }
-    }
-
-    int query(int node, int start, int end, int left, int right){
-        if(right &lt; start || end &lt; left){
-            return 0;
-        }
-        if(left &lt;= start &amp;&amp; end &lt;= right){
-            return tree[node];
-        }
-        int mid = (start + end)/2;
-        int p1 = query(2*node + 1, start, mid, left, right);
-        int p2 = query(2*node + 2, mid + 1, end, left, right);
-        return p1 + p2;
-    }
-
-    public static void main(String[] args){
-        int[] arr = {1, 2, 3, 4, 5, 6, 7};
-        int n = arr.length;
-        int height = (int) (Math.ceil(Math.log(n) / Math.log(2))) + 1;  
-        int tree_nodes = (int) Math.pow(2, height) - 1;
-        SegmentTree ob = new SegmentTree(tree_nodes);
-        ob.build(arr, 0, 0, n - 1);
-        for(int i = 0; i &lt; tree_nodes; i++){
-            System.out.print(ob.tree[i] + &quot; &quot;);
-        }
-        System.out.println();
-        System.out.println(ob.query(0, 0, n - 1, 0, 5));
     }
 }
 </code></pre>
