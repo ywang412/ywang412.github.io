@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565408891259">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565557598321">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565408891259" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565557598321" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -262,6 +262,76 @@ void morrisTraversalPreorder(Node node) {
 } 
 </code></pre>
 <p>}</p>
+<p><strong>Segment Tree</strong>
+Representation of Segment trees</p>
+<ol>
+<li>Leaf Nodes are the elements of the input array.</li>
+<li>Each internal node represents some merging of the leaf nodes. The merging may be different for different problems.</li>
+</ol>
+<pre><code>class SegmentTree{
+    int[] tree;
+
+    SegmentTree(int n){
+        tree = new int[n];
+    }
+
+    void build(int[] arr, int node, int start, int end){
+        if(start == end){
+            tree[node] = arr[start];
+        }
+        else{
+            int mid = (start + end)/2;
+            build(arr, 2*node + 1, start, mid);
+            build(arr, 2*node + 2, mid + 1, end);
+            tree[node] = tree[2*node + 1] + tree[2*node + 2];
+        }
+    }
+
+    void update(int[] arr, int node, int index, int val, int start, int end){
+        if(start == end){
+            tree[node] += val;
+            arr[start] += val;
+        }
+        else{
+            int mid = (start + end)/2;
+            if(start &lt;= index &amp;&amp; index &lt;= mid){
+                update(arr, 2*node + 1, index, val, start, mid);
+            }
+            else{
+                update(arr, 2*node + 2, index, val, mid + 1, end);
+            }
+            tree[node] = tree[2*node + 1] + tree[2*node + 2];
+        }
+    }
+
+    int query(int node, int start, int end, int left, int right){
+        if(right &lt; start || end &lt; left){
+            return 0;
+        }
+        if(left &lt;= start &amp;&amp; end &lt;= right){
+            return tree[node];
+        }
+        int mid = (start + end)/2;
+        int p1 = query(2*node + 1, start, mid, left, right);
+        int p2 = query(2*node + 2, mid + 1, end, left, right);
+        return p1 + p2;
+    }
+
+    public static void main(String[] args){
+        int[] arr = {1, 2, 3, 4, 5, 6, 7};
+        int n = arr.length;
+        int height = (int) (Math.ceil(Math.log(n) / Math.log(2))) + 1;  
+        int tree_nodes = (int) Math.pow(2, height) - 1;
+        SegmentTree ob = new SegmentTree(tree_nodes);
+        ob.build(arr, 0, 0, n - 1);
+        for(int i = 0; i &lt; tree_nodes; i++){
+            System.out.print(ob.tree[i] + &quot; &quot;);
+        }
+        System.out.println();
+        System.out.println(ob.query(0, 0, n - 1, 0, 5));
+    }
+}
+</code></pre>
 
             </div>
             
