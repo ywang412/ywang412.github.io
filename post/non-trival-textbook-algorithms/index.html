@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565577847183">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565579793649">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565577847183" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565579793649" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -520,6 +520,44 @@ static int lcm(int a, int b)
 { 
 		return (a * b) / gcd(a, b); 
 }  
+</code></pre>
+<p><strong>Dijkstra Algorithm</strong>
+743. Network Delay Time
+787. Cheapest Flights Within K Stops</p>
+<pre><code>class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Map&lt;Integer, List&lt;int[]&gt;&gt; graph = new HashMap();
+        for (int[] edge: times) {
+            if (!graph.containsKey(edge[0]))
+                graph.put(edge[0], new ArrayList&lt;int[]&gt;());
+            graph.get(edge[0]).add(new int[]{edge[1], edge[2]});
+        }
+        PriorityQueue&lt;int[]&gt; heap = new PriorityQueue&lt;int[]&gt;(
+                (info1, info2) -&gt; info1[0] - info2[0]);
+        heap.offer(new int[]{0, K});
+
+        Map&lt;Integer, Integer&gt; dist = new HashMap();
+
+        while (!heap.isEmpty()) {
+            int[] info = heap.poll();
+            int d = info[0], node = info[1];
+            if (dist.containsKey(node)) continue;
+            dist.put(node, d);
+            if (graph.containsKey(node))
+                for (int[] edge: graph.get(node)) {
+                    int nei = edge[0], d2 = edge[1];
+                    if (!dist.containsKey(nei))
+                        heap.offer(new int[]{d+d2, nei});
+                }
+        }
+
+        if (dist.size() != N) return -1;
+        int ans = 0;
+        for (int cand: dist.values())
+            ans = Math.max(ans, cand);
+        return ans;
+    }
+}
 </code></pre>
 
             </div>
