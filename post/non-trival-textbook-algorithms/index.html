@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565579793649">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565579920642">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565579793649" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565579920642" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-14</div>
+            <div class="post-date">2018-04-13</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -262,8 +262,8 @@ void morrisTraversalPreorder(Node node) {
 } 
 </code></pre>
 <p>}</p>
-<p><strong>Segment Tree</strong>
-Representation of Segment trees</p>
+<p><strong>Segment Tree</strong></p>
+<p>Representation of Segment trees</p>
 <ol>
 <li>Leaf Nodes are the elements of the input array.</li>
 <li>Each internal node represents some merging of the leaf nodes. The merging may be different for different problems.</li>
@@ -345,8 +345,8 @@ Representation of Segment trees</p>
     }
 }
 </code></pre>
-<p><strong>LFU</strong>
-Use three HashMap to save &lt;key, value&gt; pair, &lt;key, count&gt; pair and &lt;key, LinkedHashSet&gt; pair. LinkedHashSet keep track of keys of the same count.</p>
+<p><strong>LFU</strong></p>
+<p>Use three HashMap to save &lt;key, value&gt; pair, &lt;key, count&gt; pair and &lt;key, LinkedHashSet&gt; pair. LinkedHashSet keep track of keys of the same count.</p>
 <pre><code>public class LFUCache {
     HashMap&lt;Integer, Integer&gt; vals;
     HashMap&lt;Integer, Integer&gt; counts;
@@ -395,8 +395,8 @@ Use three HashMap to save &lt;key, value&gt; pair, &lt;key, count&gt; pair and &
     }
 }
 </code></pre>
-<p><strong>LRU</strong>
-Use HashMap to save &lt;key, Node&gt; pair. And create head, tail dummy double linked list node to keep track of recently used node queue.</p>
+<p><strong>LRU</strong></p>
+<p>Use HashMap to save &lt;key, Node&gt; pair. And create head, tail dummy double linked list node to keep track of recently used node queue.</p>
 <pre><code>import java.util.Hashtable;
 public class LRUCache {
 
@@ -521,7 +521,8 @@ static int lcm(int a, int b)
 		return (a * b) / gcd(a, b); 
 }  
 </code></pre>
-<p><strong>Dijkstra Algorithm</strong>
+<p><strong>Dijkstra Algorithm</strong></p>
+<p>Shortest distance
 743. Network Delay Time
 787. Cheapest Flights Within K Stops</p>
 <pre><code>class Solution {
