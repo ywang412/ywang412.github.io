@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Resume | Yu&#39;s Github</title>
+<title>Examples of System Design | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,81 +111,32 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Resume</h2>
-            <div class="post-date">2018-03-13</div>
+            <h2 class="post-title">Examples of System Design</h2>
+            <div class="post-date">2019-08-12</div>
             
             <div class="post-content">
-              <blockquote>
-<p><a href="https://ywang412.github.io/post/resume/">Resume</a> |
-<a href="https://www.linkedin.com/in/ywang412/">LinkedIn</a>  |
-<a href="https://ywang412.github.io/">Blog</a></p>
-</blockquote>
-<h1 id="yu-wang-application-developer">Yu Wang – Application Developer</h1>
-<ul>
-<li>6+ years of experience as a software engineer in various industries</li>
-<li>Full stack skill-set with a concentration on back-end engineering</li>
-<li>Contributed actively to open source projects on GitHub</li>
-</ul>
-<h2 id="education">Education</h2>
-<p><strong>Georgia Institute of Technology, Atlanta, GA</strong><br>
-M.S. in Computer Sciences<br>
-<em>Dec 2017</em><br>
-<strong>Washington University in St. Louis, St. Louis, MO</strong><br>
-Ph.D. in Biomedical Engineering<br>
-<em>May 2013</em><br>
-<strong>University of Science and Technology of China, Hefei, China</strong><br>
-B.S. in Physics<br>
-<em>May 2008</em></p>
-<h2 id="skills">Skills</h2>
-<ul>
-<li>Java, Scala, Python, Oracle SQL, Javascript</li>
-</ul>
-<h2 id="tools">Tools</h2>
-<ul>
-<li>Spring/Springboot for web application, Scala Akka, Python flask, Hibernate ORM,
-Docker/Docker Swarm, AWS, Azure</li>
-</ul>
-<h2 id="experience">Experience</h2>
-<p><strong>JPMorgan Chase, Houston, TX</strong><br>
-Software Engineer<br>
-<em>May 2018 – Present</em></p>
-<p><strong>Accenture, Houston, TX</strong><br>
-Software Engineer<br>
-<em>December 2017 – May 2018</em></p>
-<ul>
-<li>Developed Internet of Things platform that enables real-time streaming of well performance data and device health data from edge devices deployed in oilfields to central dashboard.</li>
-<li>Built a docker trusted registry to serve application docker images and implemented docker container Jenkins CD/CI workflow.</li>
-</ul>
-<p><strong>Georgia Institute of Technology</strong><br>
-Graduate Teaching Assistant<br>
-<em>August 2017 – December 2017</em></p>
-<ul>
-<li>Reviewed student projects covering TCP/IP communication, multithreaded C programming, shared memory communications, and remote procedure calls in CS6200 Introduction to Operating Systems.</li>
-</ul>
-<p><strong>In-Depth Geophysical, Houston, TX</strong><br>
-Sr. Processing Geophysicist<br>
-<em>December 2014 – August 2016</em></p>
-<ul>
-<li>Lead several advanced seismic data modeling and analysis projects and organized client meetings with
-major oil companies.</li>
-<li>Implemented image processing and large-scale geoscience data analysis python modules in workflow.</li>
-</ul>
-<p><strong>CGG, Houston TX</strong><br>
-Staff Seismic Data Analyst<br>
-<em>June 2013 – December 2014</em></p>
-<ul>
-<li>Developed a python platform to create and update geoscience data models that closely represent subsurface geology.</li>
-<li>Wrote statistics and domain transformations python algorithms to analyzed subsurface image data.</li>
-</ul>
+              <p><strong>Designing TinyURL</strong></p>
+<p>Encoding actual URL
+We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
+<p>Using base64 encoding, a 6 letter long key would result in 64^6 = ~68.7 billion possible strings
+Using base64 encoding, an 8 letter long key would result in 64^8 = ~281 trillion possible strings</p>
+<p>With 68.7B unique strings, let’s assume six letter keys would suffice for our system.</p>
+<p>If we use the MD5 algorithm as our hash function, it’ll produce a 128-bit hash value. After base64 encoding, we’ll get a string having more than 21 characters (since each base64 character encodes 6 bits of the hash value). Since we only have space for 8 characters per short key, how will we choose our key then? We can take the first 6 (or 8) letters for the key. This could result in key duplication though, upon which we can choose some other characters out of the encoding string or swap some characters.</p>
+<p>What are different issues with our solution? We have the following couple of problems with our encoding scheme:</p>
+<p>If multiple users enter the same URL, they can get the same shortened URL, which is not acceptable.
+What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
+Workaround for the issues: We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.</p>
+<p>Another solution could be to append user id (which should be unique) to the input URL. However, if the user has not signed in, we would have to ask the user to choose a uniqueness key. Even after this, if we have a conflict, we have to keep generating a key until we get a unique one.</p>
+<p><img src="https://ywang412.github.io/post-images/1565754688299.png" alt=""></p>
 
             </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/publishing-personal-website-on-githubio-using-gridea">
+                <a href="https://ywang412.github.io/post/dp-summary">
                   <h3 class="post-title">
-                    Publishing a personal programming blog on Github.io using Gridea
+                    DP summary
                   </h3>
                 </a>
               </div>

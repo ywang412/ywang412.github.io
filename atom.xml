@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-12T03:18:43.317Z</updated>
+    <updated>2019-08-14T03:51:35.373Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,27 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Examples of System Design]]></title>
+        <id>https://ywang412.github.io/post/system-design</id>
+        <link href="https://ywang412.github.io/post/system-design">
+        </link>
+        <updated>2019-08-13T01:48:51.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Designing TinyURL</strong></p>
+<p>Encoding actual URL
+We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
+<p>Using base64 encoding, a 6 letter long key would result in 64^6 = ~68.7 billion possible strings
+Using base64 encoding, an 8 letter long key would result in 64^8 = ~281 trillion possible strings</p>
+<p>With 68.7B unique strings, let’s assume six letter keys would suffice for our system.</p>
+<p>If we use the MD5 algorithm as our hash function, it’ll produce a 128-bit hash value. After base64 encoding, we’ll get a string having more than 21 characters (since each base64 character encodes 6 bits of the hash value). Since we only have space for 8 characters per short key, how will we choose our key then? We can take the first 6 (or 8) letters for the key. This could result in key duplication though, upon which we can choose some other characters out of the encoding string or swap some characters.</p>
+<p>What are different issues with our solution? We have the following couple of problems with our encoding scheme:</p>
+<p>If multiple users enter the same URL, they can get the same shortened URL, which is not acceptable.
+What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
+Workaround for the issues: We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.</p>
+<p>Another solution could be to append user id (which should be unique) to the input URL. However, if the user has not signed in, we would have to ask the user to choose a uniqueness key. Even after this, if we have a conflict, we have to keep generating a key until we get a unique one.</p>
+<p><img src="https://ywang412.github.io/post-images/1565754688299.png" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DP summary]]></title>
         <id>https://ywang412.github.io/post/dp-summary</id>
@@ -659,139 +680,6 @@ Thread.sleep(1000);
 		Thread.sleep(1000);
 		String result = futureTask.get();
 		log.info(&quot;result：{}&quot;, result);
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Perfect Singleton?]]></title>
-        <id>https://ywang412.github.io/post/perfect-singleton</id>
-        <link href="https://ywang412.github.io/post/perfect-singleton">
-        </link>
-        <updated>2019-03-20T12:30:24.000Z</updated>
-        <content type="html"><![CDATA[<p>A singleton class is a class that can have only one object (an instance of the class) at a time.</p>
-<p><strong>Eager initialization</strong> is the mostly straightforward approach.</p>
-<pre><code>@ThreadSafe
-public class SingletonExample2 {
-
-    // 私有构造函数
-    private SingletonExample2() {}
-
-    // 单例对象
-    private static SingletonExample2 instance = new SingletonExample2();
-
-    // 静态的工厂方法
-    public static SingletonExample2 getInstance() {
-        return instance;
-    }
-}
-</code></pre>
-<p><strong>Lazy initialization</strong> by adding <code>synchronized</code> keyword to the getInstance method is quite inefficient.</p>
-<pre><code>@ThreadSafe
-@NotRecommend
-public class SingletonExample3 {
-
-    // 私有构造函数
-    private SingletonExample3() {
-
-    }
-
-    // 单例对象
-    private static SingletonExample3 instance = null;
-
-    // 静态的工厂方法
-    public static synchronized SingletonExample3 getInstance() {
-        if (instance == null) {
-            instance = new SingletonExample3();
-        }
-        return instance;
-    }
-}
-</code></pre>
-<p>However, we can move the initialization into a static block so instance is created with class loading.</p>
-<pre><code>@ThreadSafe
-public class SingletonExample6 {
-
-    // 私有构造函数
-    private SingletonExample6() {
-
-    }
-
-    // 单例对象
-    private static SingletonExample6 instance = null;
-
-    static {
-        instance = new SingletonExample6();
-    }
-
-    // 静态的工厂方法
-    public static SingletonExample6 getInstance() {
-        return instance;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getInstance().hashCode());
-        System.out.println(getInstance().hashCode());
-    }
-}
-</code></pre>
-<p>To make <strong>Lazy initialization</strong> more efficient, it requires both double check locking method and <code>volatile</code> keyword to avoid CPU instruction reorder.</p>
-<pre><code>@ThreadSafe
-public class SingletonExample5 {
-
-    // 私有构造函数
-    private SingletonExample5() {
-
-    }
-
-    // 1、memory = allocate() 分配对象的内存空间
-    // 2、ctorInstance() 初始化对象
-    // 3、instance = memory 设置instance指向刚分配的内存
-
-    // 单例对象 volatile + 双重检测机制 -&gt; 禁止指令重排
-    private volatile static SingletonExample5 instance = null;
-
-    // 静态的工厂方法
-    public static SingletonExample5 getInstance() {
-        if (instance == null) { // 双重检测机制        // B
-            synchronized (SingletonExample5.class) { // 同步锁
-                if (instance == null) {
-                    instance = new SingletonExample5(); // A - 3
-                }
-            }
-        }
-        return instance;
-    }
-}
-</code></pre>
-<p>Finally, we can use enumeration approach. It has serialization and thread-safety guaranteed by the enum implementation itself, which ensures internally that only the single instance is available, correcting the problems pointed out in the class-based implementation.</p>
-<pre><code>@ThreadSafe
-@Recommend
-public class SingletonExample7 {
-
-    // 私有构造函数
-    private SingletonExample7() {
-
-    }
-
-    public static SingletonExample7 getInstance() {
-        return Singleton.INSTANCE.getInstance();
-    }
-
-    private enum Singleton {
-        INSTANCE;
-
-        private SingletonExample7 singleton;
-
-        // JVM保证这个方法绝对只调用一次
-        Singleton() {
-            singleton = new SingletonExample7();
-        }
-
-        public SingletonExample7 getInstance() {
-            return singleton;
-        }
-    }
 }
 </code></pre>
 ]]></content>
