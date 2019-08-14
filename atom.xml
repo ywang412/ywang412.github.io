@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-14T03:51:56.416Z</updated>
+    <updated>2019-08-14T04:23:14.331Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-12T12:48:51.000Z</updated>
+        <updated>2019-08-11T23:48:51.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Designing TinyURL</strong></p>
 <p>Encoding actual URL
 We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
@@ -27,7 +27,8 @@ Using base64 encoding, an 8 letter long key would result in 64^8 = ~281 trillion
 <p>If multiple users enter the same URL, they can get the same shortened URL, which is not acceptable.
 What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.
 Workaround for the issues: We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.</p>
-<p>Another solution could be to append user id (which should be unique) to the input URL. However, if the user has not signed in, we would have to ask the user to choose a uniqueness key. Even after this, if we have a conflict, we have to keep generating a key until we get a unique one.</p>
+<p>Another solution could be to append user id (which should be unique) to the input URL. However, if the user has not signed in, we would have to ask the user to choose a uniqueness key. Even after this, if we have a conflict, we have to keep generating a key until we get a unique one.
+<img src="https://ywang412.github.io/post-images/1565756590649.png" alt=""></p>
 <p><img src="https://ywang412.github.io/post-images/1565754688299.png" alt=""></p>
 ]]></content>
     </entry>
