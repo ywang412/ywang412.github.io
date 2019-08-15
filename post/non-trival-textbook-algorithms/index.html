@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565757741087">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565842358844">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565757741087" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565842358844" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -558,6 +558,44 @@ static int lcm(int a, int b)
             ans = Math.max(ans, cand);
         return ans;
     }
+}
+</code></pre>
+<p><strong>Generate Maze</strong></p>
+<p>Because the wall has thickness of 1, DFS step size is 2.</p>
+<pre><code>public int[][] maze(int n) {
+	int[][] maze = new int[n][n];
+	for (int i = 0; i &lt; n; i++) {
+		for (int j = 0; j &lt; n; j++) {
+			maze[i][j] = 1;
+		}
+	}
+	maze[0][0] = 0;
+	generate(maze, 0, 0);
+	return maze;
+}
+private void generate(int[][] maze, int x, int y) {
+	int[] dx = {0, 1, 0, -1};
+	int[] dy = {1, 0, -1, 0};
+	shuffle(dx, dy);
+	for (int i = 0; i &lt; 4; i++) {
+		if (x + dx[i] * 2 &gt;= 0 &amp;&amp; x + dx[i] * 2 &lt; maze.length &amp;&amp; y + dy[i] * 2 &gt;= 0 
+			&amp;&amp; y + dy[i] * 2 &lt; maze[0].length &amp;&amp; maze[x + dx[i] * 2][y + dy[i] * 2] == 1) {
+				maze[x + dx[i] * 2][y + dy[i] * 2] = 0;
+				maze[x + dx[i]][y + dy[i]] = 0;
+				generate(maze, x + dx[i] * 2, y + dy[i] * 2);
+			}
+	}
+}
+private void shuffle(int[] dx, int[] dy) {
+	for (int i = 0; i &lt; dx.length - 1; i++) {
+		int offset = (int) (Math.random() * (dx.length - i));
+		int temp = dx[i];
+		dx[i] = dx[i + offset];
+		dx[i + offset] = temp;
+		temp = dy[i];
+		dy[i] = dy[i + offset];
+		dy[i + offset] = temp;
+	}
 }
 </code></pre>
 
