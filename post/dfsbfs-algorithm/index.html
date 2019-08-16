@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565842358844">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1565933563889">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1565842358844" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1565933563889" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -204,6 +204,40 @@
         for (int j : map.get(i)) {
             if (visited.add(j))
                 dfsVisit(j, map, visited);
+        }
+    }
+}
+</code></pre>
+<p><strong>1087. Brace Expansion</strong>
+Use stringBuilder delete(start, end) method to backtrack to start point.</p>
+<pre><code>class Solution {
+    public String[] expand(String S) {
+        List&lt;String&gt; ans = new ArrayList&lt;&gt;();
+        expand(S, 0, new StringBuffer(), ans);
+        // Looks like one of the test cases is incorrect and it accepts result only in sorted order
+        Collections.sort(ans);
+        return ans.toArray(new String[0]);
+    }
+
+    private void expand(String s, int i, StringBuffer sb, List&lt;String&gt; ans) {
+        if (i == s.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+
+        char c = s.charAt(i);
+        if (c != '{') {
+            sb.append(c);
+            expand(s, i + 1, sb, ans);
+        } else {
+            int end = s.indexOf('}', i);
+            int start = sb.length();
+            while(i &lt; end) {
+                sb.append(s.charAt(i + 1));
+                expand(s, end + 1, sb, ans);
+                sb.delete(start, sb.length());
+                i += 2;
+            }
         }
     }
 }
