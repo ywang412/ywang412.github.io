@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-17T18:48:57.330Z</updated>
+    <updated>2019-08-17T19:28:13.843Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-07T02:48:51.000Z</updated>
+        <updated>2019-08-06T13:48:51.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Designing TinyURL</strong></p>
 <p>Encoding actual URL
 We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
@@ -71,6 +71,15 @@ Workspace (sync folders)</p>
 <p><strong>Designing Twitter</strong></p>
 <p><img src="https://ywang412.github.io/post-images/1566067729831.png" alt="">
 <img src="https://ywang412.github.io/post-images/1566067734387.png" alt=""></p>
+<p><strong>Designing Youtube</strong></p>
+<p>At a high-level we would need the following components:</p>
+<p>Processing Queue: Each uploaded video will be pushed to a processing queue to be de-queued later for encoding, thumbnail generation, and storage.
+Encoder: To encode each uploaded video into multiple formats.
+Thumbnails generator: To generate a few thumbnails for each video.
+Video and Thumbnail storage: To store video and thumbnail files in some distributed file storage.
+User Database: To store user’s information, e.g., name, email, address, etc.
+Video metadata storage: A metadata database to store all the information about videos like title, file path in the system, uploading user, total views, likes, dislikes, etc. It will also be used to store all the video comments.</p>
+<p><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566067735510">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566070092332">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566067735510" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566070092332" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -170,6 +170,15 @@ Workspace (sync folders)</p>
 <p><strong>Designing Twitter</strong></p>
 <p><img src="https://ywang412.github.io/post-images/1566067729831.png" alt="">
 <img src="https://ywang412.github.io/post-images/1566067734387.png" alt=""></p>
+<p><strong>Designing Youtube</strong></p>
+<p>At a high-level we would need the following components:</p>
+<p>Processing Queue: Each uploaded video will be pushed to a processing queue to be de-queued later for encoding, thumbnail generation, and storage.
+Encoder: To encode each uploaded video into multiple formats.
+Thumbnails generator: To generate a few thumbnails for each video.
+Video and Thumbnail storage: To store video and thumbnail files in some distributed file storage.
+User Database: To store user’s information, e.g., name, email, address, etc.
+Video metadata storage: A metadata database to store all the information about videos like title, file path in the system, uploading user, total views, likes, dislikes, etc. It will also be used to store all the video comments.</p>
+<p><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></p>
 
             </div>
             
