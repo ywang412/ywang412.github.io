@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566091977943">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566093282144">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566091977943" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566093282144" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,10 +112,14 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Examples of System Design</h2>
-            <div class="post-date">2019-08-05</div>
+            <div class="post-date">2019-08-04</div>
             
             <div class="post-content">
-              <p><strong>Designing TinyURL</strong></p>
+              <p>byte 1 byte -128 to 127.
+short 2 bytes -32,768 to 32,767.
+int 4 bytes -2,147,483,648 to 2,147,483,647.
+long 8 bytes -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.</p>
+<p><strong>Designing TinyURL</strong></p>
 <p>Encoding actual URL
 We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
 <p>Using base64 encoding, a 6 letter long key would result in 64^6 = ~68.7 billion possible strings
