@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566070092332">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566091825024">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566070092332" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566091825024" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Examples of System Design</h2>
-            <div class="post-date">2019-08-06</div>
+            <div class="post-date">2019-08-05</div>
             
             <div class="post-content">
               <p><strong>Designing TinyURL</strong></p>
@@ -179,6 +179,14 @@ Video and Thumbnail storage: To store video and thumbnail files in some distribu
 User Database: To store user’s information, e.g., name, email, address, etc.
 Video metadata storage: A metadata database to store all the information about videos like title, file path in the system, uploading user, total views, likes, dislikes, etc. It will also be used to store all the video comments.</p>
 <p><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></p>
+<p><strong>Design Rate Limiter</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1566091665748.png" alt=""></p>
+<p>fixed window
+<img src="https://ywang412.github.io/post-images/1566091776264.png" alt="">
+sliding wondow
+<img src="https://ywang412.github.io/post-images/1566091784751.png" alt="">
+bucket counter
+if we have an hourly rate limit we can keep a count for each minute and calculate the sum of all counters in the past hour when we receive a new request to calculate the throttling limit</p>
 
             </div>
             
