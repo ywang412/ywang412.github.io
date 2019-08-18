@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-18T01:54:43.952Z</updated>
+    <updated>2019-08-18T02:14:39.368Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-04T22:48:51.000Z</updated>
+        <updated>2019-08-04T09:48:51.000Z</updated>
         <content type="html"><![CDATA[<p>byte 1 byte -128 to 127.
 short 2 bytes -32,768 to 32,767.
 int 4 bytes -2,147,483,648 to 2,147,483,647.
@@ -117,6 +117,8 @@ Clients can pre-fetch some data from the server to save future requests.
 Clients can store the recent history of suggestions locally. Recent history has a very high rate of being reused.
 Establishing an early connection with the server turns out to be one of the most important factors. As soon as the user opens the search engine website, the client can open a connection with the server. So when a user types in the first character, the client doesn’t waste time in establishing the connection.
 The server can push some part of their cache to CDNs and Internet Service Providers (ISPs) for efficiency.</p>
+<p><strong>Designing Twitter Search</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1566094473812.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>
