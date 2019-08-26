@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-26T02:35:28.952Z</updated>
+    <updated>2019-08-26T02:36:37.970Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -126,11 +126,49 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-08-02T07:37:53.000Z</updated>
+        <updated>2019-08-01T18:37:53.000Z</updated>
         <content type="html"><![CDATA[<ol start="375">
 <li>Guess Number Higher or Lower II</li>
 <li>Best Time to Buy and Sell Stock IV</li>
 </ol>
+<p><strong>Coin in a line</strong>
+F(i, j)  represents the maximum value the user can collect from
+i'th coin to j'th coin.</p>
+<pre><code>F(i, j)  = Max(Vi + min(F(i+2, j), F(i+1, j-1) ), 
+               Vj + min(F(i+1, j-1), F(i, j-2) )) 
+</code></pre>
+<p>Base Cases
+F(i, j)  = Vi           If j == i
+F(i, j)  = max(Vi, Vj)  If j == i+1</p>
+<pre><code>static int optimalStrategyOfGame(int arr[], int n) 
+{ 
+		// Create a table to store solutions of subproblems 
+		int table[][] = new int[n][n]; 
+		int gap, i, j, x, y, z; 
+
+		// Fill table using above recursive formula. 
+		// Note that the tableis filled in diagonal 
+		// fashion (similar to http:// goo.gl/PQqoS), 
+		// from diagonal elements to table[0][n-1] 
+		// which is the result. 
+		for (gap = 0; gap &lt; n; ++gap) { 
+				for (i = 0, j = gap; j &lt; n; ++i, ++j) { 
+
+						// Here x is value of F(i+2, j), 
+						// y is F(i+1, j-1) and z is 
+						// F(i, j-2) in above recursive formula 
+						x = ((i + 2) &lt;= j) ? table[i + 2][j] : 0; 
+						y = ((i + 1) &lt;= (j - 1)) ? table[i + 1][j - 1] : 0; 
+						z = (i &lt;= (j - 2)) ? table[i][j - 2] : 0; 
+
+						table[i][j] = Math.max(arr[i] + Math.min(x, y),  
+																	 arr[j] + Math.min(y, z)); 
+				} 
+		} 
+
+		return table[0][n - 1]; 
+}
+</code></pre>
 ]]></content>
     </entry>
     <entry>
