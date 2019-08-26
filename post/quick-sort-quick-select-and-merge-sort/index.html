@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Quick sort, quick select, merge sort and bucket sort | Yu&#39;s Github</title>
+<title>Quick sort, quick select, merge sort, bucket sort and topological sort | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566787465386">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566788187714">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566787465386" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566788187714" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -111,7 +111,7 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Quick sort, quick select, merge sort and bucket sort</h2>
+            <h2 class="post-title">Quick sort, quick select, merge sort, bucket sort and topological sort</h2>
             <div class="post-date">2019-07-26</div>
             
             <div class="post-content">
@@ -170,6 +170,62 @@
 				}
 		}
 }
+</code></pre>
+<p><strong>Topological Sort</strong>
+Course Schedule II</p>
+<pre><code>public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+    boolean isPossible = true;
+    Map&lt;Integer, List&lt;Integer&gt;&gt; adjList = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    int[] indegree = new int[numCourses];
+    int[] topologicalOrder = new int[numCourses];
+
+    // Create the adjacency list representation of the graph
+    for (int i = 0; i &lt; prerequisites.length; i++) {
+      int dest = prerequisites[i][0];
+      int src = prerequisites[i][1];
+      List&lt;Integer&gt; lst = adjList.getOrDefault(src, new ArrayList&lt;Integer&gt;());
+      lst.add(dest);
+      adjList.put(src, lst);
+
+      // Record in-degree of each vertex
+      indegree[dest] += 1;
+    }
+
+    // Add all vertices with 0 in-degree to the queue
+    Queue&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
+    for (int i = 0; i &lt; numCourses; i++) {
+      if (indegree[i] == 0) {
+        q.add(i);
+      }
+    }
+
+    int i = 0;
+    // Process until the Q becomes empty
+    while (!q.isEmpty()) {
+      int node = q.remove();
+      topologicalOrder[i++] = node;
+
+      // Reduce the in-degree of each neighbor by 1
+      if (adjList.containsKey(node)) {
+        for (Integer neighbor : adjList.get(node)) {
+          indegree[neighbor]--;
+
+          // If in-degree of a neighbor becomes 0, add it to the Q
+          if (indegree[neighbor] == 0) {
+            q.add(neighbor);
+          }
+        }
+      }
+    }
+
+    // Check to see if topological sort is possible or not.
+    if (i == numCourses) {
+      return topologicalOrder;
+    }
+
+    return new int[0];
+  } 
 </code></pre>
 
             </div>
