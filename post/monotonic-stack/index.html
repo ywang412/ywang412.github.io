@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566792734009">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566794640736">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566792734009" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566794640736" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -150,6 +150,55 @@
             }
         }
         return maxArea;
+    }
+}
+</code></pre>
+<p><strong>239. Sliding Window Maximum</strong></p>
+<pre><code>class Solution {
+    public int[] maxSlidingWindow(int[] a, int k) {		
+            if (a == null || k &lt;= 0) {
+                return new int[0];
+            }
+            int n = a.length;
+            int[] r = new int[n-k+1];
+            int ri = 0;
+            // store index
+            Deque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+            for (int i = 0; i &lt; a.length; i++) {
+                // remove numbers out of range k
+                while (!q.isEmpty() &amp;&amp; q.peek() &lt; i - k + 1) {
+                    q.poll();
+                }
+                // remove smaller numbers in k range as they are useless
+                while (!q.isEmpty() &amp;&amp; a[q.peekLast()] &lt; a[i]) {
+                    q.pollLast();
+                }
+                // q contains index... r contains content
+                q.offer(i);
+                if (i &gt;= k - 1) {
+                    r[ri++] = a[q.peek()];
+                }
+            }
+            return r;
+        }
+}
+</code></pre>
+<p><strong>862. Shortest Subarray with Sum at Least K</strong></p>
+<pre><code>class Solution {
+    public int shortestSubarray(int[] A, int K) {
+        int N = A.length, res = N + 1;
+        int[] B = new int[N + 1];
+        for (int i = 0; i &lt; N; i++) 
+            B[i + 1] = B[i] + A[i];
+        Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
+        for (int i = 0; i &lt; N + 1; i++) {
+            while (d.size() &gt; 0 &amp;&amp; B[i] - B[d.getFirst()] &gt;=  K)
+                res = Math.min(res, i - d.pollFirst());
+            while (d.size() &gt; 0 &amp;&amp; B[i] &lt;= B[d.getLast()]) 
+                d.pollLast();
+            d.addLast(i);
+        }
+        return res &lt;= N ? res : -1;
     }
 }
 </code></pre>
