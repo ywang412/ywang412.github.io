@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566530949058">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566786926758">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566530949058" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566786926758" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-13</div>
+            <div class="post-date">2018-04-12</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -596,6 +596,49 @@ private void shuffle(int[] dx, int[] dy) {
 		dy[i] = dy[i + offset];
 		dy[i + offset] = temp;
 	}
+}
+</code></pre>
+<p><strong>Union Find</strong></p>
+<pre><code>int count, n;
+int[] f;
+public int regionsBySlashes(String[] grid) {
+		n = grid.length;
+		f = new int[n * n * 4];
+		count = n * n * 4;
+		for (int i = 0; i &lt; n * n * 4; ++i)
+				f[i] = i;
+		for (int i = 0; i &lt; n; ++i) {
+				for (int j = 0; j &lt; n; ++j) {
+						if (i &gt; 0) union(g(i - 1, j, 2), g(i, j, 0));
+						if (j &gt; 0) union(g(i , j - 1, 1), g(i , j, 3));
+						if (grid[i].charAt(j) != '/') {
+								union(g(i , j, 0), g(i , j,  1));
+								union(g(i , j, 2), g(i , j,  3));
+						}
+						if (grid[i].charAt(j) != '\\') {
+								union(g(i , j, 0), g(i , j,  3));
+								union(g(i , j, 2), g(i , j,  1));
+						}
+				}
+		}
+		return count;
+}
+
+public int find(int x) {
+		if (x != f[x]) {
+				f[x] = find(f[x]);
+		}
+		return f[x];
+}
+public void union(int x, int y) {
+		x = find(x); y = find(y);
+		if (x != y) {
+				f[x] = y;
+				count--;
+		}
+}
+public int g(int i, int j, int k) {
+		return (i * n + j) * 4 + k;
 }
 </code></pre>
 
