@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566795113848">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1566795880217">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1566795113848" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1566795880217" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -216,6 +216,45 @@
             res += stack.pop()[1];
         stack.push(new int[]{price, res});
         return res;
+    }
+}
+</code></pre>
+<p><strong>LC907. Sum of Subarray Minimums</strong></p>
+<pre><code>class Solution {
+    public int sumSubarrayMins(int[] A) {
+        int MOD = 1_000_000_007;
+        int N = A.length;
+
+        // prev has i* - 1 in increasing order of A[i* - 1]
+        // where i* is the answer to query j
+        Stack&lt;Integer&gt; stack = new Stack();
+        int[] prev = new int[N];
+        for (int i = 0; i &lt; N; ++i) {
+            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
+                stack.pop();
+            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        // next has k* + 1 in increasing order of A[k* + 1]
+        // where k* is the answer to query j
+        stack = new Stack();
+        int[] next = new int[N];
+        for (int k = N-1; k &gt;= 0; --k) {
+            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
+                stack.pop();
+            next[k] = stack.isEmpty() ? N : stack.peek();
+            stack.push(k);
+        }
+
+        // Use prev/next array to count answer
+        long ans = 0;
+        for (int i = 0; i &lt; N; ++i) {
+            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
+            ans %= MOD;
+        }
+        return (int) ans;
+
     }
 }
 </code></pre>

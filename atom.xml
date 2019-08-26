@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-26T04:51:56.285Z</updated>
+    <updated>2019-08-26T05:04:41.989Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -269,7 +269,7 @@ F(i, j)  = max(Vi, Vj)  If j == i+1</p>
         <id>https://ywang412.github.io/post/monotonic-stack</id>
         <link href="https://ywang412.github.io/post/monotonic-stack">
         </link>
-        <updated>2019-07-29T00:40:22.000Z</updated>
+        <updated>2019-07-28T11:40:22.000Z</updated>
         <content type="html"><![CDATA[<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
 <pre><code>class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
@@ -371,6 +371,45 @@ F(i, j)  = max(Vi, Vj)  If j == i+1</p>
             res += stack.pop()[1];
         stack.push(new int[]{price, res});
         return res;
+    }
+}
+</code></pre>
+<p><strong>LC907. Sum of Subarray Minimums</strong></p>
+<pre><code>class Solution {
+    public int sumSubarrayMins(int[] A) {
+        int MOD = 1_000_000_007;
+        int N = A.length;
+
+        // prev has i* - 1 in increasing order of A[i* - 1]
+        // where i* is the answer to query j
+        Stack&lt;Integer&gt; stack = new Stack();
+        int[] prev = new int[N];
+        for (int i = 0; i &lt; N; ++i) {
+            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
+                stack.pop();
+            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        // next has k* + 1 in increasing order of A[k* + 1]
+        // where k* is the answer to query j
+        stack = new Stack();
+        int[] next = new int[N];
+        for (int k = N-1; k &gt;= 0; --k) {
+            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
+                stack.pop();
+            next[k] = stack.isEmpty() ? N : stack.peek();
+            stack.push(k);
+        }
+
+        // Use prev/next array to count answer
+        long ans = 0;
+        for (int i = 0; i &lt; N; ++i) {
+            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
+            ans %= MOD;
+        }
+        return (int) ans;
+
     }
 }
 </code></pre>
