@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-27T03:52:53.127Z</updated>
+    <updated>2019-08-27T03:57:29.859Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -219,7 +219,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-31T16:37:53.000Z</updated>
+        <updated>2019-07-31T03:37:53.000Z</updated>
         <content type="html"><![CDATA[<ol start="375">
 <li>Guess Number Higher or Lower II</li>
 <li>Best Time to Buy and Sell Stock IV</li>
@@ -332,6 +332,49 @@ sub-matrix of M[][]</li>
             System.out.println(); 
         }  
     }
+</code></pre>
+<p><strong>0-1 Knapsack Problem</strong></p>
+<p>/* A Naive recursive implementation of 0-1 Knapsack problem */</p>
+<pre><code>static int knapSack(int W, int wt[], int val[], int n) 
+{ 
+	// Base Case 
+if (n == 0 || W == 0) 
+	return 0; 
+
+// If weight of the nth item is more than Knapsack capacity W, then 
+// this item cannot be included in the optimal solution 
+if (wt[n-1] &gt; W) 
+ return knapSack(W, wt, val, n-1); 
+
+// Return the maximum of two cases:  
+// (1) nth item included  
+// (2) not included 
+else return max( val[n-1] + knapSack(W-wt[n-1], wt, val, n-1), 
+							 knapSack(W, wt, val, n-1) 
+								); 
+} 
+</code></pre>
+<pre><code>static int knapSack(int W, int wt[], int val[], int n) 
+{ 
+	 int i, w; 
+int K[][] = new int[n+1][W+1]; 
+
+// Build table K[][] in bottom up manner 
+for (i = 0; i &lt;= n; i++) 
+{ 
+	 for (w = 0; w &lt;= W; w++) 
+	 { 
+			 if (i==0 || w==0) 
+						K[i][w] = 0; 
+			 else if (wt[i-1] &lt;= w) 
+						 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
+			 else
+						 K[i][w] = K[i-1][w]; 
+	 } 
+} 
+
+return K[n][W]; 
+} 
 </code></pre>
 ]]></content>
     </entry>
