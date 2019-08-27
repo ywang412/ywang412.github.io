@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-27T03:57:29.859Z</updated>
+    <updated>2019-08-27T04:12:14.302Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -219,7 +219,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-31T03:37:53.000Z</updated>
+        <updated>2019-07-30T14:37:53.000Z</updated>
         <content type="html"><![CDATA[<ol start="375">
 <li>Guess Number Higher or Lower II</li>
 <li>Best Time to Buy and Sell Stock IV</li>
@@ -375,6 +375,53 @@ for (i = 0; i &lt;= n; i++)
 
 return K[n][W]; 
 } 
+</code></pre>
+<p><strong>518. Coin Change 2</strong></p>
+<pre><code>class Solution {
+    public int change(int amount, int[] coins) {
+        int[][] dp = new int[coins.length+1][amount+1]; 
+        
+        for (int i = 0; i &lt;= coins.length; i++) {
+            dp[i][0] = 1;        
+        }
+        
+        for (int i = 1; i &lt;= coins.length; i++) {
+            for (int j = 1; j &lt;= amount; j++) {
+                dp[i][j] = dp[i-1][j] + (j &gt;= coins[i-1] ? dp[i][j-coins[i-1]] : 0);
+            }
+        }
+        return dp[coins.length][amount];
+    }
+}
+</code></pre>
+<p><strong>416. Partition Equal Subset Sum</strong></p>
+<pre><code>class Solution {
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for(int num: nums) sum += num;
+        if(sum % 2 == 1) return false;
+        
+        int target = sum / 2;
+        boolean[][] dp = new boolean[nums.length][target + 1];
+        // deal with the first row
+        if(nums[0] &lt;= target) dp[0][nums[0]] = true;
+        
+        // deal with the first col
+        for(int i = 0; i &lt; nums.length; i++) dp[i][0] = true;
+        
+        // deal with the rest
+        for(int i = 1; i &lt; nums.length; i++) {
+            for(int j = 1; j &lt; target + 1; j++) {
+                if(j &lt; nums[i]) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
+                }
+            }
+        }
+        return dp[nums.length - 1][target];
+    }
+}
 </code></pre>
 ]]></content>
     </entry>
