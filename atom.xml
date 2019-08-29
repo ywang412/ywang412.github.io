@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-27T04:56:18.471Z</updated>
+    <updated>2019-08-29T04:30:45.122Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -581,7 +581,7 @@ return K[n][W];
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
         <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
         </link>
-        <updated>2019-07-26T09:09:43.000Z</updated>
+        <updated>2019-07-25T20:09:43.000Z</updated>
         <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
 <pre><code>class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -693,6 +693,52 @@ Course Schedule II</p>
 
     return new int[0];
   } 
+</code></pre>
+<p>Topological sort using DFS</p>
+<pre><code>// A recursive function used by topologicalSort 
+void topologicalSortUtil(int v, boolean visited[], 
+												 Stack stack) 
+{ 
+		// Mark the current node as visited. 
+		visited[v] = true; 
+		Integer i; 
+
+		// Recur for all the vertices adjacent to this 
+		// vertex 
+		Iterator&lt;Integer&gt; it = adj[v].iterator(); 
+		while (it.hasNext()) 
+		{ 
+				i = it.next(); 
+				if (!visited[i]) 
+						topologicalSortUtil(i, visited, stack); 
+		} 
+
+		// Push current vertex to stack which stores result 
+		stack.push(new Integer(v)); 
+} 
+
+// The function to do Topological Sort. It uses 
+// recursive topologicalSortUtil() 
+void topologicalSort() 
+{ 
+		Stack stack = new Stack(); 
+
+		// Mark all the vertices as not visited 
+		boolean visited[] = new boolean[V]; 
+		for (int i = 0; i &lt; V; i++) 
+				visited[i] = false; 
+
+		// Call the recursive helper function to store 
+		// Topological Sort starting from all vertices 
+		// one by one 
+		for (int i = 0; i &lt; V; i++) 
+				if (visited[i] == false) 
+						topologicalSortUtil(i, visited, stack); 
+
+		// Print contents of stack 
+		while (stack.empty()==false) 
+				System.out.print(stack.pop() + &quot; &quot;); 
+} 
 </code></pre>
 ]]></content>
     </entry>
