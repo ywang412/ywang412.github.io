@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-30T04:33:18.711Z</updated>
+    <updated>2019-08-30T04:37:20.214Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -108,7 +108,7 @@
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-04T09:48:51.000Z</updated>
+        <updated>2019-08-03T20:48:51.000Z</updated>
         <content type="html"><![CDATA[<p>byte 1 byte -128 to 127.
 short 2 bytes -32,768 to 32,767.
 int 4 bytes -2,147,483,648 to 2,147,483,647.
@@ -215,11 +215,162 @@ The server can push some part of their cache to CDNs and Internet Service Provid
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Monotonic Stack]]></title>
+        <id>https://ywang412.github.io/post/monotonic-stack</id>
+        <link href="https://ywang412.github.io/post/monotonic-stack">
+        </link>
+        <updated>2019-07-28T11:40:22.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
+<pre><code>class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        int[] ret = new int[temperatures.length];
+        for(int i = 0; i &lt; temperatures.length; i++) {
+            while(!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
+                int idx = stack.pop();
+                ret[idx] = i - idx;
+            }
+            stack.push(i);
+        }
+        return ret;
+    }
+}
+</code></pre>
+<p><strong>Largest Rectangle in Histogram</strong></p>
+<pre><code>public class Solution {
+    public int largestRectangleArea(int[] height) {
+        int len = height.length;
+        Stack&lt;Integer&gt; s = new Stack&lt;Integer&gt;();
+        int maxArea = 0;
+        int i = 0;
+        while(i &lt;= len){
+            int h = (i == len ? 0 : height[i]);
+            if(s.isEmpty() || h &gt;= height[s.peek()]){
+                s.push(i);
+                i++;
+            }else{
+                int tp = s.pop();
+                maxArea = Math.max(maxArea, height[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
+                 
+            }
+        }
+        return maxArea;
+    }
+}
+</code></pre>
+<p><strong>239. Sliding Window Maximum</strong></p>
+<pre><code>class Solution {
+    public int[] maxSlidingWindow(int[] a, int k) {		
+            if (a == null || k &lt;= 0) {
+                return new int[0];
+            }
+            int n = a.length;
+            int[] r = new int[n-k+1];
+            int ri = 0;
+            // store index
+            Deque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+            for (int i = 0; i &lt; a.length; i++) {
+                // remove numbers out of range k
+                while (!q.isEmpty() &amp;&amp; q.peek() &lt; i - k + 1) {
+                    q.poll();
+                }
+                // remove smaller numbers in k range as they are useless
+                while (!q.isEmpty() &amp;&amp; a[q.peekLast()] &lt; a[i]) {
+                    q.pollLast();
+                }
+                // q contains index... r contains content
+                q.offer(i);
+                if (i &gt;= k - 1) {
+                    r[ri++] = a[q.peek()];
+                }
+            }
+            return r;
+        }
+}
+</code></pre>
+<p><strong>862. Shortest Subarray with Sum at Least K</strong></p>
+<pre><code>class Solution {
+    public int shortestSubarray(int[] A, int K) {
+        int N = A.length, res = N + 1;
+        int[] B = new int[N + 1];
+        for (int i = 0; i &lt; N; i++) 
+            B[i + 1] = B[i] + A[i];
+        Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
+        for (int i = 0; i &lt; N + 1; i++) {
+            while (d.size() &gt; 0 &amp;&amp; B[i] - B[d.getFirst()] &gt;=  K)
+                res = Math.min(res, i - d.pollFirst());
+            while (d.size() &gt; 0 &amp;&amp; B[i] &lt;= B[d.getLast()]) 
+                d.pollLast();
+            d.addLast(i);
+        }
+        return res &lt;= N ? res : -1;
+    }
+}
+</code></pre>
+<p><strong>901. Online Stock Span</strong></p>
+<pre><code>class StockSpanner {
+
+    public StockSpanner() {
+        
+    }
+    
+    Stack&lt;int[]&gt; stack = new Stack&lt;&gt;();
+    public int next(int price) {
+        int res = 1;
+        while (!stack.isEmpty() &amp;&amp; stack.peek()[0] &lt;= price)
+            res += stack.pop()[1];
+        stack.push(new int[]{price, res});
+        return res;
+    }
+}
+</code></pre>
+<p><strong>LC907. Sum of Subarray Minimums</strong></p>
+<pre><code>class Solution {
+    public int sumSubarrayMins(int[] A) {
+        int MOD = 1_000_000_007;
+        int N = A.length;
+
+        // prev has i* - 1 in increasing order of A[i* - 1]
+        // where i* is the answer to query j
+        Stack&lt;Integer&gt; stack = new Stack();
+        int[] prev = new int[N];
+        for (int i = 0; i &lt; N; ++i) {
+            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
+                stack.pop();
+            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        // next has k* + 1 in increasing order of A[k* + 1]
+        // where k* is the answer to query j
+        stack = new Stack();
+        int[] next = new int[N];
+        for (int k = N-1; k &gt;= 0; --k) {
+            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
+                stack.pop();
+            next[k] = stack.isEmpty() ? N : stack.peek();
+            stack.push(k);
+        }
+
+        // Use prev/next array to count answer
+        long ans = 0;
+        for (int i = 0; i &lt; N; ++i) {
+            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
+            ans %= MOD;
+        }
+        return (int) ans;
+
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[DP summary]]></title>
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-28T23:37:53.000Z</updated>
+        <updated>2019-07-28T10:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -483,157 +634,6 @@ return K[n][W];
             }
 
         return (int) dp[L][N];
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Monotonic Stack]]></title>
-        <id>https://ywang412.github.io/post/monotonic-stack</id>
-        <link href="https://ywang412.github.io/post/monotonic-stack">
-        </link>
-        <updated>2019-07-28T11:40:22.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
-<pre><code>class Solution {
-    public int[] dailyTemperatures(int[] temperatures) {
-        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-        int[] ret = new int[temperatures.length];
-        for(int i = 0; i &lt; temperatures.length; i++) {
-            while(!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
-                int idx = stack.pop();
-                ret[idx] = i - idx;
-            }
-            stack.push(i);
-        }
-        return ret;
-    }
-}
-</code></pre>
-<p><strong>Largest Rectangle in Histogram</strong></p>
-<pre><code>public class Solution {
-    public int largestRectangleArea(int[] height) {
-        int len = height.length;
-        Stack&lt;Integer&gt; s = new Stack&lt;Integer&gt;();
-        int maxArea = 0;
-        int i = 0;
-        while(i &lt;= len){
-            int h = (i == len ? 0 : height[i]);
-            if(s.isEmpty() || h &gt;= height[s.peek()]){
-                s.push(i);
-                i++;
-            }else{
-                int tp = s.pop();
-                maxArea = Math.max(maxArea, height[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
-                 
-            }
-        }
-        return maxArea;
-    }
-}
-</code></pre>
-<p><strong>239. Sliding Window Maximum</strong></p>
-<pre><code>class Solution {
-    public int[] maxSlidingWindow(int[] a, int k) {		
-            if (a == null || k &lt;= 0) {
-                return new int[0];
-            }
-            int n = a.length;
-            int[] r = new int[n-k+1];
-            int ri = 0;
-            // store index
-            Deque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
-            for (int i = 0; i &lt; a.length; i++) {
-                // remove numbers out of range k
-                while (!q.isEmpty() &amp;&amp; q.peek() &lt; i - k + 1) {
-                    q.poll();
-                }
-                // remove smaller numbers in k range as they are useless
-                while (!q.isEmpty() &amp;&amp; a[q.peekLast()] &lt; a[i]) {
-                    q.pollLast();
-                }
-                // q contains index... r contains content
-                q.offer(i);
-                if (i &gt;= k - 1) {
-                    r[ri++] = a[q.peek()];
-                }
-            }
-            return r;
-        }
-}
-</code></pre>
-<p><strong>862. Shortest Subarray with Sum at Least K</strong></p>
-<pre><code>class Solution {
-    public int shortestSubarray(int[] A, int K) {
-        int N = A.length, res = N + 1;
-        int[] B = new int[N + 1];
-        for (int i = 0; i &lt; N; i++) 
-            B[i + 1] = B[i] + A[i];
-        Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
-        for (int i = 0; i &lt; N + 1; i++) {
-            while (d.size() &gt; 0 &amp;&amp; B[i] - B[d.getFirst()] &gt;=  K)
-                res = Math.min(res, i - d.pollFirst());
-            while (d.size() &gt; 0 &amp;&amp; B[i] &lt;= B[d.getLast()]) 
-                d.pollLast();
-            d.addLast(i);
-        }
-        return res &lt;= N ? res : -1;
-    }
-}
-</code></pre>
-<p><strong>901. Online Stock Span</strong></p>
-<pre><code>class StockSpanner {
-
-    public StockSpanner() {
-        
-    }
-    
-    Stack&lt;int[]&gt; stack = new Stack&lt;&gt;();
-    public int next(int price) {
-        int res = 1;
-        while (!stack.isEmpty() &amp;&amp; stack.peek()[0] &lt;= price)
-            res += stack.pop()[1];
-        stack.push(new int[]{price, res});
-        return res;
-    }
-}
-</code></pre>
-<p><strong>LC907. Sum of Subarray Minimums</strong></p>
-<pre><code>class Solution {
-    public int sumSubarrayMins(int[] A) {
-        int MOD = 1_000_000_007;
-        int N = A.length;
-
-        // prev has i* - 1 in increasing order of A[i* - 1]
-        // where i* is the answer to query j
-        Stack&lt;Integer&gt; stack = new Stack();
-        int[] prev = new int[N];
-        for (int i = 0; i &lt; N; ++i) {
-            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
-                stack.pop();
-            prev[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(i);
-        }
-
-        // next has k* + 1 in increasing order of A[k* + 1]
-        // where k* is the answer to query j
-        stack = new Stack();
-        int[] next = new int[N];
-        for (int k = N-1; k &gt;= 0; --k) {
-            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
-                stack.pop();
-            next[k] = stack.isEmpty() ? N : stack.peek();
-            stack.push(k);
-        }
-
-        // Use prev/next array to count answer
-        long ans = 0;
-        for (int i = 0; i &lt; N; ++i) {
-            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
-            ans %= MOD;
-        }
-        return (int) ans;
-
     }
 }
 </code></pre>
