@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567053041780">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567138544775">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567053041780" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567138544775" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,11 +112,34 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">DP summary</h2>
-            <div class="post-date">2019-07-30</div>
+            <div class="post-date">2019-07-29</div>
             
             <div class="post-content">
               <ol start="375">
 <li>Guess Number Higher or Lower II</li>
+</ol>
+<pre><code>public class Solution {
+    public int getMoneyAmount(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        int[][] dp = new int[n + 1][n + 1];
+        for (int jminusi = 1; jminusi &lt; n; jminusi++) {
+            for (int i = 0; i + jminusi &lt;= n; i++) {
+                int j = i + jminusi;
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k &lt;= j; k++) {
+                    dp[i][j] = Math.min(dp[i][j],
+                                        k + Math.max(k - 1 &gt;= i ? dp[i][k - 1] : 0,
+                                                     j &gt;= k + 1 ? dp[k + 1][j] : 0));
+                }
+            }
+        }
+        return dp[1][n];
+    }
+}
+</code></pre>
+<ol start="377">
 <li>Best Time to Buy and Sell Stock IV</li>
 </ol>
 <p><strong>Coin in a line</strong>
@@ -315,6 +338,24 @@ return K[n][W];
             }
         }
         return dp[nums.length - 1][target];
+    }
+}
+</code></pre>
+<p><strong>920. Number of Music Playlists</strong></p>
+<pre><code>class Solution {
+    public int numMusicPlaylists(int N, int L, int K) {
+        int MOD = 1_000_000_007;
+
+        long[][] dp = new long[L+1][N+1];
+        dp[0][0] = 1;
+        for (int i = 1; i &lt;= L; ++i)
+            for (int j = 1; j &lt;= N; ++j) {
+                dp[i][j] += dp[i-1][j-1] * (N-j+1);
+                dp[i][j] += dp[i-1][j] * Math.max(j-K, 0);
+                dp[i][j] %= MOD;
+            }
+
+        return (int) dp[L][N];
     }
 }
 </code></pre>

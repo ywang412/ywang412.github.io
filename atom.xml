@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-29T04:30:45.122Z</updated>
+    <updated>2019-08-30T04:15:46.869Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -219,9 +219,32 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-30T14:37:53.000Z</updated>
+        <updated>2019-07-29T12:37:53.000Z</updated>
         <content type="html"><![CDATA[<ol start="375">
 <li>Guess Number Higher or Lower II</li>
+</ol>
+<pre><code>public class Solution {
+    public int getMoneyAmount(int n) {
+        if (n == 1) {
+            return 0;
+        }
+        int[][] dp = new int[n + 1][n + 1];
+        for (int jminusi = 1; jminusi &lt; n; jminusi++) {
+            for (int i = 0; i + jminusi &lt;= n; i++) {
+                int j = i + jminusi;
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k = i; k &lt;= j; k++) {
+                    dp[i][j] = Math.min(dp[i][j],
+                                        k + Math.max(k - 1 &gt;= i ? dp[i][k - 1] : 0,
+                                                     j &gt;= k + 1 ? dp[k + 1][j] : 0));
+                }
+            }
+        }
+        return dp[1][n];
+    }
+}
+</code></pre>
+<ol start="377">
 <li>Best Time to Buy and Sell Stock IV</li>
 </ol>
 <p><strong>Coin in a line</strong>
@@ -420,6 +443,24 @@ return K[n][W];
             }
         }
         return dp[nums.length - 1][target];
+    }
+}
+</code></pre>
+<p><strong>920. Number of Music Playlists</strong></p>
+<pre><code>class Solution {
+    public int numMusicPlaylists(int N, int L, int K) {
+        int MOD = 1_000_000_007;
+
+        long[][] dp = new long[L+1][N+1];
+        dp[0][0] = 1;
+        for (int i = 1; i &lt;= L; ++i)
+            for (int j = 1; j &lt;= N; ++j) {
+                dp[i][j] += dp[i-1][j-1] * (N-j+1);
+                dp[i][j] += dp[i-1][j] * Math.max(j-K, 0);
+                dp[i][j] %= MOD;
+            }
+
+        return (int) dp[L][N];
     }
 }
 </code></pre>
