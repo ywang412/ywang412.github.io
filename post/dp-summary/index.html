@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567138544775">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567139597032">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567138544775" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567139597032" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,12 +112,10 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">DP summary</h2>
-            <div class="post-date">2019-07-29</div>
+            <div class="post-date">2019-07-28</div>
             
             <div class="post-content">
-              <ol start="375">
-<li>Guess Number Higher or Lower II</li>
-</ol>
+              <p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
         if (n == 1) {
@@ -139,9 +137,33 @@
     }
 }
 </code></pre>
-<ol start="377">
-<li>Best Time to Buy and Sell Stock IV</li>
-</ol>
+<p><strong>377. Best Time to Buy and Sell Stock IV</strong></p>
+<pre><code>class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int len = prices.length;
+        if (k &gt;= len / 2) return quickSolve(prices);
+        
+        int[][] t = new int[k + 1][len];
+        for (int i = 1; i &lt;= k; i++) {
+            int tmpMax =  -prices[0];  // tmpMax is the max after i-1th transaction and 1 more sell. 
+            for (int j = 1; j &lt; len; j++) {
+                t[i][j] = Math.max(t[i][j - 1], prices[j] + tmpMax);
+                tmpMax =  Math.max(tmpMax, t[i - 1][j - 1] - prices[j]);
+            }
+        }
+        return t[k][len - 1];
+    }
+    
+
+    private int quickSolve(int[] prices) {
+        int len = prices.length, profit = 0;
+        for (int i = 1; i &lt; len; i++)
+            // as long as there is a price gap, we gain a profit.
+            if (prices[i] &gt; prices[i - 1]) profit += prices[i] - prices[i - 1];
+        return profit;
+    }
+}
+</code></pre>
 <p><strong>Coin in a line</strong>
 F(i, j)  represents the maximum value the user can collect from
 i'th coin to j'th coin.</p>
