@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-08-30T04:37:20.214Z</updated>
+    <updated>2019-09-03T01:59:14.928Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -370,7 +370,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-28T10:37:53.000Z</updated>
+        <updated>2019-07-27T21:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -640,11 +640,11 @@ return K[n][W];
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Quick sort, quick select, merge sort, bucket sort and topological sort]]></title>
+        <title type="html"><![CDATA[Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort]]></title>
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
         <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
         </link>
-        <updated>2019-07-25T20:09:43.000Z</updated>
+        <updated>2019-07-25T07:09:43.000Z</updated>
         <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
 <pre><code>class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -802,6 +802,21 @@ void topologicalSort()
 		while (stack.empty()==false) 
 				System.out.print(stack.pop() + &quot; &quot;); 
 } 
+</code></pre>
+<p><strong>Bubble sort</strong></p>
+<pre><code>void bubbleSort(int arr[]) 
+{ 
+		int n = arr.length; 
+		for (int i = 0; i &lt; n-1; i++) 
+				for (int j = 0; j &lt; n-i-1; j++) 
+						if (arr[j] &gt; arr[j+1]) 
+						{ 
+								// swap arr[j+1] and arr[i] 
+								int temp = arr[j]; 
+								arr[j] = arr[j+1]; 
+								arr[j+1] = temp; 
+						} 
+}
 </code></pre>
 ]]></content>
     </entry>
