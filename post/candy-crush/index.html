@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567480150781">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567481955630">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567480150781" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567481955630" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -197,6 +197,52 @@
         }
         return maxarea;
         
+    }
+}
+</code></pre>
+<p><strong>361. Bomb Enemy</strong></p>
+<pre><code>class Solution {
+     public int maxKilledEnemies(char[][] grid) {
+        if(grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
+        int max = 0;
+        int row = 0;
+        int[] col = new int[grid[0].length];
+        for(int i = 0; i&lt;grid.length; i++){
+            for(int j = 0; j&lt;grid[0].length;j++){
+                if(grid[i][j] == 'W') continue;
+                if(j == 0 || grid[i][j-1] == 'W'){
+                     row = killedEnemiesRow(grid, i, j);
+                }
+                if(i == 0 || grid[i-1][j] == 'W'){
+                     col[j] = killedEnemiesCol(grid,i,j);
+                }
+                if(grid[i][j] == '0'){
+                    max = (row + col[j] &gt; max) ? row + col[j] : max;
+                }
+            }
+
+        }
+
+        return max;
+    }
+
+    //calculate killed enemies for row i from column j
+    private int killedEnemiesRow(char[][] grid, int i, int j){
+        int num = 0;
+        while(j &lt;= grid[0].length-1 &amp;&amp; grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
+            j++;
+        }
+        return num;
+    }
+    //calculate killed enemies for  column j from row i
+    private int killedEnemiesCol(char[][] grid, int i, int j){
+        int num = 0;
+        while(i &lt;= grid.length -1 &amp;&amp; grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
+            i++;
+        }
+        return num;
     }
 }
 </code></pre>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-03T03:09:12.832Z</updated>
+    <updated>2019-09-03T03:39:17.493Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/candy-crush</id>
         <link href="https://ywang412.github.io/post/candy-crush">
         </link>
-        <updated>2019-08-24T00:01:49.000Z</updated>
+        <updated>2019-08-23T11:01:49.000Z</updated>
         <content type="html"><![CDATA[<p><strong>723. Candy Crush</strong></p>
 <pre><code>class Solution {
     public int[][] candyCrush(int[][] board) {
@@ -98,6 +98,52 @@
         }
         return maxarea;
         
+    }
+}
+</code></pre>
+<p><strong>361. Bomb Enemy</strong></p>
+<pre><code>class Solution {
+     public int maxKilledEnemies(char[][] grid) {
+        if(grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
+        int max = 0;
+        int row = 0;
+        int[] col = new int[grid[0].length];
+        for(int i = 0; i&lt;grid.length; i++){
+            for(int j = 0; j&lt;grid[0].length;j++){
+                if(grid[i][j] == 'W') continue;
+                if(j == 0 || grid[i][j-1] == 'W'){
+                     row = killedEnemiesRow(grid, i, j);
+                }
+                if(i == 0 || grid[i-1][j] == 'W'){
+                     col[j] = killedEnemiesCol(grid,i,j);
+                }
+                if(grid[i][j] == '0'){
+                    max = (row + col[j] &gt; max) ? row + col[j] : max;
+                }
+            }
+
+        }
+
+        return max;
+    }
+
+    //calculate killed enemies for row i from column j
+    private int killedEnemiesRow(char[][] grid, int i, int j){
+        int num = 0;
+        while(j &lt;= grid[0].length-1 &amp;&amp; grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
+            j++;
+        }
+        return num;
+    }
+    //calculate killed enemies for  column j from row i
+    private int killedEnemiesCol(char[][] grid, int i, int j){
+        int num = 0;
+        while(i &lt;= grid.length -1 &amp;&amp; grid[i][j] != 'W'){
+            if(grid[i][j] == 'E') num++;
+            i++;
+        }
+        return num;
     }
 }
 </code></pre>
