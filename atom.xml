@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-04T02:58:14.700Z</updated>
+    <updated>2019-09-04T04:23:35.397Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -488,7 +488,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-27T08:37:53.000Z</updated>
+        <updated>2019-07-26T19:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -792,6 +792,29 @@ return K[n][W];
 
 		return dp[m][n]; 
 } 
+</code></pre>
+<p><strong>516. Longest Palindromic Subsequence</strong></p>
+<pre><code>class Solution {
+    public int longestPalindromeSubseq(String s) {
+        int m = s.length();
+        int[][] dp = new int[m][m];
+        for (int i = 0; i &lt; m; i++) {
+            dp[i][i] = 1;
+        }
+        
+        for (int len = 2; len &lt;= m; len++) {
+            for (int i = 0; i &lt;= m - len; i++) {
+                if (s.charAt(i) == s.charAt(i + len -1)) {
+                    dp[i][i + len - 1] = dp[i + 1][i + len - 2] + 2;
+                }
+                else {
+                    dp[i][i + len - 1] = Math.max(dp[i + 1][i + len -1], dp[i][i + len - 2]);
+                }
+            }
+        }
+        return dp[0][m - 1];
+    }
+}
 </code></pre>
 ]]></content>
     </entry>
