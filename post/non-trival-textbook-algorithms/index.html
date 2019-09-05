@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567571245324">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567650819994">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567571245324" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567650819994" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -758,6 +758,32 @@ public int g(int i, int j, int k) {
 				}
 		}
 		return res;
+}
+</code></pre>
+<p><strong>Decreasing Subsequences</strong></p>
+<p>The number of decreasing subsequence partitions is equal to the length of the longest non-decreasing subsequence.</p>
+<pre><code>public static int leastSubsequences(int... nums) {
+		int[] piles = new int[nums.length];
+		int size = 0;
+		for (int val : nums) {
+				int pile = binarySearch(piles, 0, size, val);
+				piles[pile] = val;
+				if (pile == size) size++;
+		 }
+		return size;
+}
+
+// find first element greater than target
+public static int binarySearch(int[] nums, int lo, int hi, int target) {
+		while (lo &lt; hi) {
+				int mid = (lo + hi) &gt;&gt;&gt; 1;
+				if (nums[mid] &lt;= target) {
+						lo = mid + 1;
+				} else {
+						hi = mid;
+				}
+		}
+		return lo;
 }
 </code></pre>
 
