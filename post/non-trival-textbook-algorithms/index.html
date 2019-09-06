@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567742725629">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567742779312">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567742725629" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567742779312" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-07</div>
+            <div class="post-date">2018-04-06</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -806,6 +806,11 @@ public static int binarySearch(int[] nums, int lo, int hi, int target) {
 }
 </code></pre>
 <p>**Kruskal's Minimum Spanning Tree **</p>
+<ol>
+<li>Sort all the edges in non-decreasing order of their weight.</li>
+<li>Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, include this edge. Else, discard it.</li>
+<li>Repeat step#2 until there are (V-1) edges in the spanning tree.</li>
+</ol>
 <pre><code>
 // The main function to construct MST using Kruskal's algorithm 
 void KruskalMST() 
