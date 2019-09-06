@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567742779312">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567743832697">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567742779312" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567743832697" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Coding tricks using Java syntax </h2>
-            <div class="post-date">2018-06-12</div>
+            <div class="post-date">2018-06-11</div>
             
             <div class="post-content">
               <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
@@ -242,6 +242,27 @@ int res = 0;</p>
 }
 </code></pre>
 <p>}</p>
+<p><strong>TreeSet</strong></p>
+<p>E first() 	It returns the first (lowest) element currently in this sorted set.
+E last() 	It returns the last (highest) element currently in this sorted set.
+boolean remove(Object o) 	It is used to remove the specified element from this set if it is present.
+E higher(E e) 	It returns the closest greatest element of the specified element from the set, or null there is no such element.
+E lower(E e) 	It returns the closest least element of the specified element from the set, or null there is no such element.
+E ceiling(E e) 	It returns the equal or closest greatest element of the specified element from the set, or null there is no such element.
+E floor(E e) 	It returns the equal or closest least element of the specified element from the set, or null there is no such element.
+SortedSet headSet(E toElement) 	It returns the group of elements that are less than the specified element.
+SortedSet tailSet(E fromElement) 	It returns a set of elements that are greater than or equal to the specified element.</p>
+<p>Map.Entry&lt;K,V&gt; ceilingEntry(K key)	It returns the key-value pair having the least key, greater than or equal to the specified key, or null if there is no such key.
+K ceilingKey(K key)	It returns the least key, greater than the specified key or null if there is no such key.
+Map.Entry&lt;K,V&gt; floorEntry(K key)	It returns the greatest key, less than or equal to the specified key, or null if there is no such key.
+Map.Entry&lt;K,V&gt; higherEntry(K key)	It returns the least key strictly greater than the given key, or null if there is no such key.
+SortedMap&lt;K,V&gt; headMap(K toKey)	It returns the key-value pairs whose keys are strictly less than toKey.
+K higherKey(K key)	It is used to return true if this map contains a mapping for the specified key.
+Map.Entry&lt;K,V&gt; pollFirstEntry()	It removes and returns a key-value mapping associated with the least key in this map, or null if the map is empty.
+Map.Entry&lt;K,V&gt; pollLastEntry()	It removes and returns a key-value mapping associated with the greatest key in this map, or null if the map is empty.
+SortedMap&lt;K,V&gt; tailMap(K fromKey)	It returns key-value pairs whose keys are greater than or equal to fromKey.
+K firstKey()	It is used to return the first (lowest) key currently in this sorted map.
+K lastKey()	It is used to return the last (highest) key currently in the sorted map.</p>
 
             </div>
             
