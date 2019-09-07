@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-06T04:29:06.351Z</updated>
+    <updated>2019-09-07T20:27:35.803Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -484,11 +484,192 @@ The server can push some part of their cache to CDNs and Internet Service Provid
 ]]></content>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort]]></title>
+        <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
+        <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
+        </link>
+        <updated>2019-07-25T07:09:43.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
+<pre><code>class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        return quickSelectK(nums, 0, nums.length - 1, nums.length - k);
+    }
+    
+    public int quickSelectK(int[] nums, int start, int end, int k) { 
+        
+        int pivot = nums[start];
+        int i = start;
+        int j = end;
+        while (i &lt; j) { 
+            while (i &lt; end &amp;&amp; nums[i] &lt;= pivot) i++;
+            while (j &gt; start &amp;&amp; nums[j] &gt;= pivot) j--; 
+            if (i &lt; j) {
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }   
+        } 
+        nums[start] = nums[j];
+        nums[j] = pivot;
+        if (j == k) return nums[j];
+        else if (j &lt; k) return quickSelectK(nums, j + 1, end, k);
+        else return quickSelectK(nums, start, j, k);
+    } 
+}
+</code></pre>
+<p><strong>Bucket Sort</strong></p>
+<pre><code>private static void bucketSort(int[] intArr, int noOfBuckets){
+		// Create bucket array
+		List&lt;Integer&gt;[] buckets = new List[noOfBuckets];
+		// Associate a list with each index 
+		// in the bucket array         
+		for(int i = 0; i &lt; noOfBuckets; i++){
+				buckets[i] = new LinkedList&lt;&gt;();
+		}
+		// Assign numbers from array to the proper bucket
+		// by using hashing function
+		for(int num : intArr){
+				//System.out.println(&quot;hash- &quot; + hash(num));
+				buckets[hash(num)].add(num);
+		}
+		// sort buckets
+		for(List&lt;Integer&gt; bucket : buckets){
+				Collections.sort(bucket);
+		}
+		int i = 0;
+		// Merge buckets to get sorted array
+		for(List&lt;Integer&gt; bucket : buckets){
+				for(int num : bucket){
+						intArr[i++] = num;
+				}
+		}
+}
+</code></pre>
+<p><strong>Topological Sort</strong>
+Course Schedule II</p>
+<pre><code>public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+    boolean isPossible = true;
+    Map&lt;Integer, List&lt;Integer&gt;&gt; adjList = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    int[] indegree = new int[numCourses];
+    int[] topologicalOrder = new int[numCourses];
+
+    // Create the adjacency list representation of the graph
+    for (int i = 0; i &lt; prerequisites.length; i++) {
+      int dest = prerequisites[i][0];
+      int src = prerequisites[i][1];
+      List&lt;Integer&gt; lst = adjList.getOrDefault(src, new ArrayList&lt;Integer&gt;());
+      lst.add(dest);
+      adjList.put(src, lst);
+
+      // Record in-degree of each vertex
+      indegree[dest] += 1;
+    }
+
+    // Add all vertices with 0 in-degree to the queue
+    Queue&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
+    for (int i = 0; i &lt; numCourses; i++) {
+      if (indegree[i] == 0) {
+        q.add(i);
+      }
+    }
+
+    int i = 0;
+    // Process until the Q becomes empty
+    while (!q.isEmpty()) {
+      int node = q.remove();
+      topologicalOrder[i++] = node;
+
+      // Reduce the in-degree of each neighbor by 1
+      if (adjList.containsKey(node)) {
+        for (Integer neighbor : adjList.get(node)) {
+          indegree[neighbor]--;
+
+          // If in-degree of a neighbor becomes 0, add it to the Q
+          if (indegree[neighbor] == 0) {
+            q.add(neighbor);
+          }
+        }
+      }
+    }
+
+    // Check to see if topological sort is possible or not.
+    if (i == numCourses) {
+      return topologicalOrder;
+    }
+
+    return new int[0];
+  } 
+</code></pre>
+<p>Topological sort using DFS</p>
+<pre><code>// A recursive function used by topologicalSort 
+void topologicalSortUtil(int v, boolean visited[], 
+												 Stack stack) 
+{ 
+		// Mark the current node as visited. 
+		visited[v] = true; 
+		Integer i; 
+
+		// Recur for all the vertices adjacent to this 
+		// vertex 
+		Iterator&lt;Integer&gt; it = adj[v].iterator(); 
+		while (it.hasNext()) 
+		{ 
+				i = it.next(); 
+				if (!visited[i]) 
+						topologicalSortUtil(i, visited, stack); 
+		} 
+
+		// Push current vertex to stack which stores result 
+		stack.push(new Integer(v)); 
+} 
+
+// The function to do Topological Sort. It uses 
+// recursive topologicalSortUtil() 
+void topologicalSort() 
+{ 
+		Stack stack = new Stack(); 
+
+		// Mark all the vertices as not visited 
+		boolean visited[] = new boolean[V]; 
+		for (int i = 0; i &lt; V; i++) 
+				visited[i] = false; 
+
+		// Call the recursive helper function to store 
+		// Topological Sort starting from all vertices 
+		// one by one 
+		for (int i = 0; i &lt; V; i++) 
+				if (visited[i] == false) 
+						topologicalSortUtil(i, visited, stack); 
+
+		// Print contents of stack 
+		while (stack.empty()==false) 
+				System.out.print(stack.pop() + &quot; &quot;); 
+} 
+</code></pre>
+<p><strong>Bubble sort</strong></p>
+<pre><code>void bubbleSort(int arr[]) 
+{ 
+		int n = arr.length; 
+		for (int i = 0; i &lt; n-1; i++) 
+				for (int j = 0; j &lt; n-i-1; j++) 
+						if (arr[j] &gt; arr[j+1]) 
+						{ 
+								// swap arr[j+1] and arr[i] 
+								int temp = arr[j]; 
+								arr[j] = arr[j+1]; 
+								arr[j+1] = temp; 
+						} 
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[DP summary]]></title>
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-25T17:37:53.000Z</updated>
+        <updated>2019-07-25T04:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -902,186 +1083,29 @@ return K[n][W];
         }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort]]></title>
-        <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
-        <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
-        </link>
-        <updated>2019-07-25T07:09:43.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
-<pre><code>class Solution {
-    public int findKthLargest(int[] nums, int k) {
-        return quickSelectK(nums, 0, nums.length - 1, nums.length - k);
-    }
-    
-    public int quickSelectK(int[] nums, int start, int end, int k) { 
-        
-        int pivot = nums[start];
-        int i = start;
-        int j = end;
-        while (i &lt; j) { 
-            while (i &lt; end &amp;&amp; nums[i] &lt;= pivot) i++;
-            while (j &gt; start &amp;&amp; nums[j] &gt;= pivot) j--; 
-            if (i &lt; j) {
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
-            }   
-        } 
-        nums[start] = nums[j];
-        nums[j] = pivot;
-        if (j == k) return nums[j];
-        else if (j &lt; k) return quickSelectK(nums, j + 1, end, k);
-        else return quickSelectK(nums, start, j, k);
-    } 
-}
-</code></pre>
-<p><strong>Bucket Sort</strong></p>
-<pre><code>private static void bucketSort(int[] intArr, int noOfBuckets){
-		// Create bucket array
-		List&lt;Integer&gt;[] buckets = new List[noOfBuckets];
-		// Associate a list with each index 
-		// in the bucket array         
-		for(int i = 0; i &lt; noOfBuckets; i++){
-				buckets[i] = new LinkedList&lt;&gt;();
-		}
-		// Assign numbers from array to the proper bucket
-		// by using hashing function
-		for(int num : intArr){
-				//System.out.println(&quot;hash- &quot; + hash(num));
-				buckets[hash(num)].add(num);
-		}
-		// sort buckets
-		for(List&lt;Integer&gt; bucket : buckets){
-				Collections.sort(bucket);
-		}
-		int i = 0;
-		// Merge buckets to get sorted array
-		for(List&lt;Integer&gt; bucket : buckets){
-				for(int num : bucket){
-						intArr[i++] = num;
-				}
-		}
-}
-</code></pre>
-<p><strong>Topological Sort</strong>
-Course Schedule II</p>
-<pre><code>public int[] findOrder(int numCourses, int[][] prerequisites) {
-        
-    boolean isPossible = true;
-    Map&lt;Integer, List&lt;Integer&gt;&gt; adjList = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
-    int[] indegree = new int[numCourses];
-    int[] topologicalOrder = new int[numCourses];
-
-    // Create the adjacency list representation of the graph
-    for (int i = 0; i &lt; prerequisites.length; i++) {
-      int dest = prerequisites[i][0];
-      int src = prerequisites[i][1];
-      List&lt;Integer&gt; lst = adjList.getOrDefault(src, new ArrayList&lt;Integer&gt;());
-      lst.add(dest);
-      adjList.put(src, lst);
-
-      // Record in-degree of each vertex
-      indegree[dest] += 1;
-    }
-
-    // Add all vertices with 0 in-degree to the queue
-    Queue&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
-    for (int i = 0; i &lt; numCourses; i++) {
-      if (indegree[i] == 0) {
-        q.add(i);
-      }
-    }
-
-    int i = 0;
-    // Process until the Q becomes empty
-    while (!q.isEmpty()) {
-      int node = q.remove();
-      topologicalOrder[i++] = node;
-
-      // Reduce the in-degree of each neighbor by 1
-      if (adjList.containsKey(node)) {
-        for (Integer neighbor : adjList.get(node)) {
-          indegree[neighbor]--;
-
-          // If in-degree of a neighbor becomes 0, add it to the Q
-          if (indegree[neighbor] == 0) {
-            q.add(neighbor);
-          }
-        }
-      }
-    }
-
-    // Check to see if topological sort is possible or not.
-    if (i == numCourses) {
-      return topologicalOrder;
-    }
-
-    return new int[0];
-  } 
-</code></pre>
-<p>Topological sort using DFS</p>
-<pre><code>// A recursive function used by topologicalSort 
-void topologicalSortUtil(int v, boolean visited[], 
-												 Stack stack) 
+<p><strong>Longest Increasing Subsequence</strong></p>
+<pre><code>static int lis(int arr[],int n) 
 { 
-		// Mark the current node as visited. 
-		visited[v] = true; 
-		Integer i; 
+			int lis[] = new int[n]; 
+			int i,j,max = 0; 
 
-		// Recur for all the vertices adjacent to this 
-		// vertex 
-		Iterator&lt;Integer&gt; it = adj[v].iterator(); 
-		while (it.hasNext()) 
-		{ 
-				i = it.next(); 
-				if (!visited[i]) 
-						topologicalSortUtil(i, visited, stack); 
-		} 
+			/* Initialize LIS values for all indexes */
+			 for ( i = 0; i &lt; n; i++ ) 
+					lis[i] = 1; 
 
-		// Push current vertex to stack which stores result 
-		stack.push(new Integer(v)); 
+			 /* Compute optimized LIS values in bottom up manner */
+			 for ( i = 1; i &lt; n; i++ ) 
+					for ( j = 0; j &lt; i; j++ )  
+										 if ( arr[i] &gt; arr[j] &amp;&amp; lis[i] &lt; lis[j] + 1) 
+								lis[i] = lis[j] + 1; 
+
+			 /* Pick maximum of all LIS values */
+			 for ( i = 0; i &lt; n; i++ ) 
+					if ( max &lt; lis[i] ) 
+						 max = lis[i]; 
+
+				return max; 
 } 
-
-// The function to do Topological Sort. It uses 
-// recursive topologicalSortUtil() 
-void topologicalSort() 
-{ 
-		Stack stack = new Stack(); 
-
-		// Mark all the vertices as not visited 
-		boolean visited[] = new boolean[V]; 
-		for (int i = 0; i &lt; V; i++) 
-				visited[i] = false; 
-
-		// Call the recursive helper function to store 
-		// Topological Sort starting from all vertices 
-		// one by one 
-		for (int i = 0; i &lt; V; i++) 
-				if (visited[i] == false) 
-						topologicalSortUtil(i, visited, stack); 
-
-		// Print contents of stack 
-		while (stack.empty()==false) 
-				System.out.print(stack.pop() + &quot; &quot;); 
-} 
-</code></pre>
-<p><strong>Bubble sort</strong></p>
-<pre><code>void bubbleSort(int arr[]) 
-{ 
-		int n = arr.length; 
-		for (int i = 0; i &lt; n-1; i++) 
-				for (int j = 0; j &lt; n-i-1; j++) 
-						if (arr[j] &gt; arr[j+1]) 
-						{ 
-								// swap arr[j+1] and arr[i] 
-								int temp = arr[j]; 
-								arr[j] = arr[j+1]; 
-								arr[j+1] = temp; 
-						} 
-}
 </code></pre>
 ]]></content>
     </entry>
