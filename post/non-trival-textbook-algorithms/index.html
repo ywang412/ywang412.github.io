@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567888092639">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567889612264">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567888092639" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567889612264" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -870,6 +870,56 @@ void KruskalMST()
 				System.out.println(result[i].src+&quot; -- &quot; +  
 							 result[i].dest+&quot; == &quot; + result[i].weight); 
 } 
+</code></pre>
+<p><strong>smallest positive number missing</strong></p>
+<pre><code>static int findMissingNo(int []arr, int n) 
+	{ 
+			// to store current array element 
+			int val; 
+
+			// to store next array element in 
+			// current traversal 
+			int nextval; 
+
+			for (int i = 0; i &lt; n; i++) { 
+
+					// if value is negative or greater 
+					// than array size, then it cannot 
+					// be marked in array. So move to 
+					// next element. 
+					if (arr[i] &lt;= 0 || arr[i] &gt; n) 
+							continue; 
+
+					val = arr[i]; 
+
+					// traverse the array until we 
+					// reach at an element which 
+					// is already marked or which 
+					// could not be marked. 
+					while (arr[val - 1] != val) { 
+							nextval = arr[val - 1]; 
+							arr[val - 1] = val; 
+							val = nextval; 
+							if (val &lt;= 0 || val &gt; n) 
+									break; 
+					} 
+			} 
+
+			// find first array index which is 
+			// not marked which is also the 
+			// smallest positive missing 
+			// number. 
+			for (int i = 0; i &lt; n; i++) { 
+					if (arr[i] != i + 1) { 
+							return i + 1; 
+					} 
+			} 
+
+			// if all indices are marked, then 
+			// smallest missing positive 
+			// number is array_size + 1. 
+			return n + 1; 
+	} 
 </code></pre>
 
             </div>
