@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567891203921">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567892055150">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567891203921" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567892055150" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Java 8 Lambda expressions and Streams</h2>
-            <div class="post-date">2019-01-02</div>
+            <div class="post-date">2018-12-31</div>
             
             <div class="post-content">
               <p><strong>Lambda Expressions Example</strong></p>
@@ -160,6 +160,196 @@
 	
    private int operate(int a, int b, MathOperation mathOperation) {
       return mathOperation.operation(a, b);
+   }
+}
+</code></pre>
+<p><strong>Streams</strong></p>
+<pre><code>import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.Map;
+
+public class Java8Tester {
+
+   public static void main(String args[]) {
+      System.out.println(&quot;Using Java 7: &quot;);
+		
+      // Count empty strings
+      List&lt;String&gt; strings = Arrays.asList(&quot;abc&quot;, &quot;&quot;, &quot;bc&quot;, &quot;efg&quot;, &quot;abcd&quot;,&quot;&quot;, &quot;jkl&quot;);
+      System.out.println(&quot;List: &quot; +strings);
+      long count = getCountEmptyStringUsingJava7(strings);
+		
+      System.out.println(&quot;Empty Strings: &quot; + count);
+      count = getCountLength3UsingJava7(strings);
+		
+      System.out.println(&quot;Strings of length 3: &quot; + count);
+		
+      //Eliminate empty string
+      List&lt;String&gt; filtered = deleteEmptyStringsUsingJava7(strings);
+      System.out.println(&quot;Filtered List: &quot; + filtered);
+		
+      //Eliminate empty string and join using comma.
+      String mergedString = getMergedStringUsingJava7(strings,&quot;, &quot;);
+      System.out.println(&quot;Merged String: &quot; + mergedString);
+      List&lt;Integer&gt; numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
+		
+      //get list of square of distinct numbers
+      List&lt;Integer&gt; squaresList = getSquares(numbers);
+      System.out.println(&quot;Squares List: &quot; + squaresList);
+      List&lt;Integer&gt; integers = Arrays.asList(1,2,13,4,15,6,17,8,19);
+		
+      System.out.println(&quot;List: &quot; +integers);
+      System.out.println(&quot;Highest number in List : &quot; + getMax(integers));
+      System.out.println(&quot;Lowest number in List : &quot; + getMin(integers));
+      System.out.println(&quot;Sum of all numbers : &quot; + getSum(integers));
+      System.out.println(&quot;Average of all numbers : &quot; + getAverage(integers));
+      System.out.println(&quot;Random Numbers: &quot;);
+		
+      //print ten random numbers
+      Random random = new Random();
+		
+      for(int i = 0; i &lt; 10; i++) {
+         System.out.println(random.nextInt());
+      }
+		
+      System.out.println(&quot;Using Java 8: &quot;);
+      System.out.println(&quot;List: &quot; +strings);
+		
+      count = strings.stream().filter(string-&gt;string.isEmpty()).count();
+      System.out.println(&quot;Empty Strings: &quot; + count);
+		
+      count = strings.stream().filter(string -&gt; string.length() == 3).count();
+      System.out.println(&quot;Strings of length 3: &quot; + count);
+		
+      filtered = strings.stream().filter(string -&gt;!string.isEmpty()).collect(Collectors.toList());
+      System.out.println(&quot;Filtered List: &quot; + filtered);
+		
+      mergedString = strings.stream().filter(string -&gt;!string.isEmpty()).collect(Collectors.joining(&quot;, &quot;));
+      System.out.println(&quot;Merged String: &quot; + mergedString);
+		
+      squaresList = numbers.stream().map( i -&gt;i*i).distinct().collect(Collectors.toList());
+      System.out.println(&quot;Squares List: &quot; + squaresList);
+      System.out.println(&quot;List: &quot; +integers);
+		
+      IntSummaryStatistics stats = integers.stream().mapToInt((x) -&gt;x).summaryStatistics();
+		
+      System.out.println(&quot;Highest number in List : &quot; + stats.getMax());
+      System.out.println(&quot;Lowest number in List : &quot; + stats.getMin());
+      System.out.println(&quot;Sum of all numbers : &quot; + stats.getSum());
+      System.out.println(&quot;Average of all numbers : &quot; + stats.getAverage());
+      System.out.println(&quot;Random Numbers: &quot;);
+		
+      random.ints().limit(10).sorted().forEach(System.out::println);
+		
+      //parallel processing
+      count = strings.parallelStream().filter(string -&gt; string.isEmpty()).count();
+      System.out.println(&quot;Empty Strings: &quot; + count);
+   }
+	
+   private static int getCountEmptyStringUsingJava7(List&lt;String&gt; strings) {
+      int count = 0;
+
+      for(String string: strings) {
+		
+         if(string.isEmpty()) {
+            count++;
+         }
+      }
+      return count;
+   }
+	
+   private static int getCountLength3UsingJava7(List&lt;String&gt; strings) {
+      int count = 0;
+		
+      for(String string: strings) {
+		
+         if(string.length() == 3) {
+            count++;
+         }
+      }
+      return count;
+   }
+	
+   private static List&lt;String&gt; deleteEmptyStringsUsingJava7(List&lt;String&gt; strings) {
+      List&lt;String&gt; filteredList = new ArrayList&lt;String&gt;();
+		
+      for(String string: strings) {
+		
+         if(!string.isEmpty()) {
+             filteredList.add(string);
+         }
+      }
+      return filteredList;
+   }
+	
+   private static String getMergedStringUsingJava7(List&lt;String&gt; strings, String separator) {
+      StringBuilder stringBuilder = new StringBuilder();
+		
+      for(String string: strings) {
+		
+         if(!string.isEmpty()) {
+            stringBuilder.append(string);
+            stringBuilder.append(separator);
+         }
+      }
+      String mergedString = stringBuilder.toString();
+      return mergedString.substring(0, mergedString.length()-2);
+   }
+	
+   private static List&lt;Integer&gt; getSquares(List&lt;Integer&gt; numbers) {
+      List&lt;Integer&gt; squaresList = new ArrayList&lt;Integer&gt;();
+		
+      for(Integer number: numbers) {
+         Integer square = new Integer(number.intValue() * number.intValue());
+			
+         if(!squaresList.contains(square)) {
+            squaresList.add(square);
+         }
+      }
+      return squaresList;
+   }
+	
+   private static int getMax(List&lt;Integer&gt; numbers) {
+      int max = numbers.get(0);
+		
+      for(int i = 1;i &lt; numbers.size();i++) {
+		
+         Integer number = numbers.get(i);
+			
+         if(number.intValue() &gt; max) {
+            max = number.intValue();
+         }
+      }
+      return max;
+   }
+	
+   private static int getMin(List&lt;Integer&gt; numbers) {
+      int min = numbers.get(0);
+		
+      for(int i= 1;i &lt; numbers.size();i++) {
+         Integer number = numbers.get(i);
+		
+         if(number.intValue() &lt; min) {
+            min = number.intValue();
+         }
+      }
+      return min;
+   }
+	
+   private static int getSum(List numbers) {
+      int sum = (int)(numbers.get(0));
+		
+      for(int i = 1;i &lt; numbers.size();i++) {
+         sum += (int)numbers.get(i);
+      }
+      return sum;
+   }
+	
+   private static int getAverage(List&lt;Integer&gt; numbers) {
+      return getSum(numbers) / numbers.size();
    }
 }
 </code></pre>
