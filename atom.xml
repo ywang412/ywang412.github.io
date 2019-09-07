@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-07T21:34:18.024Z</updated>
+    <updated>2019-09-07T21:42:06.060Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -492,7 +492,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
         <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
         </link>
-        <updated>2019-07-25T07:09:43.000Z</updated>
+        <updated>2019-07-24T18:09:43.000Z</updated>
         <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
 <pre><code>class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -665,6 +665,81 @@ void topologicalSort()
 								arr[j+1] = temp; 
 						} 
 }
+</code></pre>
+<p><strong>Merge sort</strong></p>
+<pre><code>void merge(int arr[], int l, int m, int r) 
+{ 
+		// Find sizes of two subarrays to be merged 
+		int n1 = m - l + 1; 
+		int n2 = r - m; 
+
+		/* Create temp arrays */
+		int L[] = new int [n1]; 
+		int R[] = new int [n2]; 
+
+		/*Copy data to temp arrays*/
+		for (int i=0; i&lt;n1; ++i) 
+				L[i] = arr[l + i]; 
+		for (int j=0; j&lt;n2; ++j) 
+				R[j] = arr[m + 1+ j]; 
+
+
+		/* Merge the temp arrays */
+
+		// Initial indexes of first and second subarrays 
+		int i = 0, j = 0; 
+
+		// Initial index of merged subarry array 
+		int k = l; 
+		while (i &lt; n1 &amp;&amp; j &lt; n2) 
+		{ 
+				if (L[i] &lt;= R[j]) 
+				{ 
+						arr[k] = L[i]; 
+						i++; 
+				} 
+				else
+				{ 
+						arr[k] = R[j]; 
+						j++; 
+				} 
+				k++; 
+		} 
+
+		/* Copy remaining elements of L[] if any */
+		while (i &lt; n1) 
+		{ 
+				arr[k] = L[i]; 
+				i++; 
+				k++; 
+		} 
+
+		/* Copy remaining elements of R[] if any */
+		while (j &lt; n2) 
+		{ 
+				arr[k] = R[j]; 
+				j++; 
+				k++; 
+		} 
+} 
+
+// Main function that sorts arr[l..r] using 
+// merge() 
+void sort(int arr[], int l, int r) 
+{ 
+		if (l &lt; r) 
+		{ 
+				// Find the middle point 
+				int m = (l+r)/2; 
+
+				// Sort first and second halves 
+				sort(arr, l, m); 
+				sort(arr , m+1, r); 
+
+				// Merge the sorted halves 
+				merge(arr, l, m, r); 
+		} 
+} 
 </code></pre>
 ]]></content>
     </entry>

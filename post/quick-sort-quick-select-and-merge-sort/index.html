@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567892055150">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567892523657">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567892055150" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567892523657" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort</h2>
-            <div class="post-date">2019-07-25</div>
+            <div class="post-date">2019-07-24</div>
             
             <div class="post-content">
               <p><strong>215. Kth Largest Element in an Array</strong></p>
@@ -287,6 +287,81 @@ void topologicalSort()
 								arr[j+1] = temp; 
 						} 
 }
+</code></pre>
+<p><strong>Merge sort</strong></p>
+<pre><code>void merge(int arr[], int l, int m, int r) 
+{ 
+		// Find sizes of two subarrays to be merged 
+		int n1 = m - l + 1; 
+		int n2 = r - m; 
+
+		/* Create temp arrays */
+		int L[] = new int [n1]; 
+		int R[] = new int [n2]; 
+
+		/*Copy data to temp arrays*/
+		for (int i=0; i&lt;n1; ++i) 
+				L[i] = arr[l + i]; 
+		for (int j=0; j&lt;n2; ++j) 
+				R[j] = arr[m + 1+ j]; 
+
+
+		/* Merge the temp arrays */
+
+		// Initial indexes of first and second subarrays 
+		int i = 0, j = 0; 
+
+		// Initial index of merged subarry array 
+		int k = l; 
+		while (i &lt; n1 &amp;&amp; j &lt; n2) 
+		{ 
+				if (L[i] &lt;= R[j]) 
+				{ 
+						arr[k] = L[i]; 
+						i++; 
+				} 
+				else
+				{ 
+						arr[k] = R[j]; 
+						j++; 
+				} 
+				k++; 
+		} 
+
+		/* Copy remaining elements of L[] if any */
+		while (i &lt; n1) 
+		{ 
+				arr[k] = L[i]; 
+				i++; 
+				k++; 
+		} 
+
+		/* Copy remaining elements of R[] if any */
+		while (j &lt; n2) 
+		{ 
+				arr[k] = R[j]; 
+				j++; 
+				k++; 
+		} 
+} 
+
+// Main function that sorts arr[l..r] using 
+// merge() 
+void sort(int arr[], int l, int r) 
+{ 
+		if (l &lt; r) 
+		{ 
+				// Find the middle point 
+				int m = (l+r)/2; 
+
+				// Sort first and second halves 
+				sort(arr, l, m); 
+				sort(arr , m+1, r); 
+
+				// Merge the sorted halves 
+				merge(arr, l, m, r); 
+		} 
+} 
 </code></pre>
 
             </div>
