@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567892523657">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567893401871">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567892523657" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567893401871" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -116,31 +116,34 @@
             
             <div class="post-content">
               <p><strong>215. Kth Largest Element in an Array</strong></p>
-<pre><code>class Solution {
+<pre><code>public class Solution {
     public int findKthLargest(int[] nums, int k) {
-        return quickSelectK(nums, 0, nums.length - 1, nums.length - k);
+        int start = 0, end = nums.length - 1, index = nums.length - k;
+        while (start &lt; end) {
+            int pivot = partion(nums, start, end);
+            if (pivot &lt; index) start = pivot + 1; 
+            else if (pivot &gt; index) end = pivot - 1;
+            else return nums[pivot];
+        }
+        return nums[start];
     }
     
-    public int quickSelectK(int[] nums, int start, int end, int k) { 
-        
-        int pivot = nums[start];
-        int i = start;
-        int j = end;
-        while (i &lt; j) { 
-            while (i &lt; end &amp;&amp; nums[i] &lt;= pivot) i++;
-            while (j &gt; start &amp;&amp; nums[j] &gt;= pivot) j--; 
-            if (i &lt; j) {
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
-            }   
-        } 
-        nums[start] = nums[j];
-        nums[j] = pivot;
-        if (j == k) return nums[j];
-        else if (j &lt; k) return quickSelectK(nums, j + 1, end, k);
-        else return quickSelectK(nums, start, j, k);
-    } 
+    private int partion(int[] nums, int start, int end) {
+        int pivot = start, temp;
+        while (start &lt;= end) {
+            while (start &lt;= end &amp;&amp; nums[start] &lt;= nums[pivot]) start++;
+            while (start &lt;= end &amp;&amp; nums[end] &gt;= nums[pivot]) end--;
+            if (start &lt;= end) { 
+                temp = nums[start];
+                nums[start] = nums[end];
+                nums[end] = temp;
+            }
+        }
+        temp = nums[end];
+        nums[end] = nums[pivot];
+        nums[pivot] = temp;
+        return end;
+    }
 }
 </code></pre>
 <p><strong>Bucket Sort</strong></p>
@@ -369,9 +372,9 @@ void sort(int arr[], int l, int r)
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/dp-summary">
+                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
                   <h3 class="post-title">
-                    DP summary
+                    Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal
                   </h3>
                 </a>
               </div>
