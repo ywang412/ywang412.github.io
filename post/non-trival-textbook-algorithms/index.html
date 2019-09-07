@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567895851630">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567898261006">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567895851630" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567898261006" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-06</div>
+            <div class="post-date">2018-04-05</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -920,6 +920,79 @@ void KruskalMST()
 			// number is array_size + 1. 
 			return n + 1; 
 	} 
+</code></pre>
+<p>**642. Design Search Autocomplete System -Trie **</p>
+<pre><code>class AutocompleteSystem {
+    
+    class TrieNode {
+        public Map&lt;Character, TrieNode&gt; children;
+        public Map&lt;String, Integer&gt; count;
+        
+        public TrieNode() {
+            children = new HashMap&lt;&gt;();
+            count = new HashMap&lt;&gt;();
+        }
+    }
+
+    TrieNode root;
+    
+    public AutocompleteSystem(String[] sentences, int[] times) {
+        root = new TrieNode();
+        for (int i = 0; i &lt; sentences.length; i++) { 
+            addSentence(sentences[i], times[i]);
+        }
+    }
+    
+    public void addSentence(String s, int count) {
+        char[] cs = s.toCharArray();
+        TrieNode cur = root;
+        for (int j = 0; j &lt; cs.length; j++) {
+            cur.children.putIfAbsent(cs[j], new TrieNode());
+            cur = cur.children.get(cs[j]);
+            cur.count.put(s, cur.count.getOrDefault(s, 0) + count);
+        }
+    }
+    
+    String prev = &quot;&quot;; 
+    
+    public List&lt;String&gt; input(char c) {
+        if (c == '#') {
+            addSentence(prev, 1);
+            prev = &quot;&quot;;  
+            return new ArrayList&lt;&gt;();
+        } 
+        prev += c;
+        TrieNode curr = root;
+        
+        for (char cc : prev.toCharArray()) {
+            TrieNode next = curr.children.get(cc);
+            if (next == null) {
+                return new ArrayList&lt;String&gt;();
+            }
+            curr = next;
+        }
+        
+        PriorityQueue&lt;Map.Entry&lt;String, Integer&gt;&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; {
+            if (a.getValue() != b.getValue()) {
+                return Integer.compare(b.getValue(), a.getValue());
+            }
+            else {
+                return a.getKey().compareTo(b.getKey());
+            }
+        });
+        
+        for (Map.Entry&lt;String, Integer&gt; e : curr.count.entrySet()) {
+            pq.add(e);
+        }
+        
+        List&lt;String&gt; res = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; 3 &amp;&amp; !pq.isEmpty(); i++) {
+            res.add(pq.poll().getKey());
+        }
+        
+        return res;
+    }
+}
 </code></pre>
 
             </div>
