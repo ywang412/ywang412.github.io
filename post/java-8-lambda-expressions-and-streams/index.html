@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>LeetCode | Yu&#39;s Github</title>
+<title>Java 8 Lambda expressions and Streams | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
+
+  
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,63 +110,82 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: LeetCode</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/leetcode-118-pascals-triangle-java-type-erasure">
-                  <h2 class="post-title">Coding tricks using Java syntax </h2>
-                </a>
-                <div class="post-date">
-                  2018-06-10
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/dfsbfs-algorithm">
-                  <h2 class="post-title">Pitfalls in DFS and BFS algorithm</h2>
-                </a>
-                <div class="post-date">
-                  2018-05-13
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-                <a class="right" href="https://ywang412.github.io/post/dfsbfs-algorithm">
-                  <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/dfsbfs-algorithm.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/non-trival-textbook-algorithms">
-                  <h2 class="post-title">Non-trival textbook algorithms</h2>
-                </a>
-                <div class="post-date">
-                  2018-04-06
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">Java 8 Lambda expressions and Streams</h2>
+            <div class="post-date">2019-01-02</div>
+            
+            <div class="post-content">
+              <p><strong>Lambda Expressions Example</strong></p>
+<pre><code>public class Java8Tester {
 
-          <div class="pagination-container">
-  
-  
-</div>
+   public static void main(String args[]) {
+      Java8Tester tester = new Java8Tester();
+		
+      //with type declaration
+      MathOperation addition = (int a, int b) -&gt; a + b;
+		
+      //with out type declaration
+      MathOperation subtraction = (a, b) -&gt; a - b;
+		
+      //with return statement along with curly braces
+      MathOperation multiplication = (int a, int b) -&gt; { return a * b; };
+		
+      //without return statement and without curly braces
+      MathOperation division = (int a, int b) -&gt; a / b;
+		
+      System.out.println(&quot;10 + 5 = &quot; + tester.operate(10, 5, addition));
+      System.out.println(&quot;10 - 5 = &quot; + tester.operate(10, 5, subtraction));
+      System.out.println(&quot;10 x 5 = &quot; + tester.operate(10, 5, multiplication));
+      System.out.println(&quot;10 / 5 = &quot; + tester.operate(10, 5, division));
+		
+      //without parenthesis
+      GreetingService greetService1 = message -&gt;
+      System.out.println(&quot;Hello &quot; + message);
+		
+      //with parenthesis
+      GreetingService greetService2 = (message) -&gt;
+      System.out.println(&quot;Hello &quot; + message);
+		
+      greetService1.sayMessage(&quot;Mahesh&quot;);
+      greetService2.sayMessage(&quot;Suresh&quot;);
+   }
+	
+   interface MathOperation {
+      int operation(int a, int b);
+   }
+	
+   interface GreetingService {
+      void sayMessage(String message);
+   }
+	
+   private int operate(int a, int b, MathOperation mathOperation) {
+      return mathOperation.operation(a, b);
+   }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
+                  <h3 class="post-title">
+                    Examples of OOD class diagrams
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+
+              
+                <div id="disqus_thread" data-aos="fade-in"></div>
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -182,6 +207,26 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+
+  
+    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+    <script>
+
+    var options = {
+      shortname: 'ywang412',
+      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+    }
+    if ('') {
+      options.api = ''
+    }
+    var dsqjs = new DisqusJS(options)
+
+    </script>
+  
 
 
 
