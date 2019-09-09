@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567998447430">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1567999329760">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1567998447430" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1567999329760" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-04</div>
+            <div class="post-date">2018-04-03</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -999,6 +999,58 @@ void KruskalMST()
         
         return res;
     }
+}
+</code></pre>
+<p><strong>34. Find First and Last Position of Element in Sorted Array</strong></p>
+<pre><code>class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        
+        int[] targetRange = {-1, -1};
+        if (nums == null || nums.length &lt; 1) {
+            return targetRange;
+        }
+        int leftIdx = findLeft(nums, target);
+        if (nums[leftIdx] != target) {
+            return targetRange;
+        }
+
+        targetRange[0] = leftIdx;
+        targetRange[1] = findRight(nums, target)-1;
+
+        return targetRange;
+    }
+    
+    private int findLeft(int[] nums, int target) {
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo &lt; hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] &gt;= target) {
+                hi = mid;
+            }
+            else {
+                lo = mid+1;
+            }
+        }
+        return lo;
+    }
+    
+    private int findRight(int[] nums, int target) {
+        int lo = 0;
+        int hi = nums.length - 1;
+
+        while (lo &lt;= hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] &gt; target) {
+                hi = mid - 1;
+            }
+            else {
+                lo = mid+1;
+            }
+        }
+        return lo;
+    }   
 }
 </code></pre>
 
