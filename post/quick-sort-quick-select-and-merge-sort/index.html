@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568089401055">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568089594710">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568089401055" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568089594710" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -365,6 +365,43 @@ void sort(int arr[], int l, int r)
 				merge(arr, l, m, r); 
 		} 
 } 
+</code></pre>
+<p><strong>Counting sort</strong></p>
+<pre><code>void sort(char arr[]) 
+    { 
+        int n = arr.length; 
+  
+        // The output character array that will have sorted arr 
+        char output[] = new char[n]; 
+  
+        // Create a count array to store count of inidividul 
+        // characters and initialize count array as 0 
+        int count[] = new int[256]; 
+        for (int i=0; i&lt;256; ++i) 
+            count[i] = 0; 
+  
+        // store count of each character 
+        for (int i=0; i&lt;n; ++i) 
+            ++count[arr[i]]; 
+  
+        // Change count[i] so that count[i] now contains actual 
+        // position of this character in output array 
+        for (int i=1; i&lt;=255; ++i) 
+            count[i] += count[i-1]; 
+  
+        // Build the output character array 
+        // To make it stable we are operating in reverse order. 
+        for (int i = n-1; i&gt;=0; i--) 
+        { 
+            output[count[arr[i]]-1] = arr[i]; 
+            --count[arr[i]]; 
+        } 
+  
+        // Copy the output array to arr, so that arr now 
+        // contains sorted characters 
+        for (int i = 0; i&lt;n; ++i) 
+            arr[i] = output[i]; 
+    } 
 </code></pre>
 
             </div>

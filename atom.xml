@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-10T04:23:26.214Z</updated>
+    <updated>2019-09-10T04:26:38.342Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -937,7 +937,7 @@ return K[n][W];
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
         <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
         </link>
-        <updated>2019-07-23T03:09:43.000Z</updated>
+        <updated>2019-07-22T14:09:43.000Z</updated>
         <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
 <pre><code>public class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -1188,6 +1188,43 @@ void sort(int arr[], int l, int r)
 				merge(arr, l, m, r); 
 		} 
 } 
+</code></pre>
+<p><strong>Counting sort</strong></p>
+<pre><code>void sort(char arr[]) 
+    { 
+        int n = arr.length; 
+  
+        // The output character array that will have sorted arr 
+        char output[] = new char[n]; 
+  
+        // Create a count array to store count of inidividul 
+        // characters and initialize count array as 0 
+        int count[] = new int[256]; 
+        for (int i=0; i&lt;256; ++i) 
+            count[i] = 0; 
+  
+        // store count of each character 
+        for (int i=0; i&lt;n; ++i) 
+            ++count[arr[i]]; 
+  
+        // Change count[i] so that count[i] now contains actual 
+        // position of this character in output array 
+        for (int i=1; i&lt;=255; ++i) 
+            count[i] += count[i-1]; 
+  
+        // Build the output character array 
+        // To make it stable we are operating in reverse order. 
+        for (int i = n-1; i&gt;=0; i--) 
+        { 
+            output[count[arr[i]]-1] = arr[i]; 
+            --count[arr[i]]; 
+        } 
+  
+        // Copy the output array to arr, so that arr now 
+        // contains sorted characters 
+        for (int i = 0; i&lt;n; ++i) 
+            arr[i] = output[i]; 
+    } 
 </code></pre>
 ]]></content>
     </entry>
