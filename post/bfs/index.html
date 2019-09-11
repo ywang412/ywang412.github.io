@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568171292388">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568171341772">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568171292388" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568171341772" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">BFS</h2>
-            <div class="post-date">2019-09-10</div>
+            <div class="post-date">2019-09-09</div>
             
             <div class="post-content">
               <p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
@@ -315,32 +315,6 @@ Use stringBuilder delete(start, end) method to backtrack to start point.</p>
     }
     return -1.0;
   }
-}
-</code></pre>
-<p><strong>332. Reconstruct Itinerary</strong></p>
-<p>Add to path in reverse order when departure is the endpoint.</p>
-<pre><code>public class Solution {
-
-    Map&lt;String, PriorityQueue&lt;String&gt;&gt; flights;
-    LinkedList&lt;String&gt; path;
-
-    public List&lt;String&gt; findItinerary(String[][] tickets) {
-        flights = new HashMap&lt;&gt;();
-        path = new LinkedList&lt;&gt;();
-        for (String[] ticket : tickets) {
-            flights.putIfAbsent(ticket[0], new PriorityQueue&lt;&gt;());
-            flights.get(ticket[0]).add(ticket[1]);
-        }
-        dfs(&quot;JFK&quot;);
-        return path;
-    }
-
-    public void dfs(String departure) {
-        PriorityQueue&lt;String&gt; arrivals = flights.get(departure);
-        while (arrivals != null &amp;&amp; !arrivals.isEmpty())
-            dfs(arrivals.poll());
-        path.addFirst(departure);
-    }
 }
 </code></pre>
 
