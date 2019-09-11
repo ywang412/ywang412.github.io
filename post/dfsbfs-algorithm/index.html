@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568171467484">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568171559065">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568171467484" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568171559065" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -118,57 +118,7 @@
               </div>
             
             <div class="post-content">
-              <p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
-<p><strong>Leetcode 542. 01 Matrix</strong></p>
-<p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
-<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
-        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
-        res[i][j] = Math.min(dist, res[i][j]);
-        visited[i][j] = true;
-        dfs(res, visited, i - 1, j, dist + 1);
-        dfs(res, visited, i + 1, j, dist + 1);
-        dfs(res, visited, i, j - 1, dist + 1);
-        dfs(res, visited, i, j + 1, dist + 1); 
-        visited[i][j] = false;
-    }
-</code></pre>
-<pre><code>public class Solution {
-    public int[][] updateMatrix(int[][] matrix) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        
-        Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
-        for (int i = 0; i &lt; m; i++) {
-            for (int j = 0; j &lt; n; j++) {
-                if (matrix[i][j] == 0) {
-                    queue.offer(new int[] {i, j});
-                }
-                else {
-                    matrix[i][j] = Integer.MAX_VALUE;
-                }
-            }
-        }
-        
-        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
-        while (!queue.isEmpty()) {
-            int[] cell = queue.poll();
-            for (int[] d : dirs) {
-                int r = cell[0] + d[0];
-                int c = cell[1] + d[1];
-                if (r &lt; 0 || r &gt;= m || c &lt; 0 || c &gt;= n || 
-                    matrix[r][c] &lt;= matrix[cell[0]][cell[1]] + 1) continue;
-                matrix[r][c] = matrix[cell[0]][cell[1]] + 1;
-                queue.add(new int[] {r, c});
-                
-            }
-        }
-        
-        return matrix;
-    }
-}
-</code></pre>
-<p><strong>LeetCode 39. Combination Sum</strong></p>
+              <p><strong>LeetCode 39. Combination Sum</strong></p>
 <p>Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
 <pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
      if (cur &gt; target) return;
