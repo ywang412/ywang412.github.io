@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-11T03:09:04.815Z</updated>
+    <updated>2019-09-11T03:09:45.153Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/bfs</id>
         <link href="https://ywang412.github.io/post/bfs">
         </link>
-        <updated>2019-09-10T01:08:04.000Z</updated>
+        <updated>2019-09-09T12:08:04.000Z</updated>
         <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
 <p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
@@ -66,158 +66,29 @@
     }
 }
 </code></pre>
-<p><strong>LeetCode 39. Combination Sum</strong></p>
-<p>Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
-<pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
-     if (cur &gt; target) return;
-     if (cur == target) { 
-         List&lt;Integer&gt; pathToAdd = new LinkedList&lt;&gt;(path);
-         res.add(pathToAdd);
-         return;
-     }
-     for (int i = start; i &lt; candidates.length; i++) {
-         path.add(candidates[i]);
-         dfs(candidates, i, cur + candidates[i], target, path, res);
-         path.remove(path.size() - 1);
-     }
-</code></pre>
-<p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong></p>
-<p>Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
-<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {  
-		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
-		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
-		pre[2] = 0;
-		q.offer(pre); 
-		visited.add(pre[0] + &quot;#&quot; + pre[1]);
-		while (!q.isEmpty()) {   
-				int[] temp = q.poll(); 
-				// if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) { this will cause timeout
-				if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
-						return temp[2];
-				}
-				else {
-						for (int[] dir : dirs) {
-								int i = temp[0] + dir[0];
-								int j = temp[1] + dir[1];
-								if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
-										q.offer(new int[]{i, j, temp[2] + 1});
-										visited.add(i + &quot;#&quot; + j);
-								}
-						}
-				} 
-		}
-		return -1;
-}
-</code></pre>
-<p><strong>323. Number of Connected Components in an Undirected Graph</strong></p>
-<p>To build the adjacent matrix or adjacent list, it is important to create a bi-directional connection like below so that DFS can connect nodes bi-directionally.</p>
-<pre><code>public class Solution {
-    public int countComponents(int n, int[][] edges) {
-        if (n &lt;= 1)
-            return n;
-        Map&lt;Integer, List&lt;Integer&gt;&gt; map = new HashMap&lt;&gt;();
-        for (int i = 0; i &lt; n; i++) {
-            map.put(i, new ArrayList&lt;&gt;());
-        }
-        for (int[] edge : edges) {
-            map.get(edge[0]).add(edge[1]);
-            map.get(edge[1]).add(edge[0]);
-        }
-        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
-        int count = 0;
-        for (int i = 0; i &lt; n; i++) {
-            if (visited.add(i)) {
-                dfsVisit(i, map, visited);
-                count++;
-            }
-        }
-        return count;
-    }
-    
-    private void dfsVisit(int i, Map&lt;Integer, List&lt;Integer&gt;&gt; map, Set&lt;Integer&gt; visited) {
-        for (int j : map.get(i)) {
-            if (visited.add(j))
-                dfsVisit(j, map, visited);
-        }
-    }
-}
-</code></pre>
-<p><strong>1087. Brace Expansion</strong>
-Use stringBuilder delete(start, end) method to backtrack to start point.</p>
-<pre><code>class Solution {
-    public String[] expand(String S) {
-        List&lt;String&gt; ans = new ArrayList&lt;&gt;();
-        expand(S, 0, new StringBuffer(), ans);
-        // Looks like one of the test cases is incorrect and it accepts result only in sorted order
-        Collections.sort(ans);
-        return ans.toArray(new String[0]);
+<pre><code>    if (i == s.length()) {
+        ans.add(sb.toString());
+        return;
     }
 
-    private void expand(String s, int i, StringBuffer sb, List&lt;String&gt; ans) {
-        if (i == s.length()) {
-            ans.add(sb.toString());
-            return;
-        }
-
-        char c = s.charAt(i);
-        if (c != '{') {
-            sb.append(c);
-            expand(s, i + 1, sb, ans);
-        } else {
-            int end = s.indexOf('}', i);
-            int start = sb.length();
-            while(i &lt; end) {
-                sb.append(s.charAt(i + 1));
-                expand(s, end + 1, sb, ans);
-                sb.delete(start, sb.length());
-                i += 2;
-            }
+    char c = s.charAt(i);
+    if (c != '{') {
+        sb.append(c);
+        expand(s, i + 1, sb, ans);
+    } else {
+        int end = s.indexOf('}', i);
+        int start = sb.length();
+        while(i &lt; end) {
+            sb.append(s.charAt(i + 1));
+            expand(s, end + 1, sb, ans);
+            sb.delete(start, sb.length());
+            i += 2;
         }
     }
 }
 </code></pre>
-<p><strong>LeetCode 399. Evaluate Division</strong></p>
-<pre><code>class Solution {  
-  Map&lt;String, HashMap&lt;String, Double&gt;&gt; g = new HashMap&lt;&gt;();
-  
-  public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {    
-    for (int i = 0; i &lt; equations.length; ++i) {
-      String x = equations[i][0];
-      String y = equations[i][1];
-      double k = values[i];
-      g.computeIfAbsent(x, l -&gt; new HashMap&lt;String, Double&gt;()).put(y, k);
-      g.computeIfAbsent(y, l -&gt; new HashMap&lt;String, Double&gt;()).put(x, 1.0 / k);
-    }
-    
-    double[] ans = new double[queries.length];
-    
-    for (int i = 0; i &lt; queries.length; ++i) {      
-      String x = queries[i][0];
-      String y = queries[i][1];
-      if (!g.containsKey(x) || !g.containsKey(y)) {
-        ans[i] = -1.0;
-      } else {        
-        ans[i] = divide(x, y, new HashSet&lt;String&gt;());
-      }
-    }
-    
-    return ans;
-  }
-  
-  private double divide(String x, String y, Set&lt;String&gt; visited) {
-    if (x.equals(y)) return 1.0;
-    visited.add(x);
-    if (!g.containsKey(x)) return -1.0;
-    for (String n : g.get(x).keySet()) {
-      if (visited.contains(n)) continue;
-      visited.add(n);
-      double d = divide(n, y, visited);
-      if (d &gt; 0) return d * g.get(x).get(n);
-    }
-    return -1.0;
-  }
-}
-</code></pre>
+<p>}</p>
+<pre><code></code></pre>
 ]]></content>
     </entry>
     <entry>
