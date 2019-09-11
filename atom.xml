@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-11T03:16:48.809Z</updated>
+    <updated>2019-09-11T03:19:23.168Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,21 +15,10 @@
         <id>https://ywang412.github.io/post/bfs</id>
         <link href="https://ywang412.github.io/post/bfs">
         </link>
-        <updated>2019-09-07T21:08:04.000Z</updated>
+        <updated>2019-09-07T08:08:04.000Z</updated>
         <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
 <p><strong>Leetcode 542. 01 Matrix</strong></p>
 <p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
-<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
-        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
-        res[i][j] = Math.min(dist, res[i][j]);
-        visited[i][j] = true;
-        dfs(res, visited, i - 1, j, dist + 1);
-        dfs(res, visited, i + 1, j, dist + 1);
-        dfs(res, visited, i, j - 1, dist + 1);
-        dfs(res, visited, i, j + 1, dist + 1); 
-        visited[i][j] = false;
-    }
-</code></pre>
 <pre><code>public class Solution {
     public int[][] updateMatrix(int[][] matrix) {
         int m = matrix.length;
