@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568172765269">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568177984376">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568172765269" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568177984376" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Pitfalls in DFS and BFS algorithm</h2>
-            <div class="post-date">2018-05-12</div>
+            <div class="post-date">2018-05-11</div>
             
               <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/dfsbfs-algorithm.png')">
               </div>
@@ -172,30 +172,59 @@
 </code></pre>
 <p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong></p>
 <p>Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
-<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {  
-		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
-		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
-		pre[2] = 0;
-		q.offer(pre); 
-		visited.add(pre[0] + &quot;#&quot; + pre[1]);
-		while (!q.isEmpty()) {   
-				int[] temp = q.poll(); 
-				// if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) { this will cause timeout
-				if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
-						return temp[2];
-				}
-				else {
-						for (int[] dir : dirs) {
-								int i = temp[0] + dir[0];
-								int j = temp[1] + dir[1];
-								if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
-										q.offer(new int[]{i, j, temp[2] + 1});
-										visited.add(i + &quot;#&quot; + j);
-								}
-						}
-				} 
-		}
-		return -1;
+<pre><code>class Solution {
+    public int cutOffTree(List&lt;List&lt;Integer&gt;&gt; forest) {
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;(new Comparator&lt;int[]&gt;(){
+            public int compare(int[] a, int[] b){
+                return Integer.compare(a[2], b[2]);
+            }
+        });
+        for (int i = 0; i &lt; forest.size(); i++) {
+            for (int j = 0; j &lt; forest.get(i).size(); j++) {
+                if (forest.get(i).get(j) &gt; 1)
+                pq.offer(new int[]{i, j, forest.get(i).get(j)});
+            }
+        }
+        int[] pre = new int[]{0, 0, 0};
+        int res = 0;
+        int pqSize = pq.size();
+        while (pqSize-- &gt; 0) {
+            int[] cur = pq.poll();
+            int steps = bfs(pre, cur, forest);
+            if (steps &lt; 0) return -1;
+            res += steps;
+            pre = cur;
+        }
+        return res;
+    }
+    
+    public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {
+        int[][] dirs = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
+        Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+        pre[2] = 0;
+        q.offer(pre); 
+        visited.add(pre[0] + &quot;#&quot; + pre[1]);
+            
+        while (!q.isEmpty()) {   
+            int[] temp = q.poll(); 
+            // if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) {
+            if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
+                return temp[2];
+            }
+            else {
+                for (int[] dir : dirs) {
+                    int i = temp[0] + dir[0];
+                    int j = temp[1] + dir[1];
+                    if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
+                        q.offer(new int[]{i, j, temp[2] + 1});
+                        visited.add(i + &quot;#&quot; + j);
+                    }
+                }
+            } 
+        }
+        return -1;
+    }
 }
 </code></pre>
 <p><strong>323. Number of Connected Components in an Undirected Graph</strong></p>
