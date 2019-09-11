@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-10T04:26:38.342Z</updated>
+    <updated>2019-09-11T03:08:16.591Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,242 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[BFS]]></title>
+        <id>https://ywang412.github.io/post/bfs</id>
+        <link href="https://ywang412.github.io/post/bfs">
+        </link>
+        <updated>2019-09-10T14:08:04.000Z</updated>
+        <content type="html"><![CDATA[<p>Some pitfalls in DFS/BFS algorithm that requires extra caution.</p>
+<p><strong>Leetcode 542. 01 Matrix</strong></p>
+<p>To find the shortest distance from 1 to nearest 0, It is important to truncate when current dist from a 0 is already larger than previous found dfs path originated from another 0.</p>
+<pre><code>public void dfs(int[][] res, boolean[][] visited, int i, int j, int dist) {
+        if (i &lt; 0 || i &gt;= res.length || j &lt; 0 || j &gt;= res[0].length || res[i][j] &lt;= dist) return;
+        res[i][j] = Math.min(dist, res[i][j]);
+        visited[i][j] = true;
+        dfs(res, visited, i - 1, j, dist + 1);
+        dfs(res, visited, i + 1, j, dist + 1);
+        dfs(res, visited, i, j - 1, dist + 1);
+        dfs(res, visited, i, j + 1, dist + 1); 
+        visited[i][j] = false;
+    }
+</code></pre>
+<pre><code>public class Solution {
+    public int[][] updateMatrix(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
+        for (int i = 0; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (matrix[i][j] == 0) {
+                    queue.offer(new int[] {i, j});
+                }
+                else {
+                    matrix[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        
+        int[][] dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        
+        while (!queue.isEmpty()) {
+            int[] cell = queue.poll();
+            for (int[] d : dirs) {
+                int r = cell[0] + d[0];
+                int c = cell[1] + d[1];
+                if (r &lt; 0 || r &gt;= m || c &lt; 0 || c &gt;= n || 
+                    matrix[r][c] &lt;= matrix[cell[0]][cell[1]] + 1) continue;
+                matrix[r][c] = matrix[cell[0]][cell[1]] + 1;
+                queue.add(new int[] {r, c});
+                
+            }
+        }
+        
+        return matrix;
+    }
+}
+</code></pre>
+<p><strong>LeetCode 39. Combination Sum</strong></p>
+<p>Because of passing by reference, when adding a path to result list, the added path is a deep copy to avoid further changes. To prevent duplicated path, each dfs entry will set the minimum index of the range that following dfs can choose from.</p>
+<pre><code>public void dfs(int[] candidates, int start, int cur, int target, List&lt;Integer&gt; path, List&lt;List&lt;Integer&gt;&gt; res) {
+     if (cur &gt; target) return;
+     if (cur == target) { 
+         List&lt;Integer&gt; pathToAdd = new LinkedList&lt;&gt;(path);
+         res.add(pathToAdd);
+         return;
+     }
+     for (int i = start; i &lt; candidates.length; i++) {
+         path.add(candidates[i]);
+         dfs(candidates, i, cur + candidates[i], target, path, res);
+         path.remove(path.size() - 1);
+     }
+</code></pre>
+<p><strong>LeetCode 675. Cut Off Trees for Golf Event</strong></p>
+<p>Whenever a new position is added to the BFS queue, the visited matrix or set need to mark that as soon as possible to avoid revisiting it. Comparing string (Char of 2 bytes) is much more time consuming than comparing Integer (4 bytes).</p>
+<pre><code>public int bfs(int[] pre, int[] cur, List&lt;List&lt;Integer&gt;&gt; forest) {  
+		Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
+		Set&lt;String&gt; visited = new HashSet&lt;&gt;();
+		pre[2] = 0;
+		q.offer(pre); 
+		visited.add(pre[0] + &quot;#&quot; + pre[1]);
+		while (!q.isEmpty()) {   
+				int[] temp = q.poll(); 
+				// if ((temp[0] + &quot;#&quot; + temp[1]).equals(cur[0] + &quot;#&quot; + cur[1])) { this will cause timeout
+				if ((temp[0] == cur[0]) &amp;&amp; (temp[1] == cur[1])) {
+						return temp[2];
+				}
+				else {
+						for (int[] dir : dirs) {
+								int i = temp[0] + dir[0];
+								int j = temp[1] + dir[1];
+								if (i &gt;= 0 &amp;&amp; i &lt; forest.size() &amp;&amp; j &gt;= 0 &amp;&amp; j &lt; forest.get(i).size() &amp;&amp; forest.get(i).get(j) &gt; 0 &amp;&amp; !visited.contains(i + &quot;#&quot; + j)) {
+										q.offer(new int[]{i, j, temp[2] + 1});
+										visited.add(i + &quot;#&quot; + j);
+								}
+						}
+				} 
+		}
+		return -1;
+}
+</code></pre>
+<p><strong>323. Number of Connected Components in an Undirected Graph</strong></p>
+<p>To build the adjacent matrix or adjacent list, it is important to create a bi-directional connection like below so that DFS can connect nodes bi-directionally.</p>
+<pre><code>public class Solution {
+    public int countComponents(int n, int[][] edges) {
+        if (n &lt;= 1)
+            return n;
+        Map&lt;Integer, List&lt;Integer&gt;&gt; map = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            map.put(i, new ArrayList&lt;&gt;());
+        }
+        for (int[] edge : edges) {
+            map.get(edge[0]).add(edge[1]);
+            map.get(edge[1]).add(edge[0]);
+        }
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        int count = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (visited.add(i)) {
+                dfsVisit(i, map, visited);
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    private void dfsVisit(int i, Map&lt;Integer, List&lt;Integer&gt;&gt; map, Set&lt;Integer&gt; visited) {
+        for (int j : map.get(i)) {
+            if (visited.add(j))
+                dfsVisit(j, map, visited);
+        }
+    }
+}
+</code></pre>
+<p><strong>1087. Brace Expansion</strong>
+Use stringBuilder delete(start, end) method to backtrack to start point.</p>
+<pre><code>class Solution {
+    public String[] expand(String S) {
+        List&lt;String&gt; ans = new ArrayList&lt;&gt;();
+        expand(S, 0, new StringBuffer(), ans);
+        // Looks like one of the test cases is incorrect and it accepts result only in sorted order
+        Collections.sort(ans);
+        return ans.toArray(new String[0]);
+    }
+
+    private void expand(String s, int i, StringBuffer sb, List&lt;String&gt; ans) {
+        if (i == s.length()) {
+            ans.add(sb.toString());
+            return;
+        }
+
+        char c = s.charAt(i);
+        if (c != '{') {
+            sb.append(c);
+            expand(s, i + 1, sb, ans);
+        } else {
+            int end = s.indexOf('}', i);
+            int start = sb.length();
+            while(i &lt; end) {
+                sb.append(s.charAt(i + 1));
+                expand(s, end + 1, sb, ans);
+                sb.delete(start, sb.length());
+                i += 2;
+            }
+        }
+    }
+}
+</code></pre>
+<p><strong>LeetCode 399. Evaluate Division</strong></p>
+<pre><code>class Solution {  
+  Map&lt;String, HashMap&lt;String, Double&gt;&gt; g = new HashMap&lt;&gt;();
+  
+  public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {    
+    for (int i = 0; i &lt; equations.length; ++i) {
+      String x = equations[i][0];
+      String y = equations[i][1];
+      double k = values[i];
+      g.computeIfAbsent(x, l -&gt; new HashMap&lt;String, Double&gt;()).put(y, k);
+      g.computeIfAbsent(y, l -&gt; new HashMap&lt;String, Double&gt;()).put(x, 1.0 / k);
+    }
+    
+    double[] ans = new double[queries.length];
+    
+    for (int i = 0; i &lt; queries.length; ++i) {      
+      String x = queries[i][0];
+      String y = queries[i][1];
+      if (!g.containsKey(x) || !g.containsKey(y)) {
+        ans[i] = -1.0;
+      } else {        
+        ans[i] = divide(x, y, new HashSet&lt;String&gt;());
+      }
+    }
+    
+    return ans;
+  }
+  
+  private double divide(String x, String y, Set&lt;String&gt; visited) {
+    if (x.equals(y)) return 1.0;
+    visited.add(x);
+    if (!g.containsKey(x)) return -1.0;
+    for (String n : g.get(x).keySet()) {
+      if (visited.contains(n)) continue;
+      visited.add(n);
+      double d = divide(n, y, visited);
+      if (d &gt; 0) return d * g.get(x).get(n);
+    }
+    return -1.0;
+  }
+}
+</code></pre>
+<p><strong>332. Reconstruct Itinerary</strong></p>
+<p>Add to path in reverse order when departure is the endpoint.</p>
+<pre><code>public class Solution {
+
+    Map&lt;String, PriorityQueue&lt;String&gt;&gt; flights;
+    LinkedList&lt;String&gt; path;
+
+    public List&lt;String&gt; findItinerary(String[][] tickets) {
+        flights = new HashMap&lt;&gt;();
+        path = new LinkedList&lt;&gt;();
+        for (String[] ticket : tickets) {
+            flights.putIfAbsent(ticket[0], new PriorityQueue&lt;&gt;());
+            flights.get(ticket[0]).add(ticket[1]);
+        }
+        dfs(&quot;JFK&quot;);
+        return path;
+    }
+
+    public void dfs(String departure) {
+        PriorityQueue&lt;String&gt; arrivals = flights.get(departure);
+        while (arrivals != null &amp;&amp; !arrivals.isEmpty())
+            dfs(arrivals.poll());
+        path.addFirst(departure);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Semaphore vs Lock]]></title>
         <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
@@ -1400,96 +1636,6 @@ https://github.com/zio/zio/pull/1106</p>
 The second one is to fix a bug resulting from different Windows/Linux file seperator.
 <img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
 <p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
-        </link>
-        <updated>2019-05-14T11:31:10.000Z</updated>
-        <content type="html"><![CDATA[<p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
-<pre><code>// 修饰一个代码块
-public void test1(int j) {
-		synchronized (this) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个方法
-public synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample1 example1 = new SynchronizedExample1();
-		SynchronizedExample1 example2 = new SynchronizedExample1();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test2(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test2(2);
-		});
-}
-</code></pre>
-<pre><code>// 修饰一个类
-public static void test1(int j) {
-		synchronized (SynchronizedExample2.class) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个静态方法
-public static synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample2 example1 = new SynchronizedExample2();
-		SynchronizedExample2 example2 = new SynchronizedExample2();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test1(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test1(2);
-		});
-}
-</code></pre>
-<p>Java provide several thread safe synchronized containers out of the box.</p>
-<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
-private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
-private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
-private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
-private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
-</code></pre>
-<p>Java and Guava also provide several immutable containers out of the box.</p>
-<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
-static {
-		map.put(1, 2);
-		map.put(3, 4);
-		map.put(5, 6);
-		map = Collections.unmodifiableMap(map);
-}
-</code></pre>
-<pre><code>import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
-private final static ImmutableSet set = ImmutableSet.copyOf(list);
-private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
-private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
-				.put(1, 2).put(3, 4).put(5, 6).build();
-</code></pre>
 ]]></content>
     </entry>
 </feed>
