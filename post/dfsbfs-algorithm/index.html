@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568178051403">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568338256864">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568178051403" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568338256864" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Pitfalls in DFS and BFS algorithm</h2>
-            <div class="post-date">2018-05-11</div>
+            <div class="post-date">2018-05-10</div>
             
               <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/dfsbfs-algorithm.png')">
               </div>
@@ -360,6 +360,33 @@ Use stringBuilder delete(start, end) method to backtrack to start point.</p>
             dfs(arrivals.poll());
         path.addFirst(departure);
     }
+}
+</code></pre>
+<p><strong>Coke Machine</strong></p>
+<pre><code>// https://leetcode.com/discuss/interview-question/307252/Google-Coke-Machine
+public class Main {
+    
+    public static boolean coke(int[][] buttons, int[] target) {
+        return coke(buttons, new int[2], target, new HashSet&lt;&gt;());
+    }
+
+    private static boolean coke(int[][] buttons, int[] curr, int[] target, Set&lt;String&gt; memo) {
+        if (curr[0] &gt;= target[0] &amp;&amp; curr[1] &lt;= target[1]) return true;
+        if (curr[1] &gt; target[1]) return false;
+
+        String key = curr[0] + &quot;-&quot; + curr[1];
+        if (memo.contains(key)) return false;
+
+        for (int[] button : buttons) {
+            curr[0] += button[0];
+            curr[1] += button[1];
+            if (coke(buttons, curr, target, memo)) return true;
+            curr[0] -= button[0];
+            curr[1] -= button[1];
+        }
+        memo.add(key);
+        return false;
+    } 
 }
 </code></pre>
 
