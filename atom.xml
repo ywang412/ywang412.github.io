@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-14T04:50:25.701Z</updated>
+    <updated>2019-09-15T21:29:03.090Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -492,7 +492,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-24T02:37:53.000Z</updated>
+        <updated>2019-07-23T00:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -929,6 +929,55 @@ return K[n][W];
 
 				return max; 
 } 
+</code></pre>
+<p><strong>309. Best Time to Buy and Sell Stock with Cooldown</strong></p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length &lt;= 1) return 0;
+
+        int[] b = new int[prices.length];
+        int[] s = new int[prices.length];
+        
+        b[0] = -prices[0];
+        b[1] = Math.max(b[0], -prices[1]);
+        
+        s[0] = 0;
+        s[1] = Math.max(s[0], b[0] + prices[1]);
+        
+         for(int i = 2; i &lt; prices.length; i++) {
+            b[i] = Math.max(b[i - 1], s[i - 2] - prices[i]);
+            s[i] = Math.max(s[i - 1], b[i - 1] + prices[i]); 
+        }
+        return s[prices.length - 1];
+    }
+}
+</code></pre>
+<p><strong>188. Best Time to Buy and Sell Stock IV</strong></p>
+<pre><code>class Solution {
+    public int maxProfit(int k, int[] prices) {
+        int len = prices.length;
+        if (k &gt;= len / 2) return quickSolve(prices);
+        
+        int[][] t = new int[k + 1][len];
+        for (int i = 1; i &lt;= k; i++) {
+            int tmpMax =  -prices[0];  // tmpMax is the max after i-1th transaction and 1 more sell. 
+            for (int j = 1; j &lt; len; j++) {
+                t[i][j] = Math.max(t[i][j - 1], prices[j] + tmpMax);
+                tmpMax =  Math.max(tmpMax, t[i - 1][j - 1] - prices[j]);
+            }
+        }
+        return t[k][len - 1];
+    }
+    
+
+    private int quickSolve(int[] prices) {
+        int len = prices.length, profit = 0;
+        for (int i = 1; i &lt; len; i++)
+            // as long as there is a price gap, we gain a profit.
+            if (prices[i] &gt; prices[i - 1]) profit += prices[i] - prices[i - 1];
+        return profit;
+    }
+}
 </code></pre>
 ]]></content>
     </entry>
