@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-18T16:20:16.144Z</updated>
+    <updated>2019-09-18T16:34:00.558Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -789,7 +789,7 @@ void sort(int arr[], int l, int r)
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-22T11:37:53.000Z</updated>
+        <updated>2019-07-21T22:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -1275,6 +1275,76 @@ return K[n][W];
         return profit;
     }
 }
+</code></pre>
+<p><strong>Maximum sum rectangle in a 2D matrix</strong></p>
+<pre><code>public static int[] kadane(int[] a) { 
+		//result[0] == maxSum, result[1] == start, result[2] == end; 
+		int[] result = new int[]{Integer.MIN_VALUE, 0, -1}; 
+		int currentSum = 0; 
+		int localStart = 0; 
+
+		for (int i = 0; i &lt; a.length; i++) { 
+				currentSum += a[i]; 
+				if (currentSum &lt; 0) { 
+							currentSum = 0; 
+						localStart = i + 1; 
+					} else if (currentSum &gt; result[0]) { 
+						result[0] = currentSum; 
+						result[1] = localStart; 
+						result[2] = i; 
+					} 
+		} 
+
+		//all numbers in a are negative 
+		if (result[2] == -1) { 
+				result[0] = 0; 
+				for (int i = 0; i &lt; a.length; i++) { 
+						if (a[i] &gt; result[0]) { 
+								result[0] = a[i]; 
+								result[1] = i; 
+								result[2] = i; 
+						} 
+				} 
+		} 
+
+		return result; 
+	} 
+
+/** 
+ * To find and print maxSum, (left, top),(right, bottom) 
+ */
+public static void findMaxSubMatrix(int[][] a) { 
+		int cols = a[0].length; 
+		int rows = a.length; 
+		int[] currentResult; 
+		int maxSum = Integer.MIN_VALUE; 
+		int left = 0; 
+		int top = 0; 
+		int right = 0; 
+		int bottom = 0; 
+
+		for (int leftCol = 0; leftCol &lt; cols; leftCol++) { 
+				int[] tmp = new int[rows]; 
+
+					for (int rightCol = leftCol; rightCol &lt; cols; rightCol++) { 
+
+						for (int i = 0; i &lt; rows; i++) { 
+									tmp[i] += a[i][rightCol]; 
+						} 
+						currentResult = kadane(tmp); 
+						if (currentResult[0] &gt; maxSum) { 
+								maxSum = currentResult[0]; 
+								left = leftCol; 
+								top = currentResult[1]; 
+								right = rightCol; 
+								bottom = currentResult[2]; 
+						} 
+				} 
+		} 
+					System.out.println(&quot;MaxSum: &quot; + maxSum +  
+														&quot;, range: [(&quot; + left + &quot;, &quot; + top +  
+															&quot;)(&quot; + right + &quot;, &quot; + bottom + &quot;)]&quot;); 
+} 
 </code></pre>
 ]]></content>
     </entry>
