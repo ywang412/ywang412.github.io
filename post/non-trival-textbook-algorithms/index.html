@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568825113918">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568869420946">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568825113918" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568869420946" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-02</div>
+            <div class="post-date">2018-04-01</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -1153,65 +1153,66 @@ void KruskalMST()
 }
 </code></pre>
 <p><strong>1096. Brace Expansion II</strong></p>
-<p>public List<String> braceExpansionII(String expression) {
-String s = expression;
-char preSign = ',';
-Stack&lt;List<String>&gt; stack = new Stack&lt;&gt;();// Save List<String>
-for (int i = 0; i &lt; s.length(); i++){
-char c = s.charAt(i);
-// case 1. {...} recursive, stack.operate(resList) by preSign
-if (c == '{'){
-int j = i, p = 1;
-while (s.charAt(j) != '}' || p != 0){
-j++;
-if (s.charAt(j) == '{') p++;
-if (s.charAt(j) == '}') p--;
-}
-List<String> slist = braceExpansionII(s.substring(i+1, j));
-if (preSign == '<em>'){
-stack.push(merge(stack.pop(), slist));
-}
-else stack.push(slist);
-i = j;
-//default preSign is *
-preSign = '</em>';
-}
-// case 2 letter operate by preSign
-else if (Character.isLetter(c)){
-List<String> slist = new ArrayList&lt;&gt;();
-slist.add(&quot;&quot;+c);
-if (preSign == '<em>'){
-stack.push(merge(stack.pop(), slist));
-}
-else stack.push(slist);
-// //default preSign is *
-preSign = '</em>';
-}
-// case 3. if  == &quot;, &quot;, preSign is  plus, (default preSign is *);
-if (c ==',' || i == s.length()-1){
-preSign = ',';
-}
-}
-// output stack to one dimesion list;
-List<String> res = new ArrayList&lt;&gt;();
-while(!stack.isEmpty()){
-for (String l : stack.pop())
-if (!res.contains(l))res.add(l);
-}
-// sort by lexi-order
-Collections.sort(res);
-return res;
-}
-// multiply operation of 2 List<letter>
-public List<String> merge(List<String> list1, List<String> list2){
-List<String> res = new ArrayList&lt;&gt;();
-for (String l1 : list1){
-for (String l2 : list2){
-res.add(l1+l2);
-}
-}
-return res;
-}</p>
+<pre><code>public List&lt;String&gt; braceExpansionII(String expression) {
+		 String s = expression;
+		 char preSign = ',';
+		 Stack&lt;List&lt;String&gt;&gt; stack = new Stack&lt;&gt;();// Save List&lt;String&gt;
+		 for (int i = 0; i &lt; s.length(); i++){
+				 char c = s.charAt(i);
+				 // case 1. {...} recursive, stack.operate(resList) by preSign
+				 if (c == '{'){
+						 int j = i, p = 1;
+						 while (s.charAt(j) != '}' || p != 0){
+								 j++;
+								 if (s.charAt(j) == '{') p++;
+								 if (s.charAt(j) == '}') p--;
+						 }
+						 List&lt;String&gt; slist = braceExpansionII(s.substring(i+1, j));
+						 if (preSign == '*'){
+								 stack.push(merge(stack.pop(), slist));
+						 }
+						 else stack.push(slist);
+						 i = j;
+			//default preSign is *
+						 preSign = '*';
+				 }
+				 // case 2 letter operate by preSign
+				 else if (Character.isLetter(c)){
+						 List&lt;String&gt; slist = new ArrayList&lt;&gt;();
+						 slist.add(&quot;&quot;+c);
+               if (preSign == '*'){
+                   stack.push(merge(stack.pop(), slist));
+               }
+               else stack.push(slist);
+   			// //default preSign is *
+               preSign = '*';
+           }
+           // case 3. if  == &quot;, &quot;, preSign is  plus, (default preSign is *);
+           if (c ==',' || i == s.length()-1){
+               preSign = ',';
+           }
+       }
+       // output stack to one dimesion list;
+       List&lt;String&gt; res = new ArrayList&lt;&gt;();
+       while(!stack.isEmpty()){
+           for (String l : stack.pop())
+               if (!res.contains(l))res.add(l);
+       }
+   	// sort by lexi-order
+       Collections.sort(res);
+       return res;
+   }
+   // multiply operation of 2 List&lt;letter&gt;
+   public List&lt;String&gt; merge(List&lt;String&gt; list1, List&lt;String&gt; list2){
+       List&lt;String&gt; res = new ArrayList&lt;&gt;();
+       for (String l1 : list1){
+           for (String l2 : list2){
+               res.add(l1+l2);
+           }
+       }
+       return res;
+   }
+</code></pre>
 
             </div>
             
