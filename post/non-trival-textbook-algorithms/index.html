@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568942392486">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568943136887">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568942392486" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1568943136887" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -1212,6 +1212,56 @@ void KruskalMST()
        }
        return res;
    }
+</code></pre>
+<p><strong>Detect cycle in undirected gragh</strong></p>
+<pre><code>// A recursive function that uses visited[] and parent to detect 
+// cycle in subgraph reachable from vertex v. 
+Boolean isCyclicUtil(int v, Boolean visited[], int parent) 
+{ 
+		// Mark the current node as visited 
+		visited[v] = true; 
+		Integer i; 
+
+		// Recur for all the vertices adjacent to this vertex 
+		Iterator&lt;Integer&gt; it = adj[v].iterator(); 
+		while (it.hasNext()) 
+		{ 
+				i = it.next(); 
+
+				// If an adjacent is not visited, then recur for that 
+				// adjacent 
+				if (!visited[i]) 
+				{ 
+						if (isCyclicUtil(i, visited, v)) 
+								return true; 
+				} 
+
+				// If an adjacent is visited and not parent of current 
+				// vertex, then there is a cycle. 
+				else if (i != parent) 
+						return true; 
+		} 
+		return false; 
+} 
+
+// Returns true if the graph contains a cycle, else false. 
+Boolean isCyclic() 
+{ 
+		// Mark all the vertices as not visited and not part of 
+		// recursion stack 
+		Boolean visited[] = new Boolean[V]; 
+		for (int i = 0; i &lt; V; i++) 
+				visited[i] = false; 
+
+		// Call the recursive helper function to detect cycle in 
+		// different DFS trees 
+		for (int u = 0; u &lt; V; u++) 
+				if (!visited[u]) // Don't recur for u if already visited 
+						if (isCyclicUtil(u, visited, -1)) 
+								return true; 
+
+		return false; 
+} 
 </code></pre>
 
             </div>
