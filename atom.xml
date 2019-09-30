@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-09-30T04:09:44.441Z</updated>
+    <updated>2019-09-30T04:27:07.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -800,7 +800,7 @@ void sort(int arr[], int l, int r)
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-21T22:37:53.000Z</updated>
+        <updated>2019-07-21T09:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -1355,6 +1355,59 @@ public static void findMaxSubMatrix(int[][] a) {
 					System.out.println(&quot;MaxSum: &quot; + maxSum +  
 														&quot;, range: [(&quot; + left + &quot;, &quot; + top +  
 															&quot;)(&quot; + right + &quot;, &quot; + bottom + &quot;)]&quot;); 
+} 
+</code></pre>
+<p><strong>Partition a set into two subsets such that the difference of subset sums is minimum</strong></p>
+<pre><code>// Returns the minimum value of the difference of the two sets. 
+int findMin(int arr[], int n) 
+{ 
+    // Calculate sum of all elements 
+    int sum = 0;  
+    for (int i = 0; i &lt; n; i++) 
+        sum += arr[i]; 
+  
+    // Create an array to store results of subproblems 
+    bool dp[n+1][sum+1]; 
+  
+    // Initialize first column as true. 0 sum is possible  
+    // with all elements. 
+    for (int i = 0; i &lt;= n; i++) 
+        dp[i][0] = true; 
+  
+    // Initialize top row, except dp[0][0], as false. With 
+    // 0 elements, no other sum except 0 is possible 
+    for (int i = 1; i &lt;= sum; i++) 
+        dp[0][i] = false; 
+  
+    // Fill the partition table in bottom up manner 
+    for (int i=1; i&lt;=n; i++) 
+    { 
+        for (int j=1; j&lt;=sum; j++) 
+        { 
+            // If i'th element is excluded 
+            dp[i][j] = dp[i-1][j]; 
+  
+            // If i'th element is included 
+            if (arr[i-1] &lt;= j) 
+                dp[i][j] |= dp[i-1][j-arr[i-1]]; 
+        } 
+    } 
+   
+    // Initialize difference of two sums.  
+    int diff = INT_MAX; 
+      
+    // Find the largest j such that dp[n][j] 
+    // is true where j loops from sum/2 t0 0 
+    for (int j=sum/2; j&gt;=0; j--) 
+    { 
+        // Find the  
+        if (dp[n][j] == true) 
+        { 
+            diff = sum-2*j; 
+            break; 
+        } 
+    } 
+    return diff; 
 } 
 </code></pre>
 ]]></content>
