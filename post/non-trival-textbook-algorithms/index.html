@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1568943136887">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1569816071334">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1568943136887" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1569816071334" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Non-trival textbook algorithms</h2>
-            <div class="post-date">2018-04-01</div>
+            <div class="post-date">2018-03-31</div>
             
             <div class="post-content">
               <p><strong>229. Majority Element II  - Moore's Voting Algorithm</strong></p>
@@ -1262,6 +1262,78 @@ Boolean isCyclic()
 
 		return false; 
 } 
+</code></pre>
+<p><strong>943. Find the Shortest Superstring</strong></p>
+<p>Travelling salesman problem</p>
+<pre><code>class Solution {
+    public String shortestSuperstring(String[] A) {
+        int n = A.length;
+        int[][] graph = new int[n][n];
+        // build the graph
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                graph[i][j] = calc(A[i], A[j]);
+                graph[j][i] = calc(A[j], A[i]);
+            }
+        }
+        int[][] dp = new int[1 &lt;&lt; n][n];
+        int[][] path = new int[1 &lt;&lt; n][n];
+        int last = -1, min = Integer.MAX_VALUE;
+		
+        // start TSP DP
+        for (int i = 1; i &lt; (1 &lt;&lt; n); i++) {
+            Arrays.fill(dp[i], Integer.MAX_VALUE);
+            for (int j = 0; j &lt; n; j++) {
+                if ((i &amp; (1 &lt;&lt; j)) &gt; 0) {
+                    int prev = i - (1 &lt;&lt; j);
+                    if (prev == 0) {
+                        dp[i][j] = A[j].length();
+                    } else {
+                        for (int k = 0; k &lt; n; k++) {
+                            if (dp[prev][k] &lt; Integer.MAX_VALUE &amp;&amp; dp[prev][k] + graph[k][j] &lt; dp[i][j]) {
+                                dp[i][j] = dp[prev][k] + graph[k][j];
+                                path[i][j] = k;
+                            }
+                        }
+                    }
+                }
+                if (i == (1 &lt;&lt; n) - 1 &amp;&amp; dp[i][j] &lt; min) {
+                    min = dp[i][j];
+                    last = j;
+                }
+            }
+        }
+		
+        // build the path
+        StringBuilder sb = new StringBuilder();
+        int cur = (1 &lt;&lt; n) - 1;
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        while (cur &gt; 0) {
+            stack.push(last);
+            int temp = cur;
+            cur -= (1 &lt;&lt; last);
+            last = path[temp][last];
+        }
+		
+        // build the result
+        int i = stack.pop();
+        sb.append(A[i]);
+        while (!stack.isEmpty()) {
+            int j = stack.pop();
+            sb.append(A[j].substring(A[j].length() - graph[i][j]));
+            i = j;
+        }
+        return sb.toString();
+    }
+    private int calc(String a, String b) {
+        for (int i = 1; i &lt; a.length(); i++) {
+            if (b.startsWith(a.substring(i))) {
+                return b.length() - a.length() + i;
+            }
+        }
+        return b.length();
+    }
+}
 </code></pre>
 
             </div>
