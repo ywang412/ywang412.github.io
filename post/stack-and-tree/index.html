@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Contributing to Scala zio, a github open source project | Yu&#39;s Github</title>
+<title>Stack and Tree | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,30 +111,46 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Contributing to Scala zio, a github open source project</h2>
-            <div class="post-date">2019-06-22</div>
-            
-              <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/contributing-to-a-scala-zio-a-github-open-source-project.png')">
-              </div>
+            <h2 class="post-title">Stack and Tree</h2>
+            <div class="post-date">2018-09-21</div>
             
             <div class="post-content">
-              <p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.</p>
-<p>https://github.com/zio/zio/pull/1109
-and
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
-The second one is to fix a bug resulting from different Windows/Linux file seperator.
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
+              <p><strong>Minimum Stack</strong></p>
+<pre><code>class MinStack {
+    int min = Integer.MAX_VALUE;
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    public void push(int x) {
+        // only push the old minimum value when the current 
+        // minimum value changes after pushing the new value x
+        if(x &lt;= min){          
+            stack.push(min);
+            min=x;
+        }
+        stack.push(x);
+    }
+
+    public void pop() {
+        // if pop operation could result in the changing of the current minimum value, 
+        // pop twice and change the current minimum value to the last minimum value.
+        if(stack.pop() == min) min=stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+</code></pre>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://ywang412.github.io/tag/mppVQr2L4" class="tag">
-                    Scala
+                  <a href="https://ywang412.github.io/tag/fy8llECIr" class="tag">
+                    LeetCode
                   </a>
                 
               </div>
@@ -142,9 +158,9 @@ The second one is to fix a bug resulting from different Windows/Linux file seper
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
+                <a href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
                   <h3 class="post-title">
-                    Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container
+                    Examples of OOD class diagrams
                   </h3>
                 </a>
               </div>
