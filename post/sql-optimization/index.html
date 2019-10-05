@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Semaphore vs Lock | Yu&#39;s Github</title>
+<title>SQL Optimization | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,73 +111,50 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Semaphore vs Lock</h2>
-            <div class="post-date">2019-09-01</div>
+            <h2 class="post-title">SQL Optimization</h2>
+            <div class="post-date">2019-10-05</div>
             
             <div class="post-content">
-              <p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
+              <p><strong>Locate slow SQL query</strong></p>
+<p>Use slow query log</p>
+<pre><code>mysql&gt; set global slow_query_log = on;
 
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
+Query OK, 0 rows affected (0.00 sec)
 
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
+mysql&gt; show global variables like &quot;datadir&quot;;
 
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
++---------------+------------------------+
+| Variable_name | Value                  |
++---------------+------------------------+
+| datadir       | /data/mysql/data/3306/ |
++---------------+------------------------+
 
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
+1 row in set (0.00 sec)
+
+mysql&gt; show global variables like &quot;slow_query_log_file&quot;;
+
++---------------------+----------------+
+| Variable_name       | Value          |
++---------------------+----------------+
+| slow_query_log_file | mysql-slow.log |
++---------------------+----------------+
+
+1 row in set (0.00 sec)
 </code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
+<p>Query_time:<br>
+Lock_time: waiting for acquiring lock
+Rows_sent: number of rows returned
+Rows_examined:</p>
+<pre><code>[root@mysqltest ~]# tail -n5 /data/mysql/data/3306/mysql-slow.log
 
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
+Time: 2019-05-21T09:15:06.255554+08:00
 
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
+User@Host: root[root] @ localhost []  Id: 8591152
 
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
+Query_time: 10.000260  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 0
 
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
+SET timestamp=1558401306;
+select sleep(10);
 </code></pre>
 
             </div>
@@ -185,9 +162,9 @@ class Foo {
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/candy-crush">
+                <a href="https://ywang412.github.io/post/java-io-stream">
                   <h3 class="post-title">
-                    2D Matrix 
+                    Java IO stream
                   </h3>
                 </a>
               </div>

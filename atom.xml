@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-02T04:08:16.289Z</updated>
+    <updated>2019-10-05T23:07:38.056Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,55 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[SQL Optimization]]></title>
+        <id>https://ywang412.github.io/post/sql-optimization</id>
+        <link href="https://ywang412.github.io/post/sql-optimization">
+        </link>
+        <updated>2019-10-05T09:55:19.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Locate slow SQL query</strong></p>
+<p>Use slow query log</p>
+<pre><code>mysql&gt; set global slow_query_log = on;
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; show global variables like &quot;datadir&quot;;
+
++---------------+------------------------+
+| Variable_name | Value                  |
++---------------+------------------------+
+| datadir       | /data/mysql/data/3306/ |
++---------------+------------------------+
+
+1 row in set (0.00 sec)
+
+mysql&gt; show global variables like &quot;slow_query_log_file&quot;;
+
++---------------------+----------------+
+| Variable_name       | Value          |
++---------------------+----------------+
+| slow_query_log_file | mysql-slow.log |
++---------------------+----------------+
+
+1 row in set (0.00 sec)
+</code></pre>
+<p>Query_time:<br>
+Lock_time: waiting for acquiring lock
+Rows_sent: number of rows returned
+Rows_examined:</p>
+<pre><code>[root@mysqltest ~]# tail -n5 /data/mysql/data/3306/mysql-slow.log
+
+Time: 2019-05-21T09:15:06.255554+08:00
+
+User@Host: root[root] @ localhost []  Id: 8591152
+
+Query_time: 10.000260  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 0
+
+SET timestamp=1558401306;
+select sleep(10);
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Java IO stream]]></title>
         <id>https://ywang412.github.io/post/java-io-stream</id>
@@ -1566,24 +1615,6 @@ public Data put(String key, Data value) {
 		}).start();
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Contributing to Scala zio, a github open source project]]></title>
-        <id>https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project</id>
-        <link href="https://ywang412.github.io/post/contributing-to-a-scala-zio-a-github-open-source-project">
-        </link>
-        <updated>2019-06-23T04:54:56.000Z</updated>
-        <content type="html"><![CDATA[<p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.</p>
-<p>https://github.com/zio/zio/pull/1109
-and
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt="">
-The second one is to fix a bug resulting from different Windows/Linux file seperator.
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
 ]]></content>
     </entry>
 </feed>
