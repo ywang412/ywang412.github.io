@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570402854991">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570404242444">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570402854991" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570404242444" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Pitfalls in DFS and BFS algorithm</h2>
-            <div class="post-date">2018-05-09</div>
+            <div class="post-date">2018-05-08</div>
             
               <div class="feature-container" style="background-image: url('https://ywang412.github.io/post-images/dfsbfs-algorithm.png')">
               </div>
@@ -439,6 +439,33 @@ private void addEdge(int source, int dest) {
   
         return false; 
     } 
+</code></pre>
+<p><strong>465. Optimal Account Balancing</strong></p>
+<p>Greedy DFS to settle most negative debt</p>
+<pre><code>class Solution {
+    public int minTransfers(int[][] transactions) {
+            Map&lt;Integer, Integer&gt; m = new HashMap&lt;&gt;();
+            for (int[] t : transactions) {
+                m.put(t[0], m.getOrDefault(t[0], 0) - t[2]);
+                m.put(t[1], m.getOrDefault(t[1], 0) + t[2]);
+            }
+            return settle(0, new ArrayList&lt;&gt;(m.values()));
+        }
+
+        int settle(int start, List&lt;Integer&gt; debt) {
+            while (start &lt; debt.size() &amp;&amp; debt.get(start) == 0)
+                start++;
+            if (start == debt.size()) return 0;
+            int r = Integer.MAX_VALUE;
+            for (int i = start + 1; i &lt; debt.size(); i++)
+                if (debt.get(start) * debt.get(i) &lt; 0) {
+                    debt.set(i, debt.get(i) + debt.get(start));
+                    r = Math.min(r, 1 + settle(start + 1, debt));
+                    debt.set(i, debt.get(i) - debt.get(start));
+                }
+            return r;
+        }
+}
 </code></pre>
 
             </div>
