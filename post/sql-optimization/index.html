@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570334909996">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570337865911">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570334909996" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570337865911" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL Optimization</h2>
-            <div class="post-date">2018-10-09</div>
+            <div class="post-date">2018-10-08</div>
             
             <div class="post-content">
               <p><strong>Locate slow SQL query</strong></p>
@@ -171,6 +171,10 @@ select sleep(10);
 <code>mysql&gt; explain select * from t1 where a like '%1111%';</code></p>
 <p>Large range won't use index
 <code>mysql&gt; explain select * from t1 where b&gt;=1 and b &lt;=2000;</code></p>
+<p>b -1 = 100 won't and b = 100 + 1 can.</p>
+<pre><code>mysql&gt; explain select * from t1 where b-1 =1000;
+</code></pre>
+<p><img src="https://ywang412.github.io/post-images/1570337862625.png" alt=""></p>
 
             </div>
             
