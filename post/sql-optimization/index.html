@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570401404767">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570401613258">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570401404767" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570401613258" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -244,6 +244,26 @@ if join on index key. Small table will be the driving table. T ~ 2*N(small table
 <p>Block Nested-Loop join
 if join on key without index. Load small table into join_buffer. Scan each row of big table and compare it to each row in join_buffer.
 Total number of scanned row is M(big table) + N(small table). T ~ M(big table)*N(small table).</p>
+<ol>
+<li>join on index key</li>
+<li>use small table as driving table <code>select * from t2 straight_join t1 on t2.a = t1.a;</code></li>
+<li>temporary table
+Add index to field b in temp table</li>
+</ol>
+<pre><code>CREATE TEMPORARY TABLE `t1_tmp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `a` int(11) DEFAULT NULL,
+  `b` int(11) DEFAULT NULL,
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_a` (`a`),
+  KEY `idx_b` (b)
+) ENGINE=InnoDB ;
+</code></pre>
+<pre><code>insert into t1_tmp select * from t1;
+select * from t1_tmp join t2 on t1_tmp.b= t2.b;
+</code></pre>
 
             </div>
             
