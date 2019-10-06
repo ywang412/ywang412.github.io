@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570334605139">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570334909996">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570334605139" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570334909996" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL Optimization</h2>
-            <div class="post-date">2018-10-10</div>
+            <div class="post-date">2018-10-09</div>
             
             <div class="post-content">
               <p><strong>Locate slow SQL query</strong></p>
@@ -164,6 +164,13 @@ select sleep(10);
 <img src="https://ywang412.github.io/post-images/1570334471167.png" alt=""></p>
 <p>Using native data format will use index condition.</p>
 <p><code>mysql&gt; explain select * from t1 where c&gt;='2019-05-21 00:00:00' and c&lt;='2019-05-21 23:59:59';</code></p>
+<p>Implicit conversion won't use index. tele_phone is Varchar(20)</p>
+<pre><code>select user_name,tele_phone from user_info where tele_phone =11111111111; /* SQL 1 */
+</code></pre>
+<p>Like clause using heading % won't. But if only trailing %, it can use index.
+<code>mysql&gt; explain select * from t1 where a like '%1111%';</code></p>
+<p>Large range won't use index
+<code>mysql&gt; explain select * from t1 where b&gt;=1 and b &lt;=2000;</code></p>
 
             </div>
             
