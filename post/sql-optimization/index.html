@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570339046954">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570341356580">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570339046954" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570341356580" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL Optimization</h2>
-            <div class="post-date">2018-10-07</div>
+            <div class="post-date">2018-10-06</div>
             
             <div class="post-content">
               <p><strong>Locate slow SQL query</strong></p>
@@ -204,6 +204,28 @@ INSERT INTO `t1` VALUES (3,'3',3,'2019-05-24 15:44:10');
 <li>Adjust innodb_flush_log_at_trx_commmit and sync_binlog = 0</li>
 </ol>
 <p><strong>Order by and Group by</strong></p>
+<p>mySql order by use two kinds of sorting.
+1) using index
+2) using filesort</p>
+<p>If data size &lt; sort_buffer_size, sort in memory (number of tmp files 0), else in disk (number of tmp files &gt; 0).</p>
+<p>Filesort has 3 modes.
+&lt;sort_key, rowid&gt; only sort rowid and fetch records after
+max_length_for_sort_data &lt; length of all fields
+&lt;sort_key, additional_fields&gt; loads all fields and sort
+max_length_for_sort_data &gt; length of all fields
+&lt;sort_key, packed_additional_fields&gt;</p>
+<ol>
+<li>Add index to sort by field</li>
+<li>order by (a , b)  use  index (a, b) not (b, a)</li>
+<li>where a = 1000 order by b  use index (a, b)</li>
+<li>select * from t1 order by a,b;      won't use index
+because scan index and fetch all records costs more than filesort.
+select id,a,b from t1 order by a,b;</li>
+<li>explain select id,a,b from t1 where a&gt;9000 order by b;  won't use index
+because in range a &gt; 9000, data is not sorted by b. it is sorted by (a, b)</li>
+<li>explain select id,a,b from t1 order by a asc,b desc; won't use index</li>
+</ol>
+<p>Group by can use &quot;order by null&quot; to disable sorting.</p>
 
             </div>
             
