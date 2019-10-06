@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570401613258">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570402854991">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570401613258" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570402854991" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL Optimization</h2>
-            <div class="post-date">2018-10-05</div>
+            <div class="post-date">2018-10-04</div>
             
             <div class="post-content">
               <p><strong>Locate slow SQL query</strong></p>
@@ -264,6 +264,31 @@ Add index to field b in temp table</li>
 <pre><code>insert into t1_tmp select * from t1;
 select * from t1_tmp join t2 on t1_tmp.b= t2.b;
 </code></pre>
+<p><strong>Count (*)</strong></p>
+<p>Count(a) will not count null but Count(*) will.  Count(1) and Count(*) will be the same.
+MyISAM has meta information about total number of rows. InnoDB doesn't have the meta information because it allows concurrent transactions to have different row count.</p>
+<p>MySql will use smallest non-clustered index to calculate count(*). If there is no non-clustered index, it will use clustered-index. Because non-clustered index (secondary) only store primary key while clustered-index (primary key) stores entire row.</p>
+<ol>
+<li>
+<p><code>show table status like 't1';</code> will give an estimate of rows.</p>
+</li>
+<li>
+<p>use redis</p>
+</li>
+</ol>
+<pre><code>select count(\*) from t1;
+set   t1_count  10002
+insert into t1(a,b,c,d) values (10003,10003,10003,10003);
+INCR t1_count
+delete from t1 where id=10003;
+DECR t1_count
+get t1_count
+</code></pre>
+<p>problem: different session can read inaccurate result.</p>
+<ol start="3">
+<li>Add inno db counting table
+<img src="https://ywang412.github.io/post-images/1570402853197.png" alt=""></li>
+</ol>
 
             </div>
             
