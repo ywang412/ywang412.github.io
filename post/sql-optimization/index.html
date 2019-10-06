@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570341356580">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570400245382">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570341356580" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570400245382" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -226,6 +226,18 @@ because in range a &gt; 9000, data is not sorted by b. it is sorted by (a, b)</l
 <li>explain select id,a,b from t1 order by a asc,b desc; won't use index</li>
 </ol>
 <p>Group by can use &quot;order by null&quot; to disable sorting.</p>
+<p><strong>SQL Paging</strong></p>
+<p><code>select * from t1 limit 99000,2;</code></p>
+<ol>
+<li>use auto-increment continuous primary key
+<code>select * from t1 where id &gt;99000 limit 2;</code></li>
+</ol>
+<p><code>select * from t1 order by a limit 99000,2;</code>
+won't use index because scan index and fetch all records costs more than filesort.
+2. return id when sort
+<code>select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;</code></p>
+<p>Rewrite <code>select * from t1 limit 99000,2;</code>
+to <code>select * from t1 as a join (select id from t1 limit 99000, 2) as b on a.id = b.id;</code></p>
 
             </div>
             
