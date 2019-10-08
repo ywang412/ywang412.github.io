@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570568091481">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570568542558">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570568091481" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570568542558" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -154,6 +154,10 @@ use idx_a_b_c</p>
 <p>idx_a_b_c is equivalent to idx_a, idx_a_b, idx_a_b_c.</p>
 <p><code>select * from t11 where a=2 and b in (3,4) order by c; /* sql13 */</code>  will only use idx_a_b
 <code>select * from t11 where b=1 and c=1; /* sql34 */</code> cannot use idx_a_b_c</p>
+<p><strong>Cardinality</strong>
+<code>show index from t13;</code>
+Cardinality is the estimate of distinct index values. Query will use index of larger cardinality.</p>
+<p>If returned rows number is large, query may use the primary key index to fetch all records. Use force index to force specified index.</p>
 
             </div>
             
