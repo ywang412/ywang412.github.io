@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570567656958">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570568091481">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570567656958" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570568091481" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL 2 - Index</h2>
-            <div class="post-date">2018-11-13</div>
+            <div class="post-date">2018-11-12</div>
             
             <div class="post-content">
               <p>B tree
@@ -144,6 +144,16 @@ turn BNL to NLJ search</li>
 <p>non-clustered non-unique index use change buffer to combine multiple insert.
 Unique index has to load data into memory to check uniqueness.</p>
 <p>Although non-unique index will continue after finding the first matching record, it is highly possible that all matching records are loaded into memory in same page. Therefore, search query for unique index and non-unique index are the same.</p>
+<p><strong>Multi-column indexes</strong>
+<code>select * from t11 where a=1 and b=1 and c=1;</code>  use idx_a_b_c
+<code>select * from t11 where c=1 and b=1 and a=1; /* sql2 */</code>  same as first query, order doesn't matter</p>
+<p><code>select * from t11 where a=2 and b in (1,2) and c=2; /* sql3 */</code>
+<code>select * from t11 where a=1 and b=2 order by c; /* sql4 */</code>
+<code>select * from t11 where a=1 order by b,c; /* sql5 */</code>
+use idx_a_b_c</p>
+<p>idx_a_b_c is equivalent to idx_a, idx_a_b, idx_a_b_c.</p>
+<p><code>select * from t11 where a=2 and b in (3,4) order by c; /* sql13 */</code>  will only use idx_a_b
+<code>select * from t11 where b=1 and c=1; /* sql34 */</code> cannot use idx_a_b_c</p>
 
             </div>
             
