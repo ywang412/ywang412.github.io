@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>SQL 1 - Optimization | Yu&#39;s Github</title>
+<title>SQL 1 - Optimization and Best Practice | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570650729110">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1570679816007">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1570650729110" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1570679816007" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -111,11 +111,22 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">SQL 1 - Optimization</h2>
-            <div class="post-date">2018-10-04</div>
+            <h2 class="post-title">SQL 1 - Optimization and Best Practice</h2>
+            <div class="post-date">2018-10-03</div>
             
             <div class="post-content">
-              <p><strong>Locate slow SQL query</strong></p>
+              <p><strong>Best practice</strong></p>
+<ol>
+<li>use &quot;=&quot; not &quot;&lt;&gt;&quot; on index</li>
+<li>use Limit 1 if only return 1 record</li>
+<li>use TINYINT before SMALLINT and INT</li>
+<li>break big DELETE, UPDATE or INSERT into small ones</li>
+<li>use UNION ALL instead of UNION because ALL allows duplicate</li>
+<li>don't use select * which will not use index</li>
+<li>add index to where, join, order by</li>
+<li>use limit to return page</li>
+</ol>
+<p><strong>Locate slow SQL query</strong></p>
 <p>Use slow query log</p>
 <pre><code>mysql&gt; set global slow_query_log = on;
 
