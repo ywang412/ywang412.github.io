@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571506013635">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571528816454">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571506013635" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571528816454" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -160,8 +160,40 @@ class RandomChar:
 
     def anyone(self):
         return self.pick_random_item(self.all_uppercase + self.all_lowercase + self.all_digits + self.all_specials)
- 
 </code></pre>
+<p><strong>List</strong></p>
+<pre><code>letters = ['a', 'b', 'c']
+letters.append('d')
+letters.insert(0, 'c')
+letters.extend(['e', 'f'])
+letters.pop(0)
+letters.pop() # pop last
+letters.remove('a')
+letters.clear()
+list('abc')
+</code></pre>
+<p><strong>Dict</strong></p>
+<pre><code>codes = {'beijing' : '010', 'shanghai' : '021'}
+codes.get('a', '100')
+list(codes.keys())
+list(codes.values())
+list(codes.items())
+codes.pop('beijing', '123')
+codes.popitem() # random
+codes.clear()
+codes.update({'shanghai' : '000'})
+dict(a = 1, b = 2)
+</code></pre>
+<p><strong>Set</strong></p>
+<pre><code>numbers = {1, 2}
+numbers.add(2)
+numbers.update({2, 3})
+numbers.remove(1) # throws KeyError
+numbers.discard(1) # no Error thrown
+numbers.pop() # random
+set('abc')
+</code></pre>
+<p><strong>Iterator</strong></p>
 
             </div>
             
