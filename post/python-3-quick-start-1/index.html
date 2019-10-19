@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Semaphore vs Lock | Yu&#39;s Github</title>
+<title>Python 3 quick start - 1 | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,73 +111,56 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Semaphore vs Lock</h2>
-            <div class="post-date">2019-09-01</div>
+            <h2 class="post-title">Python 3 quick start - 1</h2>
+            <div class="post-date">2018-09-30</div>
             
             <div class="post-content">
-              <p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
-
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
-
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
+              <p><strong>Math</strong></p>
+<pre><code>2**3 = 8
+9 // 2 = 4
+int()   # convert string or float to int
+type() # int, float, str, bool and NoneType
 </code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
+<p><strong>Try Except</strong></p>
+<pre><code>try:
+    block1
+except (NameError, ValueError, TypeError) as e:
+    block2
+except (IOError) as e:
+    block3
+finally:
+		block4
+		raise ValueError('input error')
+</code></pre>
+<p><strong>Class</strong></p>
+<pre><code>import random
 
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
+class RandomChar:
+    def __init__(self):
+        self.all_uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        self.all_lowercase = 'abcdefghijklmnopqrstuvwxyz'
+        self.all_digits = '0123456789'
+        self.all_specials = '~!@#$%^&amp;*'
 
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
+    def pick_random_item(self, sequence):
+        random_int = random.randint(0, len(sequence) - 1)
+        return sequence[random_int]
 
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
+    def uppercase(self):
+        return self.pick_random_item(self.all_uppercase)
 
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
+    def lowercase(self):
+        return self.pick_random_item(self.all_lowercase)
+
+    def digit(self):
+        return self.pick_random_item(self.all_digits)
+
+    def special(self):
+        return self.pick_random_item(self.all_specials)
+
+    def anyone(self):
+        return self.pick_random_item(self.all_uppercase + self.all_lowercase + self.all_digits + self.all_specials)
+ 
 </code></pre>
 
             </div>
@@ -185,9 +168,9 @@ class Foo {
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/candy-crush">
+                <a href="https://ywang412.github.io/post/stack-and-tree">
                   <h3 class="post-title">
-                    2D Matrix 
+                    Stack and Tree
                   </h3>
                 </a>
               </div>
