@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571590050390">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571591880953">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571590050390" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571591880953" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -236,6 +236,40 @@ for item in p:
 <p>use generator to generate dict and set
 {k: v for item in iterable}
 {operation for item in iterable}</p>
+<p><strong>Class method and class property</strong></p>
+<pre><code>class Char:
+    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    __digits = '0123456789'    # private
+	
+    @classmethod
+    def random_letter(cls):
+        return random.choice(cls.letters)
+	
+    @classmethod
+    def random_digits(cls):
+        return random.choice(cls.digits)
+    
+    @staticmethod
+    def random_char(string):
+        if not isinstance(string, str):
+        	raise TypeError('需要字符串参数')
+        
+        return random.choice(string)
+</code></pre>
+<p><strong>Inheritance</strong></p>
+<pre><code>class B(A):
+	def __init__(self):
+		super().__init__()        # to have parent's method and property
+		self.banana = 'banana'
+</code></pre>
+<p><strong>filter, map, sorted</strong></p>
+<pre><code>codes= [('a', 1), ('b', 2)]
+sorted(codes, key = lambda x : x[1])
+
+# filter and map will return iterator
+list(filter(lambda x : len(x)%2 == 1, ['a', 'bc']))
+list(map(lambda x : x.upper(), ['a', 'bc']))
+</code></pre>
 
             </div>
             
