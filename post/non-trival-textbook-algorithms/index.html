@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571528816454">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571546009826">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571528816454" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571546009826" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -1332,6 +1332,42 @@ Boolean isCyclic()
             }
         }
         return b.length();
+    }
+}
+</code></pre>
+<p><strong>Tarjin's algorithm to find critical edge</strong></p>
+<ol start="1192">
+<li>Critical Connections in a Network</li>
+</ol>
+<pre><code>class Solution {
+    int timer = 0;
+    public List&lt;List&lt;Integer&gt;&gt; criticalConnections(int n, List&lt;List&lt;Integer&gt;&gt; connections) {
+        List&lt;Integer&gt;[] graph = new ArrayList[n];
+        for (int i = 0; i &lt; n; i++) graph[i] = new ArrayList&lt;&gt;();
+        
+        for(List&lt;Integer&gt; oneConnection :connections) {
+            graph[oneConnection.get(0)].add(oneConnection.get(1));
+            graph[oneConnection.get(1)].add(oneConnection.get(0));
+        } 
+        List&lt;List&lt;Integer&gt;&gt; results = new ArrayList&lt;&gt;();
+        boolean[] visited = new boolean[n];
+        int []timeStampAtThatNode = new int[n]; 
+        criticalConnectionsUtil(graph, -1, 0, visited, results, timeStampAtThatNode);
+        return results;
+    }
+    
+    
+    public void criticalConnectionsUtil(List&lt;Integer&gt;[] graph, int parent, int node, boolean[] visited, List&lt;List&lt;Integer&gt;&gt; results, int []timeStampAtThatNode) {
+        visited[node] = true;
+        timeStampAtThatNode[node] = timer++;
+        int currentTimeStamp = timeStampAtThatNode[node];
+        
+        for(int oneNeighbour : graph[node]) {
+            if(oneNeighbour == parent) continue;
+            if(!visited[oneNeighbour]) criticalConnectionsUtil(graph, node, oneNeighbour, visited, results, timeStampAtThatNode);
+            timeStampAtThatNode[node] = Math.min(timeStampAtThatNode[node], timeStampAtThatNode[oneNeighbour]);
+            if(currentTimeStamp &lt; timeStampAtThatNode[oneNeighbour]) results.add(Arrays.asList(node, oneNeighbour));
+        }
     }
 }
 </code></pre>
