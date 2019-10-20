@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal | Yu&#39;s Github</title>
+<title>Java JUC (java.util.concurrent) 5 - Exception | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,30 +111,50 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal</h2>
-            <div class="post-date">2019-07-06</div>
+            <h2 class="post-title">Java JUC (java.util.concurrent) 5 - Exception</h2>
+            <div class="post-date">2019-07-15</div>
             
             <div class="post-content">
-              <p>Java use Thread Pool pattern to save resources in a multithreaded application, and also to contain the parallelism in certain predefined limits. It controls several re-used threads for executing these tasks.</p>
-<pre><code>ExecutorService executorService = Executors.newCachedThreadPool();
-for (int i = 0; i &lt; 10; i++) {
-		final int index = i;
-		executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-						log.info(&quot;task:{}&quot;, index);
-				}
-		});
+              <p>To stop a thread</p>
+<ol>
+<li>stop()  // deprecated
+throws ThreadDeath exception and release lock</li>
+<li>interrupt()   // isInterrupted()</li>
+</ol>
+<pre><code>public class MyThread extends Thread {
+    @Override
+    public void run() {
+        try {
+            for (int i=0; i&lt;50000; i++){
+                if (this.isInterrupted()) {
+                    System.out.println(&quot; 已经是停止状态了！&quot;);
+                    throw new InterruptedException();   // or intead use return;
+                }
+                System.out.println(i);
+            }
+            System.out.println(&quot; 不抛出异常，我会被执行的哦！&quot;);
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+    }
+ 
+    public static void main(String[] args) throws InterruptedException {
+        MyThread myThread =new MyThread();
+        myThread.start();
+        Thread.sleep(100);
+        myThread.interrupt();
+    }
+ 
 }
-executorService.shutdown();
 </code></pre>
-<p>There are several pre-defined threadpool for various scenarios.</p>
-<pre><code>ExecutorService executorService = Executors.newFixedThreadPool(3);
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-</code></pre>
-<p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
-<pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
+<p>suspend() and resume() // deprecated because occupy lock</p>
+<p>suspend can block println()</p>
+<pre><code>public void println(String x) {
+		synchronized (this) {
+				print(x);
+				newLine();
+		}
+}
 </code></pre>
 
             </div>
@@ -142,9 +162,9 @@ ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
+                <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
                   <h3 class="post-title">
-                    Java JUC (java.util.concurrent) 4 - Lock
+                    Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal
                   </h3>
                 </a>
               </div>
