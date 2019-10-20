@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571547199220">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571590019677">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571547199220" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571590019677" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -194,6 +194,48 @@ numbers.pop() # random
 set('abc')
 </code></pre>
 <p><strong>Iterator</strong></p>
+<p>for is equivalent to</p>
+<ol>
+<li>call iter() on container  #   <code>__iter__()</code>,   <code>isinstance([1, 2, 3], Iterable)</code></li>
+<li>call next()</li>
+<li>break until StopIteration Error</li>
+</ol>
+<pre><code>class PowerOfTwo:
+    def __init__(self):
+        self.exponent = 0  					#  
+
+    def __next__(self):
+        if self.exponent &gt; 10:
+            raise StopIteration
+        else:
+            result = 2 ** self.exponent		#  
+            self.exponent += 1
+            return result
+
+    def __iter__(self):
+        return self
+				
+				
+p = PowerOfTwo()
+for item in p:
+		print(item)
+</code></pre>
+<p><strong>Generator</strong></p>
+<p>generator will generate <code>__iter__()</code> and <code>__next__()</code></p>
+<pre><code>def power_of_two():
+	for exponent in range(11):	 
+		yield 2 ** exponent	
+</code></pre>
+<p><code>generator = (operation for item in iterable)</code></p>
+<p>use generator to generate list</p>
+<pre><code># [generator]
+[char.upper() for char in ['a', 'b', 'c', 'd', 'e']]
+[char for char in ['a', 'b', 'c', 'd', 'e']]  #list('abcde')
+[2 ** i for i in range(1, 11) if i % 2 == 1 ]
+</code></pre>
+<p>use generator to generate dict and set
+{k: v for item in iterable}
+{op for item in iterable}</p>
 
             </div>
             
