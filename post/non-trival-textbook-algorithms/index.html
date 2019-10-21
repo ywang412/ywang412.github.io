@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571627602310">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571629489900">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571627602310" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571629489900" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -684,6 +684,33 @@ public int g(int i, int j, int k) {
 		System.out.println(&quot;Following are k randomly selected items&quot;); 
 		System.out.println(Arrays.toString(reservoir)); 
 } 
+</code></pre>
+<ol start="398">
+<li>Random Pick Index</li>
+</ol>
+<pre><code>class Solution {
+
+    int[] nums;
+    Random rnd;
+
+    public Solution(int[] nums) {
+        this.nums = nums;
+        this.rnd = new Random();
+    }
+    
+    public int pick(int target) {
+        int result = -1;
+        int count = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (nums[i] != target)
+                continue;
+            if (rnd.nextInt(++count) == 0)
+                result = i;
+        }
+        
+        return result;
+    }
+}
 </code></pre>
 <p><strong>315. Count of Smaller Numbers After Self</strong></p>
 <p>When we try to insert a number, the total number of smaller number would be adding dup and sum of the nodes where we turn right.</p>
