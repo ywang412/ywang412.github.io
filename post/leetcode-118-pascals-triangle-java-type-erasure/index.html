@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571629489900">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571799932352">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571629489900" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571799932352" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -303,6 +303,18 @@ arr = al.toArray(arr);
 		//0x55555555 is to get rid of those power of 2 but not power of 4
 		//so that the single 1 bit always appears at the odd position 
 }
+</code></pre>
+<p><strong>IntStream to List or Array</strong></p>
+<pre><code>List&lt;Integer&gt; ints = IntStream.of(1,2,3,4,5)
+                .boxed()
+                .collect(Collectors.toList());
+	
+int[] intArray = IntStream.of(1, 2, 3, 4, 5).toArray();
+
+int[] intArray = {1, 2, 3, 4, 5};
+IntStream intStream1 = Arrays.stream(intArray);
+
+IntStream is = list.stream().mapToInt(Integer::intValue);
 </code></pre>
 
             </div>
