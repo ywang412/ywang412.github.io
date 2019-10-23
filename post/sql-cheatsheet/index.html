@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802216476">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802271901">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571802216476" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571802271901" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-21</div>
+            <div class="post-date">2019-10-20</div>
             
             <div class="post-content">
               <p><strong>rank scores</strong></p>
@@ -161,14 +161,13 @@ order by num desc
 limit 1
 ;
 
-SELECT id1 AS id, COUNT() AS num
-FROM (
-SELECT requester_id AS id1, accepter_id AS id2 FROM request_accepted
-UNION
-SELECT accepter_id AS id1 , requester_id AS id2 FROM request_accepted
-) a
-GROUP BY 1
-ORDER BY COUNT() DESC
+SELECT ids as id , COUNT(*) as num
+FROM 
+  (SELECT requester_id as ids FROM request_accepted
+   UNION ALL
+   SELECT accepter_id as ids FROM request_accepted) AS u
+GROUP BY ids
+ORDER BY COUNT(*) DESC
 LIMIT 1
 </code></pre>
 

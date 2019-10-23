@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-23T03:43:39.474Z</updated>
+    <updated>2019-10-23T03:44:35.044Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-21T12:24:27.000Z</updated>
+        <updated>2019-10-20T23:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>rank scores</strong></p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
@@ -62,14 +62,13 @@ order by num desc
 limit 1
 ;
 
-SELECT id1 AS id, COUNT() AS num
-FROM (
-SELECT requester_id AS id1, accepter_id AS id2 FROM request_accepted
-UNION
-SELECT accepter_id AS id1 , requester_id AS id2 FROM request_accepted
-) a
-GROUP BY 1
-ORDER BY COUNT() DESC
+SELECT ids as id , COUNT(*) as num
+FROM 
+  (SELECT requester_id as ids FROM request_accepted
+   UNION ALL
+   SELECT accepter_id as ids FROM request_accepted) AS u
+GROUP BY ids
+ORDER BY COUNT(*) DESC
 LIMIT 1
 </code></pre>
 ]]></content>
