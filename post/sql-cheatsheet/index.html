@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802271901">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802309926">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571802271901" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571802309926" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,7 +115,7 @@
             <div class="post-date">2019-10-20</div>
             
             <div class="post-content">
-              <p><strong>rank scores</strong></p>
+              <p><strong>Rank scores</strong></p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
 FROM Scores s ORDER BY Score DESC;
@@ -138,7 +138,7 @@ END) AS id, student
 FROM seat, (select count(*) as records from seat) as seat_records
 ORDER BY id asc;
 </code></pre>
-<p><strong>Friend Requests I</strong></p>
+<p><strong>Friend requests I</strong></p>
 <pre><code>select
 round(
     ifnull(
@@ -148,7 +148,7 @@ round(
     0)
 , 2) as accept_rate;
 </code></pre>
-<p><strong>Friend Requests II</strong></p>
+<p><strong>Friend requests II</strong></p>
 <pre><code>select id, count(*) as num
    from
    (

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-23T03:44:35.044Z</updated>
+    <updated>2019-10-23T03:45:13.106Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,8 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-20T23:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>rank scores</strong></p>
+        <updated>2019-10-20T10:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
 FROM Scores s ORDER BY Score DESC;
@@ -39,7 +39,7 @@ END) AS id, student
 FROM seat, (select count(*) as records from seat) as seat_records
 ORDER BY id asc;
 </code></pre>
-<p><strong>Friend Requests I</strong></p>
+<p><strong>Friend requests I</strong></p>
 <pre><code>select
 round(
     ifnull(
@@ -49,7 +49,7 @@ round(
     0)
 , 2) as accept_rate;
 </code></pre>
-<p><strong>Friend Requests II</strong></p>
+<p><strong>Friend requests II</strong></p>
 <pre><code>select id, count(*) as num
    from
    (
