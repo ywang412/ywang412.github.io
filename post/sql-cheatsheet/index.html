@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571801767110">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802216476">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571801767110" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571802216476" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -124,6 +124,7 @@ SELECT s.Score, COUNT(DISTINCT t.Score) Rank
 FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
 GROUP BY s.Id ORDER BY s.Score DESC;
 </code></pre>
+<p><strong>Exchange seat</strong></p>
 <pre><code>select
 if(id &lt; (select count(*) from seat), if(id mod 2=0, id-1, id+1), if(id mod 2=0, id-1, id)) as id, student
 from seat
@@ -136,6 +137,39 @@ SELECT (CASE
 END) AS id, student
 FROM seat, (select count(*) as records from seat) as seat_records
 ORDER BY id asc;
+</code></pre>
+<p><strong>Friend Requests I</strong></p>
+<pre><code>select
+round(
+    ifnull(
+    (select count(*) from (select distinct requester_id, accepter_id from request_accepted) as A)
+    /
+    (select count(*) from (select distinct sender_id, send_to_id from friend_request) as B),
+    0)
+, 2) as accept_rate;
+</code></pre>
+<p><strong>Friend Requests II</strong></p>
+<pre><code>select id, count(*) as num
+   from
+   (
+        select requester_id as id from request_accepted
+        union all   -- union all will take duplicates
+        select accepter_id from request_accepted
+    ) as tbl1
+   group by id
+order by num desc
+limit 1
+;
+
+SELECT id1 AS id, COUNT() AS num
+FROM (
+SELECT requester_id AS id1, accepter_id AS id2 FROM request_accepted
+UNION
+SELECT accepter_id AS id1 , requester_id AS id2 FROM request_accepted
+) a
+GROUP BY 1
+ORDER BY COUNT() DESC
+LIMIT 1
 </code></pre>
 
             </div>
