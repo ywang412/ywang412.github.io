@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571890414714">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571892496616">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571890414714" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571892496616" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-19</div>
+            <div class="post-date">2019-10-18</div>
             
             <div class="post-content">
               <p><strong>Rank scores</strong></p>
@@ -209,6 +209,37 @@ FROM
    WHERE state = &quot;approved&quot;
 ) s
 GROUP BY month, country
+</code></pre>
+<p><strong>Students Report By Geography</strong></p>
+<p>@variable</p>
+<pre><code>SELECT 
+    America, Asia, Europe
+FROM
+    (SELECT @as:=0, @am:=0, @eu:=0) t,
+    (SELECT 
+        @as:=@as + 1 AS asid, name AS Asia
+    FROM
+        student
+    WHERE
+        continent = 'Asia'
+    ORDER BY Asia) AS t1
+        RIGHT JOIN
+    (SELECT 
+        @am:=@am + 1 AS amid, name AS America
+    FROM
+        student
+    WHERE
+        continent = 'America'
+    ORDER BY America) AS t2 ON asid = amid
+        LEFT JOIN
+    (SELECT 
+        @eu:=@eu + 1 AS euid, name AS Europe
+    FROM
+        student
+    WHERE
+        continent = 'Europe'
+    ORDER BY Europe) AS t3 ON amid = euid
+;
 </code></pre>
 
             </div>

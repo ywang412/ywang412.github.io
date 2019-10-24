@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-24T04:13:37.780Z</updated>
+    <updated>2019-10-24T04:48:19.505Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-19T08:24:27.000Z</updated>
+        <updated>2019-10-18T19:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -110,6 +110,37 @@ FROM
    WHERE state = &quot;approved&quot;
 ) s
 GROUP BY month, country
+</code></pre>
+<p><strong>Students Report By Geography</strong></p>
+<p>@variable</p>
+<pre><code>SELECT 
+    America, Asia, Europe
+FROM
+    (SELECT @as:=0, @am:=0, @eu:=0) t,
+    (SELECT 
+        @as:=@as + 1 AS asid, name AS Asia
+    FROM
+        student
+    WHERE
+        continent = 'Asia'
+    ORDER BY Asia) AS t1
+        RIGHT JOIN
+    (SELECT 
+        @am:=@am + 1 AS amid, name AS America
+    FROM
+        student
+    WHERE
+        continent = 'America'
+    ORDER BY America) AS t2 ON asid = amid
+        LEFT JOIN
+    (SELECT 
+        @eu:=@eu + 1 AS euid, name AS Europe
+    FROM
+        student
+    WHERE
+        continent = 'Europe'
+    ORDER BY Europe) AS t3 ON amid = euid
+;
 </code></pre>
 ]]></content>
     </entry>
