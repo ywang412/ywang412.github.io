@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571887638415">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571890414714">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571887638415" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571890414714" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -188,6 +188,27 @@ union all
 select match_id, guest_team, host_team, guest_goals, host_goals from matches) as T on t.team_id = T.host_team
 group by t.team_id
 order by num_points desc, t.team_id asc
+</code></pre>
+<p><strong>Monthly Transactions II</strong></p>
+<pre><code>SELECT month, country, 
+
+SUM(IF( state = &quot;approved&quot;,1,0)) AS approved_count,
+SUM(CASE WHEN state = &quot;approved&quot; THEN amount ELSE 0 END) AS approved_amount, 
+SUM(IF(state='back',1,0)) AS chargeback_count,
+SUM(CASE WHEN state = &quot;back&quot; THEN amount ELSE 0 END) AS chargeback_amount
+FROM
+(
+   SELECT DATE_FORMAT(c.trans_date, '%Y-%m') AS month, country,   -- LEFT(trans_date, 7)
+   &quot;back&quot; AS state, amount
+   FROM chargebacks AS c
+   JOIN transactions AS t ON c.trans_id = t.id
+   UNION ALL
+   
+   SELECT DATE_FORMAT(t.trans_date, '%Y-%m') AS month, country, state, amount
+   FROM transactions AS t
+   WHERE state = &quot;approved&quot;
+) s
+GROUP BY month, country
 </code></pre>
 
             </div>
