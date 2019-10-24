@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571802309926">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571887638415">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571802309926" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571887638415" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,10 +112,11 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-20</div>
+            <div class="post-date">2019-10-19</div>
             
             <div class="post-content">
               <p><strong>Rank scores</strong></p>
+<p>join vs subquery</p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
 FROM Scores s ORDER BY Score DESC;
@@ -125,6 +126,7 @@ FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
 GROUP BY s.Id ORDER BY s.Score DESC;
 </code></pre>
 <p><strong>Exchange seat</strong></p>
+<p>if clause</p>
 <pre><code>select
 if(id &lt; (select count(*) from seat), if(id mod 2=0, id-1, id+1), if(id mod 2=0, id-1, id)) as id, student
 from seat
@@ -139,6 +141,7 @@ FROM seat, (select count(*) as records from seat) as seat_records
 ORDER BY id asc;
 </code></pre>
 <p><strong>Friend requests I</strong></p>
+<p>round + ifnull</p>
 <pre><code>select
 round(
     ifnull(
@@ -149,19 +152,8 @@ round(
 , 2) as accept_rate;
 </code></pre>
 <p><strong>Friend requests II</strong></p>
-<pre><code>select id, count(*) as num
-   from
-   (
-        select requester_id as id from request_accepted
-        union all   -- union all will take duplicates
-        select accepter_id from request_accepted
-    ) as tbl1
-   group by id
-order by num desc
-limit 1
-;
-
-SELECT ids as id , COUNT(*) as num
+<p>union all</p>
+<pre><code>SELECT ids as id , COUNT(*) as num
 FROM 
   (SELECT requester_id as ids FROM request_accepted
    UNION ALL
@@ -169,6 +161,33 @@ FROM
 GROUP BY ids
 ORDER BY COUNT(*) DESC
 LIMIT 1
+</code></pre>
+<p><strong>Team Scores in Football Tournament</strong></p>
+<p>Left join on or</p>
+<pre><code>SELECT team_id,team_name,
+SUM(CASE WHEN team_id=host_team AND host_goals&gt;guest_goals THEN 3 ELSE 0 END)+
+SUM(CASE WHEN team_id=guest_team AND guest_goals&gt;host_goals THEN 3 ELSE 0 END)+
+SUM(CASE WHEN team_id=host_team AND host_goals=guest_goals THEN 1 ELSE 0 END)+
+SUM(CASE WHEN team_id=guest_team AND guest_goals=host_goals THEN 1 ELSE 0 END)
+as num_points
+FROM Teams
+LEFT JOIN Matches
+ON team_id=host_team OR team_id=guest_team
+GROUP BY team_id
+ORDER BY num_points DESC, team_id ASC;
+
+select t.team_id, t.team_name, 
+        sum(case 
+            when T.host_goals &gt; T.guest_goals then 3 
+            when T.host_goals = T.guest_goals then 1
+            else 0
+            end) as num_points
+from teams t left join
+(select * from matches
+union all
+select match_id, guest_team, host_team, guest_goals, host_goals from matches) as T on t.team_id = T.host_team
+group by t.team_id
+order by num_points desc, t.team_id asc
 </code></pre>
 
             </div>

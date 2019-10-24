@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-23T05:13:29.114Z</updated>
+    <updated>2019-10-24T03:27:22.353Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,9 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-20T10:24:27.000Z</updated>
+        <updated>2019-10-19T21:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
+<p>join vs subquery</p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
 FROM Scores s ORDER BY Score DESC;
@@ -26,6 +27,7 @@ FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
 GROUP BY s.Id ORDER BY s.Score DESC;
 </code></pre>
 <p><strong>Exchange seat</strong></p>
+<p>if clause</p>
 <pre><code>select
 if(id &lt; (select count(*) from seat), if(id mod 2=0, id-1, id+1), if(id mod 2=0, id-1, id)) as id, student
 from seat
@@ -40,6 +42,7 @@ FROM seat, (select count(*) as records from seat) as seat_records
 ORDER BY id asc;
 </code></pre>
 <p><strong>Friend requests I</strong></p>
+<p>round + ifnull</p>
 <pre><code>select
 round(
     ifnull(
@@ -50,19 +53,8 @@ round(
 , 2) as accept_rate;
 </code></pre>
 <p><strong>Friend requests II</strong></p>
-<pre><code>select id, count(*) as num
-   from
-   (
-        select requester_id as id from request_accepted
-        union all   -- union all will take duplicates
-        select accepter_id from request_accepted
-    ) as tbl1
-   group by id
-order by num desc
-limit 1
-;
-
-SELECT ids as id , COUNT(*) as num
+<p>union all</p>
+<pre><code>SELECT ids as id , COUNT(*) as num
 FROM 
   (SELECT requester_id as ids FROM request_accepted
    UNION ALL
@@ -70,6 +62,33 @@ FROM
 GROUP BY ids
 ORDER BY COUNT(*) DESC
 LIMIT 1
+</code></pre>
+<p><strong>Team Scores in Football Tournament</strong></p>
+<p>Left join on or</p>
+<pre><code>SELECT team_id,team_name,
+SUM(CASE WHEN team_id=host_team AND host_goals&gt;guest_goals THEN 3 ELSE 0 END)+
+SUM(CASE WHEN team_id=guest_team AND guest_goals&gt;host_goals THEN 3 ELSE 0 END)+
+SUM(CASE WHEN team_id=host_team AND host_goals=guest_goals THEN 1 ELSE 0 END)+
+SUM(CASE WHEN team_id=guest_team AND guest_goals=host_goals THEN 1 ELSE 0 END)
+as num_points
+FROM Teams
+LEFT JOIN Matches
+ON team_id=host_team OR team_id=guest_team
+GROUP BY team_id
+ORDER BY num_points DESC, team_id ASC;
+
+select t.team_id, t.team_name, 
+        sum(case 
+            when T.host_goals &gt; T.guest_goals then 3 
+            when T.host_goals = T.guest_goals then 1
+            else 0
+            end) as num_points
+from teams t left join
+(select * from matches
+union all
+select match_id, guest_team, host_team, guest_goals, host_goals from matches) as T on t.team_id = T.host_team
+group by t.team_id
+order by num_points desc, t.team_id asc
 </code></pre>
 ]]></content>
     </entry>
