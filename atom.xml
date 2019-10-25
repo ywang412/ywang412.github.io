@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-25T01:46:57.302Z</updated>
+    <updated>2019-10-25T01:57:56.123Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-17T04:24:27.000Z</updated>
+        <updated>2019-10-16T15:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -182,6 +182,19 @@ from cinema a join cinema b
   and a.free = true and b.free = true
 order by a.seat_id
 ;
+</code></pre>
+<p>**176. Second Highest Salary  **</p>
+<pre><code>SELECT
+    IFNULL(
+      (SELECT DISTINCT Salary
+       FROM Employee
+       ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1),
+    NULL) AS SecondHighestSalary
+
+SELECT max(Salary)
+FROM Employee
+WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
 </code></pre>
 ]]></content>
     </entry>
