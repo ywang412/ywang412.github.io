@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-24T04:52:52.586Z</updated>
+    <updated>2019-10-25T01:43:25.425Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-18T19:24:27.000Z</updated>
+        <updated>2019-10-18T06:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -140,6 +140,31 @@ FROM
     WHERE
         continent = 'Europe'
     ORDER BY Europe) AS t3 ON amid = euid
+;
+</code></pre>
+<p><strong>571. Find Median Given Frequency of Numbers</strong></p>
+<pre><code>select  avg(n.Number) median
+from Numbers n
+where n.Frequency &gt;= abs((select sum(Frequency) from Numbers where Number&lt;=n.Number) -
+                         (select sum(Frequency) from Numbers where Number&gt;=n.Number))
+												 
+select avg(t3.Number) as median
+from Numbers as t3 
+inner join 
+    (select t1.Number, 
+        abs(sum(case when t1.Number&gt;t2.Number then t2.Frequency else 0 end) -
+            sum(case when t1.Number&lt;t2.Number then t2.Frequency else 0 end)) as count_diff
+    from numbers as t1, numbers as t2
+    group by t1.Number) as t4
+on t3.Number = t4.Number
+where t3.Frequency&gt;=t4.count_diff
+</code></pre>
+<p>**603. Consecutive Available Seats **</p>
+<pre><code>select distinct a.seat_id
+from cinema a join cinema b
+  on abs(a.seat_id - b.seat_id) = 1
+  and a.free = true and b.free = true
+order by a.seat_id
 ;
 </code></pre>
 ]]></content>

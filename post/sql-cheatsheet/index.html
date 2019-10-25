@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571892496616">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571967802069">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571892496616" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1571967802069" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -239,6 +239,31 @@ FROM
     WHERE
         continent = 'Europe'
     ORDER BY Europe) AS t3 ON amid = euid
+;
+</code></pre>
+<p><strong>571. Find Median Given Frequency of Numbers</strong></p>
+<pre><code>select  avg(n.Number) median
+from Numbers n
+where n.Frequency &gt;= abs((select sum(Frequency) from Numbers where Number&lt;=n.Number) -
+                         (select sum(Frequency) from Numbers where Number&gt;=n.Number))
+												 
+select avg(t3.Number) as median
+from Numbers as t3 
+inner join 
+    (select t1.Number, 
+        abs(sum(case when t1.Number&gt;t2.Number then t2.Frequency else 0 end) -
+            sum(case when t1.Number&lt;t2.Number then t2.Frequency else 0 end)) as count_diff
+    from numbers as t1, numbers as t2
+    group by t1.Number) as t4
+on t3.Number = t4.Number
+where t3.Frequency&gt;=t4.count_diff
+</code></pre>
+<p>**603. Consecutive Available Seats **</p>
+<pre><code>select distinct a.seat_id
+from cinema a join cinema b
+  on abs(a.seat_id - b.seat_id) = 1
+  and a.free = true and b.free = true
+order by a.seat_id
 ;
 </code></pre>
 
