@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572065986879">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572067395547">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1572065986879" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572067395547" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -305,6 +305,37 @@ where 3 &gt; (select count(distinct(e2.Salary))
                   where e2.Salary &gt; e1.Salary 
                   and e1.DepartmentId = e2.DepartmentId
                   );
+</code></pre>
+<p><strong>Second Highest Salary</strong></p>
+<pre><code>SELECT Salary FROM Employee GROUP BY Salary
+UNION ALL (SELECT NULL AS Salary)
+ORDER BY Salary DESC LIMIT 1 OFFSET 1;
+
+SELECT MAX(Salary) FROM Employee
+Where Salary &lt;
+(SELECT MAX(Salary) FROM Employee);
+
+SELECT MAX(Salary) FROM Employee E1
+WHERE 1 =
+(SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
+WHERE E2.Salary &gt; E1.Salary);
+</code></pre>
+<p><strong>1204. Last Person to Fit in the Elevator</strong></p>
+<pre><code>SELECT q1.person_name
+FROM Queue q1 JOIN Queue q2 ON q1.turn &gt;= q2.turn
+GROUP BY q1.turn
+HAVING SUM(q2.weight) &lt;= 1000
+ORDER BY SUM(q2.weight) DESC
+LIMIT 1
+
+SELECT person_name FROM Queue as a
+WHERE
+(
+    SELECT SUM(weight) FROM Queue as b
+    WHERE b.turn&lt;=a.turn
+    ORDER By turn
+)&lt;=1000
+ORDER BY a.turn DESC limit 1;
 </code></pre>
 
             </div>
