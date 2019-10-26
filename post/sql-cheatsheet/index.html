@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1571968673407">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572065986879">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1571968673407" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572065986879" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-16</div>
+            <div class="post-date">2019-10-15</div>
             
             <div class="post-content">
               <p><strong>Rank scores</strong></p>
@@ -294,6 +294,17 @@ order by a.seat_id
 SELECT max(Salary)
 FROM Employee
 WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
+</code></pre>
+<p><strong>185. Department Top Three Salaries</strong></p>
+<pre><code>select d.Name Department, e1.Name Employee, e1.Salary
+from Employee e1 
+join Department d
+on e1.DepartmentId = d.Id
+where 3 &gt; (select count(distinct(e2.Salary)) 
+                  from Employee e2 
+                  where e2.Salary &gt; e1.Salary 
+                  and e1.DepartmentId = e2.DepartmentId
+                  );
 </code></pre>
 
             </div>

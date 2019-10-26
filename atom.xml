@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-25T01:57:56.123Z</updated>
+    <updated>2019-10-26T04:59:50.442Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-16T15:24:27.000Z</updated>
+        <updated>2019-10-16T02:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -195,6 +195,17 @@ order by a.seat_id
 SELECT max(Salary)
 FROM Employee
 WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
+</code></pre>
+<p><strong>185. Department Top Three Salaries</strong></p>
+<pre><code>select d.Name Department, e1.Name Employee, e1.Salary
+from Employee e1 
+join Department d
+on e1.DepartmentId = d.Id
+where 3 &gt; (select count(distinct(e2.Salary)) 
+                  from Employee e2 
+                  where e2.Salary &gt; e1.Salary 
+                  and e1.DepartmentId = e2.DepartmentId
+                  );
 </code></pre>
 ]]></content>
     </entry>
