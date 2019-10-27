@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-27T05:34:22.956Z</updated>
+    <updated>2019-10-27T06:04:33.534Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-15T13:24:27.000Z</updated>
+        <updated>2019-10-15T00:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -25,6 +25,8 @@ FROM Scores s ORDER BY Score DESC;
 SELECT s.Score, COUNT(DISTINCT t.Score) Rank
 FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
 GROUP BY s.Id ORDER BY s.Score DESC;
+--Group by s.Id so COUNT is per id
+
 </code></pre>
 <p><strong>Exchange seat</strong></p>
 <p>if clause</p>
@@ -38,7 +40,8 @@ SELECT (CASE
     WHEN mod(id, 2) != 0 and records = id THEN id
     ELSE id - 1
 END) AS id, student
-FROM seat, (select count(*) as records from seat) as seat_records
+FROM seat, (select count(*) as records from seat) as seat_records 
+-- as seat_records because Every derived table must have its own alias
 ORDER BY id asc;
 
 SELECT 
