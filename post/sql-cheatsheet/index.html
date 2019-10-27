@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572156266853">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572156351493">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1572156266853" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572156351493" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -142,8 +142,9 @@ END) AS id, student
 FROM seat, (select count(*) as records from seat) as seat_records 
 -- as seat_records because Every derived table must have its own alias
 ORDER BY id asc;
-
-SELECT 
+</code></pre>
+<p><strong>610. Triangle Judgement</strong></p>
+<pre><code>SELECT 
     x,
     y,
     z,
