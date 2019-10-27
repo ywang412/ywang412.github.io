@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-10-26T05:23:19.005Z</updated>
+    <updated>2019-10-27T04:27:39.803Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -1647,7 +1647,7 @@ int findMin(int arr[], int n)
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-exception</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-exception">
         </link>
-        <updated>2019-07-14T18:45:19.000Z</updated>
+        <updated>2019-07-14T05:45:19.000Z</updated>
         <content type="html"><![CDATA[<p>To stop a thread</p>
 <ol>
 <li>stop()  // deprecated
@@ -1688,6 +1688,56 @@ throws ThreadDeath exception and release lock</li>
 				newLine();
 		}
 }
+</code></pre>
+<p><img src="https://ywang412.github.io/post-images/1572150142349.jpg" alt=""></p>
+<p><strong>uncaughtException</strong></p>
+<pre><code>ThreadGroup group = new ThreadGroup(&quot;&quot;){
+      @Override
+      public void uncaughtException(Thread t, Throwable e) {
+             super.uncaughtException(t, e);
+             // 一个线程出现异常，中断组内所有线程
+             this.interrupt();
+      }
+};
+</code></pre>
+<pre><code>public class MyThread{
+ 
+    public static void main(String[] args) {
+        ThreadGroup threadGroup = new ThreadGroup(&quot;ThreadGroup&quot;){
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程组的异常处理 &quot;);
+                super.uncaughtException(t, e);
+            }
+        };
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程类的异常处理 &quot;);
+            }
+        });
+        Thread thread = new Thread(threadGroup,&quot;Thread&quot;){
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+&quot; 执行 &quot;);
+                int i= 2/0;
+            }
+        };
+//        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread t, Throwable e) {
+//                System.out.println(&quot; 线程对象的异常处理 &quot;);
+//            }
+//        });
+        thread.start();
+    }
+ 
+}
+
+Thread 执行
+线程组的异常处理
+线程类的异常处理
+
 </code></pre>
 ]]></content>
     </entry>

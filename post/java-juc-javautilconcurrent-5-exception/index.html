@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572067395547">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572150455530">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1572067395547" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572150455530" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -155,6 +155,56 @@ throws ThreadDeath exception and release lock</li>
 				newLine();
 		}
 }
+</code></pre>
+<p><img src="https://ywang412.github.io/post-images/1572150142349.jpg" alt=""></p>
+<p><strong>uncaughtException</strong></p>
+<pre><code>ThreadGroup group = new ThreadGroup(&quot;&quot;){
+      @Override
+      public void uncaughtException(Thread t, Throwable e) {
+             super.uncaughtException(t, e);
+             // 一个线程出现异常，中断组内所有线程
+             this.interrupt();
+      }
+};
+</code></pre>
+<pre><code>public class MyThread{
+ 
+    public static void main(String[] args) {
+        ThreadGroup threadGroup = new ThreadGroup(&quot;ThreadGroup&quot;){
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程组的异常处理 &quot;);
+                super.uncaughtException(t, e);
+            }
+        };
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程类的异常处理 &quot;);
+            }
+        });
+        Thread thread = new Thread(threadGroup,&quot;Thread&quot;){
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+&quot; 执行 &quot;);
+                int i= 2/0;
+            }
+        };
+//        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread t, Throwable e) {
+//                System.out.println(&quot; 线程对象的异常处理 &quot;);
+//            }
+//        });
+        thread.start();
+    }
+ 
+}
+
+Thread 执行
+线程组的异常处理
+线程类的异常处理
+
 </code></pre>
 
             </div>
