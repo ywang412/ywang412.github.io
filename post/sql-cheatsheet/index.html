@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572238572635">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572578181242">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1572238572635" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572578181242" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-13</div>
+            <div class="post-date">2019-10-12</div>
             
             <div class="post-content">
               <p><strong>Rank scores</strong></p>
@@ -281,7 +281,7 @@ inner join
 on t3.Number = t4.Number
 where t3.Frequency&gt;=t4.count_diff
 </code></pre>
-<p>**603. Consecutive Available Seats **</p>
+<p><strong>603. Consecutive Available Seats</strong></p>
 <pre><code>select distinct a.seat_id
 from cinema a join cinema b
   on abs(a.seat_id - b.seat_id) = 1
@@ -289,7 +289,7 @@ from cinema a join cinema b
 order by a.seat_id
 ;
 </code></pre>
-<p>**176. Second Highest Salary  **</p>
+<p><strong>176. Second Highest Salary</strong></p>
 <pre><code>SELECT
     IFNULL(
       (SELECT DISTINCT Salary
@@ -343,6 +343,12 @@ WHERE
     ORDER By turn
 )&lt;=1000
 ORDER BY a.turn DESC limit 1;
+</code></pre>
+<p><strong>NOT EXISTS vs. NOT IN vs. LEFT JOIN WHERE IS NULL</strong></p>
+<p>NOT IN never matches if there is a single NULL in the list.</p>
+<pre><code>SELECT a FROM table1 WHERE a NOT IN (SELECT a FROM table2)
+SELECT a FROM table1 WHERE NOT EXISTS (SELECT * FROM table2 WHERE table1.a = table2.a)
+SELECT a FROM table1 LEFT JOIN table2 ON table1.a = table2.a WHERE table1.a IS NULL
 </code></pre>
 
             </div>
