@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572581133446">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1572581640998">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1572581133446" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1572581640998" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -298,6 +298,74 @@ def time(format):
 @time('%Y/%m/%d %H:%M:%S')  # say_hello() as func in closure
 def say_hello():
     print('Hello!')     
+		
+		
+# binding		
+		
+class SelfPools(): 
+    def __init__(self):
+        self.routes = {}
+    def route(self, route_str):
+        def decorator(f):
+            self.routes[route_str] = f
+            return f
+        return decorator
+
+    def output(self, path): 
+        view_function = self.routes.get(path) 
+        if view_function:
+            print u&quot;输出[%s]板块股票:&quot; % path
+            for str in view_function():
+                print(str)             
+            return
+        else: 
+            raise ValueError('Route &quot;{}&quot;&quot; has not been registered'.format(path)) 				
+
+app = SelfPools()  
+
+@app.route(u&quot;5G&quot;) 
+def Stock_pool_1(): 
+    stock_name = [u&quot;600776:东方通信&quot;,u&quot;002792:通宇通信&quot;,u&quot;002268:卫士通&quot;,u&quot;300698:万马科技&quot;]
+    return stock_name    
+
+@app.route(u&quot;量子通信&quot;) 
+def Stock_pool_2(): 
+    stock_name = [u&quot;600746:中国海防&quot;,u&quot;002126:银轮股份&quot;,u&quot;600522:中天科技&quot;,u&quot;600468:百利电气&quot;]
+    return stock_name     
+
+app.output(u&quot;5G&quot;)
+</code></pre>
+<p><strong>multi-threading vs multi process</strong></p>
+<p>Due to python GIL (only one thread will be executed by interpreter), multi-threading is good for IO-intensive. Multi process for CPU-intensive task.</p>
+<pre><code>#!/usr/bin/python
+from threading import Thread
+from multiprocessing import Process,Manager
+from timeit import timeit
+
+#计算密集型任务
+def count(n):
+	while n &gt; 0:
+		n -= 1
+#不采用多任务方式     
+def test_normal():
+	count(1000000)
+	count(1000000)
+#多线程方式     
+def test_Thread():
+ 	t1 = Thread(target=count,args=(1000000,))
+ 	t2 = Thread(target=count,args=(1000000,))
+ 	t1.start()
+ 	t2.start()
+ 	t1.join()
+ 	t2.join()			
+#多进程方式  		
+def test_Process():
+ 	t1 = Process(target=count,args=(1000000,))
+ 	t2 = Process(target=count,args=(1000000,))
+ 	t1.start()
+ 	t2.start()
+ 	t1.join()
+ 	t2.join()	
 </code></pre>
 
             </div>
