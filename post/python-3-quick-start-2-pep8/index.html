@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Publishing a personal programming blog on Github.io using Gridea | Yu&#39;s Github</title>
+<title>Python 3 quick start - 2 PEP8 | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,35 +111,41 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Publishing a personal programming blog on Github.io using Gridea</h2>
-            <div class="post-date">2018-02-28</div>
+            <h2 class="post-title">Python 3 quick start - 2 PEP8</h2>
+            <div class="post-date">2018-09-14</div>
             
             <div class="post-content">
-              <p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
-<p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
-<p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.
-<img src="https://ywang412.github.io/post-images/1561227595716.png" alt=""></p>
-<p>The best thing about Gridea is auto-generation of markdown tags and corresponding hotkeys. <img src="https://ywang412.github.io/post-images/1561227880490.png" alt=""></p>
-<pre><code>object SumOfMultiples {
-  def sum(factors: Set[Int], limit: Int): Int = {
-    factors.map(x =&gt; Stream.range(1, limit / x + 1).map(_ * x).takeWhile(_ &lt; limit).toList).flatMap(x =&gt; x).sum
-  }
-}
+              <p>variable and function_name</p>
+<pre><code>seconds_per_day
+print_hello()
 </code></pre>
-<p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt="">
-Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
-<p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
+<p>ClassName</p>
+<pre><code>MyClass
+FileParseError
+</code></pre>
+<p>CONSTANT</p>
+<p><code>MAX_RETRY_TIMES</code></p>
+<p>package_name</p>
+<p><code>open_api</code></p>
+<p>newLine &quot;&quot;</p>
+<pre><code>with open('/path/to/some/file/you/want/to/read') as file_1, \
+     open('/path/to/some/file/being/written', 'w') as file_2:
+    file_2.write(file_1.read())
+</code></pre>
+<p>Comment</p>
+<p><code>#</code></p>
 
             </div>
             
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/WwpuuqDmO" class="tag">
-                    Gadget
-                  </a>
-                
-              </div>
             
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://ywang412.github.io/post/python-3-quick-start-1">
+                  <h3 class="post-title">
+                    Python 3 quick start - 1
+                  </h3>
+                </a>
+              </div>
             
 
             
