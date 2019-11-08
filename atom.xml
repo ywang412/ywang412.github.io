@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-04T05:14:22.590Z</updated>
+    <updated>2019-11-08T04:49:50.055Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-12T07:24:27.000Z</updated>
+        <updated>2019-10-11T18:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
@@ -250,6 +250,17 @@ ORDER BY a.turn DESC limit 1;
 <pre><code>SELECT a FROM table1 WHERE a NOT IN (SELECT a FROM table2)
 SELECT a FROM table1 WHERE NOT EXISTS (SELECT * FROM table2 WHERE table1.a = table2.a)
 SELECT a FROM table1 LEFT JOIN table2 ON table1.a = table2.a WHERE table1.a IS NULL
+</code></pre>
+<p><strong>Find Local Maximum</strong></p>
+<pre><code>SELECT b.index
+FROM points AS a, points AS b, points AS c
+WHERE  a.index = b.index-1 AND c.index = b.index+1
+AND a.value &lt; b.value   AND c.value &lt; b.value 
+	 
+select ind
+from tmp1 t1
+where val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind-1)
+and val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind+1);
 </code></pre>
 ]]></content>
     </entry>
