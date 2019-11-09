@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-09T21:12:17.613Z</updated>
+    <updated>2019-11-09T21:20:39.206Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-10T16:24:27.000Z</updated>
+        <updated>2019-10-10T03:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Delete duplicate emails</strong></p>
 <pre><code>DELETE p1
 FROM Person p1, Person p2
@@ -351,6 +351,22 @@ From Weather, (Select @preTemp:=NULL, @Higher:=NULL, @preDate:=NULL) var
 Order by Date
 ) tmp
 Where Higher = 'Yes' AND DateContinuous = 'Yes';
+</code></pre>
+<p><strong>262 Trips and Users</strong></p>
+<pre><code>SELECT t.Request_at as Day,
+       ROUND(COUNT(IF(Status &lt;&gt; 'completed', TRUE, NULL)) / COUNT(*), 2) AS 'Cancellation Rate' 
+from Trips t 
+inner join Users u 
+on t.Client_Id = u.Users_Id and u.Banned='No'
+and t.Request_at between '2013-10-01' and '2013-10-03'
+group by t.Request_at
+
+SELECT request_at AS &quot;Day&quot;, 
+            ROUND(((SUM(CASE WHEN LOWER(Status) LIKE &quot;cancelled%&quot; THEN 1.000 ELSE 0 END)) / COUNT(id)), 2) AS &quot;Cancellation Rate&quot; 
+FROM        trips
+WHERE       client_id NOT IN (SELECT users_id FROM users WHERE banned = 'Yes')
+AND         request_at BETWEEN '2013-10-01' AND '2013-10-03'
+GROUP BY    request_at;
 </code></pre>
 ]]></content>
     </entry>
