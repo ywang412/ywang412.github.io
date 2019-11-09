@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-08T05:37:15.804Z</updated>
+    <updated>2019-11-09T21:12:17.613Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,23 @@
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-11T05:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Rank scores</strong></p>
+        <updated>2019-10-10T16:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Delete duplicate emails</strong></p>
+<pre><code>DELETE p1
+FROM Person p1, Person p2
+WHERE p1.Email = p2.Email AND
+p1.Id &gt; p2.Id
+
+Delete From Person
+Where Id not in (
+    Select minId From (
+        Select min(Id) AS minId, Email
+        From Person
+        Group by Email
+    ) AS tmp
+);
+</code></pre>
+<p><strong>Rank scores</strong></p>
 <p>join vs subquery</p>
 <pre><code>SELECT Score, 
 (SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
@@ -27,6 +42,13 @@ FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
 GROUP BY s.Id ORDER BY s.Score DESC;
 --Group by s.Id so COUNT is per id
 
+Select Score, Rank From (
+    Select Id, Score,
+        @rank := if(@preScore = Score, @rank, @rank+1) AS Rank,
+        @preScore := Score AS preScore
+    From Scores, (Select @rank:=0, @preScore:=-1) var
+    Order by Score DESC
+    ) tmp;
 </code></pre>
 <p><strong>Exchange seat</strong></p>
 <p>if clause</p>
@@ -231,8 +253,23 @@ where 3 &gt; (select count(distinct(e2.Salary))
                   where e2.Salary &gt; e1.Salary 
                   and e1.DepartmentId = e2.DepartmentId
                   );
+									
+Select D.Name AS Department, T.Name AS Employee, T.Salary
+From 
+(
+Select DepartmentId, Name, Salary,
+    (CASE WHEN @id=DepartmentId THEN @rank:= IF(@preSalary = Salary, @rank, @rank+1)
+         ELSE @rank:= 1
+    END) AS Rank,
+    @preSalary:= Salary AS preSalary,
+    @id:= DepartmentId AS preId
+From Employee, (Select @rank:=0, @preSalary:=-1, @id:=NULL) var
+Order by DepartmentId, Salary DESC
+) T JOIN Department D
+ON T.DepartmentId = D.Id
+Where T.Rank &lt;=3;
 </code></pre>
-<p><strong>Second Highest Salary</strong></p>
+<p><strong>Nth Highest Salary</strong></p>
 <pre><code>SELECT Salary FROM Employee GROUP BY Salary
 UNION ALL (SELECT NULL AS Salary)
 ORDER BY Salary DESC LIMIT 1 OFFSET 1;
@@ -245,6 +282,15 @@ SELECT MAX(Salary) FROM Employee E1
 WHERE 1 =
 (SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
 WHERE E2.Salary &gt; E1.Salary);
+
+Select Distinct Salary From (
+    Select Id, Salary,
+        @rank := if(@preSalary = Salary, @rank, @rank+1) AS Rank,
+        @preSalary := Salary AS preSalary
+    From Employee, (Select @rank:=0, @preSalary:=-1) var
+    Order by Salary DESC
+    ) tmp
+Where Rank=N;
 </code></pre>
 <p><strong>1204. Last Person to Fit in the Elevator</strong></p>
 <pre><code>SELECT q1.person_name
@@ -279,6 +325,32 @@ select ind
 from tmp1 t1
 where val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind-1)
 and val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind+1);
+</code></pre>
+<p><strong>Consecutive Numbers</strong></p>
+<pre><code>Select Distinct Num As ConsecutiveNums From (
+    Select Id, Num, 
+        @count := If(@preNum = Num, @count+1, 1) AS Count,
+        @preNum := Num AS preNum
+    From Logs, (Select @preNum:=NULL, @count:=1) var 
+    ) tmp
+Where Count &gt;=3;
+</code></pre>
+<p><strong>197. Raising Temperature</strong></p>
+<pre><code>Select W1.Id
+From Weather W1 JOIN Weather W2 
+ON to_days(W1.Date) = to_days(W2.Date) + 1
+Where W1.Temperature &gt; W2.Temperature;
+
+Select Id From (
+Select Id, Date, Temperature,
+    @Higher := If(Temperature &gt; @preTemp, 'Yes', 'No') AS Higher,
+    @DateContinuous := If(Datediff(Date, @preDate) = 1, 'Yes', 'No') AS DateContinuous,
+    @preTemp := Temperature AS preTemp,
+    @preDate := Date
+From Weather, (Select @preTemp:=NULL, @Higher:=NULL, @preDate:=NULL) var
+Order by Date
+) tmp
+Where Higher = 'Yes' AND DateContinuous = 'Yes';
 </code></pre>
 ]]></content>
     </entry>
