@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Semaphore vs Lock | Yu&#39;s Github</title>
+<title>SQL 5 - Advanced | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,83 +111,23 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Semaphore vs Lock</h2>
-            <div class="post-date">2019-09-01</div>
+            <h2 class="post-title">SQL 5 - Advanced</h2>
+            <div class="post-date">2018-12-15</div>
             
             <div class="post-content">
-              <p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
-
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
-
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
-</code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
-
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
-
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
-
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
-
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
-</code></pre>
+              <p><strong>Auto increment primary key</strong></p>
+<p>Clustered index is (primary key -&gt; first unique not-nullable index -&gt; rowID)</p>
+<p>auto increment can maintain the B+ tree (only append new node at the end)
+<img src="https://ywang412.github.io/post-images/1573358670278.png" alt=""></p>
 
             </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/candy-crush">
+                <a href="https://ywang412.github.io/post/sql-4-transaction">
                   <h3 class="post-title">
-                    2D Matrix 
+                    SQL 4 - Transaction
                   </h3>
                 </a>
               </div>
