@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573360116834">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573365358137">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573360116834" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573365358137" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,13 +112,65 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL 5 - Advanced</h2>
-            <div class="post-date">2018-12-14</div>
+            <div class="post-date">2018-12-13</div>
             
             <div class="post-content">
               <p><strong>Auto increment primary key</strong></p>
 <p>Clustered index is (primary key -&gt; first unique not-nullable index -&gt; rowID)</p>
 <p>auto increment can maintain the B+ tree (only append new node at the end)
 <img src="https://ywang412.github.io/post-images/1573358670278.png" alt=""></p>
+<p><strong>Master-slave</strong></p>
+<p>Master-slave asynchronous copy
+<img src="https://ywang412.github.io/post-images/1573361198939.png" alt="">
+Latency due to single thread in slave to consume relay log</p>
+<p>Master-slave semi-synchronous copy
+<img src="https://ywang412.github.io/post-images/1573361277684.png" alt=""></p>
+<p>read-write seperation</p>
+<ol>
+<li>through program (set slave read-only to prevent write to slave)</li>
+<li>through middle-ware (MyCAT)</li>
+</ol>
+<p>Latency happends for
+big transaction
+big table ddl
+master concurrent dml
+master no primary key</p>
+<p><strong>Sharding</strong></p>
+<p>When to shard
+Big table backup from slave takes too long
+Big table DDL takes too long</p>
+<p>how to shard
+vertical sharding frequently update field
+vertical sharding text/blob field
+vertical sharding of fast growing fields</p>
+<ol>
+<li>through program</li>
+<li>through middle-ware (MyCAT)</li>
+</ol>
+<p><strong>Bulk delete</strong></p>
+<p>if innodb_file_per_table on, each table has seperate file and drop table will clean space</p>
+<p>To delete a table</p>
+<ol>
+<li>alter table t29 rename t29_bak_20191011;</li>
+<li>wait a month to find dependence on the table</li>
+<li>drop table t29_bak_20191011;</li>
+</ol>
+<p>To clean a table (don't use delete because each row binlog, truncate will drop and create)</p>
+<ol>
+<li>create table t29_bak_20191011 like t29;</li>
+<li>insert into t29_bak_20191011  select * from t29;</li>
+<li>truncate table t29;</li>
+<li>back up table and then drop table t29_bak_20191011;</li>
+</ol>
+<p>delete some record in a table without partition</p>
+<ol>
+<li>back up table</li>
+<li>make sure index exist</li>
+<li>delete from table_name where date&lt;'2017-01-01' limit 1000;</li>
+<li>alter table table_name engine=InnoDB; or optimize table student;  to release space (delete record will not free space, future insert can reuse)</li>
+</ol>
+<p>delete some record in a table with partition
+alter table t29_log drop partition p2016;</p>
 
             </div>
             
