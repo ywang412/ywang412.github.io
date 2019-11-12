@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-12T05:43:10.458Z</updated>
+    <updated>2019-11-12T17:40:32.914Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[NoSQL vs SQL]]></title>
+        <id>https://ywang412.github.io/post/nosql-vs-sql</id>
+        <link href="https://ywang412.github.io/post/nosql-vs-sql">
+        </link>
+        <updated>2019-11-12T03:25:02.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>AWS redshift RDS table design optimization</strong></p>
+<p>Distribution style
+Even - The leader node distributes the rows across the slices in a round-robin fashion
+Auto - Amazon Redshift assigns an optimal distribution style based on the size of the table data
+Key - The leader node places matching values on the same node slice
+ALL - replicate table on all nodes</p>
+<p>Sorting Key
+define a colum as sort key
+<img src="https://ywang412.github.io/post-images/1573580426980.png" alt=""></p>
+<pre><code>CREATE TABLE part (
+  p_partkey     	integer     	not null	sortkey distkey,
+  p_name        	varchar(22) 	not null,
+  p_mfgr        	varchar(6)      not null,
+  p_category    	varchar(7)      not null,
+  p_brand1      	varchar(9)      not null,
+  p_color       	varchar(11) 	not null,
+  p_type        	varchar(25) 	not null,
+  p_size        	integer     	not null,
+  p_container   	varchar(10)     not null
+);
+</code></pre>
+<p>Significantly improve query time</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SQL cheatsheet]]></title>
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
@@ -1895,35 +1925,6 @@ throws ThreadDeath exception and release lock</li>
 //线程组的异常处理
 //线程类的异常处理
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
-        </link>
-        <updated>2019-07-07T01:19:02.000Z</updated>
-        <content type="html"><![CDATA[<p>Java use Thread Pool pattern to save resources in a multithreaded application, and also to contain the parallelism in certain predefined limits. It controls several re-used threads for executing these tasks.</p>
-<pre><code>ExecutorService executorService = Executors.newCachedThreadPool();
-for (int i = 0; i &lt; 10; i++) {
-		final int index = i;
-		executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-						log.info(&quot;task:{}&quot;, index);
-				}
-		});
-}
-executorService.shutdown();
-</code></pre>
-<p>There are several pre-defined threadpool for various scenarios.</p>
-<pre><code>ExecutorService executorService = Executors.newFixedThreadPool(3);
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-</code></pre>
-<p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
-<pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
 </code></pre>
 ]]></content>
     </entry>

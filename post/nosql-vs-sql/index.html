@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>SQL 2 - Index | Yu&#39;s Github</title>
+<title>NoSQL vs SQL | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,64 +111,49 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">SQL 2 - Index</h2>
-            <div class="post-date">2018-11-11</div>
+            <h2 class="post-title">NoSQL vs SQL</h2>
+            <div class="post-date">2019-11-11</div>
             
             <div class="post-content">
-              <p>B tree
-<img src="https://ywang412.github.io/post-images/1570566488064.png" alt="">
-vs B+ tree
-<img src="https://ywang412.github.io/post-images/1570566504268.png" alt=""></p>
-<p>Auto increment primary key can prevent breaking the B+ tree.
-<img src="https://ywang412.github.io/post-images/1571012532447.png" alt=""></p>
-<p>Clustered index - primary key if exist
-If no primary key, first not-nullable unique index or rowid.
-Only one clustered index and one B+ tree for a table.</p>
-<p>Non-clustered index
-B+ tree leaf node only have index field and primary key
-Search query will find primary key first and then fetch the record, therefore more costly.</p>
-<p><strong>Where to have index</strong></p>
-<ol>
-<li>where clause
-<code>select * from t9_1 where d = 90000;</code></li>
-<li>aggregate function
-<code>select max(d) from t9_1;</code>
-<code>select count(*) from t9_1;</code>
-because count(*) use non-clustered index (only index and primary key) which is faster than clustered index.</li>
-<li>order by</li>
-<li>use only non-clustered index
-<code>select b,c from t9_1 where b=90000;</code>
-use idx_b_c</li>
-<li>Join clause
-turn BNL to NLJ search</li>
-</ol>
-<p><strong>Difference between unique index and non-unique index</strong></p>
-<p>non-clustered non-unique index use change buffer to combine multiple insert.
-Unique index has to load data into memory to check uniqueness.</p>
-<p>Although non-unique index will continue after finding the first matching record, it is highly possible that all matching records are loaded into memory in same page. Therefore, search query for unique index and non-unique index are the same.</p>
-<p><strong>Multi-column indexes</strong>
-<code>select * from t11 where a=1 and b=1 and c=1;</code>  use idx_a_b_c
-<code>select * from t11 where c=1 and b=1 and a=1; /* sql2 */</code>  same as first query, order doesn't matter</p>
-<p><code>select * from t11 where a=2 and b in (1,2) and c=2; /* sql3 */</code>
-<code>select * from t11 where a=1 and b=2 order by c; /* sql4 */</code>
-<code>select * from t11 where a=1 order by b,c; /* sql5 */</code>
-use idx_a_b_c</p>
-<p>idx_a_b_c is equivalent to idx_a, idx_a_b, idx_a_b_c.</p>
-<p><code>select * from t11 where a=2 and b in (3,4) order by c; /* sql13 */</code>  will only use idx_a_b
-<code>select * from t11 where b=1 and c=1; /* sql34 */</code> cannot use idx_a_b_c</p>
-<p><strong>Cardinality</strong>
-<code>show index from t13;</code>
-Cardinality is the estimate of distinct index values. Query will use index of larger cardinality.</p>
-<p>If returned rows number is large, query may use the primary key index to fetch all records. Use force index to force specified index.</p>
+              <p><strong>AWS redshift RDS table design optimization</strong></p>
+<p>Distribution style
+Even - The leader node distributes the rows across the slices in a round-robin fashion
+Auto - Amazon Redshift assigns an optimal distribution style based on the size of the table data
+Key - The leader node places matching values on the same node slice
+ALL - replicate table on all nodes</p>
+<p>Sorting Key
+define a colum as sort key
+<img src="https://ywang412.github.io/post-images/1573580426980.png" alt=""></p>
+<pre><code>CREATE TABLE part (
+  p_partkey     	integer     	not null	sortkey distkey,
+  p_name        	varchar(22) 	not null,
+  p_mfgr        	varchar(6)      not null,
+  p_category    	varchar(7)      not null,
+  p_brand1      	varchar(9)      not null,
+  p_color       	varchar(11) 	not null,
+  p_type        	varchar(25) 	not null,
+  p_size        	integer     	not null,
+  p_container   	varchar(10)     not null
+);
+</code></pre>
+<p>Significantly improve query time</p>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="tag">
+                    SQL
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/sql-optimization">
+                <a href="https://ywang412.github.io/post/sql-cheatsheet">
                   <h3 class="post-title">
-                    SQL 1 - Optimization and Best Practice
+                    SQL cheatsheet
                   </h3>
                 </a>
               </div>
