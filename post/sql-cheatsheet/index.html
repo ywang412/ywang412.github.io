@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573445637925">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573533954074">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573445637925" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573533954074" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -329,19 +329,6 @@ WHERE E.DepartmentId = D.id
   AND (DepartmentId,Salary) in 
   (SELECT DepartmentId,max(Salary) as max FROM Employee GROUP BY DepartmentId)
 </code></pre>
-<p><strong>176. Second Highest Salary</strong></p>
-<pre><code>SELECT
-    IFNULL(
-      (SELECT DISTINCT Salary
-       FROM Employee
-       ORDER BY Salary DESC
-        LIMIT 1 OFFSET 1),
-    NULL) AS SecondHighestSalary
-
-SELECT max(Salary)
-FROM Employee
-WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
-</code></pre>
 <p><strong>185. Department Top Three Salaries</strong></p>
 <pre><code>select d.Name Department, e1.Name Employee, e1.Salary
 from Employee e1 
@@ -368,19 +355,31 @@ Order by DepartmentId, Salary DESC
 ON T.DepartmentId = D.Id
 Where T.Rank &lt;=3;
 </code></pre>
+<p><strong>176. Second Highest Salary</strong></p>
+<pre><code>CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+  RETURN (
+      SELECT MAX(Salary) FROM Employee E1
+      WHERE N - 1 =
+      (SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
+      WHERE E2.Salary &gt; E1.Salary)
+  );
+END
+
+SELECT max(Salary)
+FROM Employee
+WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
+</code></pre>
 <p><strong>Nth Highest Salary</strong></p>
 <pre><code>SELECT Salary FROM Employee GROUP BY Salary
 UNION ALL (SELECT NULL AS Salary)
 ORDER BY Salary DESC LIMIT 1 OFFSET 1;
-
-SELECT MAX(Salary) FROM Employee
-Where Salary &lt;
-(SELECT MAX(Salary) FROM Employee);
+ 
 
 SELECT MAX(Salary) FROM Employee E1
-WHERE 1 =
+WHERE N =
 (SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
-WHERE E2.Salary &gt; E1.Salary);
+WHERE E2.Salary &gt;= E1.Salary);
 
 Select Distinct Salary From (
     Select Id, Salary,
@@ -413,6 +412,19 @@ ORDER BY a.turn DESC limit 1;
 <pre><code>SELECT a FROM table1 WHERE a NOT IN (SELECT a FROM table2)
 SELECT a FROM table1 WHERE NOT EXISTS (SELECT * FROM table2 WHERE table1.a = table2.a)
 SELECT a FROM table1 LEFT JOIN table2 ON table1.a = table2.a WHERE table1.a IS NULL
+
+DELETE b FROM BLOB b 
+  LEFT JOIN FILES f ON f.id = b.fileid 
+      WHERE f.id IS NULL
+
+DELETE FROM BLOB 
+ WHERE NOT EXISTS(SELECT NULL
+                    FROM FILES f
+                   WHERE f.id = fileid)
+									 
+DELETE FROM BLOB
+ WHERE fileid NOT IN (SELECT f.id 
+                        FROM FILES f)
 </code></pre>
 <p><strong>Find Local Maximum</strong></p>
 <pre><code>SELECT b.index
@@ -434,7 +446,7 @@ and val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind+1);
     ) tmp
 Where Count &gt;=3;
 </code></pre>
-<p><strong>197. Raising Temperature</strong></p>
+<p><strong>197. Rising Temperature</strong></p>
 <pre><code>Select W1.Id
 From Weather W1 JOIN Weather W2 
 ON to_days(W1.Date) = to_days(W2.Date) + 1
@@ -466,6 +478,20 @@ FROM        trips
 WHERE       client_id NOT IN (SELECT users_id FROM users WHERE banned = 'Yes')
 AND         request_at BETWEEN '2013-10-01' AND '2013-10-03'
 GROUP BY    request_at;
+</code></pre>
+<p><strong>182. Select duplicated email</strong></p>
+<pre><code>select Email
+from Person
+group by Email
+having count(Email) &gt; 1;
+</code></pre>
+<p><strong>627. Swap Salary</strong></p>
+<pre><code>UPDATE salary
+SET
+    sex = CASE sex
+        WHEN 'm' THEN 'f'
+        ELSE 'm'
+    END;
 </code></pre>
 
             </div>
