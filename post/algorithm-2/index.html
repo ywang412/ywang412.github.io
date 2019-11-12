@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573533954074">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573537387318">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573533954074" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573537387318" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -125,6 +125,56 @@ public int[] shuffle() {
 				swap(a, i, j);
 		}
 		return a;
+}
+</code></pre>
+<p><strong>Tarjan Algorithm</strong></p>
+<p>To find a critical connections</p>
+<pre><code>class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; criticalConnections(int n, List&lt;List&lt;Integer&gt;&gt; connections) {
+        int[] disc = new int[n], low = new int[n];
+        // use adjacency list instead of matrix will save some memory, adjmatrix will cause MLE
+        List&lt;Integer&gt;[] graph = new ArrayList[n];
+        List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();
+        Arrays.fill(disc, -1); // use disc to track if visited (disc[i] == -1)
+        for (int i = 0; i &lt; n; i++) {
+            graph[i] = new ArrayList&lt;&gt;();
+        }
+        // build graph
+        for (int i = 0; i &lt; connections.size(); i++) {
+            int from = connections.get(i).get(0), to = connections.get(i).get(1);
+            graph[from].add(to);
+            graph[to].add(from);
+        }
+
+        for (int i = 0; i &lt; n; i++) {
+            if (disc[i] == -1) {
+                dfs(i, low, disc, graph, res, i);
+            }
+        }
+        return res;
+    }
+
+    int time = 0; // time when discover each vertex
+
+    private void dfs(int u, int[] low, int[] disc, List&lt;Integer&gt;[] graph, List&lt;List&lt;Integer&gt;&gt; res, int pre) {
+        disc[u] = low[u] = time++; // discover u
+        for (int j = 0; j &lt; graph[u].size(); j++) {
+            int v = graph[u].get(j);
+            if (v == pre) {
+                continue; // if parent vertex, ignore
+            }
+            if (disc[v] == -1) { // if not discovered
+                dfs(v, low, disc, graph, res, u);
+                low[u] = Math.min(low[u], low[v]);
+                if (low[v] &gt; disc[u]) {
+                    // u - v is critical, there is no path for v to reach back to u or previous vertices of u
+                    res.add(Arrays.asList(u, v));
+                }
+            } else { // if v discovered and is not parent of u, update low[u], cannot use low[v] because u is not subtree of v
+                low[u] = Math.min(low[u], disc[v]);
+            }
+        }
+    }
 }
 </code></pre>
 
