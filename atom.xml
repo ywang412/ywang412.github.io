@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-12T17:40:32.914Z</updated>
+    <updated>2019-11-12T17:43:37.049Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-12T03:25:02.000Z</updated>
+        <updated>2019-11-11T13:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>AWS redshift RDS table design optimization</strong></p>
 <p>Distribution style
 Even - The leader node distributes the rows across the slices in a round-robin fashion
@@ -37,7 +37,7 @@ define a colum as sort key
   p_container   	varchar(10)     not null
 );
 </code></pre>
-<p>Significantly improve query time</p>
+<p>Distribution key and sort key significantly improve query time</p>
 ]]></content>
     </entry>
     <entry>
