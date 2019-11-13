@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-13T00:54:43.897Z</updated>
+    <updated>2019-11-13T01:01:45.665Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,42 +15,58 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-09T19:25:02.000Z</updated>
+        <updated>2019-11-09T05:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
-<p>Benefit
-SQL
-Joins
-Aggregation
-good for small data volume
-Secondary index
-model data independent of Queries</p>
-<p>bad for
-only scale vertically
-schema not flexible</p>
+<p>Benefit</p>
+<ul>
+<li>SQL</li>
+<li>Joins</li>
+<li>Aggregation</li>
+<li>good for small data volume</li>
+<li>Secondary index</li>
+<li>model data independent of Queries</li>
+</ul>
+<p>Drawback</p>
+<ul>
+<li>only scale vertically</li>
+<li>schema not flexible</li>
+</ul>
 <p>Normalization  - reduce redundency and increase correctness
 denormalization - increase performance for read heavy</p>
 <p><strong>Cassendra</strong></p>
-<p>table - group of partition
-Partition - collection of rows - unit of access
-PK - partition key (Sharding) + clustering columns (sorting within partition desc)</p>
-<p>good for
-logging events
-IOT
-time series db
-heavy write</p>
-<p>bad for
-ad - hoc queries
-joins</p>
-<p>Denormalization - a must for cassendra - model queries no joins -  one query per table</p>
+<ul>
+<li>table - group of partition</li>
+<li>Partition - collection of rows - unit of access</li>
+<li>PK - partition key (Sharding) + clustering columns (sorting within partition desc)</li>
+</ul>
+<p>Good for</p>
+<ul>
+<li>logging events</li>
+<li>IOT</li>
+<li>time series db</li>
+<li>heavy write</li>
+</ul>
+<p>Bad for</p>
+<ul>
+<li>ad - hoc queries</li>
+<li>joins</li>
+</ul>
+<p>Denormalization is a must for cassendra / model queries no joins /  one query per table</p>
 <p><strong>AWS redshift RDS table design optimization</strong></p>
+<ul>
+<li>
 <p>Distribution style
 Even - The leader node distributes the rows across the slices in a round-robin fashion
 Auto - Amazon Redshift assigns an optimal distribution style based on the size of the table data
 Key - The leader node places matching values on the same node slice
 ALL - replicate table on all nodes</p>
+</li>
+<li>
 <p>Sorting Key
-define a colum as sort key
-<img src="https://ywang412.github.io/post-images/1573580426980.png" alt=""></p>
+define a colum as sort key</p>
+</li>
+</ul>
+<p><img src="https://ywang412.github.io/post-images/1573580426980.png" alt=""></p>
 <pre><code>CREATE TABLE part (
   p_partkey     	integer     	not null	sortkey distkey,
   p_name        	varchar(22) 	not null,
