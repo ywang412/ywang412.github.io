@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573605884157">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573606010829">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573605884157" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573606010829" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,63 +112,10 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Gist</h2>
-            <div class="post-date">2017-11-01</div>
+            <div class="post-date">2017-10-31</div>
             
             <div class="post-content">
-              <h1 id="test">test</h1>
-<pre><code class="language-python">
-import pyspark
-sc = pyspark.SparkContext(appName=&quot;maps_and_lazy_evaluation_example&quot;)
-
-log_of_songs = [
-        &quot;Despacito&quot;,
-        &quot;Nice for what&quot;,
-        &quot;No tears left to cry&quot;,
-        &quot;Despacito&quot;,
-        &quot;Havana&quot;,
-        &quot;In my feelings&quot;,
-        &quot;Nice for what&quot;,
-        &quot;despacito&quot;,
-        &quot;All the stars&quot;
-]
-
-# parallelize the log_of_songs to use with Spark
-distributed_song_log = sc.parallelize(log_of_songs)
-</code></pre>
-<p>restsdfasdfasdf</p>
-<pre><code class="language-python">def convert_song_to_lowercase(song):
-    return song.lower()
-
-convert_song_to_lowercase(&quot;Havana&quot;)
-</code></pre>
-<pre><code>'havana'
-</code></pre>
-<pre><code class="language-python">distributed_song_log.map(convert_song_to_lowercase).collect()
-</code></pre>
-<pre><code>['despacito',
- 'nice for what',
- 'no tears left to cry',
- 'despacito',
- 'havana',
- 'in my feelings',
- 'nice for what',
- 'despacito',
- 'all the stars']
-</code></pre>
-<pre><code class="language-python">distributed_song_log.collect()
-</code></pre>
-<pre><code>['Despacito',
- 'Nice for what',
- 'No tears left to cry',
- 'Despacito',
- 'Havana',
- 'In my feelings',
- 'Nice for what',
- 'despacito',
- 'All the stars']
-</code></pre>
-<pre><code class="language-python">
-</code></pre>
+              <p>Once Upon a Time</p>
 
             </div>
             
