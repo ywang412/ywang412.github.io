@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Semaphore vs Lock | Yu&#39;s Github</title>
+<title>Gist | Yu&#39;s Github</title>
 <meta name="description" content="Java by day, Scala by night">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,86 +111,67 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Semaphore vs Lock</h2>
-            <div class="post-date">2019-09-01</div>
+            <h2 class="post-title">Gist</h2>
+            <div class="post-date">2017-11-01</div>
             
             <div class="post-content">
-              <p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
+              <h1 id="test">test</h1>
+<pre><code class="language-python">
+import pyspark
+sc = pyspark.SparkContext(appName=&quot;maps_and_lazy_evaluation_example&quot;)
 
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
+log_of_songs = [
+        &quot;Despacito&quot;,
+        &quot;Nice for what&quot;,
+        &quot;No tears left to cry&quot;,
+        &quot;Despacito&quot;,
+        &quot;Havana&quot;,
+        &quot;In my feelings&quot;,
+        &quot;Nice for what&quot;,
+        &quot;despacito&quot;,
+        &quot;All the stars&quot;
+]
 
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
+# parallelize the log_of_songs to use with Spark
+distributed_song_log = sc.parallelize(log_of_songs)
 </code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
+<p>restsdfasdfasdf</p>
+<pre><code class="language-python">def convert_song_to_lowercase(song):
+    return song.lower()
 
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
-
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
-
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
-
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
+convert_song_to_lowercase(&quot;Havana&quot;)
+</code></pre>
+<pre><code>'havana'
+</code></pre>
+<pre><code class="language-python">distributed_song_log.map(convert_song_to_lowercase).collect()
+</code></pre>
+<pre><code>['despacito',
+ 'nice for what',
+ 'no tears left to cry',
+ 'despacito',
+ 'havana',
+ 'in my feelings',
+ 'nice for what',
+ 'despacito',
+ 'all the stars']
+</code></pre>
+<pre><code class="language-python">distributed_song_log.collect()
+</code></pre>
+<pre><code>['Despacito',
+ 'Nice for what',
+ 'No tears left to cry',
+ 'Despacito',
+ 'Havana',
+ 'In my feelings',
+ 'Nice for what',
+ 'despacito',
+ 'All the stars']
+</code></pre>
+<pre><code class="language-python">
 </code></pre>
 
             </div>
             
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/candy-crush">
-                  <h3 class="post-title">
-                    2D Matrix 
-                  </h3>
-                </a>
-              </div>
             
 
             
