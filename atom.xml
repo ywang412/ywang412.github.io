@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-13T00:38:59.950Z</updated>
+    <updated>2019-11-13T00:44:47.487Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-10T23:25:02.000Z</updated>
+        <updated>2019-11-09T19:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
 <p>Benefit
 SQL
@@ -71,7 +71,7 @@ define a colum as sort key
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-09T14:24:27.000Z</updated>
+        <updated>2019-10-08T12:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Delete duplicate emails</strong></p>
 <pre><code>DELETE p1
 FROM Person p1, Person p2
@@ -457,7 +457,7 @@ SET
         <id>https://ywang412.github.io/post/java-io-stream</id>
         <link href="https://ywang412.github.io/post/java-io-stream">
         </link>
-        <updated>2019-09-28T13:08:04.000Z</updated>
+        <updated>2019-09-28T00:08:04.000Z</updated>
         <content type="html"><![CDATA[<p><img src="https://ywang412.github.io/post-images/1573445636324.png" alt="">
 <img src="https://ywang412.github.io/post-images/1569816542486.png" alt=""></p>
 <p><img src="https://ywang412.github.io/post-images/1569816549973.png" alt=""></p>
@@ -465,11 +465,11 @@ SET
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Semaphore vs Lock]]></title>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 7 - ExceptionSemaphore vs Lock Example]]></title>
         <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
         <link href="https://ywang412.github.io/post/semaphore-vs-lock">
         </link>
-        <updated>2019-09-01T13:36:52.000Z</updated>
+        <updated>2019-08-31T11:36:52.000Z</updated>
         <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
 <pre><code>class Foo {
     
@@ -541,7 +541,7 @@ class Foo {
         <id>https://ywang412.github.io/post/candy-crush</id>
         <link href="https://ywang412.github.io/post/candy-crush">
         </link>
-        <updated>2019-08-22T22:01:49.000Z</updated>
+        <updated>2019-08-21T20:01:49.000Z</updated>
         <content type="html"><![CDATA[<p><strong>723. Candy Crush</strong></p>
 <pre><code>class Solution {
     public int[][] candyCrush(int[][] board) {
@@ -680,7 +680,7 @@ class Foo {
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-03T07:48:51.000Z</updated>
+        <updated>2019-08-02T05:48:51.000Z</updated>
         <content type="html"><![CDATA[<p>byte 1 byte -128 to 127.
 short 2 bytes -32,768 to 32,767.
 int 4 bytes -2,147,483,648 to 2,147,483,647.
@@ -795,7 +795,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/monotonic-stack</id>
         <link href="https://ywang412.github.io/post/monotonic-stack">
         </link>
-        <updated>2019-07-27T22:40:22.000Z</updated>
+        <updated>2019-07-26T20:40:22.000Z</updated>
         <content type="html"><![CDATA[<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
 <pre><code>class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
@@ -947,7 +947,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
         <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
         </link>
-        <updated>2019-07-22T14:09:43.000Z</updated>
+        <updated>2019-07-21T12:09:43.000Z</updated>
         <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
 <pre><code>public class Solution {
     public int findKthLargest(int[] nums, int k) {
@@ -1243,7 +1243,7 @@ void sort(int arr[], int l, int r)
         <id>https://ywang412.github.io/post/dp-summary</id>
         <link href="https://ywang412.github.io/post/dp-summary">
         </link>
-        <updated>2019-07-21T09:37:53.000Z</updated>
+        <updated>2019-07-20T07:37:53.000Z</updated>
         <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
 <pre><code>public class Solution {
     public int getMoneyAmount(int n) {
@@ -1860,7 +1860,7 @@ int findMin(int arr[], int n)
         <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-exception</id>
         <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-exception">
         </link>
-        <updated>2019-07-13T16:45:19.000Z</updated>
+        <updated>2019-07-12T01:45:19.000Z</updated>
         <content type="html"><![CDATA[<p>To stop a thread</p>
 <ol>
 <li>stop()  // deprecated
