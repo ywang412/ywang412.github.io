@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-13T00:46:53.921Z</updated>
+    <updated>2019-11-13T00:54:43.897Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
-    <subtitle>Java by day, Scala by night</subtitle>
+    <subtitle>Java, SQL, Python and a little bit of Scala </subtitle>
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
