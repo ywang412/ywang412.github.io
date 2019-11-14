@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573692244932">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573704952172">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573692244932" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573704952172" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,7 +115,21 @@
             <div class="post-date">2019-07-26</div>
             
             <div class="post-content">
-              <p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
+              <p><strong>503. Next Greater Element II</strong></p>
+<pre><code>public int[] nextGreaterElements(int[] nums) {
+		int n = nums.length, next[] = new int[n];
+		Arrays.fill(next, -1);
+		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // index stack
+		for (int i = 0; i &lt; n * 2; i++) {
+				int num = nums[i % n]; 
+				while (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; num)
+						next[stack.pop()] = num;
+				stack.push(i % n);
+		}   
+		return next;
+}
+</code></pre>
+<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
 <pre><code>class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
