@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573704952172">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573705458350">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573704952172" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573705458350" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">Monotonic Stack</h2>
-            <div class="post-date">2019-07-26</div>
+            <div class="post-date">2019-07-25</div>
             
             <div class="post-content">
               <p><strong>503. Next Greater Element II</strong></p>
@@ -127,6 +127,24 @@
 				stack.push(i % n);
 		}   
 		return next;
+}
+</code></pre>
+<p><strong>1130. Minimum Cost Tree From Leaf Values</strong></p>
+<pre><code>public int mctFromLeafValues(int[] A) {
+		int res = 0, n = A.length;
+		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+		stack.push(Integer.MAX_VALUE);
+		for (int a : A) {
+				while (stack.peek() &lt;= a) {
+						int mid = stack.pop();
+						res += mid * Math.min(stack.peek(), a);
+				}
+				stack.push(a);
+		}
+		while (stack.size() &gt; 2) {
+				res += stack.pop() * stack.peek();
+		}
+		return res;
 }
 </code></pre>
 <p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
