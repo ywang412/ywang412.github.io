@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-15T00:55:26.642Z</updated>
+    <updated>2019-11-16T21:10:57.573Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -87,7 +87,7 @@ define a colum as sort key</p>
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-08T12:24:27.000Z</updated>
+        <updated>2019-10-07T23:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Delete duplicate emails</strong></p>
 <pre><code>DELETE p1
 FROM Person p1, Person p2
@@ -465,6 +465,36 @@ SET
         WHEN 'm' THEN 'f'
         ELSE 'm'
     END;
+</code></pre>
+<p><strong>585. Investments in 2016</strong></p>
+<pre><code>select sum(TIV_2016) TIV_2016
+from insurance
+where TIV_2015 in (select TIV_2015 from insurance group by TIV_2015 having count(1)&gt;1)
+and (lat, lon) in (select lat, lon from insurance group by lat, lon having count(1)=1)
+</code></pre>
+<p><strong>569. Median Employee Salary</strong></p>
+<pre><code>SELECT 
+    Id, Company, Salary
+FROM
+    (SELECT 
+        e.Id,
+            e.Salary,
+            e.Company,
+            IF(@prev = e.Company, @Rank:=@Rank + 1, @Rank:=1) AS rank,
+            @prev:=e.Company
+    FROM
+        Employee e, (SELECT @Rank:=0, @prev:=0) AS temp
+    ORDER BY e.Company , e.Salary , e.Id) Ranking
+        INNER JOIN
+    (SELECT 
+        COUNT(*) AS totalcount, Company AS name
+    FROM
+        Employee e2
+    GROUP BY e2.Company) companycount ON companycount.name = Ranking.Company
+WHERE
+    Rank = FLOOR((totalcount + 1) / 2)
+        OR Rank = FLOOR((totalcount + 2) / 2)
+;
 </code></pre>
 ]]></content>
     </entry>
