@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-16T21:34:13.934Z</updated>
+    <updated>2019-11-16T21:46:05.776Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -87,8 +87,18 @@ define a colum as sort key</p>
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-06T21:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Delete duplicate emails</strong></p>
+        <updated>2019-10-06T08:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>612. Shortest Distance in a Plane</strong></p>
+<pre><code>SELECT
+    round(min(sqrt(pow(P1.y-P2.y,2)+pow(P1.x-P2.x,2))),2) as shortest
+FROM
+    point_2d P1,
+    point_2d P2
+WHERE
+    P1.x &lt;&gt; P2.x OR
+    P1.y &lt;&gt; P2.y
+</code></pre>
+<p><strong>Delete duplicate emails</strong></p>
 <pre><code>DELETE p1
 FROM Person p1, Person p2
 WHERE p1.Email = p2.Email AND
