@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-16T23:38:34.115Z</updated>
+    <updated>2019-11-16T23:44:19.693Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -569,213 +569,2237 @@ from tree t1 order by id;
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 7 - ExceptionSemaphore vs Lock Example]]></title>
-        <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
-        <link href="https://ywang412.github.io/post/semaphore-vs-lock">
+        <title type="html"><![CDATA[AWS Redshift and Apache Airflow pipeline]]></title>
+        <id>https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline</id>
+        <link href="https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline">
         </link>
-        <updated>2019-08-31T11:36:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
-
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
-
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
-</code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
-
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
-
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
-
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
-
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
-</code></pre>
+        <updated>2019-08-20T02:10:43.000Z</updated>
+        <content type="html"><![CDATA[<p>A reusable production-grade data pipeline that incorporates data quality checks and allows for easy backfills. The source data resides in S3 and needs to be processed in a data warehouse in Amazon Redshift. The source datasets consist of JSON logs that tell about user activity in the application and JSON metadata about the songs the users listen to.</p>
+<ol>
+<li>
+<p>Create AWS redshift cluster and test queries.
+<img src="https://ywang412.github.io/post-images/1573755046671.png" alt=""></p>
+</li>
+<li>
+<p>Set up AWS S3 hook
+<img src="https://ywang412.github.io/post-images/1573760821111.png" alt=""></p>
+</li>
+<li>
+<p>Set up redshift connection hook
+<img src="https://ywang412.github.io/post-images/1573760949674.png" alt=""></p>
+</li>
+<li>
+<p>Set up Airflow job DAG
+<img src="https://ywang412.github.io/post-images/1573778681268.png" alt=""></p>
+</li>
+<li>
+<p>Run Airflow scheduler
+<img src="https://ywang412.github.io/post-images/1573778839068.png" alt=""></p>
+</li>
+<li>
+<p>See past job statistics
+<img src="https://ywang412.github.io/post-images/1573779317276.png" alt=""></p>
+</li>
+</ol>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[2D Matrix ]]></title>
-        <id>https://ywang412.github.io/post/candy-crush</id>
-        <link href="https://ywang412.github.io/post/candy-crush">
+        <title type="html"><![CDATA[AWS EMR Spark and Data Lake]]></title>
+        <id>https://ywang412.github.io/post/aws-emr-spark-and-data-lake</id>
+        <link href="https://ywang412.github.io/post/aws-emr-spark-and-data-lake">
         </link>
-        <updated>2019-08-21T20:01:49.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>723. Candy Crush</strong></p>
-<pre><code>class Solution {
-    public int[][] candyCrush(int[][] board) {
-        int R = board.length, C = board[0].length;
-        boolean todo = false;
-        for (int r = 0; r &lt; R; ++r) {
-            for (int c = 0; c + 2 &lt; C; ++c) {
-                int v = Math.abs(board[r][c]);
-                if (v != 0 &amp;&amp; v == Math.abs(board[r][c+1]) &amp;&amp; v == Math.abs(board[r][c+2])) {
-                    board[r][c] = board[r][c+1] = board[r][c+2] = -v;
-                    todo = true;
-                }
-            }
-        }
-        for (int r = 0; r + 2 &lt; R; ++r) {
-            for (int c = 0; c &lt; C; ++c) {
-                int v = Math.abs(board[r][c]);
-                if (v != 0 &amp;&amp; v == Math.abs(board[r+1][c]) &amp;&amp; v == Math.abs(board[r+2][c])) {
-                    board[r][c] = board[r+1][c] = board[r+2][c] = -v;
-                    todo = true;
-                }
-            }
-        }
+        <updated>2019-08-14T16:20:45.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://ywang412.github.io/post-images/1573690987278.png" alt=""></p>
+<p>An ETL pipeline that extracts data from S3, processes them using Spark, and loads the data back into S3 as a set of dimensional tables.</p>
+<p>Create a Data Lake with Spark and AWS EMR</p>
+<ol>
+<li>create a ssh key-pair to securely connect to the EMR cluster</li>
+<li>create an EMR cluster
+<img src="https://ywang412.github.io/post-images/1573691132968.png" alt="">
+<img src="https://ywang412.github.io/post-images/1573691150215.png" alt=""></li>
+<li>ssh into the master node
+<img src="https://ywang412.github.io/post-images/1573691211629.png" alt=""></li>
+<li>access master node jupyter notebook
+<img src="https://ywang412.github.io/post-images/1573691449872.png" alt=""></li>
+</ol>
+<pre><code class="language-python">print(&quot;Welcome to my EMR Notebook!&quot;)
+</code></pre>
+<pre><code>VBox()
 
-        for (int c = 0; c &lt; C; ++c) {
-            int wr = R - 1;
-            for (int r = R-1; r &gt;= 0; --r)
-                if (board[r][c] &gt; 0)
-                    board[wr--][c] = board[r][c];
-            while (wr &gt;= 0)
-                board[wr--][c] = 0;
-        }
 
-        return todo ? candyCrush(board) : board;
+Starting Spark application
+</code></pre>
+<table>
+<tr><th>ID</th><th>YARN Application ID</th><th>Kind</th><th>State</th><th>Spark UI</th><th>Driver log</th><th>Current session?</th></tr><tr><td>1</td><td>application_1573680517609_0004</td><td>pyspark</td><td>idle</td><td><a target="_blank" href="http://ip-172-31-90-61.ec2.internal:20888/proxy/application_1573680517609_0004/">Link</a></td><td><a target="_blank" href="http://ip-172-31-94-174.ec2.internal:8042/node/containerlogs/container_1573680517609_0004_01_000001/livy">Link</a></td><td>✔</td></tr></table>
+<pre><code>FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+SparkSession available as 'spark'.
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+Welcome to my EMR Notebook!
+</code></pre>
+<pre><code class="language-python">%%info
+</code></pre>
+<p>Current session configs: <tt>{'conf': {'spark.pyspark.python': 'python3', 'spark.pyspark.virtualenv.enabled': 'true', 'spark.pyspark.virtualenv.type': 'native', 'spark.pyspark.virtualenv.bin.path': '/usr/bin/virtualenv'}, 'kind': 'pyspark'}</tt><br></p>
+<table>
+<tr><th>ID</th><th>YARN Application ID</th><th>Kind</th><th>State</th><th>Spark UI</th><th>Driver log</th><th>Current session?</th></tr><tr><td>1</td><td>application_1573680517609_0004</td><td>pyspark</td><td>idle</td><td><a target="_blank" href="http://ip-172-31-90-61.ec2.internal:20888/proxy/application_1573680517609_0004/">Link</a></td><td><a target="_blank" href="http://ip-172-31-94-174.ec2.internal:8042/node/containerlogs/container_1573680517609_0004_01_000001/livy">Link</a></td><td>✔</td></tr></table>
+<pre><code class="language-python">sc.list_packages()
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+Package                    Version
+-------------------------- -------
+beautifulsoup4             4.8.1  
+boto                       2.49.0 
+jmespath                   0.9.4  
+lxml                       4.4.1  
+mysqlclient                1.4.4  
+nltk                       3.4.5  
+nose                       1.3.4  
+numpy                      1.14.5 
+pip                        19.3.1 
+py-dateutil                2.2    
+python36-sagemaker-pyspark 1.2.6  
+pytz                       2019.3 
+PyYAML                     3.11   
+setuptools                 41.6.0 
+six                        1.12.0 
+soupsieve                  1.9.4  
+wheel                      0.33.6 
+windmill                   1.6
+</code></pre>
+<pre><code class="language-python">sc.install_pypi_package(&quot;pandas==0.25.1&quot;)
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+Collecting pandas==0.25.1
+  Downloading https://files.pythonhosted.org/packages/73/9b/52e228545d14f14bb2a1622e225f38463c8726645165e1cb7dde95bfe6d4/pandas-0.25.1-cp36-cp36m-manylinux1_x86_64.whl (10.5MB)
+Requirement already satisfied: numpy&gt;=1.13.3 in /usr/local/lib64/python3.6/site-packages (from pandas==0.25.1) (1.14.5)
+Collecting python-dateutil&gt;=2.6.1
+  Downloading https://files.pythonhosted.org/packages/d4/70/d60450c3dd48ef87586924207ae8907090de0b306af2bce5d134d78615cb/python_dateutil-2.8.1-py2.py3-none-any.whl (227kB)
+Requirement already satisfied: pytz&gt;=2017.2 in /usr/local/lib/python3.6/site-packages (from pandas==0.25.1) (2019.3)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.6/site-packages (from python-dateutil&gt;=2.6.1-&gt;pandas==0.25.1) (1.12.0)
+Installing collected packages: python-dateutil, pandas
+Successfully installed pandas-0.25.1 python-dateutil-2.8.1
+</code></pre>
+<pre><code class="language-python">sc.install_pypi_package(&quot;matplotlib&quot;, &quot;https://pypi.org/simple&quot;) #Install matplotlib from given PyPI repository
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+Collecting matplotlib
+  Downloading https://files.pythonhosted.org/packages/57/4f/dd381ecf6c6ab9bcdaa8ea912e866dedc6e696756156d8ecc087e20817e2/matplotlib-3.1.1-cp36-cp36m-manylinux1_x86_64.whl (13.1MB)
+Requirement already satisfied: numpy&gt;=1.11 in /usr/local/lib64/python3.6/site-packages (from matplotlib) (1.14.5)
+Collecting kiwisolver&gt;=1.0.1
+  Downloading https://files.pythonhosted.org/packages/f8/a1/5742b56282449b1c0968197f63eae486eca2c35dcd334bab75ad524e0de1/kiwisolver-1.1.0-cp36-cp36m-manylinux1_x86_64.whl (90kB)
+Requirement already satisfied: python-dateutil&gt;=2.1 in /mnt/tmp/1573683191129-0/lib/python3.6/site-packages (from matplotlib) (2.8.1)
+Collecting pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1
+  Downloading https://files.pythonhosted.org/packages/c0/0c/fc2e007d9a992d997f04a80125b0f183da7fb554f1de701bbb70a8e7d479/pyparsing-2.4.5-py2.py3-none-any.whl (67kB)
+Collecting cycler&gt;=0.10
+  Downloading https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
+Requirement already satisfied: setuptools in /mnt/tmp/1573683191129-0/lib/python3.6/site-packages (from kiwisolver&gt;=1.0.1-&gt;matplotlib) (41.6.0)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.6/site-packages (from python-dateutil&gt;=2.1-&gt;matplotlib) (1.12.0)
+Installing collected packages: kiwisolver, pyparsing, cycler, matplotlib
+Successfully installed cycler-0.10.0 kiwisolver-1.1.0 matplotlib-3.1.1 pyparsing-2.4.5
+</code></pre>
+<pre><code class="language-python">sc.list_packages()
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+Package                    Version
+-------------------------- -------
+beautifulsoup4             4.8.1  
+boto                       2.49.0 
+cycler                     0.10.0 
+jmespath                   0.9.4  
+kiwisolver                 1.1.0  
+lxml                       4.4.1  
+matplotlib                 3.1.1  
+mysqlclient                1.4.4  
+nltk                       3.4.5  
+nose                       1.3.4  
+numpy                      1.14.5 
+pandas                     0.25.1 
+pip                        19.3.1 
+py-dateutil                2.2    
+pyparsing                  2.4.5  
+python-dateutil            2.8.1  
+python36-sagemaker-pyspark 1.2.6  
+pytz                       2019.3 
+PyYAML                     3.11   
+setuptools                 41.6.0 
+six                        1.12.0 
+soupsieve                  1.9.4  
+wheel                      0.33.6 
+windmill                   1.6
+</code></pre>
+<pre><code class="language-python">df = spark.read.parquet('s3://amazon-reviews-pds/parquet/product_category=Books/*.parquet')
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+</code></pre>
+<pre><code class="language-python">df.printSchema()
+num_of_books = df.select('product_id').distinct().count()
+print(f'Number of Books: {num_of_books:,}')
+</code></pre>
+<pre><code>VBox()
+
+
+
+FloatProgress(value=0.0, bar_style='info', description='Progress:', layout=Layout(height='25px', width='50%'),…
+
+
+root
+ |-- marketplace: string (nullable = true)
+ |-- customer_id: string (nullable = true)
+ |-- review_id: string (nullable = true)
+ |-- product_id: string (nullable = true)
+ |-- product_parent: string (nullable = true)
+ |-- product_title: string (nullable = true)
+ |-- star_rating: integer (nullable = true)
+ |-- helpful_votes: integer (nullable = true)
+ |-- total_votes: integer (nullable = true)
+ |-- vine: string (nullable = true)
+ |-- verified_purchase: string (nullable = true)
+ |-- review_headline: string (nullable = true)
+ |-- review_body: string (nullable = true)
+ |-- review_date: date (nullable = true)
+ |-- year: integer (nullable = true)
+
+Number of Books: 3,423,743
+</code></pre>
+<ol start="5">
+<li>install python libraries</li>
+</ol>
+<pre><code>sudo easy_install-3.6 pip 
+sudo /usr/local/bin/pip3 install paramiko nltk scipy scikit-learn pandas
+</code></pre>
+<ol start="6">
+<li>
+<p>upload file to EMR
+<img src="https://ywang412.github.io/post-images/1573691565612.png" alt=""></p>
+</li>
+<li>
+<p>spark-submit job</p>
+</li>
+</ol>
+<pre><code class="language-python">import configparser
+from datetime import datetime
+import os
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import udf, col
+from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
+from pyspark.sql import functions as F
+from pyspark.sql import types as T
+
+import pandas as pd
+pd.set_option('display.max_columns', 500)
+</code></pre>
+<pre><code class="language-python">config = configparser.ConfigParser()
+
+#Normally this file should be in ~/.aws/credentials
+config.read_file(open('dl.cfg'))
+
+os.environ[&quot;AWS_ACCESS_KEY_ID&quot;]= config['AWS']['AWS_ACCESS_KEY_ID']
+os.environ[&quot;AWS_SECRET_ACCESS_KEY&quot;]= config['AWS']['AWS_SECRET_ACCESS_KEY']
+</code></pre>
+<pre><code class="language-python">def create_spark_session():
+    spark = SparkSession \
+        .builder \
+        .config(&quot;spark.jars.packages&quot;, &quot;org.apache.hadoop:hadoop-aws:2.7.0&quot;) \
+        .getOrCreate()
+    return spark
+</code></pre>
+<pre><code class="language-python"># create the spark session
+spark = create_spark_session()
+</code></pre>
+<pre><code class="language-python"># read data from my S3 bucket. This is the same data in workspace
+songPath = 's3a://testemrs3/song_data/*/*/*/*.json'
+logPath = 's3a://testemrs3/log_data/*.json'
+</code></pre>
+<pre><code class="language-python"># define output paths
+output = 's3a://testemrs3/schema/'
+</code></pre>
+<h2 id="process-song-data">process song data</h2>
+<h3 id="create-song_table">create song_table</h3>
+<pre><code class="language-python"># Step 1: Read in the song data
+df_song = spark.read.json(songPath)
+</code></pre>
+<pre><code class="language-python"># check the schema
+df_song.printSchema()
+</code></pre>
+<pre><code>root
+ |-- artist_id: string (nullable = true)
+ |-- artist_latitude: double (nullable = true)
+ |-- artist_location: string (nullable = true)
+ |-- artist_longitude: double (nullable = true)
+ |-- artist_name: string (nullable = true)
+ |-- duration: double (nullable = true)
+ |-- num_songs: long (nullable = true)
+ |-- song_id: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- year: long (nullable = true)
+</code></pre>
+<pre><code class="language-python"># Step 2: extract columns to create songs table
+song_cols = ['song_id', 'title', 'artist_id', 'year', 'duration']
+</code></pre>
+<pre><code class="language-python"># groupby song_id and select the first record's title in the group.
+t1 = df_song.select(F.col('song_id'), 'title') \
+    .groupBy('song_id') \
+    .agg({'title': 'first'}) \
+    .withColumnRenamed('first(title)', 'title1')
+
+t2 = df_song.select(song_cols)
+</code></pre>
+<pre><code class="language-python">t1.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
 }
 </code></pre>
-<p><strong>85. Maximal Rectangle</strong></p>
-<pre><code>class Solution {
-
-    public int maximalRectangle(char[][] matrix) {
-        if(matrix.length == 0) return 0;
-        int m = matrix.length;
-        int n = matrix[0].length;
-
-        int[] left = new int[n]; // initialize left as the leftmost boundary possible
-        int[] right = new int[n];
-        int[] height = new int[n];
-
-        Arrays.fill(right, n - 1); // initialize right as the rightmost boundary possible
-
-        int maxarea = 0;
-        for(int i = 0; i &lt; m; i++) {
-            int cur_left = 0, cur_right = n - 1;
-            // update height
-            for(int j = 0; j &lt; n; j++) {
-                if(matrix[i][j] == '1') height[j]++;
-                else height[j] = 0;
-            }
-            // update left
-            for(int j=0; j&lt;n; j++) {
-                if(matrix[i][j]=='1') left[j]=Math.max(left[j],cur_left);
-                //00100
-                //01210
-                
-                //left[j] at 2
-                
-                
-                else {left[j]=0; cur_left=j+1;}
-            }
-            // update right
-            for(int j = n - 1; j &gt;= 0; j--) {
-                if(matrix[i][j] == '1') right[j] = Math.min(right[j], cur_right);
-                else {right[j] = n - 1; cur_right = j - 1;}    
-            }
-            // update area
-            for(int j = 0; j &lt; n; j++) {
-                maxarea = Math.max(maxarea, (right[j] - left[j] + 1) * height[j]);
-            }
-        }
-        return maxarea;
-        
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>song_id</th>
+      <th>title1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SOGOSOV12AF72A285E</td>
+      <td>¿Dónde va Chichi?</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SOMZWCG12A8C13C480</td>
+      <td>I Didn't Mean To</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOUPIRU12A6D4FA1E1</td>
+      <td>Der Kleine Dompfaff</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SOXVLOJ12AB0189215</td>
+      <td>Amor De Cabaret</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SOWTBJW12AC468AC6E</td>
+      <td>Broken-Down Merry-Go-Round</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">t2.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
 }
 </code></pre>
-<p><strong>361. Bomb Enemy</strong></p>
-<pre><code>class Solution {
-     public int maxKilledEnemies(char[][] grid) {
-        if(grid == null || grid.length == 0 ||  grid[0].length == 0) return 0;
-        int max = 0;
-        int row = 0;
-        int[] col = new int[grid[0].length];
-        for(int i = 0; i&lt;grid.length; i++){
-            for(int j = 0; j&lt;grid[0].length;j++){
-                if(grid[i][j] == 'W') continue;
-                if(j == 0 || grid[i][j-1] == 'W'){
-                     row = killedEnemiesRow(grid, i, j);
-                }
-                if(i == 0 || grid[i-1][j] == 'W'){
-                     col[j] = killedEnemiesCol(grid,i,j);
-                }
-                if(grid[i][j] == '0'){
-                    max = (row + col[j] &gt; max) ? row + col[j] : max;
-                }
-            }
-
-        }
-
-        return max;
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>song_id</th>
+      <th>title</th>
+      <th>artist_id</th>
+      <th>year</th>
+      <th>duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SOBAYLL12A8C138AF9</td>
+      <td>Sono andati? Fingevo di dormire</td>
+      <td>ARDR4AC1187FB371A1</td>
+      <td>0</td>
+      <td>511.16363</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SOOLYAZ12A6701F4A6</td>
+      <td>Laws Patrolling (Album Version)</td>
+      <td>AREBBGV1187FB523D2</td>
+      <td>0</td>
+      <td>173.66159</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOBBUGU12A8C13E95D</td>
+      <td>Setting Fire to Sleeping Giants</td>
+      <td>ARMAC4T1187FB3FA4C</td>
+      <td>2004</td>
+      <td>207.77751</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SOAOIBZ12AB01815BE</td>
+      <td>I Hold Your Hand In Mine [Live At Royal Albert...</td>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>2000</td>
+      <td>43.36281</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SONYPOM12A8C13B2D7</td>
+      <td>I Think My Wife Is Running Around On Me (Taco ...</td>
+      <td>ARDNS031187B9924F0</td>
+      <td>2005</td>
+      <td>186.48771</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">song_table_df = t1.join(t2, 'song_id') \
+                .where(F.col(&quot;title1&quot;) == F.col(&quot;title&quot;)) \
+                .select(song_cols)
+</code></pre>
+<pre><code class="language-python">song_table_df.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
-
-    //calculate killed enemies for row i from column j
-    private int killedEnemiesRow(char[][] grid, int i, int j){
-        int num = 0;
-        while(j &lt;= grid[0].length-1 &amp;&amp; grid[i][j] != 'W'){
-            if(grid[i][j] == 'E') num++;
-            j++;
-        }
-        return num;
-    }
-    //calculate killed enemies for  column j from row i
-    private int killedEnemiesCol(char[][] grid, int i, int j){
-        int num = 0;
-        while(i &lt;= grid.length -1 &amp;&amp; grid[i][j] != 'W'){
-            if(grid[i][j] == 'E') num++;
-            i++;
-        }
-        return num;
-    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
 }
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>song_id</th>
+      <th>title</th>
+      <th>artist_id</th>
+      <th>year</th>
+      <th>duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SOBAYLL12A8C138AF9</td>
+      <td>Sono andati? Fingevo di dormire</td>
+      <td>ARDR4AC1187FB371A1</td>
+      <td>0</td>
+      <td>511.16363</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SOOLYAZ12A6701F4A6</td>
+      <td>Laws Patrolling (Album Version)</td>
+      <td>AREBBGV1187FB523D2</td>
+      <td>0</td>
+      <td>173.66159</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOBBUGU12A8C13E95D</td>
+      <td>Setting Fire to Sleeping Giants</td>
+      <td>ARMAC4T1187FB3FA4C</td>
+      <td>2004</td>
+      <td>207.77751</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SOAOIBZ12AB01815BE</td>
+      <td>I Hold Your Hand In Mine [Live At Royal Albert...</td>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>2000</td>
+      <td>43.36281</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SONYPOM12A8C13B2D7</td>
+      <td>I Think My Wife Is Running Around On Me (Taco ...</td>
+      <td>ARDNS031187B9924F0</td>
+      <td>2005</td>
+      <td>186.48771</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">song_table_df.toPandas().shape
+</code></pre>
+<pre><code>(71, 5)
+</code></pre>
+<pre><code class="language-python">df_song.toPandas().shape
+</code></pre>
+<pre><code>(71, 10)
+</code></pre>
+<pre><code class="language-python"># Step 3: Write this to a parquet file
+song_table_df.write.parquet('data/songs_table', partitionBy=['year', 'artist_id'], mode='Overwrite')
+</code></pre>
+<pre><code class="language-python"># write this to s3 bucket
+song_table_df.write.parquet(output + 'songs_table', partitionBy=['year', 'artist_id'], mode='Overwrite')
+</code></pre>
+<h3 id="create-artists_table">create artists_table</h3>
+<pre><code class="language-python"># define the cols
+artists_cols = [&quot;artist_id&quot;, &quot;artist_name&quot;, &quot;artist_location&quot;, &quot;artist_latitude&quot;, &quot;artist_longitude&quot;]
+</code></pre>
+<pre><code class="language-python">df_song.printSchema()
+</code></pre>
+<pre><code>root
+ |-- artist_id: string (nullable = true)
+ |-- artist_latitude: double (nullable = true)
+ |-- artist_location: string (nullable = true)
+ |-- artist_longitude: double (nullable = true)
+ |-- artist_name: string (nullable = true)
+ |-- duration: double (nullable = true)
+ |-- num_songs: long (nullable = true)
+ |-- song_id: string (nullable = true)
+ |-- title: string (nullable = true)
+ |-- year: long (nullable = true)
+</code></pre>
+<pre><code class="language-python"># groupby song_id and select the first record's title in the group.
+t1 = df_song.select(F.col('artist_id'), 'artist_name') \
+    .groupBy('artist_id') \
+    .agg({'artist_name': 'first'}) \
+    .withColumnRenamed('first(artist_name)', 'artist_name1')
+
+t2 = df_song.select(artists_cols)
+</code></pre>
+<pre><code class="language-python">t1.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist_id</th>
+      <th>artist_name1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AR9AWNF1187B9AB0B4</td>
+      <td>Kenny G featuring Daryl Hall</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AR0IAWL1187B9A96D0</td>
+      <td>Danilo Perez</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AR0RCMP1187FB3F427</td>
+      <td>Billie Jo Spears</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AREDL271187FB40F44</td>
+      <td>Soul Mekanik</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ARI3BMM1187FB4255E</td>
+      <td>Alice Stuart</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">t2.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist_id</th>
+      <th>artist_name</th>
+      <th>artist_location</th>
+      <th>artist_latitude</th>
+      <th>artist_longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ARDR4AC1187FB371A1</td>
+      <td>Montserrat Caballé;Placido Domingo;Vicente Sar...</td>
+      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AREBBGV1187FB523D2</td>
+      <td>Mike Jones (Featuring CJ_ Mello &amp; Lil' Bran)</td>
+      <td>Houston, TX</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ARMAC4T1187FB3FA4C</td>
+      <td>The Dillinger Escape Plan</td>
+      <td>Morris Plains, NJ</td>
+      <td>40.82624</td>
+      <td>-74.47995</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>Tiny Tim</td>
+      <td>New York, NY</td>
+      <td>40.71455</td>
+      <td>-74.00712</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ARDNS031187B9924F0</td>
+      <td>Tim Wilson</td>
+      <td>Georgia</td>
+      <td>32.67828</td>
+      <td>-83.22295</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">artists_table_df = t1.join(t2, 'artist_id') \
+                .where(F.col(&quot;artist_name1&quot;) == F.col(&quot;artist_name&quot;)) \
+                .select(artists_cols)
+</code></pre>
+<pre><code class="language-python">artists_table_df.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist_id</th>
+      <th>artist_name</th>
+      <th>artist_location</th>
+      <th>artist_latitude</th>
+      <th>artist_longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ARDR4AC1187FB371A1</td>
+      <td>Montserrat Caballé;Placido Domingo;Vicente Sar...</td>
+      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AREBBGV1187FB523D2</td>
+      <td>Mike Jones (Featuring CJ_ Mello &amp; Lil' Bran)</td>
+      <td>Houston, TX</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ARMAC4T1187FB3FA4C</td>
+      <td>The Dillinger Escape Plan</td>
+      <td>Morris Plains, NJ</td>
+      <td>40.82624</td>
+      <td>-74.47995</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>Tiny Tim</td>
+      <td>New York, NY</td>
+      <td>40.71455</td>
+      <td>-74.00712</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ARDNS031187B9924F0</td>
+      <td>Tim Wilson</td>
+      <td>Georgia</td>
+      <td>32.67828</td>
+      <td>-83.22295</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python"># write this to s3 bucket
+artists_table_df.write.parquet(output + 'artists_table', mode='Overwrite')
+</code></pre>
+<pre><code class="language-python">artists_table_df.write.parquet('data/artists_table', mode='Overwrite')
+</code></pre>
+<pre><code class="language-python"># read the partitioned data
+df_artists_read = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;data/artists_table&quot;)
+</code></pre>
+<h2 id="process-log-data">Process log data</h2>
+<pre><code class="language-python"># Step 1: Read in the log data
+df_log = spark.read.json(logPath)
+</code></pre>
+<pre><code class="language-python">df_log.printSchema()
+</code></pre>
+<pre><code>root
+ |-- artist: string (nullable = true)
+ |-- auth: string (nullable = true)
+ |-- firstName: string (nullable = true)
+ |-- gender: string (nullable = true)
+ |-- itemInSession: long (nullable = true)
+ |-- lastName: string (nullable = true)
+ |-- length: double (nullable = true)
+ |-- level: string (nullable = true)
+ |-- location: string (nullable = true)
+ |-- method: string (nullable = true)
+ |-- page: string (nullable = true)
+ |-- registration: double (nullable = true)
+ |-- sessionId: long (nullable = true)
+ |-- song: string (nullable = true)
+ |-- status: long (nullable = true)
+ |-- ts: long (nullable = true)
+ |-- userAgent: string (nullable = true)
+ |-- userId: string (nullable = true)
+</code></pre>
+<pre><code class="language-python">df_log.filter(F.col(&quot;page&quot;) == &quot;NextSong&quot;).toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist</th>
+      <th>auth</th>
+      <th>firstName</th>
+      <th>gender</th>
+      <th>itemInSession</th>
+      <th>lastName</th>
+      <th>length</th>
+      <th>level</th>
+      <th>location</th>
+      <th>method</th>
+      <th>page</th>
+      <th>registration</th>
+      <th>sessionId</th>
+      <th>song</th>
+      <th>status</th>
+      <th>ts</th>
+      <th>userAgent</th>
+      <th>userId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Harmonia</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Smith</td>
+      <td>655.77751</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>Sehr kosmisch</td>
+      <td>200</td>
+      <td>1542241826796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>The Prodigy</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>1</td>
+      <td>Smith</td>
+      <td>260.07465</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>The Big Gundown</td>
+      <td>200</td>
+      <td>1542242481796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Train</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>2</td>
+      <td>Smith</td>
+      <td>205.45261</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>Marry Me</td>
+      <td>200</td>
+      <td>1542242741796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sony Wonder</td>
+      <td>Logged In</td>
+      <td>Samuel</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Gonzalez</td>
+      <td>218.06975</td>
+      <td>free</td>
+      <td>Houston-The Woodlands-Sugar Land, TX</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.540493e+12</td>
+      <td>597</td>
+      <td>Blackbird</td>
+      <td>200</td>
+      <td>1542253449796</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Van Halen</td>
+      <td>Logged In</td>
+      <td>Tegan</td>
+      <td>F</td>
+      <td>2</td>
+      <td>Levine</td>
+      <td>289.38404</td>
+      <td>paid</td>
+      <td>Portland-South Portland, ME</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.540794e+12</td>
+      <td>602</td>
+      <td>Best Of Both Worlds (Remastered Album Version)</td>
+      <td>200</td>
+      <td>1542260935796</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>80</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python"># Step 2: filter by actions for song plays
+df_log = df_log.filter(F.col(&quot;page&quot;) == &quot;NextSong&quot;)
+</code></pre>
+<pre><code class="language-python">df_log.toPandas().shape
+</code></pre>
+<pre><code>(6820, 18)
+</code></pre>
+<pre><code class="language-python"># Step 3: extract columns for users table
+users_cols = [&quot;userId&quot;, &quot;firstName&quot;, &quot;lastName&quot;, &quot;gender&quot;, &quot;level&quot;]
+</code></pre>
+<pre><code class="language-python">df_log.select(users_cols).toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>userId</th>
+      <th>firstName</th>
+      <th>lastName</th>
+      <th>gender</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>26</td>
+      <td>Ryan</td>
+      <td>Smith</td>
+      <td>M</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>Ryan</td>
+      <td>Smith</td>
+      <td>M</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>26</td>
+      <td>Ryan</td>
+      <td>Smith</td>
+      <td>M</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>61</td>
+      <td>Samuel</td>
+      <td>Gonzalez</td>
+      <td>M</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>80</td>
+      <td>Tegan</td>
+      <td>Levine</td>
+      <td>F</td>
+      <td>paid</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">df_log.select(users_cols).toPandas().shape
+</code></pre>
+<pre><code>(6820, 5)
+</code></pre>
+<pre><code class="language-python">df_log.select(users_cols).dropDuplicates().toPandas().shape
+</code></pre>
+<pre><code>(104, 5)
+</code></pre>
+<pre><code class="language-python">df_log.select(users_cols).dropDuplicates().toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>userId</th>
+      <th>firstName</th>
+      <th>lastName</th>
+      <th>gender</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>57</td>
+      <td>Katherine</td>
+      <td>Gay</td>
+      <td>F</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>84</td>
+      <td>Shakira</td>
+      <td>Hunt</td>
+      <td>F</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>22</td>
+      <td>Sean</td>
+      <td>Wilson</td>
+      <td>F</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>52</td>
+      <td>Theodore</td>
+      <td>Smith</td>
+      <td>M</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>80</td>
+      <td>Tegan</td>
+      <td>Levine</td>
+      <td>F</td>
+      <td>paid</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">users_table_df = df_log.select(users_cols).dropDuplicates()
+</code></pre>
+<pre><code class="language-python"># write this to s3 bucket
+users_table_df.write.parquet(output + 'users_table', mode='Overwrite')
+</code></pre>
+<pre><code class="language-python">users_table_df.write.parquet('data/users_table', mode='Overwrite')
+</code></pre>
+<h2 id="time-table">Time table</h2>
+<pre><code class="language-python"># # create timestamp column from original timestamp column
+get_timestamp = udf()
+</code></pre>
+<pre><code class="language-python">df_log.select('ts').toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1542241826796</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1542242481796</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1542242741796</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1542253449796</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1542260935796</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">df.withColumn('epoch', f.date_format(df.epoch.cast(dataType=t.TimestampType()), &quot;yyyy-MM-dd&quot;))
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-python">df_log.withColumn('ts', F.date_format(df_log.ts.cast(dataType=T.TimestampType()), &quot;yyyy-MM-dd&quot;)).toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist</th>
+      <th>auth</th>
+      <th>firstName</th>
+      <th>gender</th>
+      <th>itemInSession</th>
+      <th>lastName</th>
+      <th>length</th>
+      <th>level</th>
+      <th>location</th>
+      <th>method</th>
+      <th>page</th>
+      <th>registration</th>
+      <th>sessionId</th>
+      <th>song</th>
+      <th>status</th>
+      <th>ts</th>
+      <th>userAgent</th>
+      <th>userId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Harmonia</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Smith</td>
+      <td>655.77751</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>Sehr kosmisch</td>
+      <td>200</td>
+      <td>50841-09-12</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>The Prodigy</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>1</td>
+      <td>Smith</td>
+      <td>260.07465</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>The Big Gundown</td>
+      <td>200</td>
+      <td>50841-09-19</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Train</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>2</td>
+      <td>Smith</td>
+      <td>205.45261</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.541017e+12</td>
+      <td>583</td>
+      <td>Marry Me</td>
+      <td>200</td>
+      <td>50841-09-22</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sony Wonder</td>
+      <td>Logged In</td>
+      <td>Samuel</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Gonzalez</td>
+      <td>218.06975</td>
+      <td>free</td>
+      <td>Houston-The Woodlands-Sugar Land, TX</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.540493e+12</td>
+      <td>597</td>
+      <td>Blackbird</td>
+      <td>200</td>
+      <td>50842-01-24</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Van Halen</td>
+      <td>Logged In</td>
+      <td>Tegan</td>
+      <td>F</td>
+      <td>2</td>
+      <td>Levine</td>
+      <td>289.38404</td>
+      <td>paid</td>
+      <td>Portland-South Portland, ME</td>
+      <td>PUT</td>
+      <td>NextSong</td>
+      <td>1.540794e+12</td>
+      <td>602</td>
+      <td>Best Of Both Worlds (Remastered Album Version)</td>
+      <td>200</td>
+      <td>50842-04-21</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>80</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">df_time = df_log.select('ts')
+</code></pre>
+<pre><code class="language-python">df_time.take(5)
+</code></pre>
+<pre><code>[Row(ts=1542241826796),
+ Row(ts=1542242481796),
+ Row(ts=1542242741796),
+ Row(ts=1542253449796),
+ Row(ts=1542260935796)]
+</code></pre>
+<pre><code class="language-python">@udf
+def gettimestamp(time):
+    import datetime
+    time = time/1000
+    return datetime.datetime.fromtimestamp(time).strftime(&quot;%m-%d-%Y %H:%M:%S&quot;)
+</code></pre>
+<pre><code class="language-python">df_time.withColumn(&quot;timestamp&quot;, gettimestamp(&quot;ts&quot;)).show()
+</code></pre>
+<pre><code>+-------------+-------------------+
+|           ts|          timestamp|
++-------------+-------------------+
+|1542241826796|11-15-2018 00:30:26|
+|1542242481796|11-15-2018 00:41:21|
+|1542242741796|11-15-2018 00:45:41|
+|1542253449796|11-15-2018 03:44:09|
+|1542260935796|11-15-2018 05:48:55|
+|1542261224796|11-15-2018 05:53:44|
+|1542261356796|11-15-2018 05:55:56|
+|1542261662796|11-15-2018 06:01:02|
+|1542262057796|11-15-2018 06:07:37|
+|1542262233796|11-15-2018 06:10:33|
+|1542262434796|11-15-2018 06:13:54|
+|1542262456796|11-15-2018 06:14:16|
+|1542262679796|11-15-2018 06:17:59|
+|1542262728796|11-15-2018 06:18:48|
+|1542262893796|11-15-2018 06:21:33|
+|1542263158796|11-15-2018 06:25:58|
+|1542263378796|11-15-2018 06:29:38|
+|1542265716796|11-15-2018 07:08:36|
+|1542265929796|11-15-2018 07:12:09|
+|1542266927796|11-15-2018 07:28:47|
++-------------+-------------------+
+only showing top 20 rows
+</code></pre>
+<pre><code class="language-python">df_time.printSchema()
+</code></pre>
+<pre><code>root
+ |-- ts: long (nullable = true)
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-python">get_timestamp = F.udf(lambda x: datetime.fromtimestamp( (x/1000.0) ), T.TimestampType()) 
+get_hour = F.udf(lambda x: x.hour, T.IntegerType()) 
+get_day = F.udf(lambda x: x.day, T.IntegerType()) 
+get_week = F.udf(lambda x: x.isocalendar()[1], T.IntegerType()) 
+get_month = F.udf(lambda x: x.month, T.IntegerType()) 
+get_year = F.udf(lambda x: x.year, T.IntegerType()) 
+get_weekday = F.udf(lambda x: x.weekday(), T.IntegerType()) 
+</code></pre>
+<pre><code class="language-python">df_log = df_log.withColumn(&quot;timestamp&quot;, get_timestamp(df_log.ts))
+df_log = df_log.withColumn(&quot;hour&quot;, get_hour(df_log.timestamp))
+df_log = df_log.withColumn(&quot;day&quot;, get_day(df_log.timestamp))
+df_log = df_log.withColumn(&quot;week&quot;, get_week(df_log.timestamp))
+df_log = df_log.withColumn(&quot;month&quot;, get_month(df_log.timestamp))
+df_log = df_log.withColumn(&quot;year&quot;, get_year(df_log.timestamp))
+df_log = df_log.withColumn(&quot;weekday&quot;, get_weekday(df_log.timestamp))
+df_log.limit(5).toPandas()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist</th>
+      <th>auth</th>
+      <th>firstName</th>
+      <th>gender</th>
+      <th>itemInSession</th>
+      <th>lastName</th>
+      <th>length</th>
+      <th>level</th>
+      <th>location</th>
+      <th>method</th>
+      <th>...</th>
+      <th>ts</th>
+      <th>userAgent</th>
+      <th>userId</th>
+      <th>timestamp</th>
+      <th>hour</th>
+      <th>day</th>
+      <th>week</th>
+      <th>month</th>
+      <th>year</th>
+      <th>weekday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Harmonia</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Smith</td>
+      <td>655.77751</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>...</td>
+      <td>1542241826796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+      <td>2018-11-15 00:30:26.796</td>
+      <td>0</td>
+      <td>15</td>
+      <td>46</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>The Prodigy</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>1</td>
+      <td>Smith</td>
+      <td>260.07465</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>...</td>
+      <td>1542242481796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+      <td>2018-11-15 00:41:21.796</td>
+      <td>0</td>
+      <td>15</td>
+      <td>46</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Train</td>
+      <td>Logged In</td>
+      <td>Ryan</td>
+      <td>M</td>
+      <td>2</td>
+      <td>Smith</td>
+      <td>205.45261</td>
+      <td>free</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>PUT</td>
+      <td>...</td>
+      <td>1542242741796</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>26</td>
+      <td>2018-11-15 00:45:41.796</td>
+      <td>0</td>
+      <td>15</td>
+      <td>46</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Sony Wonder</td>
+      <td>Logged In</td>
+      <td>Samuel</td>
+      <td>M</td>
+      <td>0</td>
+      <td>Gonzalez</td>
+      <td>218.06975</td>
+      <td>free</td>
+      <td>Houston-The Woodlands-Sugar Land, TX</td>
+      <td>PUT</td>
+      <td>...</td>
+      <td>1542253449796</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>61</td>
+      <td>2018-11-15 03:44:09.796</td>
+      <td>3</td>
+      <td>15</td>
+      <td>46</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Van Halen</td>
+      <td>Logged In</td>
+      <td>Tegan</td>
+      <td>F</td>
+      <td>2</td>
+      <td>Levine</td>
+      <td>289.38404</td>
+      <td>paid</td>
+      <td>Portland-South Portland, ME</td>
+      <td>PUT</td>
+      <td>...</td>
+      <td>1542260935796</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>80</td>
+      <td>2018-11-15 05:48:55.796</td>
+      <td>5</td>
+      <td>15</td>
+      <td>46</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 25 columns</p>
+</div>
+<pre><code class="language-python">time_cols = [&quot;timestamp&quot;, &quot;hour&quot;, &quot;day&quot;, &quot;week&quot;, &quot;month&quot;, &quot;year&quot;, &quot;weekday&quot;]
+</code></pre>
+<pre><code class="language-python">time_table_df = df_log.select(time_cols)
+</code></pre>
+<pre><code class="language-python"># write to parquet file partition by 
+time_table_df.write.parquet('data/time_table', partitionBy=['year', 'month'], mode='Overwrite')
+</code></pre>
+<pre><code class="language-python"># write this to s3 bucket
+time_table_df.write.parquet(output + 'time_table', partitionBy=['year', 'month'], mode='Overwrite')
+</code></pre>
+<h2 id="songplay-table">SongPlay table</h2>
+<pre><code class="language-python">df_log.printSchema()
+</code></pre>
+<pre><code>root
+ |-- artist: string (nullable = true)
+ |-- auth: string (nullable = true)
+ |-- firstName: string (nullable = true)
+ |-- gender: string (nullable = true)
+ |-- itemInSession: long (nullable = true)
+ |-- lastName: string (nullable = true)
+ |-- length: double (nullable = true)
+ |-- level: string (nullable = true)
+ |-- location: string (nullable = true)
+ |-- method: string (nullable = true)
+ |-- page: string (nullable = true)
+ |-- registration: double (nullable = true)
+ |-- sessionId: long (nullable = true)
+ |-- song: string (nullable = true)
+ |-- status: long (nullable = true)
+ |-- ts: long (nullable = true)
+ |-- userAgent: string (nullable = true)
+ |-- userId: string (nullable = true)
+ |-- timestamp: timestamp (nullable = true)
+ |-- hour: integer (nullable = true)
+ |-- day: integer (nullable = true)
+ |-- week: integer (nullable = true)
+ |-- month: integer (nullable = true)
+ |-- year: integer (nullable = true)
+ |-- weekday: integer (nullable = true)
+</code></pre>
+<pre><code class="language-python">songplay_cols_temp = [&quot;timestamp&quot;, &quot;userId&quot;, &quot;sessionId&quot;, &quot;location&quot;, &quot;userAgent&quot;, &quot;level&quot;]
+</code></pre>
+<pre><code class="language-python">df_log.select(songplay_cols).toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamp</th>
+      <th>userId</th>
+      <th>sessionId</th>
+      <th>location</th>
+      <th>userAgent</th>
+      <th>level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-11-15 00:30:26.796</td>
+      <td>26</td>
+      <td>583</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-11-15 00:41:21.796</td>
+      <td>26</td>
+      <td>583</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-11-15 00:45:41.796</td>
+      <td>26</td>
+      <td>583</td>
+      <td>San Jose-Sunnyvale-Santa Clara, CA</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-11-15 03:44:09.796</td>
+      <td>61</td>
+      <td>597</td>
+      <td>Houston-The Woodlands-Sugar Land, TX</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>free</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-11-15 05:48:55.796</td>
+      <td>80</td>
+      <td>602</td>
+      <td>Portland-South Portland, ME</td>
+      <td>"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4...</td>
+      <td>paid</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python"># read the partitioned data
+df_artists_read = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;data/artists_table&quot;)
+df_songs_read = spark.read.option(&quot;mergeSchema&quot;, &quot;true&quot;).parquet(&quot;data/songs_table&quot;)
+</code></pre>
+<pre><code class="language-python">df_artists_read.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist_id</th>
+      <th>artist_name</th>
+      <th>artist_location</th>
+      <th>artist_latitude</th>
+      <th>artist_longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ARDR4AC1187FB371A1</td>
+      <td>Montserrat Caballé;Placido Domingo;Vicente Sar...</td>
+      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AREBBGV1187FB523D2</td>
+      <td>Mike Jones (Featuring CJ_ Mello &amp; Lil' Bran)</td>
+      <td>Houston, TX</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ARMAC4T1187FB3FA4C</td>
+      <td>The Dillinger Escape Plan</td>
+      <td>Morris Plains, NJ</td>
+      <td>40.82624</td>
+      <td>-74.47995</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>Tiny Tim</td>
+      <td>New York, NY</td>
+      <td>40.71455</td>
+      <td>-74.00712</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ARDNS031187B9924F0</td>
+      <td>Tim Wilson</td>
+      <td>Georgia</td>
+      <td>32.67828</td>
+      <td>-83.22295</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">df_songs_read.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>song_id</th>
+      <th>title</th>
+      <th>duration</th>
+      <th>year</th>
+      <th>artist_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SOAOIBZ12AB01815BE</td>
+      <td>I Hold Your Hand In Mine [Live At Royal Albert...</td>
+      <td>43.36281</td>
+      <td>2000</td>
+      <td>ARPBNLO1187FB3D52F</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SONYPOM12A8C13B2D7</td>
+      <td>I Think My Wife Is Running Around On Me (Taco ...</td>
+      <td>186.48771</td>
+      <td>2005</td>
+      <td>ARDNS031187B9924F0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SODREIN12A58A7F2E5</td>
+      <td>A Whiter Shade Of Pale (Live @ Fillmore West)</td>
+      <td>326.00771</td>
+      <td>0</td>
+      <td>ARLTWXK1187FB5A3F8</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SOYMRWW12A6D4FAB14</td>
+      <td>The Moon And I (Ordinary Day Album Version)</td>
+      <td>267.70240</td>
+      <td>0</td>
+      <td>ARKFYS91187B98E58F</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>Streets On Fire (Explicit Album Version)</td>
+      <td>279.97995</td>
+      <td>0</td>
+      <td>ARPFHN61187FB575F6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python"># merge song and artists
+df_songs_read.join(df_artists_read, 'artist_id').toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>artist_id</th>
+      <th>song_id</th>
+      <th>title</th>
+      <th>duration</th>
+      <th>year</th>
+      <th>artist_name</th>
+      <th>artist_location</th>
+      <th>artist_latitude</th>
+      <th>artist_longitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ARPBNLO1187FB3D52F</td>
+      <td>SOAOIBZ12AB01815BE</td>
+      <td>I Hold Your Hand In Mine [Live At Royal Albert...</td>
+      <td>43.36281</td>
+      <td>2000</td>
+      <td>Tiny Tim</td>
+      <td>New York, NY</td>
+      <td>40.71455</td>
+      <td>-74.00712</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ARDNS031187B9924F0</td>
+      <td>SONYPOM12A8C13B2D7</td>
+      <td>I Think My Wife Is Running Around On Me (Taco ...</td>
+      <td>186.48771</td>
+      <td>2005</td>
+      <td>Tim Wilson</td>
+      <td>Georgia</td>
+      <td>32.67828</td>
+      <td>-83.22295</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ARLTWXK1187FB5A3F8</td>
+      <td>SODREIN12A58A7F2E5</td>
+      <td>A Whiter Shade Of Pale (Live @ Fillmore West)</td>
+      <td>326.00771</td>
+      <td>0</td>
+      <td>King Curtis</td>
+      <td>Fort Worth, TX</td>
+      <td>32.74863</td>
+      <td>-97.32925</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>ARKFYS91187B98E58F</td>
+      <td>SOYMRWW12A6D4FAB14</td>
+      <td>The Moon And I (Ordinary Day Album Version)</td>
+      <td>267.70240</td>
+      <td>0</td>
+      <td>Jeff And Sheri Easter</td>
+      <td></td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>ARPFHN61187FB575F6</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>Streets On Fire (Explicit Album Version)</td>
+      <td>279.97995</td>
+      <td>0</td>
+      <td>Lupe Fiasco</td>
+      <td>Chicago, IL</td>
+      <td>41.88415</td>
+      <td>-87.63241</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">df_joined_songs_artists = df_songs_read.join(df_artists_read, 'artist_id').select(&quot;artist_id&quot;, &quot;song_id&quot;, &quot;title&quot;, &quot;artist_name&quot;)
+</code></pre>
+<pre><code class="language-python">songplay_cols = [&quot;timestamp&quot;, &quot;userId&quot;, &quot;song_id&quot;, &quot;artist_id&quot;, &quot;sessionId&quot;, &quot;location&quot;, &quot;userAgent&quot;, &quot;level&quot;, &quot;month&quot;, &quot;year&quot;]
+</code></pre>
+<pre><code class="language-python"># join df_logs with df_joined_songs_artists
+df_log.join(df_joined_songs_artists, df_log.artist == df_joined_songs_artists.artist_name).select(songplay_cols).toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamp</th>
+      <th>userId</th>
+      <th>song_id</th>
+      <th>artist_id</th>
+      <th>sessionId</th>
+      <th>location</th>
+      <th>userAgent</th>
+      <th>level</th>
+      <th>month</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-11-10 07:47:51.796</td>
+      <td>44</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>350</td>
+      <td>Waterloo-Cedar Falls, IA</td>
+      <td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; r...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-11-06 18:34:31.796</td>
+      <td>97</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>293</td>
+      <td>Lansing-East Lansing, MI</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-11-06 16:04:44.796</td>
+      <td>2</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>126</td>
+      <td>Plymouth, IN</td>
+      <td>"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebK...</td>
+      <td>free</td>
+      <td>11</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-11-28 23:22:57.796</td>
+      <td>24</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>984</td>
+      <td>Lake Havasu City-Kingman, AZ</td>
+      <td>"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebK...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-11-14 13:11:26.796</td>
+      <td>34</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>495</td>
+      <td>Milwaukee-Waukesha-West Allis, WI</td>
+      <td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; r...</td>
+      <td>free</td>
+      <td>11</td>
+      <td>2018</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">songplay_table_df = df_log.join(df_joined_songs_artists, df_log.artist == df_joined_songs_artists.artist_name).select(songplay_cols)
+songplay_table_df = songplay_table_df.withColumn(&quot;songplay_id&quot;, F.monotonically_increasing_id())
+</code></pre>
+<pre><code class="language-python">songplay_table_df.toPandas().head()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>timestamp</th>
+      <th>userId</th>
+      <th>song_id</th>
+      <th>artist_id</th>
+      <th>sessionId</th>
+      <th>location</th>
+      <th>userAgent</th>
+      <th>level</th>
+      <th>month</th>
+      <th>year</th>
+      <th>songplay_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-11-10 07:47:51.796</td>
+      <td>44</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>350</td>
+      <td>Waterloo-Cedar Falls, IA</td>
+      <td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; r...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-11-06 18:34:31.796</td>
+      <td>97</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>293</td>
+      <td>Lansing-East Lansing, MI</td>
+      <td>"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-11-06 16:04:44.796</td>
+      <td>2</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>126</td>
+      <td>Plymouth, IN</td>
+      <td>"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebK...</td>
+      <td>free</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-11-28 23:22:57.796</td>
+      <td>24</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>984</td>
+      <td>Lake Havasu City-Kingman, AZ</td>
+      <td>"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebK...</td>
+      <td>paid</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-11-14 13:11:26.796</td>
+      <td>34</td>
+      <td>SOWQTQZ12A58A7B63E</td>
+      <td>ARPFHN61187FB575F6</td>
+      <td>495</td>
+      <td>Milwaukee-Waukesha-West Allis, WI</td>
+      <td>Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; r...</td>
+      <td>free</td>
+      <td>11</td>
+      <td>2018</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python"># write this to parquet file
+# write to parquet file partition by 
+songplay_table_df.write.parquet('data/songplays_table', partitionBy=['year', 'month'], mode='Overwrite')
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+<pre><code class="language-python">from pyspark.sql import functions as F
+</code></pre>
+<pre><code class="language-python">from glob import glob
+</code></pre>
+<pre><code class="language-python">test_df = spark.read.json(glob(&quot;test/*.json&quot;))
+</code></pre>
+<pre><code class="language-python">test_df.select(['song_id', 'title', 'artist_id', 'year', 'duration']).toPandas()
+</code></pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}
+</code></pre>
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>song_id</th>
+      <th>title</th>
+      <th>artist_id</th>
+      <th>year</th>
+      <th>duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SOYMRWW12A6D4FAB14</td>
+      <td>The Moon And I (Ordinary Day Album Version)</td>
+      <td>ARKFYS91187B98E58F</td>
+      <td>0</td>
+      <td>267.70240</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SOHKNRJ12A6701D1F8</td>
+      <td>Drop of Rain</td>
+      <td>AR10USD1187B99F3F1</td>
+      <td>0</td>
+      <td>189.57016</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOYMRWW12A6D4FAB14</td>
+      <td>The Moon And SUN</td>
+      <td>ASKFYS91187B98E58F</td>
+      <td>0</td>
+      <td>269.70240</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SOUDSGM12AC9618304</td>
+      <td>Insatiable (Instrumental Version)</td>
+      <td>ARNTLGG11E2835DDB9</td>
+      <td>0</td>
+      <td>266.39628</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<pre><code class="language-python">test_df.select(['song_id', 'title', 'artist_id', 'year', 'duration']).groupBy('song_id').count().show()
+</code></pre>
+<pre><code>+------------------+-----+
+|           song_id|count|
++------------------+-----+
+|SOUDSGM12AC9618304|    1|
+|SOYMRWW12A6D4FAB14|    2|
+|SOHKNRJ12A6701D1F8|    1|
++------------------+-----+
+</code></pre>
+<pre><code class="language-python">test_df.select(F.col('song_id'), 'title') \
+    .groupBy('song_id') \
+    .agg({'title': 'first'}) \
+    .withColumnRenamed('first(title)', 'title1') \
+    .show()
+</code></pre>
+<pre><code>+------------------+--------------------+
+|           song_id|               title|
++------------------+--------------------+
+|SOUDSGM12AC9618304|Insatiable (Instr...|
+|SOYMRWW12A6D4FAB14|The Moon And I (O...|
+|SOHKNRJ12A6701D1F8|        Drop of Rain|
++------------------+--------------------+
+</code></pre>
+<pre><code class="language-python">t1 = test_df.select(F.col('song_id'), 'title') \
+    .groupBy('song_id') \
+    .agg({'title': 'first'}) \
+    .withColumnRenamed('first(title)', 'title1')
+</code></pre>
+<pre><code class="language-python">t2 = test_df.select(['song_id', 'title', 'artist_id', 'year', 'duration'])
+</code></pre>
+<pre><code class="language-python">t1.join(t2, 'song_id').where(F.col(&quot;title1&quot;) == F.col(&quot;title&quot;)).select([&quot;song_id&quot;, &quot;title&quot;, &quot;artist_id&quot;, &quot;year&quot;, &quot;duration&quot;]).show()
+</code></pre>
+<pre><code>+------------------+--------------------+------------------+----+---------+
+|           song_id|               title|         artist_id|year| duration|
++------------------+--------------------+------------------+----+---------+
+|SOYMRWW12A6D4FAB14|The Moon And I (O...|ARKFYS91187B98E58F|   0| 267.7024|
+|SOHKNRJ12A6701D1F8|        Drop of Rain|AR10USD1187B99F3F1|   0|189.57016|
+|SOUDSGM12AC9618304|Insatiable (Instr...|ARNTLGG11E2835DDB9|   0|266.39628|
++------------------+--------------------+------------------+----+---------+
 </code></pre>
 ]]></content>
     </entry>
@@ -895,1099 +2919,74 @@ The server can push some part of their cache to CDNs and Internet Service Provid
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Monotonic Stack]]></title>
-        <id>https://ywang412.github.io/post/monotonic-stack</id>
-        <link href="https://ywang412.github.io/post/monotonic-stack">
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 7 - ExceptionSemaphore vs Lock Example]]></title>
+        <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
+        <link href="https://ywang412.github.io/post/semaphore-vs-lock">
         </link>
-        <updated>2019-07-25T18:40:22.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>503. Next Greater Element II</strong></p>
-<pre><code>public int[] nextGreaterElements(int[] nums) {
-		int n = nums.length, next[] = new int[n];
-		Arrays.fill(next, -1);
-		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // index stack
-		for (int i = 0; i &lt; n * 2; i++) {
-				int num = nums[i % n]; 
-				while (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; num)
-						next[stack.pop()] = num;
-				stack.push(i % n);
-		}   
-		return next;
-}
-</code></pre>
-<p><strong>1130. Minimum Cost Tree From Leaf Values</strong></p>
-<pre><code>public int mctFromLeafValues(int[] A) {
-		int res = 0, n = A.length;
-		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-		stack.push(Integer.MAX_VALUE);
-		for (int a : A) {
-				while (stack.peek() &lt;= a) {
-						int mid = stack.pop();
-						res += mid * Math.min(stack.peek(), a);
-				}
-				stack.push(a);
-		}
-		while (stack.size() &gt; 2) {
-				res += stack.pop() * stack.peek();
-		}
-		return res;
-}
-</code></pre>
-<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
-<pre><code>class Solution {
-    public int[] dailyTemperatures(int[] temperatures) {
-        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-        int[] ret = new int[temperatures.length];
-        for(int i = 0; i &lt; temperatures.length; i++) {
-            while(!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
-                int idx = stack.pop();
-                ret[idx] = i - idx;
-            }
-            stack.push(i);
-        }
-        return ret;
-    }
-}
-</code></pre>
-<p><strong>Largest Rectangle in Histogram</strong></p>
-<pre><code>public class Solution {
-    public int largestRectangleArea(int[] height) {
-        int len = height.length;
-        Stack&lt;Integer&gt; s = new Stack&lt;Integer&gt;();
-        int maxArea = 0;
-        int i = 0;
-        while(i &lt;= len){
-            int h = (i == len ? 0 : height[i]);
-            if(s.isEmpty() || h &gt;= height[s.peek()]){
-                s.push(i);
-                i++;
-            }else{
-                int tp = s.pop();
-                maxArea = Math.max(maxArea, height[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
-                 
-            }
-        }
-        return maxArea;
-    }
-}
-</code></pre>
-<p><strong>239. Sliding Window Maximum</strong></p>
-<pre><code>class Solution {
-    public int[] maxSlidingWindow(int[] a, int k) {		
-            if (a == null || k &lt;= 0) {
-                return new int[0];
-            }
-            int n = a.length;
-            int[] r = new int[n-k+1];
-            int ri = 0;
-            // store index
-            Deque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
-            for (int i = 0; i &lt; a.length; i++) {
-                // remove numbers out of range k
-                while (!q.isEmpty() &amp;&amp; q.peek() &lt; i - k + 1) {
-                    q.poll();
-                }
-                // remove smaller numbers in k range as they are useless
-                while (!q.isEmpty() &amp;&amp; a[q.peekLast()] &lt; a[i]) {
-                    q.pollLast();
-                }
-                // q contains index... r contains content
-                q.offer(i);
-                if (i &gt;= k - 1) {
-                    r[ri++] = a[q.peek()];
-                }
-            }
-            return r;
-        }
-}
-</code></pre>
-<p><strong>862. Shortest Subarray with Sum at Least K</strong></p>
-<pre><code>class Solution {
-    public int shortestSubarray(int[] A, int K) {
-        int N = A.length, res = N + 1;
-        int[] B = new int[N + 1];
-        for (int i = 0; i &lt; N; i++) 
-            B[i + 1] = B[i] + A[i];
-        Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
-        for (int i = 0; i &lt; N + 1; i++) {
-            while (d.size() &gt; 0 &amp;&amp; B[i] - B[d.getFirst()] &gt;=  K)
-                res = Math.min(res, i - d.pollFirst());
-            while (d.size() &gt; 0 &amp;&amp; B[i] &lt;= B[d.getLast()]) 
-                d.pollLast();
-            d.addLast(i);
-        }
-        return res &lt;= N ? res : -1;
-    }
-}
-</code></pre>
-<p><strong>901. Online Stock Span</strong></p>
-<p>The span of the stock's price today is defined as the maximum number of consecutive days (starting from today and going backwards) for which the price of the stock was less than or equal to today's price.</p>
-<pre><code>class StockSpanner {
-
-    public StockSpanner() {
-        
-    }
+        <updated>2019-07-14T22:36:52.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
+<pre><code>class Foo {
     
-    Stack&lt;int[]&gt; stack = new Stack&lt;&gt;();
-    public int next(int price) {
-        int res = 1;
-        while (!stack.isEmpty() &amp;&amp; stack.peek()[0] &lt;= price)
-            res += stack.pop()[1];
-        stack.push(new int[]{price, res});
-        return res;
-    }
-}
-</code></pre>
-<p><strong>LC907. Sum of Subarray Minimums</strong></p>
-<pre><code>class Solution {
-    public int sumSubarrayMins(int[] A) {
-        int MOD = 1_000_000_007;
-        int N = A.length;
+    private volatile boolean onePrinted;
+    private volatile boolean twoPrinted;
 
-        // prev has i* - 1 in increasing order of A[i* - 1]
-        // where i* is the answer to query j
-        Stack&lt;Integer&gt; stack = new Stack();
-        int[] prev = new int[N];
-        for (int i = 0; i &lt; N; ++i) {
-            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
-                stack.pop();
-            prev[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(i);
-        }
-
-        // next has k* + 1 in increasing order of A[k* + 1]
-        // where k* is the answer to query j
-        stack = new Stack();
-        int[] next = new int[N];
-        for (int k = N-1; k &gt;= 0; --k) {
-            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
-                stack.pop();
-            next[k] = stack.isEmpty() ? N : stack.peek();
-            stack.push(k);
-        }
-
-        // Use prev/next array to count answer
-        long ans = 0;
-        for (int i = 0; i &lt; N; ++i) {
-            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
-            ans %= MOD;
-        }
-        return (int) ans;
-
+    public Foo() {
+        onePrinted = false;
+        twoPrinted = false;        
     }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort]]></title>
-        <id>https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort</id>
-        <link href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
-        </link>
-        <updated>2019-07-21T12:09:43.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>215. Kth Largest Element in an Array</strong></p>
-<pre><code>public class Solution {
-    public int findKthLargest(int[] nums, int k) {
-        int start = 0, end = nums.length - 1, index = nums.length - k;
-        while (start &lt; end) {
-            int pivot = partion(nums, start, end);
-            if (pivot &lt; index) start = pivot + 1; 
-            else if (pivot &gt; index) end = pivot - 1;
-            else return nums[pivot];
-        }
-        return nums[start];
-    }
-    
-    private int partion(int[] nums, int start, int end) {
-        int pivot = start, temp;
-        while (start &lt;= end) {
-            while (start &lt;= end &amp;&amp; nums[start] &lt;= nums[pivot]) start++;
-            while (start &lt;= end &amp;&amp; nums[end] &gt;= nums[pivot]) end--;
-            if (start &lt;= end) { 
-                temp = nums[start];
-                nums[start] = nums[end];
-                nums[end] = temp;
-            }
-        }
-        temp = nums[end];
-        nums[end] = nums[pivot];
-        nums[pivot] = temp;
-        return end;
-    }
-}
-</code></pre>
-<p><strong>Bucket Sort</strong></p>
-<pre><code>private static void bucketSort(int[] intArr, int noOfBuckets){
-		// Create bucket array
-		List&lt;Integer&gt;[] buckets = new List[noOfBuckets];
-		// Associate a list with each index 
-		// in the bucket array         
-		for(int i = 0; i &lt; noOfBuckets; i++){
-				buckets[i] = new LinkedList&lt;&gt;();
-		}
-		// Assign numbers from array to the proper bucket
-		// by using hashing function
-		for(int num : intArr){
-				//System.out.println(&quot;hash- &quot; + hash(num));
-				buckets[hash(num)].add(num);
-		}
-		// sort buckets
-		for(List&lt;Integer&gt; bucket : buckets){
-				Collections.sort(bucket);
-		}
-		int i = 0;
-		// Merge buckets to get sorted array
-		for(List&lt;Integer&gt; bucket : buckets){
-				for(int num : bucket){
-						intArr[i++] = num;
-				}
-		}
-}
-</code></pre>
-<p><strong>Topological Sort</strong>
-Course Schedule II</p>
-<pre><code>public int[] findOrder(int numCourses, int[][] prerequisites) {
+
+    public synchronized void first(Runnable printFirst) throws InterruptedException {
         
-    boolean isPossible = true;
-    Map&lt;Integer, List&lt;Integer&gt;&gt; adjList = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
-    int[] indegree = new int[numCourses];
-    int[] topologicalOrder = new int[numCourses];
-
-    // Create the adjacency list representation of the graph
-    for (int i = 0; i &lt; prerequisites.length; i++) {
-      int dest = prerequisites[i][0];
-      int src = prerequisites[i][1];
-      List&lt;Integer&gt; lst = adjList.getOrDefault(src, new ArrayList&lt;Integer&gt;());
-      lst.add(dest);
-      adjList.put(src, lst);
-
-      // Record in-degree of each vertex
-      indegree[dest] += 1;
+        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
+        printFirst.run();
+        onePrinted = true;
+        notifyAll();
     }
 
-    // Add all vertices with 0 in-degree to the queue
-    Queue&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
-    for (int i = 0; i &lt; numCourses; i++) {
-      if (indegree[i] == 0) {
-        q.add(i);
-      }
-    }
-
-    int i = 0;
-    // Process until the Q becomes empty
-    while (!q.isEmpty()) {
-      int node = q.remove();
-      topologicalOrder[i++] = node;
-
-      // Reduce the in-degree of each neighbor by 1
-      if (adjList.containsKey(node)) {
-        for (Integer neighbor : adjList.get(node)) {
-          indegree[neighbor]--;
-
-          // If in-degree of a neighbor becomes 0, add it to the Q
-          if (indegree[neighbor] == 0) {
-            q.add(neighbor);
-          }
+    public synchronized void second(Runnable printSecond) throws InterruptedException {
+        while(!onePrinted) {
+            wait();
         }
-      }
+        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
+        printSecond.run();
+        twoPrinted = true;
+        notifyAll();
     }
 
-    // Check to see if topological sort is possible or not.
-    if (i == numCourses) {
-      return topologicalOrder;
-    }
-
-    return new int[0];
-  } 
-</code></pre>
-<p>Topological sort using DFS</p>
-<pre><code>// A recursive function used by topologicalSort 
-void topologicalSortUtil(int v, boolean visited[], 
-												 Stack stack) 
-{ 
-		// Mark the current node as visited. 
-		visited[v] = true; 
-		Integer i; 
-
-		// Recur for all the vertices adjacent to this 
-		// vertex 
-		Iterator&lt;Integer&gt; it = adj[v].iterator(); 
-		while (it.hasNext()) 
-		{ 
-				i = it.next(); 
-				if (!visited[i]) 
-						topologicalSortUtil(i, visited, stack); 
-		} 
-
-		// Push current vertex to stack which stores result 
-		stack.push(new Integer(v)); 
-} 
-
-// The function to do Topological Sort. It uses 
-// recursive topologicalSortUtil() 
-void topologicalSort() 
-{ 
-		Stack stack = new Stack(); 
-
-		// Mark all the vertices as not visited 
-		boolean visited[] = new boolean[V]; 
-		for (int i = 0; i &lt; V; i++) 
-				visited[i] = false; 
-
-		// Call the recursive helper function to store 
-		// Topological Sort starting from all vertices 
-		// one by one 
-		for (int i = 0; i &lt; V; i++) 
-				if (visited[i] == false) 
-						topologicalSortUtil(i, visited, stack); 
-
-		// Print contents of stack 
-		while (stack.empty()==false) 
-				System.out.print(stack.pop() + &quot; &quot;); 
-} 
-</code></pre>
-<p><strong>Bubble sort</strong></p>
-<pre><code>void bubbleSort(int arr[]) 
-{ 
-		int n = arr.length; 
-		for (int i = 0; i &lt; n-1; i++) 
-				for (int j = 0; j &lt; n-i-1; j++) 
-						if (arr[j] &gt; arr[j+1]) 
-						{ 
-								// swap arr[j+1] and arr[i] 
-								int temp = arr[j]; 
-								arr[j] = arr[j+1]; 
-								arr[j+1] = temp; 
-						} 
-}
-</code></pre>
-<p><strong>Merge sort</strong></p>
-<pre><code>void merge(int arr[], int l, int m, int r) 
-{ 
-		// Find sizes of two subarrays to be merged 
-		int n1 = m - l + 1; 
-		int n2 = r - m; 
-
-		/* Create temp arrays */
-		int L[] = new int [n1]; 
-		int R[] = new int [n2]; 
-
-		/*Copy data to temp arrays*/
-		for (int i=0; i&lt;n1; ++i) 
-				L[i] = arr[l + i]; 
-		for (int j=0; j&lt;n2; ++j) 
-				R[j] = arr[m + 1+ j]; 
-
-
-		/* Merge the temp arrays */
-
-		// Initial indexes of first and second subarrays 
-		int i = 0, j = 0; 
-
-		// Initial index of merged subarry array 
-		int k = l; 
-		while (i &lt; n1 &amp;&amp; j &lt; n2) 
-		{ 
-				if (L[i] &lt;= R[j]) 
-				{ 
-						arr[k] = L[i]; 
-						i++; 
-				} 
-				else
-				{ 
-						arr[k] = R[j]; 
-						j++; 
-				} 
-				k++; 
-		} 
-
-		/* Copy remaining elements of L[] if any */
-		while (i &lt; n1) 
-		{ 
-				arr[k] = L[i]; 
-				i++; 
-				k++; 
-		} 
-
-		/* Copy remaining elements of R[] if any */
-		while (j &lt; n2) 
-		{ 
-				arr[k] = R[j]; 
-				j++; 
-				k++; 
-		} 
-} 
-
-// Main function that sorts arr[l..r] using 
-// merge() 
-void sort(int arr[], int l, int r) 
-{ 
-		if (l &lt; r) 
-		{ 
-				// Find the middle point 
-				int m = (l+r)/2; 
-
-				// Sort first and second halves 
-				sort(arr, l, m); 
-				sort(arr , m+1, r); 
-
-				// Merge the sorted halves 
-				merge(arr, l, m, r); 
-		} 
-} 
-</code></pre>
-<p><strong>Counting sort</strong></p>
-<pre><code>void sort(char arr[]) 
-    { 
-        int n = arr.length; 
-  
-        // The output character array that will have sorted arr 
-        char output[] = new char[n]; 
-  
-        // Create a count array to store count of inidividul 
-        // characters and initialize count array as 0 
-        int count[] = new int[256]; 
-        for (int i=0; i&lt;256; ++i) 
-            count[i] = 0; 
-  
-        // store count of each character 
-        for (int i=0; i&lt;n; ++i) 
-            ++count[arr[i]]; 
-  
-        // Change count[i] so that count[i] now contains actual 
-        // position of this character in output array 
-        for (int i=1; i&lt;=255; ++i) 
-            count[i] += count[i-1]; 
-  
-        // Build the output character array 
-        // To make it stable we are operating in reverse order. 
-        for (int i = n-1; i&gt;=0; i--) 
-        { 
-            output[count[arr[i]]-1] = arr[i]; 
-            --count[arr[i]]; 
-        } 
-  
-        // Copy the output array to arr, so that arr now 
-        // contains sorted characters 
-        for (int i = 0; i&lt;n; ++i) 
-            arr[i] = output[i]; 
-    } 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[DP summary]]></title>
-        <id>https://ywang412.github.io/post/dp-summary</id>
-        <link href="https://ywang412.github.io/post/dp-summary">
-        </link>
-        <updated>2019-07-20T07:37:53.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>375. Guess Number Higher or Lower II</strong></p>
-<pre><code>public class Solution {
-    public int getMoneyAmount(int n) {
-        if (n == 1) {
-            return 0;
+    public synchronized void third(Runnable printThird) throws InterruptedException {
+        while(!twoPrinted) {
+            wait();
         }
-        int[][] dp = new int[n + 1][n + 1];
-        for (int jminusi = 1; jminusi &lt; n; jminusi++) {
-            for (int i = 0; i + jminusi &lt;= n; i++) {
-                int j = i + jminusi;
-                dp[i][j] = Integer.MAX_VALUE;
-                for (int k = i; k &lt;= j; k++) {
-                    dp[i][j] = Math.min(dp[i][j],
-                                        k + Math.max(k - 1 &gt;= i ? dp[i][k - 1] : 0,
-                                                     j &gt;= k + 1 ? dp[k + 1][j] : 0));
-                }
-            }
-        }
-        return dp[1][n];
+        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
+        printThird.run();
     }
 }
 </code></pre>
-<p><strong>377. Best Time to Buy and Sell Stock IV</strong></p>
-<pre><code>class Solution {
-    public int maxProfit(int k, int[] prices) {
-        int len = prices.length;
-        if (k &gt;= len / 2) return quickSolve(prices);
-        
-        int[][] t = new int[k + 1][len];
-        for (int i = 1; i &lt;= k; i++) {
-            int tmpMax =  -prices[0];  // tmpMax is the max after i-1th transaction and 1 more sell. 
-            for (int j = 1; j &lt; len; j++) {
-                t[i][j] = Math.max(t[i][j - 1], prices[j] + tmpMax);
-                tmpMax =  Math.max(tmpMax, t[i - 1][j - 1] - prices[j]);
-            }
-        }
-        return t[k][len - 1];
+<pre><code>import java.util.concurrent.*;
+class Foo {
+    Semaphore run2, run3;
+
+    public Foo() {
+        run2 = new Semaphore(0);
+        run3 = new Semaphore(0);
     }
-    
 
-    private int quickSolve(int[] prices) {
-        int len = prices.length, profit = 0;
-        for (int i = 1; i &lt; len; i++)
-            // as long as there is a price gap, we gain a profit.
-            if (prices[i] &gt; prices[i - 1]) profit += prices[i] - prices[i - 1];
-        return profit;
+    public void first(Runnable printFirst) throws InterruptedException {
+        printFirst.run();
+        run2.release();
     }
-}
-</code></pre>
-<p><strong>Coin in a line</strong>
-F(i, j)  represents the maximum value the user can collect from
-i'th coin to j'th coin.</p>
-<pre><code>F(i, j)  = Max(Vi + min(F(i+2, j), F(i+1, j-1) ), 
-               Vj + min(F(i+1, j-1), F(i, j-2) )) 
-</code></pre>
-<p>Base Cases
-F(i, j)  = Vi           If j == i
-F(i, j)  = max(Vi, Vj)  If j == i+1</p>
-<pre><code>static int optimalStrategyOfGame(int arr[], int n) 
-{ 
-		// Create a table to store solutions of subproblems 
-		int table[][] = new int[n][n]; 
-		int gap, i, j, x, y, z; 
 
-		// Fill table using above recursive formula. 
-		// Note that the tableis filled in diagonal 
-		// fashion (similar to http:// goo.gl/PQqoS), 
-		// from diagonal elements to table[0][n-1] 
-		// which is the result. 
-		for (gap = 0; gap &lt; n; ++gap) { 
-				for (i = 0, j = gap; j &lt; n; ++i, ++j) { 
-
-						// Here x is value of F(i+2, j), 
-						// y is F(i+1, j-1) and z is 
-						// F(i, j-2) in above recursive formula 
-						x = ((i + 2) &lt;= j) ? table[i + 2][j] : 0; 
-						y = ((i + 1) &lt;= (j - 1)) ? table[i + 1][j - 1] : 0; 
-						z = (i &lt;= (j - 2)) ? table[i][j - 2] : 0; 
-
-						table[i][j] = Math.max(arr[i] + Math.min(x, y),  
-																	 arr[j] + Math.min(y, z)); 
-				} 
-		} 
-
-		return table[0][n - 1]; 
-}
-</code></pre>
-<p><strong>Maximum size square sub-matrix with all 1s</strong></p>
-<p><img src="https://ywang412.github.io/post-images/1566875991890.png" alt=""></p>
-<ol>
-<li>Construct a sum matrix S[R][C] for the given M[R][C].
-a)    Copy first row and first columns as it is from M[][] to S[][]
-b)    For other entries, use following expressions to construct S[][]
-If M[i][j] is 1 then
-S[i][j] = min(S[i][j-1], S[i-1][j], S[i-1][j-1]) + 1
-Else /<em>If M[i][j] is 0</em>/
-S[i][j] = 0</li>
-<li>Find the maximum entry in S[R][C]</li>
-<li>Using the value and coordinates of maximum entry in S[i], print
-sub-matrix of M[][]</li>
-</ol>
-<pre><code>static void printMaxSubSquare(int M[][]) 
-    { 
-        int i,j; 
-        int R = M.length;         //no of rows in M[][] 
-        int C = M[0].length;     //no of columns in M[][] 
-        int S[][] = new int[R][C];      
-          
-        int max_of_s, max_i, max_j;  
-      
-        /* Set first column of S[][]*/
-        for(i = 0; i &lt; R; i++) 
-            S[i][0] = M[i][0]; 
-      
-        /* Set first row of S[][]*/
-        for(j = 0; j &lt; C; j++) 
-            S[0][j] = M[0][j]; 
-          
-        /* Construct other entries of S[][]*/
-        for(i = 1; i &lt; R; i++) 
-        { 
-            for(j = 1; j &lt; C; j++) 
-            { 
-                if(M[i][j] == 1)  
-                    S[i][j] = Math.min(S[i][j-1], 
-                                Math.min(S[i-1][j], S[i-1][j-1])) + 1; 
-                else
-                    S[i][j] = 0; 
-            }  
-        }      
-          
-        /* Find the maximum entry, and indexes of maximum entry  
-            in S[][] */
-        max_of_s = S[0][0]; max_i = 0; max_j = 0; 
-        for(i = 0; i &lt; R; i++) 
-        { 
-            for(j = 0; j &lt; C; j++) 
-            { 
-                if(max_of_s &lt; S[i][j]) 
-                { 
-                    max_of_s = S[i][j]; 
-                    max_i = i;  
-                    max_j = j; 
-                }      
-            }                  
-        }      
-          
-        System.out.println(&quot;Maximum size sub-matrix is: &quot;); 
-        for(i = max_i; i &gt; max_i - max_of_s; i--) 
-        { 
-            for(j = max_j; j &gt; max_j - max_of_s; j--) 
-            { 
-                System.out.print(M[i][j] + &quot; &quot;); 
-            }  
-            System.out.println(); 
-        }  
+    public void second(Runnable printSecond) throws InterruptedException {
+        run2.acquire();
+        printSecond.run();
+        run3.release();
     }
-</code></pre>
-<p><strong>0-1 Knapsack Problem</strong></p>
-<p>/* A Naive recursive implementation of 0-1 Knapsack problem */</p>
-<pre><code>static int knapSack(int W, int wt[], int val[], int n) 
-{ 
-	// Base Case 
-if (n == 0 || W == 0) 
-	return 0; 
 
-// If weight of the nth item is more than Knapsack capacity W, then 
-// this item cannot be included in the optimal solution 
-if (wt[n-1] &gt; W) 
- return knapSack(W, wt, val, n-1); 
-
-// Return the maximum of two cases:  
-// (1) nth item included  
-// (2) not included 
-else return max( val[n-1] + knapSack(W-wt[n-1], wt, val, n-1), 
-							 knapSack(W, wt, val, n-1) 
-								); 
-} 
-</code></pre>
-<pre><code>static int knapSack(int W, int wt[], int val[], int n) 
-{ 
-	 int i, w; 
-int K[][] = new int[n+1][W+1]; 
-
-// Build table K[][] in bottom up manner 
-for (i = 0; i &lt;= n; i++) 
-{ 
-	 for (w = 0; w &lt;= W; w++) 
-	 { 
-			 if (i==0 || w==0) 
-						K[i][w] = 0; 
-			 else if (wt[i-1] &lt;= w) 
-						 K[i][w] = max(val[i-1] + K[i-1][w-wt[i-1]],  K[i-1][w]); 
-			 else
-						 K[i][w] = K[i-1][w]; 
-	 } 
-} 
-
-return K[n][W]; 
-} 
-</code></pre>
-<p><strong>518. Coin Change 2</strong></p>
-<pre><code>class Solution {
-    public int change(int amount, int[] coins) {
-        int[][] dp = new int[coins.length+1][amount+1]; 
-        
-        for (int i = 0; i &lt;= coins.length; i++) {
-            dp[i][0] = 1;        
-        }
-        
-        for (int i = 1; i &lt;= coins.length; i++) {
-            for (int j = 1; j &lt;= amount; j++) {
-                dp[i][j] = dp[i-1][j] + (j &gt;= coins[i-1] ? dp[i][j-coins[i-1]] : 0);
-            }
-        }
-        return dp[coins.length][amount];
+    public void third(Runnable printThird) throws InterruptedException {
+        run3.acquire(); 
+        printThird.run();
     }
 }
-</code></pre>
-<p><strong>416. Partition Equal Subset Sum</strong></p>
-<pre><code>class Solution {
-    public boolean canPartition(int[] nums) {
-        int sum = 0;
-        for(int num: nums) sum += num;
-        if(sum % 2 == 1) return false;
-        
-        int target = sum / 2;
-        boolean[][] dp = new boolean[nums.length][target + 1];
-        // deal with the first row
-        if(nums[0] &lt;= target) dp[0][nums[0]] = true;
-        
-        // deal with the first col
-        for(int i = 0; i &lt; nums.length; i++) dp[i][0] = true;
-        
-        // deal with the rest
-        for(int i = 1; i &lt; nums.length; i++) {
-            for(int j = 1; j &lt; target + 1; j++) {
-                if(j &lt; nums[i]) {
-                    dp[i][j] = dp[i - 1][j];
-                } else {
-                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i]];
-                }
-            }
-        }
-        return dp[nums.length - 1][target];
-    }
-}
-</code></pre>
-<p><strong>920. Number of Music Playlists</strong></p>
-<pre><code>class Solution {
-    public int numMusicPlaylists(int N, int L, int K) {
-        int MOD = 1_000_000_007;
-
-        long[][] dp = new long[L+1][N+1];
-        dp[0][0] = 1;
-        for (int i = 1; i &lt;= L; ++i)
-            for (int j = 1; j &lt;= N; ++j) {
-                dp[i][j] += dp[i-1][j-1] * (N-j+1);
-                dp[i][j] += dp[i-1][j] * Math.max(j-K, 0);
-                dp[i][j] %= MOD;
-            }
-
-        return (int) dp[L][N];
-    }
-}
-</code></pre>
-<p><strong>Edit Distance</strong></p>
-<pre><code>static int editDistDP(String str1, String str2, int m, int n) 
-{ 
-		// Create a table to store results of subproblems 
-		int dp[][] = new int[m+1][n+1]; 
-
-		// Fill d[][] in bottom up manner 
-		for (int i=0; i&lt;=m; i++) 
-		{ 
-				for (int j=0; j&lt;=n; j++) 
-				{ 
-						// If first string is empty, only option is to 
-						// insert all characters of second string 
-						if (i==0) 
-								dp[i][j] = j;  // Min. operations = j 
-
-						// If second string is empty, only option is to 
-						// remove all characters of second string 
-						else if (j==0) 
-								dp[i][j] = i; // Min. operations = i 
-
-						// If last characters are same, ignore last char 
-						// and recur for remaining string 
-						else if (str1.charAt(i-1) == str2.charAt(j-1)) 
-								dp[i][j] = dp[i-1][j-1]; 
-
-						// If the last character is different, consider all 
-						// possibilities and find the minimum 
-						else
-								dp[i][j] = 1 + min(dp[i][j-1],  // Insert 
-																	 dp[i-1][j],  // Remove 
-																	 dp[i-1][j-1]); // Replace 
-				} 
-		} 
-
-		return dp[m][n]; 
-} 
-</code></pre>
-<p><strong>516. Longest Palindromic Subsequence</strong></p>
-<pre><code>class Solution {
-    public int longestPalindromeSubseq(String s) {
-        int m = s.length();
-        int[][] dp = new int[m][m];
-        for (int i = 0; i &lt; m; i++) {
-            dp[i][i] = 1;
-        }
-        
-        for (int len = 2; len &lt;= m; len++) {
-            for (int i = 0; i &lt;= m - len; i++) {
-                if (s.charAt(i) == s.charAt(i + len -1)) {
-                    dp[i][i + len - 1] = dp[i + 1][i + len - 2] + 2;
-                }
-                else {
-                    dp[i][i + len - 1] = Math.max(dp[i + 1][i + len -1], dp[i][i + len - 2]);
-                }
-            }
-        }
-        return dp[0][m - 1];
-    }
-}
-</code></pre>
-<p><strong>975. Odd Even Jump</strong></p>
-<pre><code>class Solution {
-    public int oddEvenJumps(int[] A) {
-        int n  = A.length, res = 1;
-        boolean[] higher = new boolean[n], lower = new boolean[n];
-        higher[n - 1] = lower[n - 1] = true;
-        TreeMap&lt;Integer, Integer&gt; map = new TreeMap&lt;&gt;();
-        map.put(A[n - 1], n - 1);
-        for (int i = n - 2; i &gt;= 0; --i) {
-            Map.Entry hi = map.ceilingEntry(A[i]), lo = map.floorEntry(A[i]);
-            if (hi != null) higher[i] = lower[(int)hi.getValue()];
-            if (lo != null) lower[i] = higher[(int)lo.getValue()];
-            if (higher[i]) res++;
-            map.put(A[i], i);
-        }
-        return res;
-    }
-}
-</code></pre>
-<p><strong>10. Regular Expression Matching</strong></p>
-<p>'.' Matches any single character.
-'*' Matches zero or more of the preceding element.</p>
-<pre><code>class Solution {
-    public boolean isMatch(String s, String p) {
-        if (s == null || p == null) return false;
-        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
-        dp[0][0] = true;
-        
-        for (int j = 0; j &lt; p.length(); j++) {
-            if (p.charAt(j) == '*') {
-                dp[0][j+1] = dp[0][j-1];      
-            } 
-        }
-        
-        for (int i = 0; i &lt; s.length(); i++) {
-            for (int j = 0; j &lt; p.length(); j++) {
-                if (p.charAt(j) == s.charAt(i) || p.charAt(j) == '.') {
-                    dp[i+1][j+1] = dp[i][j];     // dp[i+1][j+1]  is match until i and j (i+1, j+1 exclusive)
-                }
-                if (p.charAt(j) == '*') {
-                    if (p.charAt(j-1) != s.charAt(i) &amp;&amp; p.charAt(j-1) != '.') {
-                        dp[i+1][j+1] = dp[i+1][j-1];
-                    }
-                    else { // * only counts as non-zero, then `a*` can be treated as `a*a`!!!  a*a means  dp[i+1][j+1] = (dp[i][j+1])  the last char in s is gone
-                        dp[i+1][j+1] = (dp[i][j+1] || dp[i+1][j-1] || dp[i+1][j]);
-                    }
-                }
-            }
-        }  
-        return dp[s.length()][p.length()];
-    }
-}
-</code></pre>
-<p><strong>44. Wildcard Matching</strong></p>
-<p>'?' Matches any single character.
-'*' Matches any sequence of characters (including the empty sequence).</p>
-<pre><code>class Solution {
-    public boolean isMatch(String s, String p) {
-        int m=s.length(), n=p.length();
-        boolean[][] dp = new boolean[m+1][n+1];
-        dp[0][0] = true;
-        for (int i=1; i&lt;=m; i++) {
-            dp[i][0] = false;
-        }
-
-        for(int j=1; j&lt;=n; j++) {
-            if(p.charAt(j-1)=='*'){
-                dp[0][j] = true;
-            } else {
-                break;
-            }
-        }
-
-        for(int i=1; i&lt;=m; i++) {
-            for(int j=1; j&lt;=n; j++) {
-                if (s.charAt(i-1)==p.charAt(j-1) || p.charAt(j-1)=='?')  {
-                    dp[i][j] = dp[i-1][j-1];
-                } else if (p.charAt(j-1) == '*'){
-                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
-                }
-            }
-        }
-        return dp[m][n];
-        }
-}
-</code></pre>
-<p><strong>Longest Increasing Subsequence</strong></p>
-<pre><code>static int lis(int arr[],int n) 
-{ 
-			int lis[] = new int[n]; 
-			int i,j,max = 0; 
-
-			/* Initialize LIS values for all indexes */
-			 for ( i = 0; i &lt; n; i++ ) 
-					lis[i] = 1; 
-
-			 /* Compute optimized LIS values in bottom up manner */
-			 for ( i = 1; i &lt; n; i++ ) 
-					for ( j = 0; j &lt; i; j++ )  
-										 if ( arr[i] &gt; arr[j] &amp;&amp; lis[i] &lt; lis[j] + 1) 
-								lis[i] = lis[j] + 1; 
-
-			 /* Pick maximum of all LIS values */
-			 for ( i = 0; i &lt; n; i++ ) 
-					if ( max &lt; lis[i] ) 
-						 max = lis[i]; 
-
-				return max; 
-} 
-</code></pre>
-<p><strong>309. Best Time to Buy and Sell Stock with Cooldown</strong></p>
-<pre><code>class Solution {
-    public int maxProfit(int[] prices) {
-        if(prices == null || prices.length &lt;= 1) return 0;
-
-        int[] b = new int[prices.length];
-        int[] s = new int[prices.length];
-        
-        b[0] = -prices[0];
-        b[1] = Math.max(b[0], -prices[1]);
-        
-        s[0] = 0;
-        s[1] = Math.max(s[0], b[0] + prices[1]);
-        
-         for(int i = 2; i &lt; prices.length; i++) {
-            b[i] = Math.max(b[i - 1], s[i - 2] - prices[i]);
-            s[i] = Math.max(s[i - 1], b[i - 1] + prices[i]); 
-        }
-        return s[prices.length - 1];
-    }
-}
-</code></pre>
-<p><strong>188. Best Time to Buy and Sell Stock IV</strong></p>
-<pre><code>class Solution {
-    public int maxProfit(int k, int[] prices) {
-        int len = prices.length;
-        if (k &gt;= len / 2) return quickSolve(prices);
-        
-        int[][] t = new int[k + 1][len];
-        for (int i = 1; i &lt;= k; i++) {
-            int tmpMax =  -prices[0];  // tmpMax is the max after i-1th transaction and 1 more sell. 
-            for (int j = 1; j &lt; len; j++) {
-                t[i][j] = Math.max(t[i][j - 1], prices[j] + tmpMax);
-                tmpMax =  Math.max(tmpMax, t[i - 1][j - 1] - prices[j]);
-            }
-        }
-        return t[k][len - 1];
-    }
-    
-
-    private int quickSolve(int[] prices) {
-        int len = prices.length, profit = 0;
-        for (int i = 1; i &lt; len; i++)
-            // as long as there is a price gap, we gain a profit.
-            if (prices[i] &gt; prices[i - 1]) profit += prices[i] - prices[i - 1];
-        return profit;
-    }
-}
-</code></pre>
-<p><strong>Maximum sum rectangle in a 2D matrix</strong></p>
-<pre><code>public static int[] kadane(int[] a) { 
-		//result[0] == maxSum, result[1] == start, result[2] == end; 
-		int[] result = new int[]{Integer.MIN_VALUE, 0, -1}; 
-		int currentSum = 0; 
-		int localStart = 0; 
-
-		for (int i = 0; i &lt; a.length; i++) { 
-				currentSum += a[i]; 
-				if (currentSum &lt; 0) { 
-							currentSum = 0; 
-						localStart = i + 1; 
-					} else if (currentSum &gt; result[0]) { 
-						result[0] = currentSum; 
-						result[1] = localStart; 
-						result[2] = i; 
-					} 
-		} 
-
-		//all numbers in a are negative 
-		if (result[2] == -1) { 
-				result[0] = 0; 
-				for (int i = 0; i &lt; a.length; i++) { 
-						if (a[i] &gt; result[0]) { 
-								result[0] = a[i]; 
-								result[1] = i; 
-								result[2] = i; 
-						} 
-				} 
-		} 
-
-		return result; 
-	} 
-
-/** 
- * To find and print maxSum, (left, top),(right, bottom) 
- */
-public static void findMaxSubMatrix(int[][] a) { 
-		int cols = a[0].length; 
-		int rows = a.length; 
-		int[] currentResult; 
-		int maxSum = Integer.MIN_VALUE; 
-		int left = 0; 
-		int top = 0; 
-		int right = 0; 
-		int bottom = 0; 
-
-		for (int leftCol = 0; leftCol &lt; cols; leftCol++) { 
-				int[] tmp = new int[rows]; 
-
-					for (int rightCol = leftCol; rightCol &lt; cols; rightCol++) { 
-
-						for (int i = 0; i &lt; rows; i++) { 
-									tmp[i] += a[i][rightCol]; 
-						} 
-						currentResult = kadane(tmp); 
-						if (currentResult[0] &gt; maxSum) { 
-								maxSum = currentResult[0]; 
-								left = leftCol; 
-								top = currentResult[1]; 
-								right = rightCol; 
-								bottom = currentResult[2]; 
-						} 
-				} 
-		} 
-					System.out.println(&quot;MaxSum: &quot; + maxSum +  
-														&quot;, range: [(&quot; + left + &quot;, &quot; + top +  
-															&quot;)(&quot; + right + &quot;, &quot; + bottom + &quot;)]&quot;); 
-} 
-</code></pre>
-<p><strong>Partition a set into two subsets such that the difference of subset sums is minimum</strong></p>
-<pre><code>// Returns the minimum value of the difference of the two sets. 
-int findMin(int arr[], int n) 
-{ 
-    // Calculate sum of all elements 
-    int sum = 0;  
-    for (int i = 0; i &lt; n; i++) 
-        sum += arr[i]; 
-  
-    // Create an array to store results of subproblems 
-    bool dp[n+1][sum+1]; 
-  
-    // Initialize first column as true. 0 sum is possible  
-    // with all elements. 
-    for (int i = 0; i &lt;= n; i++) 
-        dp[i][0] = true; 
-  
-    // Initialize top row, except dp[0][0], as false. With 
-    // 0 elements, no other sum except 0 is possible 
-    for (int i = 1; i &lt;= sum; i++) 
-        dp[0][i] = false; 
-  
-    // Fill the partition table in bottom up manner 
-    for (int i=1; i&lt;=n; i++) 
-    { 
-        for (int j=1; j&lt;=sum; j++) 
-        { 
-            // If i'th element is excluded 
-            dp[i][j] = dp[i-1][j]; 
-  
-            // If i'th element is included 
-            if (arr[i-1] &lt;= j) 
-                dp[i][j] |= dp[i-1][j-arr[i-1]]; 
-        } 
-    } 
-   
-    // Initialize difference of two sums.  
-    int diff = INT_MAX; 
-      
-    // Find the largest j such that dp[n][j] 
-    // is true where j loops from sum/2 t0 0 
-    for (int j=sum/2; j&gt;=0; j--) 
-    { 
-        // Find the  
-        if (dp[n][j] == true) 
-        { 
-            diff = sum-2*j; 
-            break; 
-        } 
-    } 
-    return diff; 
-} 
 </code></pre>
 ]]></content>
     </entry>
@@ -2087,6 +3086,162 @@ throws ThreadDeath exception and release lock</li>
 //线程组的异常处理
 //线程类的异常处理
 
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
+        </link>
+        <updated>2019-07-06T12:19:02.000Z</updated>
+        <content type="html"><![CDATA[<p>Java use Thread Pool pattern to save resources in a multithreaded application, and also to contain the parallelism in certain predefined limits. It controls several re-used threads for executing these tasks.</p>
+<pre><code>ExecutorService executorService = Executors.newCachedThreadPool();
+for (int i = 0; i &lt; 10; i++) {
+		final int index = i;
+		executorService.execute(new Runnable() {
+				@Override
+				public void run() {
+						log.info(&quot;task:{}&quot;, index);
+				}
+		});
+}
+executorService.shutdown();
+</code></pre>
+<p>There are several pre-defined threadpool for various scenarios.</p>
+<pre><code>ExecutorService executorService = Executors.newFixedThreadPool(3);
+ExecutorService executorService = Executors.newSingleThreadExecutor();
+ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+</code></pre>
+<p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
+<pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 4 - Lock]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
+        </link>
+        <updated>2019-07-03T04:07:58.000Z</updated>
+        <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
+<p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
+<pre><code>private synchronized static void add() {
+        count++;
+}
+</code></pre>
+<pre><code>private final static Lock lock = new ReentrantLock();
+private static void add() {
+		lock.lock();
+		try {
+				count++;
+		} finally {
+				lock.unlock();
+		}
+}
+</code></pre>
+<p>Therefore, it is possible for both <code>synchronized</code> and Lock to introduce the well-know deadlock problem like below.</p>
+<pre><code>public class DeadLock implements Runnable {
+    public int flag = 1;
+    //静态对象是类的所有对象共享的
+    private static Object o1 = new Object(), o2 = new Object();
+
+    @Override
+    public void run() {
+        log.info(&quot;flag:{}&quot;, flag);
+        if (flag == 1) {
+            synchronized (o1) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                synchronized (o2) {
+                    log.info(&quot;1&quot;);
+                }
+            }
+        }
+        if (flag == 0) {
+            synchronized (o2) {
+                try {
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                synchronized (o1) {
+                    log.info(&quot;0&quot;);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        DeadLock td1 = new DeadLock();
+        DeadLock td2 = new DeadLock();
+        td1.flag = 1;
+        td2.flag = 0;
+        //td1,td2都处于可执行状态，但JVM线程调度先执行哪个线程是不确定的。
+        //td2的run()可能在td1的run()之前运行
+        new Thread(td1).start();
+        new Thread(td2).start();
+    }
+}
+</code></pre>
+<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
+<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
+
+private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+private final Lock readLock = lock.readLock();
+private final Lock writeLock = lock.writeLock();
+
+public Data get(String key) {
+		readLock.lock();
+		try {
+				return map.get(key);
+		} finally {
+				readLock.unlock();
+		}
+}
+
+public Data put(String key, Data value) {
+		writeLock.lock();
+		try {
+				return map.put(key, value);
+		} finally {
+				writeLock.unlock();
+		}
+}
+</code></pre>
+<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
+<pre><code>public static void main(String[] args) {
+		ReentrantLock reentrantLock = new ReentrantLock();
+		Condition condition = reentrantLock.newCondition();
+
+		new Thread(() -&gt; {
+				try {
+						reentrantLock.lock();
+						log.info(&quot;wait signal&quot;); // 1
+						condition.await();
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				log.info(&quot;get signal&quot;); // 4
+				reentrantLock.unlock();
+		}).start();
+
+		new Thread(() -&gt; {
+				reentrantLock.lock();
+				log.info(&quot;get lock&quot;); // 2
+				try {
+						Thread.sleep(3000);
+				} catch (InterruptedException e) {
+						e.printStackTrace();
+				}
+				condition.signalAll();
+				log.info(&quot;send signal ~ &quot;); // 3
+				reentrantLock.unlock();
+		}).start();
+}
 </code></pre>
 ]]></content>
     </entry>
