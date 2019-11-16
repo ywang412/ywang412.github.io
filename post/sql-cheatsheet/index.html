@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573940763471">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573941241825">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573940763471" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573941241825" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,10 +112,31 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-06</div>
+            <div class="post-date">2019-10-05</div>
             
             <div class="post-content">
-              <p><strong>612. Shortest Distance in a Plane</strong></p>
+              <p><strong>601. Human Traffic Of Stadium</strong></p>
+<pre><code>select distinct day1.* 
+from 
+stadium day1, stadium day2, stadium day3
+where 
+day1.people &gt;= 100 and day2.people &gt;= 100 and day3.people &gt;= 100 and
+((day1.id + 1 =  day2.id and day1.id + 2 = day3.id) or 
+(day1.id - 1 = day2.id and day1.id + 1 = day3.id) or 
+(day1.id - 2 = day2.id and day1.id - 1 = day3.id)) 
+order by day1.id; 
+
+select day1.* 
+from 
+stadium day1, stadium day2, stadium day3
+where 
+day1.people &gt;= 100 and day2.people &gt;= 100 and day3.people &gt;= 100 and
+((day1.id + 1 =  day2.id and day1.id + 2 = day3.id) or 
+(day1.id - 1 = day2.id and day1.id + 1 = day3.id) or 
+(day1.id - 2 = day2.id and day1.id - 1 = day3.id)) 
+GROUP BY day1.id; 
+</code></pre>
+<p><strong>612. Shortest Distance in a Plane</strong></p>
 <pre><code>SELECT
     round(min(sqrt(pow(P1.y-P2.y,2)+pow(P1.x-P2.x,2))),2) as shortest
 FROM
