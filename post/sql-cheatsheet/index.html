@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573938852882">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1573940039735">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1573938852882" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1573940039735" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,7 +112,7 @@
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
             <h2 class="post-title">SQL cheatsheet</h2>
-            <div class="post-date">2019-10-07</div>
+            <div class="post-date">2019-10-06</div>
             
             <div class="post-content">
               <p><strong>Delete duplicate emails</strong></p>
@@ -530,6 +530,25 @@ JOIN Employee e2 ON (e.Id = e2.Id AND e.Month &gt;= e2.Month AND (e.Month - e2.M
 WHERE e.Month &lt; (SELECT MAX(Month) from Employee where Id = e.Id)
 GROUP BY e.Id, e.Month
 ORDER BY e.Id, e.Month DESC
+</code></pre>
+<p><strong>608. Tree Node</strong></p>
+<pre><code>SELECT
+    atree.id,
+    IF(ISNULL(atree.p_id),
+        'Root',
+        IF(atree.id IN (SELECT p_id FROM tree), 'Inner','Leaf')) Type
+FROM
+    tree atree
+ORDER BY atree.id
+
+select id, 
+case when p_id is null then 'Root' 
+else CASE WHEN EXISTS (SELECT 1 FROM tree t2 WHERE t2.p_id = t1.id)
+                      THEN 'Inner'
+                       ELSE 'Leaf'
+                 END
+    END AS Type
+from tree t1 order by id;
 </code></pre>
 
             </div>
