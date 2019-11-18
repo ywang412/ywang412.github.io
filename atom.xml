@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-16T23:44:19.693Z</updated>
+    <updated>2019-11-18T00:04:19.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -573,7 +573,7 @@ from tree t1 order by id;
         <id>https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline</id>
         <link href="https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline">
         </link>
-        <updated>2019-08-20T02:10:43.000Z</updated>
+        <updated>2019-08-19T13:10:43.000Z</updated>
         <content type="html"><![CDATA[<p>A reusable production-grade data pipeline that incorporates data quality checks and allows for easy backfills. The source data resides in S3 and needs to be processed in a data warehouse in Amazon Redshift. The source datasets consist of JSON logs that tell about user activity in the application and JSON metadata about the songs the users listen to.</p>
 <ol>
 <li>
@@ -608,7 +608,7 @@ from tree t1 order by id;
         <id>https://ywang412.github.io/post/aws-emr-spark-and-data-lake</id>
         <link href="https://ywang412.github.io/post/aws-emr-spark-and-data-lake">
         </link>
-        <updated>2019-08-14T16:20:45.000Z</updated>
+        <updated>2019-08-14T03:20:45.000Z</updated>
         <content type="html"><![CDATA[<p><img src="https://ywang412.github.io/post-images/1573690987278.png" alt=""></p>
 <p>An ETL pipeline that extracts data from S3, processes them using Spark, and loads the data back into S3 as a set of dimensional tables.</p>
 <p>Create a Data Lake with Spark and AWS EMR</p>
