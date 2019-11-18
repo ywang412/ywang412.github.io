@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035469730">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035711265">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1574035469730" class="site-logo">
+        <img src="https://ywang412.github.io/images/avatar.png?v=1574035711265" class="site-logo">
         <h1 class="site-title">Yu&#39;s Github</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,7 +115,44 @@
             <div class="post-date">2019-10-05</div>
             
             <div class="post-content">
-              <p><strong>601. Human Traffic Of Stadium</strong></p>
+              <p><strong>SQL window function</strong></p>
+<pre><code>SELECT start_terminal,
+       duration_seconds,
+       SUM(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_total,
+       COUNT(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_count,
+       AVG(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_avg
+			 ROW_NUMBER() OVER (PARTITION BY start_terminal
+									ORDER BY start_time)
+						AS row_numbe
+			-- RANK() would give the identical rows and then skip
+			-- DENSE_RANK() would give the identical rows and then no-skip
+			 RANK() OVER (PARTITION BY start_terminal  
+							ORDER BY start_time)
+				AS rank
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time &lt; '2012-01-08'
+</code></pre>
+<p>LAG pulls from previous rows and LEAD pulls from following rows</p>
+<pre><code>SELECT *
+  FROM (
+    SELECT start_terminal,
+           duration_seconds,
+           duration_seconds -LAG(duration_seconds, 1) OVER
+             (PARTITION BY start_terminal ORDER BY duration_seconds)
+             AS difference
+      FROM tutorial.dc_bikeshare_q1_2012
+     WHERE start_time &lt; '2012-01-08'
+     ORDER BY start_terminal, duration_seconds
+       ) sub
+ WHERE sub.difference IS NOT NULL
+</code></pre>
+<p><strong>601. Human Traffic Of Stadium</strong></p>
 <pre><code>select distinct day1.* 
 from 
 stadium day1, stadium day2, stadium day3

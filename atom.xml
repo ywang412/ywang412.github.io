@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-18T00:04:32.871Z</updated>
+    <updated>2019-11-18T00:08:34.866Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -87,8 +87,45 @@ define a colum as sort key</p>
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-05T19:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>601. Human Traffic Of Stadium</strong></p>
+        <updated>2019-10-05T06:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>SQL window function</strong></p>
+<pre><code>SELECT start_terminal,
+       duration_seconds,
+       SUM(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_total,
+       COUNT(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_count,
+       AVG(duration_seconds) OVER
+         (PARTITION BY start_terminal ORDER BY start_time)
+         AS running_avg
+			 ROW_NUMBER() OVER (PARTITION BY start_terminal
+									ORDER BY start_time)
+						AS row_numbe
+			-- RANK() would give the identical rows and then skip
+			-- DENSE_RANK() would give the identical rows and then no-skip
+			 RANK() OVER (PARTITION BY start_terminal  
+							ORDER BY start_time)
+				AS rank
+  FROM tutorial.dc_bikeshare_q1_2012
+ WHERE start_time &lt; '2012-01-08'
+</code></pre>
+<p>LAG pulls from previous rows and LEAD pulls from following rows</p>
+<pre><code>SELECT *
+  FROM (
+    SELECT start_terminal,
+           duration_seconds,
+           duration_seconds -LAG(duration_seconds, 1) OVER
+             (PARTITION BY start_terminal ORDER BY duration_seconds)
+             AS difference
+      FROM tutorial.dc_bikeshare_q1_2012
+     WHERE start_time &lt; '2012-01-08'
+     ORDER BY start_terminal, duration_seconds
+       ) sub
+ WHERE sub.difference IS NOT NULL
+</code></pre>
+<p><strong>601. Human Traffic Of Stadium</strong></p>
 <pre><code>select distinct day1.* 
 from 
 stadium day1, stadium day2, stadium day3
