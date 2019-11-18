@@ -1,185 +1,159 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+  <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python | Yu&#39;s Github</title>
-<meta name="description" content="Java, SQL, Python and a little bit of Scala ">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574046952525">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035711265">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-143424668-1');
-</script>
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1574035711265" class="site-logo">
-        <h1 class="site-title">Yu&#39;s Github</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574046952525" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
       
-        
-          <a href="/" class="site-nav">
-            Home
-          </a>
-        
+        <a href="/" class="menu">
+          Home
+        </a>
       
-        
-          <a href="/archives" class="site-nav">
-            Archive
-          </a>
-        
+    
       
-        
-          <a href="/tags" class="site-nav">
-            Tag
-          </a>
-        
+        <a href="/archives" class="menu">
+          Archive
+        </a>
       
-        
-          <a href="/post/resume" class="site-nav">
-            Resume
-          </a>
-        
+    
       
-    </div>
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
+  <div class="social-container">
+    
       
-        
-          <a class="social-link" href="https://github.com/ywang412/" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
-      
-    </div>
-    <div class="site-description">
-      Java, SQL, Python and a little bit of Scala 
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
+    
   </div>
 </div>
 
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Python</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/pandas-numpy-and-matplot">
-                  <h2 class="post-title">Pandas, Numpy and Matplot</h2>
-                </a>
-                <div class="post-date">
-                  2018-09-15
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/python-3-quick-start-2-pep8">
-                  <h2 class="post-title">Python 3 quick start - 2 PEP8</h2>
-                </a>
-                <div class="post-date">
-                  2018-09-13
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://ywang412.github.io/post/python-3-quick-start-1">
-                  <h2 class="post-title">Python 3 quick start - 1 Basics</h2>
-                </a>
-                <div class="post-date">
-                  2018-09-01
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-
-          <div class="pagination-container">
-  
-  
-</div>
-
+        <div class="current-tag-container">
+            <h2 class="title">
+                标签：#Python
+            </h2> 
         </div>
+        <div class="post-container">
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/pandas-numpy-and-matplot">
+        <h2 class="post-title">Pandas, Numpy and Matplot</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2018-09-15 ·
+        </time>
+        
+          <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
+            # Python
+          </a>
+        
       </div>
-    </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/python-3-quick-start-2-pep8">
+        <h2 class="post-title">Python 3 quick start - 2 PEP8</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2018-09-13 ·
+        </time>
+        
+          <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
+            # Python
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/python-3-quick-start-1">
+        <h2 class="post-title">Python 3 quick start - 1 Basics</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2018-09-01 ·
+        </time>
+        
+          <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
+            # Python
+          </a>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+</div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <div class="pagination-container">
+  
+  
+</div>
 
-<script type="application/javascript">
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
 
-AOS.init();
-
-hljs.initHighlightingOnLoad()
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
+<script>
+  hljs.initHighlightingOnLoad()
 </script>
 
-
-
-
+      </div>
+    </div>
   </body>
 </html>

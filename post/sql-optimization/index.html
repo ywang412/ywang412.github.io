@@ -1,118 +1,91 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL 1 - Optimization and Best Practice | Yu&#39;s Github</title>
-<meta name="description" content="Java, SQL, Python and a little bit of Scala ">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574046952525">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035711265">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
-
-  
-
-  
-    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
-  
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-143424668-1');
-</script>
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1574035711265" class="site-logo">
-        <h1 class="site-title">Yu&#39;s Github</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574046952525" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
       
-        
-          <a href="/" class="site-nav">
-            Home
-          </a>
-        
+        <a href="/" class="menu">
+          Home
+        </a>
       
-        
-          <a href="/archives" class="site-nav">
-            Archive
-          </a>
-        
+    
       
-        
-          <a href="/tags" class="site-nav">
-            Tag
-          </a>
-        
+        <a href="/archives" class="menu">
+          Archive
+        </a>
       
-        
-          <a href="/post/resume" class="site-nav">
-            Resume
-          </a>
-        
+    
       
-    </div>
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
+  <div class="social-container">
+    
       
-        
-          <a class="social-link" href="https://github.com/ywang412/" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
-      
-    </div>
-    <div class="site-description">
-      Java, SQL, Python and a little bit of Scala 
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
+    
   </div>
 </div>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">SQL 1 - Optimization and Best Practice</h2>
-            <div class="post-date">2018-10-02</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              SQL 1 - Optimization and Best Practice
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-10-02 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
+                  # SQL
+                </a>
+              
+            </div>
             
             <div class="post-content">
               <p><strong>Best practice</strong></p>
@@ -153,8 +126,8 @@ mysql&gt; show global variables like &quot;slow_query_log_file&quot;;
 1 row in set (0.00 sec)
 </code></pre>
 <p>Query_time:<br>
-Lock_time: waiting for acquiring lock
-Rows_sent: number of rows returned
+Lock_time: waiting for acquiring lock<br>
+Rows_sent: number of rows returned<br>
 Rows_examined:</p>
 <pre><code>[root@mysqltest ~]# tail -n5 /data/mysql/data/3306/mysql-slow.log
 
@@ -169,23 +142,23 @@ select sleep(10);
 </code></pre>
 <p><strong>Use explain to analyze SQL query</strong></p>
 <p><code>mysql&gt; explain select * from t1 where b=100;</code></p>
-<p><img src="https://ywang412.github.io/post-images/1570332651442.png" alt=""></p>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1570332651442.png" alt=""></figure>
 <p><strong>Scenario where Index won't be used</strong></p>
-<p><code>mysql&gt; explain select * from t1 where date(c) ='2019-05-21';</code>
+<p><code>mysql&gt; explain select * from t1 where date(c) ='2019-05-21';</code><br>
 <img src="https://ywang412.github.io/post-images/1570334471167.png" alt=""></p>
 <p>Using native data format will use index condition.</p>
 <p><code>mysql&gt; explain select * from t1 where c&gt;='2019-05-21 00:00:00' and c&lt;='2019-05-21 23:59:59';</code></p>
 <p>Implicit conversion won't use index. tele_phone is Varchar(20)</p>
 <pre><code>select user_name,tele_phone from user_info where tele_phone =11111111111; /* SQL 1 */
 </code></pre>
-<p>Like clause using heading % won't. But if only trailing %, it can use index.
+<p>Like clause using heading % won't. But if only trailing %, it can use index.<br>
 <code>mysql&gt; explain select * from t1 where a like '%1111%';</code></p>
-<p>Large range won't use index
+<p>Large range won't use index<br>
 <code>mysql&gt; explain select * from t1 where b&gt;=1 and b &lt;=2000;</code></p>
 <p>b -1 = 100 won't and b = 100 + 1 can.</p>
 <pre><code>mysql&gt; explain select * from t1 where b-1 =1000;
 </code></pre>
-<p><img src="https://ywang412.github.io/post-images/1570337862625.png" alt=""></p>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1570337862625.png" alt=""></figure>
 <p><strong>Batch insert submission</strong></p>
 <p>Insert multiple rows at a time</p>
 <p>create the batch insert sql</p>
@@ -215,24 +188,24 @@ INSERT INTO `t1` VALUES (3,'3',3,'2019-05-24 15:44:10');
 <li>Adjust innodb_flush_log_at_trx_commmit and sync_binlog = 0</li>
 </ol>
 <p><strong>Order by and Group by</strong></p>
-<p>mySql order by use two kinds of sorting.
-1) using index
+<p>mySql order by use two kinds of sorting.<br>
+1) using index<br>
 2) using filesort</p>
 <p>If data size &lt; sort_buffer_size, sort in memory (number of tmp files 0), else in disk (number of tmp files &gt; 0).</p>
-<p>Filesort has 3 modes.
-&lt;sort_key, rowid&gt; only sort rowid and fetch records after
-max_length_for_sort_data &lt; length of all fields
-&lt;sort_key, additional_fields&gt; loads all fields and sort
-max_length_for_sort_data &gt; length of all fields
+<p>Filesort has 3 modes.<br>
+&lt;sort_key, rowid&gt; only sort rowid and fetch records after<br>
+max_length_for_sort_data &lt; length of all fields<br>
+&lt;sort_key, additional_fields&gt; loads all fields and sort<br>
+max_length_for_sort_data &gt; length of all fields<br>
 &lt;sort_key, packed_additional_fields&gt;</p>
 <ol>
 <li>Add index to sort by field</li>
 <li>order by (a , b)  use  index (a, b) not (b, a)</li>
 <li>where a = 1000 order by b  use index (a, b)</li>
-<li>select * from t1 order by a,b;      won't use index
-because scan index and fetch all records costs more than filesort.
+<li>select * from t1 order by a,b;      won't use index<br>
+because scan index and fetch all records costs more than filesort.<br>
 select id,a,b from t1 order by a,b;</li>
-<li>explain select id,a,b from t1 where a&gt;9000 order by b;  won't use index
+<li>explain select id,a,b from t1 where a&gt;9000 order by b;  won't use index<br>
 because in range a &gt; 9000, data is not sorted by b. it is sorted by (a, b)</li>
 <li>explain select id,a,b from t1 order by a asc,b desc; won't use index</li>
 </ol>
@@ -240,25 +213,25 @@ because in range a &gt; 9000, data is not sorted by b. it is sorted by (a, b)</l
 <p><strong>SQL Paging</strong></p>
 <p><code>select * from t1 limit 99000,2;</code></p>
 <ol>
-<li>use auto-increment continuous primary key
+<li>use auto-increment continuous primary key<br>
 <code>select * from t1 where id &gt;99000 limit 2;</code></li>
 </ol>
-<p><code>select * from t1 order by a limit 99000,2;</code>
-won't use index because scan index and fetch all records costs more than filesort.
-2. return id when sort
+<p><code>select * from t1 order by a limit 99000,2;</code><br>
+won't use index because scan index and fetch all records costs more than filesort.<br>
+2. return id when sort<br>
 <code>select * from t1 f inner join (select id from t1 order by a limit 99000,2)g on f.id = g.id;</code></p>
-<p>Rewrite <code>select * from t1 limit 99000,2;</code>
+<p>Rewrite <code>select * from t1 limit 99000,2;</code><br>
 to <code>select * from t1 as a join (select id from t1 limit 99000, 2) as b on a.id = b.id;</code></p>
 <p><strong>SQL join</strong></p>
-<p>Index Nested-Loop Join
+<p>Index Nested-Loop Join<br>
 if join on index key. Small table will be the driving table. T ~ 2*N(small table).</p>
-<p>Block Nested-Loop join
-if join on key without index. Load small table into join_buffer. Scan each row of big table and compare it to each row in join_buffer.
+<p>Block Nested-Loop join<br>
+if join on key without index. Load small table into join_buffer. Scan each row of big table and compare it to each row in join_buffer.<br>
 Total number of scanned row is M(big table) + N(small table). T ~ M(big table)*N(small table).</p>
 <ol>
 <li>join on index key</li>
 <li>use small table as driving table <code>select * from t2 straight_join t1 on t2.a = t1.a;</code></li>
-<li>temporary table
+<li>temporary table<br>
 Add index to field b in temp table</li>
 </ol>
 <pre><code>CREATE TEMPORARY TABLE `t1_tmp` (
@@ -276,7 +249,7 @@ Add index to field b in temp table</li>
 select * from t1_tmp join t2 on t1_tmp.b= t2.b;
 </code></pre>
 <p><strong>Count (*)</strong></p>
-<p>Count(a) will not count null but Count(*) will.  Count(1) and Count(*) will be the same.
+<p>Count(a) will not count null but Count(*) will.  Count(1) and Count(*) will be the same.<br>
 MyISAM has meta information about total number of rows. InnoDB doesn't have the meta information because it allows concurrent transactions to have different row count.</p>
 <p>MySql will use smallest non-clustered index to calculate count(*). If there is no non-clustered index, it will use clustered-index. Because non-clustered index (secondary) only store primary key while clustered-index (primary key) stores entire row.</p>
 <ol>
@@ -297,84 +270,60 @@ get t1_count
 </code></pre>
 <p>problem: different session can read inaccurate result.</p>
 <ol start="3">
-<li>Add inno db counting table
+<li>Add inno db counting table<br>
 <img src="https://ywang412.github.io/post-images/1570402853197.png" alt=""></li>
 </ol>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="tag">
-                    SQL
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/pandas-numpy-and-matplot">
-                  <h3 class="post-title">
-                    Pandas, Numpy and Matplot
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-
-              
-                <div id="disqus_thread" data-aos="fade-in"></div>
-              
-            
-
-          </div>
-
+          </article>
         </div>
-      </div>
-    </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/pandas-numpy-and-matplot">
+              <h3 class="post-title">
+                Pandas, Numpy and Matplot
+              </h3>
+            </a>
+          </div>
+        
 
-<script type="application/javascript">
+        
+          
 
-AOS.init();
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
 
-hljs.initHighlightingOnLoad()
+<div id="disqus_thread"></div>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
 
 </script>
 
+          
+        
 
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
 
-  
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
 
-  
-    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
-    <script>
-
-    var options = {
-      shortname: 'ywang412',
-      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
-    }
-    if ('') {
-      options.api = ''
-    }
-    var dsqjs = new DisqusJS(options)
-
-    </script>
-  
-
-
-
-
+      </div>
+    </div>
   </body>
 </html>

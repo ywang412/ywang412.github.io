@@ -1,130 +1,103 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding tricks using Java syntax  | Yu&#39;s Github</title>
-<meta name="description" content="Java, SQL, Python and a little bit of Scala ">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574046952525">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035711265">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
-
-  
-
-  
-    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
-  
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-143424668-1');
-</script>
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1574035711265" class="site-logo">
-        <h1 class="site-title">Yu&#39;s Github</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574046952525" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
       
-        
-          <a href="/" class="site-nav">
-            Home
-          </a>
-        
+        <a href="/" class="menu">
+          Home
+        </a>
       
-        
-          <a href="/archives" class="site-nav">
-            Archive
-          </a>
-        
+    
       
-        
-          <a href="/tags" class="site-nav">
-            Tag
-          </a>
-        
+        <a href="/archives" class="menu">
+          Archive
+        </a>
       
-        
-          <a href="/post/resume" class="site-nav">
-            Resume
-          </a>
-        
+    
       
-    </div>
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
+  <div class="social-container">
+    
       
-        
-          <a class="social-link" href="https://github.com/ywang412/" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
-      
-    </div>
-    <div class="site-description">
-      Java, SQL, Python and a little bit of Scala 
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
+    
   </div>
 </div>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Coding tricks using Java syntax </h2>
-            <div class="post-date">2018-06-03</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Coding tricks using Java syntax 
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-06-03 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
+                  # LeetCode
+                </a>
+              
+            </div>
             
             <div class="post-content">
               <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
-<p>String.valueOf(int)
+<p>String.valueOf(int)<br>
 Integer.toString(int)</p>
-<p>Integer.valueOf()    //Integer
+<p>Integer.valueOf()    //Integer<br>
 Integer.parseInt()   //int</p>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
-Due to Java type erasure, in order to instantiate a list of list, one can use
-<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</code>
-or
-<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;List&lt;Integer&gt;&gt;();</code>
+Due to Java type erasure, in order to instantiate a list of list, one can use<br>
+<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</code><br>
+or<br>
+<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;List&lt;Integer&gt;&gt;();</code><br>
 Here <code>List&lt;Integer&gt;</code> becomes type definition.</p>
 <p><strong>LeetCode 929</strong> requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which can treat the &quot;.&quot; as a dot character.</p>
 <p><em>JDK7</em></p>
@@ -157,7 +130,7 @@ Replaces the first substring of this string that matches the given regular expre
     }
 }
 </code></pre>
-<p><strong>LeetCode 791. Custom Sort String</strong>
+<p><strong>LeetCode 791. Custom Sort String</strong><br>
 Below is the code snippet to create a priorityqueue with custom comparator.</p>
 <pre><code>			PriorityQueue&lt;Character&gt; queue = new PriorityQueue&lt;&gt;(new Comparator&lt;Character&gt;(){
 					public int compare(Character a, Character b) {
@@ -188,7 +161,7 @@ Integer high = set.ceiling(bulbs[i]);
 if (low != null &amp;&amp; bulbs[i] - low - 1 == K) return i + 1;
 if (high != null &amp;&amp; high - bulbs[i] - 1 == K) return i + 1;            
 </code></pre>
-<p><strong>402. Remove K Digits</strong>
+<p><strong>402. Remove K Digits</strong><br>
 To remove the leading zeros in a string, regex match by &quot;^0*&quot; is the shortcut. A more verbose way is to break the for-loop at the first non-zero Char.</p>
 <pre><code>for (int i = 0; i &lt; source.length(); ++i) {
 		char c = source.charAt(i);
@@ -232,9 +205,9 @@ if (s.isEmpty()) s = &quot;0&quot;;
 </code></pre>
 <p><strong>190. Reverse Bits</strong></p>
 <p>&lt;&lt; operate has lower priority than +, therefore parentheses are needed to raise the priority.</p>
-<p>public class Solution {
-// you need treat n as an unsigned value
-public int reverseBits(int n) {
+<p>public class Solution {<br>
+// you need treat n as an unsigned value<br>
+public int reverseBits(int n) {<br>
 int res = 0;</p>
 <pre><code>    for (int i = 0; i &lt; 32; i++) {
         int temp = n &amp; 1;
@@ -247,26 +220,26 @@ int res = 0;</p>
 </code></pre>
 <p>}</p>
 <p><strong>TreeSet</strong></p>
-<p>E first() 	It returns the first (lowest) element currently in this sorted set.
-E last() 	It returns the last (highest) element currently in this sorted set.
-boolean remove(Object o) 	It is used to remove the specified element from this set if it is present.
-E higher(E e) 	It returns the closest greatest element of the specified element from the set, or null there is no such element.
-E lower(E e) 	It returns the closest least element of the specified element from the set, or null there is no such element.
-E ceiling(E e) 	It returns the equal or closest greatest element of the specified element from the set, or null there is no such element.
-E floor(E e) 	It returns the equal or closest least element of the specified element from the set, or null there is no such element.
-SortedSet headSet(E toElement) 	It returns the group of elements that are less than the specified element.
+<p>E first() 	It returns the first (lowest) element currently in this sorted set.<br>
+E last() 	It returns the last (highest) element currently in this sorted set.<br>
+boolean remove(Object o) 	It is used to remove the specified element from this set if it is present.<br>
+E higher(E e) 	It returns the closest greatest element of the specified element from the set, or null there is no such element.<br>
+E lower(E e) 	It returns the closest least element of the specified element from the set, or null there is no such element.<br>
+E ceiling(E e) 	It returns the equal or closest greatest element of the specified element from the set, or null there is no such element.<br>
+E floor(E e) 	It returns the equal or closest least element of the specified element from the set, or null there is no such element.<br>
+SortedSet headSet(E toElement) 	It returns the group of elements that are less than the specified element.<br>
 SortedSet tailSet(E fromElement) 	It returns a set of elements that are greater than or equal to the specified element.</p>
-<p><strong>TreeMap</strong>
-Map.Entry&lt;K,V&gt; ceilingEntry(K key)	It returns the key-value pair having the least key, greater than or equal to the specified key, or null if there is no such key.
-K ceilingKey(K key)	It returns the least key, greater than the specified key or null if there is no such key.
-Map.Entry&lt;K,V&gt; floorEntry(K key)	It returns the greatest key, less than or equal to the specified key, or null if there is no such key.
-Map.Entry&lt;K,V&gt; higherEntry(K key)	It returns the least key strictly greater than the given key, or null if there is no such key.
-SortedMap&lt;K,V&gt; headMap(K toKey)	It returns the key-value pairs whose keys are strictly less than toKey.
-K higherKey(K key)	It is used to return true if this map contains a mapping for the specified key.
-Map.Entry&lt;K,V&gt; pollFirstEntry()	It removes and returns a key-value mapping associated with the least key in this map, or null if the map is empty.
-Map.Entry&lt;K,V&gt; pollLastEntry()	It removes and returns a key-value mapping associated with the greatest key in this map, or null if the map is empty.
-SortedMap&lt;K,V&gt; tailMap(K fromKey)	It returns key-value pairs whose keys are greater than or equal to fromKey.
-K firstKey()	It is used to return the first (lowest) key currently in this sorted map.
+<p><strong>TreeMap</strong><br>
+Map.Entry&lt;K,V&gt; ceilingEntry(K key)	It returns the key-value pair having the least key, greater than or equal to the specified key, or null if there is no such key.<br>
+K ceilingKey(K key)	It returns the least key, greater than the specified key or null if there is no such key.<br>
+Map.Entry&lt;K,V&gt; floorEntry(K key)	It returns the greatest key, less than or equal to the specified key, or null if there is no such key.<br>
+Map.Entry&lt;K,V&gt; higherEntry(K key)	It returns the least key strictly greater than the given key, or null if there is no such key.<br>
+SortedMap&lt;K,V&gt; headMap(K toKey)	It returns the key-value pairs whose keys are strictly less than toKey.<br>
+K higherKey(K key)	It is used to return true if this map contains a mapping for the specified key.<br>
+Map.Entry&lt;K,V&gt; pollFirstEntry()	It removes and returns a key-value mapping associated with the least key in this map, or null if the map is empty.<br>
+Map.Entry&lt;K,V&gt; pollLastEntry()	It removes and returns a key-value mapping associated with the greatest key in this map, or null if the map is empty.<br>
+SortedMap&lt;K,V&gt; tailMap(K fromKey)	It returns key-value pairs whose keys are greater than or equal to fromKey.<br>
+K firstKey()	It is used to return the first (lowest) key currently in this sorted map.<br>
 K lastKey()	It is used to return the last (highest) key currently in the sorted map.</p>
 <pre><code>Set&lt;Map.Entry&lt;String,Integer&gt;&gt; s = m.entrySet(); 
 for (Map.Entry&lt;String, Integer&gt; it: s) { 
@@ -322,79 +295,55 @@ String[] result = Arrays.stream(lines.split(&quot;\\s+&quot;))
 </code></pre>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/fy8llECIr" class="tag">
-                    LeetCode
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
-                  <h3 class="post-title">
-                    Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-
-              
-                <div id="disqus_thread" data-aos="fade-in"></div>
-              
-            
-
-          </div>
-
+          </article>
         </div>
-      </div>
-    </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
+              <h3 class="post-title">
+                Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort
+              </h3>
+            </a>
+          </div>
+        
 
-<script type="application/javascript">
+        
+          
 
-AOS.init();
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
 
-hljs.initHighlightingOnLoad()
+<div id="disqus_thread"></div>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
 
 </script>
 
+          
+        
 
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
 
-  
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
 
-  
-    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
-    <script>
-
-    var options = {
-      shortname: 'ywang412',
-      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
-    }
-    if ('') {
-      options.api = ''
-    }
-    var dsqjs = new DisqusJS(options)
-
-    </script>
-  
-
-
-
-
+      </div>
+    </div>
   </body>
 </html>

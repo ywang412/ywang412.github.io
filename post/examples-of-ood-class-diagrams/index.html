@@ -1,227 +1,176 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" >
-
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Examples of OOD class diagrams | Yu&#39;s Github</title>
-<meta name="description" content="Java, SQL, Python and a little bit of Scala ">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574046952525">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574035711265">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
 
-
-  
-
-  
-    <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css" />
-  
-
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-143424668-1');
-</script>
 
 
   </head>
   <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://ywang412.github.io">
-        <img src="https://ywang412.github.io/images/avatar.png?v=1574035711265" class="site-logo">
-        <h1 class="site-title">Yu&#39;s Github</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574046952525" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
       
-        
-          <a href="/" class="site-nav">
-            Home
-          </a>
-        
+        <a href="/" class="menu">
+          Home
+        </a>
       
-        
-          <a href="/archives" class="site-nav">
-            Archive
-          </a>
-        
+    
       
-        
-          <a href="/tags" class="site-nav">
-            Tag
-          </a>
-        
+        <a href="/archives" class="menu">
+          Archive
+        </a>
       
-        
-          <a href="/post/resume" class="site-nav">
-            Resume
-          </a>
-        
+    
       
-    </div>
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
   </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
+  <div class="social-container">
+    
       
-        
-          <a class="social-link" href="https://github.com/ywang412/" target="_blank">
-            <i class="fab fa-github"></i>
-          </a>
-        
+    
       
-        
+    
       
-        
+    
       
-        
+    
       
-        
-      
-    </div>
-    <div class="site-description">
-      Java, SQL, Python and a little bit of Scala 
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
-    </div>
+    
   </div>
 </div>
 
 
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">Examples of OOD class diagrams</h2>
-            <div class="post-date">2018-07-09</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Examples of OOD class diagrams
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-07-09 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/naQ7xxWut" class="post-tag">
+                  # OOD
+                </a>
+              
+            </div>
             
             <div class="post-content">
-              <p>Shopping
-<img src="https://ywang412.github.io/post-images/1561869983328.png" alt="">
-Parking
-<img src="https://ywang412.github.io/post-images/1561693897171.png" alt="">
-Library
-<img src="https://ywang412.github.io/post-images/1561693905367.png" alt="">
-StackOverflow
-<img src="https://ywang412.github.io/post-images/1562126076022.png" alt="">
-Movie
-<img src="https://ywang412.github.io/post-images/1562126239722.png" alt="">
-Flight
-<img src="https://ywang412.github.io/post-images/1562126309435.png" alt="">
-ATM
-<img src="https://ywang412.github.io/post-images/1562126330414.png" alt="">
-BlackJack
-<img src="https://ywang412.github.io/post-images/1562127573365.png" alt="">
-Car rental
-<img src="https://ywang412.github.io/post-images/1562818933938.png" alt="">
-Chess
-<img src="https://ywang412.github.io/post-images/1562818948581.png" alt="">
-Stock
-<img src="https://ywang412.github.io/post-images/1562818966353.png" alt="">
-Cric Info
-<img src="https://ywang412.github.io/post-images/1562818980878.png" alt="">
-Hotel
-<img src="https://ywang412.github.io/post-images/1562818993543.png" alt="">
-Linkedin
-<img src="https://ywang412.github.io/post-images/1562819007254.png" alt="">
-Facebook
-<img src="https://ywang412.github.io/post-images/1562819025938.png" alt="">
-Restaurants
+              <p>Shopping<br>
+<img src="https://ywang412.github.io/post-images/1561869983328.png" alt=""><br>
+Parking<br>
+<img src="https://ywang412.github.io/post-images/1561693897171.png" alt=""><br>
+Library<br>
+<img src="https://ywang412.github.io/post-images/1561693905367.png" alt=""><br>
+StackOverflow<br>
+<img src="https://ywang412.github.io/post-images/1562126076022.png" alt=""><br>
+Movie<br>
+<img src="https://ywang412.github.io/post-images/1562126239722.png" alt=""><br>
+Flight<br>
+<img src="https://ywang412.github.io/post-images/1562126309435.png" alt=""><br>
+ATM<br>
+<img src="https://ywang412.github.io/post-images/1562126330414.png" alt=""><br>
+BlackJack<br>
+<img src="https://ywang412.github.io/post-images/1562127573365.png" alt=""><br>
+Car rental<br>
+<img src="https://ywang412.github.io/post-images/1562818933938.png" alt=""><br>
+Chess<br>
+<img src="https://ywang412.github.io/post-images/1562818948581.png" alt=""><br>
+Stock<br>
+<img src="https://ywang412.github.io/post-images/1562818966353.png" alt=""><br>
+Cric Info<br>
+<img src="https://ywang412.github.io/post-images/1562818980878.png" alt=""><br>
+Hotel<br>
+<img src="https://ywang412.github.io/post-images/1562818993543.png" alt=""><br>
+Linkedin<br>
+<img src="https://ywang412.github.io/post-images/1562819007254.png" alt=""><br>
+Facebook<br>
+<img src="https://ywang412.github.io/post-images/1562819025938.png" alt=""><br>
+Restaurants<br>
 <img src="https://ywang412.github.io/post-images/1562819148411.png" alt=""></p>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://ywang412.github.io/tag/naQ7xxWut" class="tag">
-                    OOD
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://ywang412.github.io/post/dp-summary">
-                  <h3 class="post-title">
-                    DP summary
-                  </h3>
-                </a>
-              </div>
-            
-
-            
-              
-
-              
-                <div id="disqus_thread" data-aos="fade-in"></div>
-              
-            
-
-          </div>
-
+          </article>
         </div>
-      </div>
-    </div>
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/dp-summary">
+              <h3 class="post-title">
+                DP summary
+              </h3>
+            </a>
+          </div>
+        
 
-<script type="application/javascript">
+        
+          
 
-AOS.init();
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
 
-hljs.initHighlightingOnLoad()
+<div id="disqus_thread"></div>
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
 
 </script>
 
+          
+        
 
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
 
-  
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
 
-  
-    <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
-    <script>
-
-    var options = {
-      shortname: 'ywang412',
-      apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
-    }
-    if ('') {
-      options.api = ''
-    }
-    var dsqjs = new DisqusJS(options)
-
-    </script>
-  
-
-
-
-
+      </div>
+    </div>
   </body>
 </html>
