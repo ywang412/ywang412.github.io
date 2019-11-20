@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NoSQL vs SQL | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574231439151">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574232110791">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574231439151" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574232110791" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-11-07 ·
+                · 2019-11-06 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/xMvNqmiAx" class="post-tag">
@@ -127,6 +127,73 @@ Bad for</li>
 <li>joins</li>
 </ul>
 <p>Denormalization is a must for cassendra / model queries no joins /  one query per table</p>
+<p><strong>MongoDB</strong></p>
+<p>Embedded and Referenced Relationships</p>
+<pre><code>Manual References
+{
+   &quot;_id&quot;:ObjectId(&quot;52ffc33cd85242f436000001&quot;),
+   &quot;contact&quot;: &quot;987654321&quot;,
+   &quot;dob&quot;: &quot;01-01-1991&quot;,
+   &quot;name&quot;: &quot;Tom Benzamin&quot;,
+   &quot;address_ids&quot;: [
+      ObjectId(&quot;52ffc4a5d85242602e000000&quot;),
+      ObjectId(&quot;52ffc4a5d85242602e000001&quot;)
+   ]
+}
+&gt;var result = db.users.findOne({&quot;name&quot;:&quot;Tom Benzamin&quot;},{&quot;address_ids&quot;:1})
+&gt;var addresses = db.address.find({&quot;_id&quot;:{&quot;$in&quot;:result[&quot;address_ids&quot;]}})
+
+DBRefs
+{
+   &quot;_id&quot;:ObjectId(&quot;53402597d852426020000002&quot;),
+   &quot;address&quot;: {
+   &quot;$ref&quot;: &quot;address_home&quot;,
+   &quot;$id&quot;: ObjectId(&quot;534009e4d852427820000002&quot;),
+   &quot;$db&quot;: &quot;tutorialspoint&quot;},
+   &quot;contact&quot;: &quot;987654321&quot;,
+   &quot;dob&quot;: &quot;01-01-1991&quot;,
+   &quot;name&quot;: &quot;Tom Benzamin&quot;
+}
+</code></pre>
+<p>Covered Queries</p>
+<pre><code>&gt;db.users.ensureIndex({gender:1,user_name:1})
+Covered Query (fetch the required data from indexed data which is very fast. not go looking into database documents.)
+&gt;db.users.find({gender:&quot;M&quot;},{user_name:1,_id:0}
+Not Covered Query (index does not include _id field)
+&gt;db.users.find({gender:&quot;M&quot;},{user_name:1})
+</code></pre>
+<p>Atomic Operations</p>
+<pre><code>&gt;db.products.findAndModify({ 
+   query:{_id:2,product_available:{$gt:0}}, 
+   update:{ 
+      $inc:{product_available:-1}, 
+      $push:{product_bought_by:{customer:&quot;rob&quot;,date:&quot;9-Jan-2014&quot;}} 
+   }    
+})
+</code></pre>
+<p>Indexing Array Fields and Sub-Document Fields</p>
+<p>An ObjectId is a 12-byte BSON type having the following structure −<br>
+The first 4 bytes representing the seconds since the unix epoch<br>
+The next 3 bytes are the machine identifier<br>
+The next 2 bytes consists of process id<br>
+The last 3 bytes are a random counter value</p>
+<p>Text search</p>
+<pre><code>&gt;db.adminCommand({setParameter:true,textSearchEnabled:true})
+&gt;db.posts.ensureIndex({post_text:&quot;text&quot;})
+&gt;db.posts.find({$text:{$search:&quot;tutorialspoint&quot;}})
+</code></pre>
+<p>Auto-Increment Sequence</p>
+<pre><code>&gt;function getNextSequenceValue(sequenceName){
+
+   var sequenceDocument = db.counters.findAndModify({
+      query:{_id: sequenceName },
+      update: {$inc:{sequence_value:1}},
+      new:true
+   });
+	
+   return sequenceDocument.sequence_value;
+}
+</code></pre>
 <p><strong>AWS redshift RDS table design optimization</strong></p>
 <ul>
 <li>
