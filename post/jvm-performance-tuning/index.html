@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contributing to Scala zio, a github open source project | Yu&#39;s Github</title>
+<title>JVM performance tuning | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574229358482">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -74,33 +74,46 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Contributing to Scala zio, a github open source project
+              JVM performance tuning
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-02-19 ·
+                · 2018-11-21 ·
               </time>
               
-                <a href="https://ywang412.github.io/tag/mppVQr2L4" class="post-tag">
-                  # Scala
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
                 </a>
               
             </div>
             
-              <div class="post-feature-image" style="background-image: url('https://ywang412.github.io/post-images/contributing-to-a-scala-zio-a-github-open-source-project.png')">
-              </div>
-            
             <div class="post-content">
-              <p>I've hoped to contribute to open source project on github to be a part of the open source community and become a better developer. Today my two pull requests to a high profile scala repository, zio, got approved and I am very excited. The friendly and encouraging github community brought me a great experience.</p>
-<p>These are the two pull requests that I made.</p>
-<p>https://github.com/zio/zio/pull/1109<br>
-and<br>
-https://github.com/zio/zio/pull/1106</p>
-<p>The first one is to deprecate a FiberLocal class.<br>
-<img src="https://ywang412.github.io/post-images/1561874927019.png" alt=""><br>
-The second one is to fix a bug resulting from different Windows/Linux file seperator.<br>
-<img src="https://ywang412.github.io/post-images/1561874992932.png" alt=""></p>
-<p>The zio scala repository is very well maintained with decent test coverage and CD/CI pipeline. Thanks to the project maintainers for their huge efforts.</p>
+              <p>Thread status - new, runnable, blocked, waiting, timed-waiting</p>
+<p>Thread dumps<br>
+When the CPU Usage is Abnormally High<br>
+Extract the thread that has the highest CPU usage. After acquiring the thread dump, check the thread's action. Extract thread dumps several times every hour, and check the status change of the threads to determine the problem.</p>
+<p>When the Processing Performance is Abnormally Slow<br>
+After acquiring thread dumps several times, find the list of threads with BLOCKED status. Acquire the list of threads with BLOCKED status after getting the thread dumps several times.</p>
+<p>Heap dumps<br>
+All Objects<br>
+All Classes<br>
+Garbage collection roots<br>
+Thread Stacks and Local Variables</p>
+<p>Collector Types</p>
+<ul>
+<li>Throughput Collectors</li>
+</ul>
+<ol>
+<li>Serial</li>
+<li>Parallel</li>
+</ol>
+<ul>
+<li>Low Pause Collectors</li>
+</ul>
+<ol>
+<li>Concurrent Mark Sweep</li>
+<li>G1</li>
+</ol>
 
             </div>
           </article>
@@ -109,9 +122,9 @@ The second one is to fix a bug resulting from different Windows/Linux file seper
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/coding-tricks-of-scala-syntax">
+            <a href="https://ywang412.github.io/post/sql-2-index">
               <h3 class="post-title">
-                Coding tricks using Scala syntax
+                SQL 2 - Index
               </h3>
             </a>
           </div>
