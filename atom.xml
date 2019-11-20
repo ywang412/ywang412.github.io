@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-20T06:09:00.166Z</updated>
+    <updated>2019-11-20T06:30:43.903Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-08T01:25:02.000Z</updated>
+        <updated>2019-11-07T11:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -38,16 +38,15 @@ denormalization - increase performance for read heavy</p>
 <li>table - group of partition</li>
 <li>Partition - collection of rows - unit of access</li>
 <li>PK - partition key (Sharding) + clustering columns (sorting within partition desc)</li>
+<li>Cassandra Collection: Set, List, Map</li>
 </ul>
 <p>Good for</p>
 <ul>
 <li>logging events</li>
 <li>IOT</li>
 <li>time series db</li>
-<li>heavy write</li>
-</ul>
-<p>Bad for</p>
-<ul>
+<li>heavy write<br>
+Bad for</li>
 <li>ad - hoc queries</li>
 <li>joins</li>
 </ul>
