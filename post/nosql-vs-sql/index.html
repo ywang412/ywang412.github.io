@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NoSQL vs SQL | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574229358482">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574229995940">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574229358482" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574229995940" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -156,6 +156,16 @@ define a colum as sort key</p>
 );
 </code></pre>
 <p>Distribution key and sort key significantly improve query time</p>
+<p><strong>Neo4J</strong></p>
+<pre><code>// Friend-of-a-friend 
+(user)-[:KNOWS]-(friend)-[:KNOWS]-(foaf)
+// Shortest path
+path = shortestPath( (user)-[:KNOWS*..5]-(other) )
+// Collaborative filtering
+(user)-[:PURCHASED]-&gt;(product)&lt;-[:PURCHASED]-()-[:PURCHASED]-&gt;(otherProduct)
+// Tree navigation 
+(root)&lt;-[:PARENT*]-(leaf:Category)-[:ITEM]-&gt;(data:Product)
+</code></pre>
 
             </div>
           </article>
