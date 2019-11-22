@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-20T06:43:48.111Z</updated>
+    <updated>2019-11-22T06:10:26.688Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-06T21:25:02.000Z</updated>
+        <updated>2019-11-06T07:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -118,6 +118,17 @@ The last 3 bytes are a random counter value</p>
    return sequenceDocument.sequence_value;
 }
 </code></pre>
+<p><strong>Mongodb diagnosis and optimization</strong></p>
+<p>web service response time &lt; 200ms<br>
+mongodb response time &lt; 100ms<br>
+long response time</p>
+<ol>
+<li>proper index use explain()</li>
+<li>cacheSizeGB ram size use mongostat()<br>
+connection fail</li>
+<li>maxIncomingConnections db.serverStatus().connections shows available connections</li>
+<li>ulimit -a -&gt; open files -&gt; max file descriptors</li>
+</ol>
 <p><strong>AWS redshift RDS table design optimization</strong></p>
 <ul>
 <li>
