@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-22T06:10:26.688Z</updated>
+    <updated>2019-11-22T06:34:16.695Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-06T07:25:02.000Z</updated>
+        <updated>2019-11-05T17:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
