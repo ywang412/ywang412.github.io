@@ -1,0 +1,365 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TCP / UDP  | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574474967825">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574474967825" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              TCP / UDP 
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-11-15 ·
+              </time>
+              
+            </div>
+            
+            <div class="post-content">
+              <figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1574474560226.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1574474564715.png" alt=""></figure>
+<pre><code>class QuoteService {
+	
+	Map&lt;String, String&gt; productInfo = new HashMap&lt;String,String&gt;();
+	
+	public QuoteService() {
+		productInfo.put(&quot;a&quot;, &quot;100&quot;);
+		productInfo.put(&quot;b&quot;, &quot;200&quot;);
+	}
+	
+	public String getQuote(String product) {
+		return productInfo.get(product);
+	}
+}
+
+class ServiceThread extends Thread {
+
+	Socket sock;
+	
+	QuoteService quoteService = new QuoteService();
+	
+	public ServiceThread(Socket sock) {
+		this.sock = sock;
+	}
+	
+	public void run() {
+		try {
+			InputStream in = sock.getInputStream();
+			OutputStream out = sock.getOutputStream();
+			
+			System.out.println(&quot;Waiting for product information from the client.&quot;);
+			
+			byte request[] = new byte[100];
+			in.read(request);
+			
+			String product = new String(request).trim();
+			
+			System.out.println(&quot;Received product name - &quot; + product );
+			
+			String price = quoteService.getQuote(product);
+			if (price == null) {
+				price = &quot;Invalid product&quot;;
+			}
+			
+			out.write(price.getBytes());
+			
+			System.out.println(&quot;Response sent...&quot;);
+			
+			sock.close();
+		} catch(Exception e) {}
+	}
+	
+}
+
+public class Server {
+
+	public static void main(String[] args) throws IOException {
+		
+		ServerSocket serSocket = new ServerSocket(9999);
+		
+		System.out.println(&quot;Started listening to 9999&quot;);
+		
+		while (true) {
+			
+			System.out.println(&quot;Waiting for client..&quot;);
+			Socket sock = serSocket.accept();
+			
+			// create a new thread to service client.
+			System.out.println(&quot;Starting a thread which will service the client&quot;);
+			new ServiceThread(sock).start();
+		}
+		
+
+	}
+
+}
+public class Client {
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+
+		System.out.println(&quot;Connecting to the server...&quot;);
+		Socket sock = new Socket(&quot;127.0.0.1&quot;, 9999);
+		System.out.println(&quot;Connected to the server..&quot;);
+
+		System.out.println(&quot;Enter product name : &quot;);
+		Scanner scan = new Scanner(System.in);
+		String product = scan.nextLine();
+		
+		InputStream in = sock.getInputStream();
+		OutputStream out = sock.getOutputStream();
+		
+		System.out.println(&quot;Sending product information..&quot;);
+		out.write(product.getBytes());
+		
+		byte [] response = new byte[100];
+		in.read(response);
+		
+		String strResponse = new String(response).trim();
+		
+		System.out.println(&quot;Obtained response is - &quot; + strResponse);
+		
+		sock.close();
+		
+	}
+
+}
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1574474572857.png" alt=""></figure>
+<pre><code>public class Server {
+
+	public static void main(String[] args) throws IOException {
+		
+		DatagramSocket dgSock = new DatagramSocket(8989);
+		
+		DatagramPacket packet = new DatagramPacket(new byte[1000], 1000);
+		
+		dgSock.receive(packet);
+		
+		System.out.println( new String(packet.getData()) );
+		System.out.println(&quot;Obtained from IP - &quot; + packet.getAddress() );
+		System.out.println(&quot;Obtained from Port - &quot; + packet.getPort() );
+		
+		dgSock.close();
+		
+	}
+
+}
+
+public class Client {
+
+	public static void main(String[] args) throws IOException {
+		
+		DatagramSocket dgSock = new DatagramSocket();
+		
+		String message = &quot;Hello from so and so...&quot;;
+		byte [] data = message.getBytes();
+		
+		DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getLocalHost(), 8989);
+		
+		dgSock.send(packet);
+		
+		dgSock.close();
+			
+	}
+
+}
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1574474578338.png" alt=""></figure>
+<pre><code>public class RequestHandler {
+	
+	ResourceLoader resourceLoader = new ResourceLoader();
+	
+	public void handleRequest(Socket sock) {
+		OutputStream out = null;
+
+		try {
+			out = sock.getOutputStream();
+			String request = HttpUtils.getRequest(sock);
+
+			String uri = HttpUtils.getRequestUri(request);
+			System.out.println(&quot;Received request for - &quot; + uri);
+
+			InputStream in = resourceLoader.getResource(uri);
+
+			if (in == null) {
+				System.out.println(&quot;Sending resource not found &quot;);
+				HttpResponseUtils.sendResourceNotFound(out);
+				return;
+			}
+
+			System.out.println(&quot;Sending response &quot;);
+			HttpResponseUtils.sendSuccessResponse(in, out);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (out != null) {
+				try {
+					System.out.println(&quot;Sending internal error &quot;);
+					HttpResponseUtils.sendInternalError(out);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		} finally {
+			try {
+				sock.close();
+			} catch (Exception e) {
+			}
+		}
+	}
+}
+public class ServiceRequestTask implements Runnable {
+	
+	Socket sock;
+	RequestHandler requestHandler = new RequestHandler();
+	
+	public ServiceRequestTask(Socket sock) {
+		this.sock = sock;
+	}
+
+	@Override
+	public void run() {
+		requestHandler.handleRequest(sock);
+	}
+
+}
+public class Server {
+
+	public static void main(String[] args) throws Exception {
+		
+		ServerSocket serSock = new ServerSocket(8000);
+		ExecutorService executor = Executors.newFixedThreadPool(5);
+		
+		while (true) {
+			System.out.println(&quot;Waiting for client...&quot;);
+			Socket sock = serSock.accept();
+			
+			System.out.println(&quot;Task submitted&quot;);
+			executor.submit(new ServiceRequestTask(sock));
+		}	
+	}
+}
+
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/sql-2-index">
+              <h3 class="post-title">
+                SQL 2 - Index
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
