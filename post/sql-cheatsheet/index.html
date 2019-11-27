@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574475001169">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574833666259">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574475001169" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1574833666259" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-10-05 ·
+                · 2019-10-04 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -590,6 +590,23 @@ else CASE WHEN EXISTS (SELECT 1 FROM tree t2 WHERE t2.p_id = t1.id)
                  END
     END AS Type
 from tree t1 order by id;
+</code></pre>
+<p><strong>1084. Sales Analysis III</strong></p>
+<p>Group by having</p>
+<pre><code>SELECT s.product_id, product_name
+FROM Sales s
+LEFT JOIN Product p
+ON s.product_id = p.product_id
+GROUP BY s.product_id
+HAVING MIN(sale_date) &gt;= CAST('2019-01-01' AS DATE) AND
+       MAX(sale_date) &lt;= CAST('2019-03-31' AS DATE)
+
+select product_id, product_name
+from product
+where product_id not in
+(select product_id
+from sales
+where sale_date not between '2019-01-01' and '2019-03-31');
 </code></pre>
 
             </div>
