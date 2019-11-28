@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Publishing a personal programming blog on Github.io using Gridea | Yu&#39;s Github</title>
+<title>Flash sale website system design | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1574899905487">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -74,34 +74,60 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Publishing a personal programming blog on Github.io using Gridea
+              Flash sale website system design
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-02-28 ·
+                · 2019-11-27 ·
               </time>
-              
-                <a href="https://ywang412.github.io/tag/WwpuuqDmO" class="post-tag">
-                  # Gadget
-                </a>
               
             </div>
             
             <div class="post-content">
-              <p>I've always wanted to start a programmer's blog because I learned a huge amount from others' tech blog. But hosting and maintaining a blog website could require lots of effort. I came across this Gridea tool (https://github.com/getgridea/gridea) which features html/css static content generation and github.io auto publishing. It helps immensely writing a programming blog.</p>
-<p>After downloading and installing the Gridea tool, the first thing is to link it in order to publish on github.io. The settings tab is quite self-explanatory. <img src="https://ywang412.github.io/post-images/1561227293749.png" alt=""></p>
-<p>The publishing will require a github token for authentication which can be generated here https://github.com/settings/tokens . Remember to use <strong>repo scope</strong> access token to reduce vulnerability.<br>
-<img src="https://ywang412.github.io/post-images/1561227595716.png" alt=""></p>
-<p>The best thing about Gridea is auto-generation of markdown tags and corresponding hotkeys. <img src="https://ywang412.github.io/post-images/1561227880490.png" alt=""></p>
-<pre><code>object SumOfMultiples {
-  def sum(factors: Set[Int], limit: Int): Int = {
-    factors.map(x =&gt; Stream.range(1, limit / x + 1).map(_ * x).takeWhile(_ &lt; limit).toList).flatMap(x =&gt; x).sum
-  }
-}
-</code></pre>
-<p>The last thing I want to mention is the comment function. Currently, only Gitalk and Disqus third-party API are allowed. I choose Disqus for its simpler setting. <img src="https://ywang412.github.io/post-images/1561228499134.png" alt=""><br>
-Register a free account on disqus and create a new application. The public api key will appear in the application confirmation page. The short name can be located on the admin page. <img src="https://ywang412.github.io/post-images/1561229354797.png" alt=""></p>
-<p>I enjoyed very much the writing and seeing the outcome on github.io. Now I have a personal blog that motivates me to write once a while to share knowledge and help others. Kudos!</p>
+              <p><strong>Multi-level rate limiter</strong></p>
+<ol>
+<li>
+<p>prevent malicious requests<br>
+add verification code<br>
+redirect page after 5 seconds delay<br>
+block ip</p>
+</li>
+<li>
+<p>hardware load-balancing - 2nd layer<br>
+LVS load-balancing - 4th layer<br>
+nginx reverse proxy to multiple tomcat - 7th layer</p>
+</li>
+<li>
+<p>tomcat max thread / max connection<br>
+(io intensive, increase threads, increase throughput<br>
+cpu intensive, decrease threads, increase cpu efficiency)<br>
+message queue<br>
+server cpu/mem monitoring<br>
+RateLimiter</p>
+</li>
+</ol>
+<p><strong>Multi-level cache</strong></p>
+<p>html css javascript in object storage service / CDN<br>
+ajax / axis requests</p>
+<p>cache database requests in memory<br>
+Cache penetration: malicous requests for nonexisting information<br>
+use value = &quot;&quot; to cache malicous requests<br>
+Cache breakdow: hot cache expiration, many request at the same expired cache<br>
+use a thread to monitor cache near expiration and refresh cache<br>
+use longer time for hot cache<br>
+Cache avalanche: many cache expire at the same time<br>
+use redis cluster and use different cache expiration time</p>
+<p>use local guavacache plus remote redis cluster<br>
+use message queue as request buffer</p>
+<p><strong>Fault Tolerance and service degradation</strong></p>
+<p>Spring Cloud Hystrix<br>
+manual shutdown of less important services</p>
+<p><strong>Database cluster</strong></p>
+<p>master dml -&gt; binlog -&gt; slave relay log -&gt; slave dml<br>
+mycat cluster (use HaProxy + Keepalived) to sharding database write/read</p>
+<p><strong>Thread safety</strong></p>
+<p>lock/synchronzed keyword<br>
+AtomicInteger compare and swap</p>
 
             </div>
           </article>
@@ -110,9 +136,9 @@ Register a free account on disqus and create a new application. The public api k
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/resume">
+            <a href="https://ywang412.github.io/post/nosql-vs-sql">
               <h3 class="post-title">
-                Resume
+                NoSQL vs SQL
               </h3>
             </a>
           </div>
