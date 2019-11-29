@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-11-29T23:07:37.275Z</updated>
+    <updated>2019-11-29T23:20:01.816Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -174,7 +174,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-04T04:24:27.000Z</updated>
+        <updated>2019-10-03T15:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SQL window function</strong></p>
 <pre><code>SELECT start_terminal,
        duration_seconds,
@@ -577,7 +577,7 @@ Where Count &gt;=3;
 <p><strong>197. Rising Temperature</strong></p>
 <pre><code>Select W1.Id
 From Weather W1 JOIN Weather W2 
-ON to_days(W1.Date) = to_days(W2.Date) + 1
+ON to_days(W1.Date) = to_days(W2.Date) + 1 --DATEDIFF(a.Date, b.Date)=1
 Where W1.Temperature &gt; W2.Temperature;
 
 Select Id From (
