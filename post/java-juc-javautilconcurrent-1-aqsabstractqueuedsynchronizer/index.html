@@ -1,0 +1,321 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Java JUC (java.util.concurrent) 1 - AQS：AbstractQueuedSynchronizer
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-04-09 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>AbstractQueuedSynchronizer lays the foundation of java JUC programming. Concurrency classes are extensively using Sync class which extends from AQS as shown below.</p>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1562476011734.png" alt=""></figure>
+<p>Some example code snippets of CountDownLatch, CyclicBarrier, Semaphore, ForkJoinTask, and FutureTask are explained here.</p>
+<p><strong>CountDownLatch</strong></p>
+<pre><code>public static void main(String[] args) throws Exception {
+		ExecutorService exec = Executors.newCachedThreadPool();
+		final CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+		for (int i = 0; i &lt; threadCount; i++) {
+				final int threadNum = i;
+				exec.execute(() -&gt; {
+						try {
+								test(threadNum);
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						} finally {
+								countDownLatch.countDown();
+						}
+				});
+		}
+		countDownLatch.await(10, TimeUnit.MILLISECONDS);
+		log.info(&quot;finish&quot;);
+		exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+		Thread.sleep(100);
+		log.info(&quot;{}&quot;, threadNum);
+}
+</code></pre>
+<p><strong>CyclicBarrier</strong></p>
+<pre><code>private static CyclicBarrier barrier = new CyclicBarrier(5);
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executor = Executors.newCachedThreadPool();
+		for (int i = 0; i &lt; 10; i++) {
+				final int threadNum = i;
+				Thread.sleep(1000);
+				executor.execute(() -&gt; {
+						try {
+								race(threadNum);
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+				});
+		}
+		executor.shutdown();
+}
+
+private static void race(int threadNum) throws Exception {
+		Thread.sleep(1000);
+		log.info(&quot;{} is ready&quot;, threadNum);
+		barrier.await();
+		log.info(&quot;{} continue&quot;, threadNum);
+}
+</code></pre>
+<p><strong>Semaphore</strong></p>
+<pre><code>ExecutorService exec = Executors.newCachedThreadPool();
+final Semaphore semaphore = new Semaphore(3);
+
+for (int i = 0; i &lt; threadCount; i++) {
+		final int threadNum = i;
+		exec.execute(() -&gt; {
+				try {
+						if (semaphore.tryAcquire(5000, TimeUnit.MILLISECONDS)) { // 尝试获取一个许可
+								test(threadNum);
+								semaphore.release(); // 释放一个许可
+						}
+				} catch (Exception e) {
+						log.error(&quot;exception&quot;, e);
+				}
+		});
+}
+exec.shutdown();
+}
+
+private static void test(int threadNum) throws Exception {
+log.info(&quot;{}&quot;, threadNum);
+Thread.sleep(1000);
+}
+</code></pre>
+<p><strong>ForkJoinTask</strong></p>
+<pre><code>public class ForkJoinTaskExample extends RecursiveTask&lt;Integer&gt; {
+
+    public static final int threshold = 2;
+    private int start;
+    private int end;
+
+    public ForkJoinTaskExample(int start, int end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    protected Integer compute() {
+        int sum = 0;
+
+        //如果任务足够小就计算任务
+        boolean canCompute = (end - start) &lt;= threshold;
+        if (canCompute) {
+            for (int i = start; i &lt;= end; i++) {
+                sum += i;
+            }
+        } else {
+            // 如果任务大于阈值，就分裂成两个子任务计算
+            int middle = (start + end) / 2;
+            ForkJoinTaskExample leftTask = new ForkJoinTaskExample(start, middle);
+            ForkJoinTaskExample rightTask = new ForkJoinTaskExample(middle + 1, end);
+
+            // 执行子任务
+            leftTask.fork();
+            rightTask.fork();
+
+            // 等待任务执行结束合并其结果
+            int leftResult = leftTask.join();
+            int rightResult = rightTask.join();
+
+            // 合并子任务
+            sum = leftResult + rightResult;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        ForkJoinPool forkjoinPool = new ForkJoinPool();
+
+        //生成一个计算任务，计算1+2+3+4
+        ForkJoinTaskExample task = new ForkJoinTaskExample(1, 100);
+
+        //执行一个任务
+        Future&lt;Integer&gt; result = forkjoinPool.submit(task);
+
+        try {
+            log.info(&quot;result:{}&quot;, result.get());
+        } catch (Exception e) {
+            log.error(&quot;exception&quot;, e);
+        }
+    }
+}
+</code></pre>
+<p><strong>Future</strong></p>
+<pre><code>static class MyCallable implements Callable&lt;String&gt; {
+
+        @Override
+        public String call() throws Exception {
+            log.info(&quot;do something in callable&quot;);
+            Thread.sleep(5000);
+            return &quot;Done&quot;;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Future&lt;String&gt; future = executorService.submit(new MyCallable());
+        log.info(&quot;do something in main&quot;);
+        Thread.sleep(1000);
+        String result = future.get();
+        log.info(&quot;result：{}&quot;, result);
+    }
+</code></pre>
+<p><strong>FutureTask</strong></p>
+<pre><code>public static void main(String[] args) throws Exception {
+		FutureTask&lt;String&gt; futureTask = new FutureTask&lt;String&gt;(new Callable&lt;String&gt;() {
+				@Override
+				public String call() throws Exception {
+						log.info(&quot;do something in callable&quot;);
+						Thread.sleep(5000);
+						return &quot;Done&quot;;
+				}
+		});
+
+		new Thread(futureTask).start();
+		log.info(&quot;do something in main&quot;);
+		Thread.sleep(1000);
+		String result = futureTask.get();
+		log.info(&quot;result：{}&quot;, result);
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/perfect-singleton">
+              <h3 class="post-title">
+                Perfect Singleton?
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

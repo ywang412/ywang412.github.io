@@ -1,0 +1,349 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coding tricks using Java syntax  | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Coding tricks using Java syntax 
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-06-03 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
+                  # LeetCode
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>LeetCode has greatly sharpened my programming skills. A few examples are listed here.</p>
+<p>String.valueOf(int)<br>
+Integer.toString(int)</p>
+<p>Integer.valueOf()    //Integer<br>
+Integer.parseInt()   //int</p>
+<p><strong>LeetCode 118</strong> Pascal's Triangle<br>
+Due to Java type erasure, in order to instantiate a list of list, one can use<br>
+<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</code><br>
+or<br>
+<code>List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;List&lt;Integer&gt;&gt;();</code><br>
+Here <code>List&lt;Integer&gt;</code> becomes type definition.</p>
+<p><strong>LeetCode 929</strong> requires removing of &quot;.&quot; in a string. It turns out &quot;.&quot; and &quot;*&quot; are metaCharacters used in a regex. From JDK 7 manual, the replaceAll() takes regex input and therefore &quot;.&quot; was recognized  as &quot;any character&quot;. Two backward slashes will escape dot character. Yet it is OK to use replace() API which can treat the &quot;.&quot; as a dot character.</p>
+<p><em>JDK7</em></p>
+<pre><code>String	replace(char oldChar, char newChar)
+Returns a new string resulting from replacing all occurrences of oldChar in this string with newChar.
+String	replaceAll(String regex, String replacement)
+Replaces each substring of this string that matches the given regular expression with the given replacement.
+String	replaceFirst(String regex, String replacement)
+Replaces the first substring of this string that matches the given regular expression with the given replacement.
+</code></pre>
+<p>The solution is below,</p>
+<pre><code>class Solution {
+    public static int numUniqueEmails(String[] emails) {
+        if (emails.length &lt; 1) return 0;
+
+        Set&lt;String&gt; set = new HashSet&lt;&gt;();
+        for (String email : emails) {
+            String[] adds = email.split(&quot;@&quot;);
+            String name = adds[0]; 
+            if (name.indexOf(&quot;+&quot;) &gt;= 0) name = name.substring(0, name.indexOf(&quot;+&quot;));
+            name = name.replaceAll(&quot;\\.&quot;,&quot;&quot;);
+            set.add(name + &quot;@&quot; + adds[1]);
+        }
+        return set.size();
+    }
+
+    public static void main(String[] args) {
+        String[] t = new String[]{&quot;testemail@leetcode.com&quot;,&quot;testemail1@leetcode.com&quot;,&quot;testemail+david@lee.tcode.com&quot;};
+        System.out.println(numUniqueEmails(t));
+    }
+}
+</code></pre>
+<p><strong>LeetCode 791. Custom Sort String</strong><br>
+Below is the code snippet to create a priorityqueue with custom comparator.</p>
+<pre><code>			PriorityQueue&lt;Character&gt; queue = new PriorityQueue&lt;&gt;(new Comparator&lt;Character&gt;(){
+					public int compare(Character a, Character b) {
+							return Integer.compare(map.getOrDefault(a, Integer.MAX_VALUE), map.getOrDefault(b, Integer.MAX_VALUE));
+					}
+			});
+</code></pre>
+<p><strong>LeetCode 957. Prison Cells After N Days</strong></p>
+<p>The state change cycle might start at a state that is not the initital state, therefore a map is used to record past state at each day. When fastforward the N using N % cycle, the N could already be 0 and the last state change should be skipped.</p>
+<pre><code>while (N &gt; 0) { 
+		StringBuilder sb = new StringBuilder();
+		for (int j : cells) sb.append(j);
+		if (map.containsKey(sb.toString())) {
+				N %= (N - map.get(sb.toString()));
+		}
+		map.put(sb.toString(), N);
+		if (N &gt;= 1) {
+				N--;
+				cells = prisonAfter1Day(cells);
+		}
+}
+</code></pre>
+<p><strong>LeetCode 957. K Empty Slots</strong></p>
+<p>Java Primitive types such as &quot;int&quot; are not nullable. Boxed version such as &quot;Integer&quot; are nullable. Therefore, when get nullable value from Java collections, the null check can only performed on the boxed data type.</p>
+<pre><code>TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
+Integer low = set.floor(bulbs[i]);
+Integer high = set.ceiling(bulbs[i]);
+if (low != null &amp;&amp; bulbs[i] - low - 1 == K) return i + 1;
+if (high != null &amp;&amp; high - bulbs[i] - 1 == K) return i + 1;            
+</code></pre>
+<p><strong>402. Remove K Digits</strong><br>
+To remove the leading zeros in a string, regex match by &quot;^0*&quot; is the shortcut. A more verbose way is to break the for-loop at the first non-zero Char.</p>
+<pre><code>for (int i = 0; i &lt; source.length(); ++i) {
+		char c = source.charAt(i);
+		if (c != '0') {
+				return source.substring(i);
+		}
+}
+return &quot;&quot;; // or return &quot;0&quot;;
+</code></pre>
+<pre><code>while(sb.length()&gt;1 &amp;&amp; sb.charAt(0)=='0')
+		sb.deleteCharAt(0);
+return sb.toString();
+</code></pre>
+<pre><code>String s = &quot;00000000&quot;;
+s = s.replaceFirst (&quot;^0*&quot;, &quot;&quot;);
+if (s.isEmpty()) s = &quot;0&quot;;
+</code></pre>
+<p><strong>1027. Longest Arithmetic Sequence</strong></p>
+<p>The syntax to create a array of Hashmap is</p>
+<p><code>HashMap&lt;Integer, Integer&gt;[] dp = new HashMap[n];</code></p>
+<p><strong>1027. Multiply Strings</strong></p>
+<p>The underlying data structure is a int[] of which each element is a single digit number representing the number at that position. However, when adding the product to the int[], it is important to keep the element to be single digit. To convert single digit to Char, one can use <em>(char)(dig + '0')</em></p>
+<pre><code>public String multiply(String num1, String num2) {
+		int[] p = new int[num1.length() + num2.length()];
+		for (int i = num1.length() - 1; i &gt;= 0; i--) {
+				for (int j = num2.length() - 1; j &gt;= 0; j--) {
+						int multiply = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+						int sum = multiply + p[i+j+1];
+						p[i+j+1] = sum % 10;
+						p[i+j] += sum / 10;
+				}
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int dig : p) {
+				if (!(sb.length() == 0 &amp;&amp; dig == 0)) {
+						sb.append((char)(dig + '0'));
+				}
+		}
+		return sb.length() == 0? &quot;0&quot;:sb.toString();
+}
+</code></pre>
+<p><strong>190. Reverse Bits</strong></p>
+<p>&lt;&lt; operate has lower priority than +, therefore parentheses are needed to raise the priority.</p>
+<p>public class Solution {<br>
+// you need treat n as an unsigned value<br>
+public int reverseBits(int n) {<br>
+int res = 0;</p>
+<pre><code>    for (int i = 0; i &lt; 32; i++) {
+        int temp = n &amp; 1;
+        res = (res &lt;&lt; 1) + temp;
+        n = n &gt;&gt; 1;
+    }
+    
+    return res;
+}
+</code></pre>
+<p>}</p>
+<p><strong>TreeSet</strong></p>
+<p>E first() 	It returns the first (lowest) element currently in this sorted set.<br>
+E last() 	It returns the last (highest) element currently in this sorted set.<br>
+boolean remove(Object o) 	It is used to remove the specified element from this set if it is present.<br>
+E higher(E e) 	It returns the closest greatest element of the specified element from the set, or null there is no such element.<br>
+E lower(E e) 	It returns the closest least element of the specified element from the set, or null there is no such element.<br>
+E ceiling(E e) 	It returns the equal or closest greatest element of the specified element from the set, or null there is no such element.<br>
+E floor(E e) 	It returns the equal or closest least element of the specified element from the set, or null there is no such element.<br>
+SortedSet headSet(E toElement) 	It returns the group of elements that are less than the specified element.<br>
+SortedSet tailSet(E fromElement) 	It returns a set of elements that are greater than or equal to the specified element.</p>
+<p><strong>TreeMap</strong><br>
+Map.Entry&lt;K,V&gt; ceilingEntry(K key)	It returns the key-value pair having the least key, greater than or equal to the specified key, or null if there is no such key.<br>
+K ceilingKey(K key)	It returns the least key, greater than the specified key or null if there is no such key.<br>
+Map.Entry&lt;K,V&gt; floorEntry(K key)	It returns the greatest key, less than or equal to the specified key, or null if there is no such key.<br>
+Map.Entry&lt;K,V&gt; higherEntry(K key)	It returns the least key strictly greater than the given key, or null if there is no such key.<br>
+SortedMap&lt;K,V&gt; headMap(K toKey)	It returns the key-value pairs whose keys are strictly less than toKey.<br>
+K higherKey(K key)	It is used to return true if this map contains a mapping for the specified key.<br>
+Map.Entry&lt;K,V&gt; pollFirstEntry()	It removes and returns a key-value mapping associated with the least key in this map, or null if the map is empty.<br>
+Map.Entry&lt;K,V&gt; pollLastEntry()	It removes and returns a key-value mapping associated with the greatest key in this map, or null if the map is empty.<br>
+SortedMap&lt;K,V&gt; tailMap(K fromKey)	It returns key-value pairs whose keys are greater than or equal to fromKey.<br>
+K firstKey()	It is used to return the first (lowest) key currently in this sorted map.<br>
+K lastKey()	It is used to return the last (highest) key currently in the sorted map.</p>
+<pre><code>Set&lt;Map.Entry&lt;String,Integer&gt;&gt; s = m.entrySet(); 
+for (Map.Entry&lt;String, Integer&gt; it: s) { 
+System.out.println(&quot;Before channge of value = &quot; +  
+                       it.getKey() + &quot;   &quot; +  it.getValue());
+}
+</code></pre>
+<p><strong>List and Arrays</strong></p>
+<p>List equals() Method</p>
+<pre><code>int[] arr1 = new int [] {1, 2, 3, 4}; 
+int[] arr2 = new int [] {1, 2, 3, 4}; 
+Arrays.equals(arr1, arr2)); 
+
+int arr[] = { 12, 13, 14, 15, 16, 17, 18 };  
+// to index is within the range 
+int[] copy = Arrays.copyOfRange(arr, 2, 6); 
+</code></pre>
+<pre><code>// creating Arrays of Integer type, int[] will not work because asList does not box. String[] will work
+Integer a[] = new Integer[] { 10, 20, 30, 40 }; 
+// getting the list view of Array 
+List&lt;Integer&gt; list = Arrays.asList(a); 
+
+int[] ints = {1, 2, 3};
+List&lt;Integer&gt; list = Arrays.stream(ints).boxed().collect(Collectors.toList());
+</code></pre>
+<pre><code>//int[] will not work, String[] will work
+List&lt;Integer&gt; al = new ArrayList&lt;Integer&gt;(); 
+Integer[] arr = new Integer[al.size()]; 
+arr = al.toArray(arr); 
+</code></pre>
+<p><strong>342. Power of Four</strong></p>
+<pre><code>public boolean isPowerOfFour(int num) {
+		return num &gt; 0 &amp;&amp; (num&amp;(num-1)) == 0 &amp;&amp; (num &amp; 0x55555555) != 0;
+		//0x55555555 is to get rid of those power of 2 but not power of 4
+		//so that the single 1 bit always appears at the odd position 
+}
+</code></pre>
+<p><strong>IntStream to List or Array</strong></p>
+<pre><code>List&lt;Integer&gt; ints = IntStream.of(1,2,3,4,5)
+                .boxed()
+                .collect(Collectors.toList());
+	
+int[] intArray = IntStream.of(1, 2, 3, 4, 5).toArray();
+
+int[] intArray = {1, 2, 3, 4, 5};
+IntStream intStream1 = Arrays.stream(intArray);
+
+IntStream is = list.stream().mapToInt(Integer::intValue);
+
+String[] result = Arrays.stream(lines.split(&quot;\\s+&quot;))
+.map(String::toUpperCase)
+.toArray(String[]::new);
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/quick-sort-quick-select-and-merge-sort">
+              <h3 class="post-title">
+                Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

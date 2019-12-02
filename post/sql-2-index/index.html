@@ -1,0 +1,189 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SQL 2 - Index | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              SQL 2 - Index
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-11-10 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
+                  # SQL
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>B tree<br>
+<img src="https://ywang412.github.io/post-images/1570566488064.png" alt=""><br>
+vs B+ tree<br>
+<img src="https://ywang412.github.io/post-images/1570566504268.png" alt=""></p>
+<p>Auto increment primary key can prevent breaking the B+ tree.<br>
+<img src="https://ywang412.github.io/post-images/1571012532447.png" alt=""></p>
+<p>Clustered index - primary key if exist<br>
+If no primary key, first not-nullable unique index or rowid.<br>
+Only one clustered index and one B+ tree for a table.</p>
+<p>Non-clustered index<br>
+B+ tree leaf node only have index field and primary key<br>
+Search query will find primary key first and then fetch the record, therefore more costly.</p>
+<p><strong>Where to have index</strong></p>
+<ol>
+<li>where clause<br>
+<code>select * from t9_1 where d = 90000;</code></li>
+<li>aggregate function<br>
+<code>select max(d) from t9_1;</code><br>
+<code>select count(*) from t9_1;</code><br>
+because count(*) use non-clustered index (only index and primary key) which is faster than clustered index.</li>
+<li>order by</li>
+<li>use only non-clustered index<br>
+<code>select b,c from t9_1 where b=90000;</code><br>
+use idx_b_c</li>
+<li>Join clause<br>
+turn BNL to NLJ search</li>
+</ol>
+<p><strong>Difference between unique index and non-unique index</strong></p>
+<p>non-clustered non-unique index use change buffer to combine multiple insert.<br>
+Unique index has to load data into memory to check uniqueness.</p>
+<p>Although non-unique index will continue after finding the first matching record, it is highly possible that all matching records are loaded into memory in same page. Therefore, search query for unique index and non-unique index are the same.</p>
+<p><strong>Multi-column indexes</strong><br>
+<code>select * from t11 where a=1 and b=1 and c=1;</code>  use idx_a_b_c<br>
+<code>select * from t11 where c=1 and b=1 and a=1; /* sql2 */</code>  same as first query, order doesn't matter</p>
+<p><code>select * from t11 where a=2 and b in (1,2) and c=2; /* sql3 */</code><br>
+<code>select * from t11 where a=1 and b=2 order by c; /* sql4 */</code><br>
+<code>select * from t11 where a=1 order by b,c; /* sql5 */</code><br>
+use idx_a_b_c</p>
+<p>idx_a_b_c is equivalent to idx_a, idx_a_b, idx_a_b_c.</p>
+<p><code>select * from t11 where a=2 and b in (3,4) order by c; /* sql13 */</code>  will only use idx_a_b<br>
+<code>select * from t11 where b=1 and c=1; /* sql34 */</code> cannot use idx_a_b_c</p>
+<p><strong>Cardinality</strong><br>
+<code>show index from t13;</code><br>
+Cardinality is the estimate of distinct index values. Query will use index of larger cardinality.</p>
+<p>If returned rows number is large, query may use the primary key index to fetch all records. Use force index to force specified index.</p>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/flash-sale-website-system-design">
+              <h3 class="post-title">
+                Flash sale website system design
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

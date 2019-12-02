@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Examples of System Design | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Examples of System Design
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-08-02 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/Ior5oAFIx" class="post-tag">
+                  # Design
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>byte 1 byte -128 to 127.<br>
+short 2 bytes -32,768 to 32,767.<br>
+int 4 bytes -2,147,483,648 to 2,147,483,647.<br>
+long 8 bytes -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.</p>
+<p>Requirement clarification (use cases, post, follow, search, push notification)<br>
+API<br>
+Estimation (scaling, partitioning, load balancing, caching, storage, network bandwidth)<br>
+Data model (SQL schema)</p>
+<p><strong>Designing TinyURL</strong></p>
+<p>Encoding actual URL<br>
+We can compute a unique hash (e.g., MD5 or SHA256, etc.) of the given URL. The hash can then be encoded for displaying. This encoding could be base36 ([a-z ,0-9]) or base62 ([A-Z, a-z, 0-9]) and if we add ‘-’ and ‘.’ we can use base64 encoding. A reasonable question would be, what should be the length of the short key? 6, 8 or 10 characters.</p>
+<p>Using base64 encoding, a 6 letter long key would result in 64^6 = ~68.7 billion possible strings<br>
+Using base64 encoding, an 8 letter long key would result in 64^8 = ~281 trillion possible strings</p>
+<p>With 68.7B unique strings, let’s assume six letter keys would suffice for our system.</p>
+<p>If we use the MD5 algorithm as our hash function, it’ll produce a 128-bit hash value. After base64 encoding, we’ll get a string having more than 21 characters (since each base64 character encodes 6 bits of the hash value). Since we only have space for 8 characters per short key, how will we choose our key then? We can take the first 6 (or 8) letters for the key. This could result in key duplication though, upon which we can choose some other characters out of the encoding string or swap some characters.</p>
+<p>What are different issues with our solution? We have the following couple of problems with our encoding scheme:</p>
+<p>If multiple users enter the same URL, they can get the same shortened URL, which is not acceptable.<br>
+What if parts of the URL are URL-encoded? e.g., http://www.educative.io/distributed.php?id=design, and http://www.educative.io/distributed.php%3Fid%3Ddesign are identical except for the URL encoding.<br>
+Workaround for the issues: We can append an increasing sequence number to each input URL to make it unique, and then generate a hash of it. We don’t need to store this sequence number in the databases, though. Possible problems with this approach could be an ever-increasing sequence number. Can it overflow? Appending an increasing sequence number will also impact the performance of the service.</p>
+<p>Another solution could be to append user id (which should be unique) to the input URL. However, if the user has not signed in, we would have to ask the user to choose a uniqueness key. Even after this, if we have a conflict, we have to keep generating a key until we get a unique one.</p>
+<p><img src="https://ywang412.github.io/post-images/1565756686530.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1565754688299.png" alt=""></p>
+<p><strong>Designing Pastebin</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1565757376688.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1565756747081.png" alt=""></p>
+<p><strong>Design Instagram</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1565757489241.png" alt=""><br>
+a. Partitioning based on UserID Let’s assume we shard based on the ‘UserID’ so that we can keep all photos of a user on the same shard. If one DB shard is 1TB, we will need four shards to store 3.7TB of data. Let’s assume for better performance and scalability we keep 10 shards.</p>
+<p>So we’ll find the shard number by UserID % 10 and then store the data there. To uniquely identify any photo in our system, we can append shard number with each PhotoID.</p>
+<p>How can we generate PhotoIDs? Each DB shard can have its own auto-increment sequence for PhotoIDs and since we will append ShardID with each PhotoID, it will make it unique throughout our system.</p>
+<p>What are the different issues with this partitioning scheme?</p>
+<p>How would we handle hot users? Several people follow such hot users and a lot of other people see any photo they upload.<br>
+Some users will have a lot of photos compared to others, thus making a non-uniform distribution of storage.<br>
+What if we cannot store all pictures of a user on one shard? If we distribute photos of a user onto multiple shards will it cause higher latencies?<br>
+Storing all photos of a user on one shard can cause issues like unavailability of all of the user’s data if that shard is down or higher latency if it is serving high load etc.<br>
+b. Partitioning based on PhotoID If we can generate unique PhotoIDs first and then find a shard number through “PhotoID % 10”, the above problems will have been solved. We would not need to append ShardID with PhotoID in this case as PhotoID will itself be unique throughout the system.</p>
+<p>How can we generate PhotoIDs? Here we cannot have an auto-incrementing sequence in each shard to define PhotoID because we need to know PhotoID first to find the shard where it will be stored. One solution could be that we dedicate a separate database instance to generate auto-incrementing IDs. If our PhotoID can fit into 64 bits, we can define a table containing only a 64 bit ID field. So whenever we would like to add a photo in our system, we can insert a new row in this table and take that ID to be our PhotoID of the new photo.</p>
+<p>Wouldn’t this key generating DB be a single point of failure? Yes, it would be. A workaround for that could be defining two such databases with one generating even numbered IDs and the other odd numbered. For the MySQL, the following script can define such sequences:</p>
+<pre><code>KeyGeneratingServer1:
+auto-increment-increment = 2
+auto-increment-offset = 1 
+KeyGeneratingServer2:
+auto-increment-increment = 2
+auto-increment-offset = 2
+</code></pre>
+<p>We can put a load balancer in front of both of these databases to round robin between them and to deal with downtime. Both these servers could be out of sync with one generating more keys than the other, but this will not cause any issue in our system. We can extend this design by defining separate ID tables for Users, Photo-Comments, or other objects present in our system.</p>
+<p>Alternately, we can implement a ‘key’ generation scheme similar to what we have discussed in Designing a URL Shortening service like TinyURL.</p>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1565757623378.png" alt=""></figure>
+<p><strong>Design Dropbox</strong></p>
+<p>The metadata Database should be storing information about following objects:</p>
+<p>Chunks<br>
+Files<br>
+User<br>
+Devices<br>
+Workspace (sync folders)</p>
+<p><img src="https://ywang412.github.io/post-images/1565757709181.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1565757739488.png" alt=""></p>
+<p><strong>Designing Messenger</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1566064813925.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1566064820748.png" alt=""></p>
+<p><strong>Designing Twitter</strong></p>
+<p><img src="https://ywang412.github.io/post-images/1566067729831.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1566067734387.png" alt=""></p>
+<p><strong>Designing Youtube</strong></p>
+<p>At a high-level we would need the following components:</p>
+<p>Processing Queue: Each uploaded video will be pushed to a processing queue to be de-queued later for encoding, thumbnail generation, and storage.<br>
+Encoder: To encode each uploaded video into multiple formats.<br>
+Thumbnails generator: To generate a few thumbnails for each video.<br>
+Video and Thumbnail storage: To store video and thumbnail files in some distributed file storage.<br>
+User Database: To store user’s information, e.g., name, email, address, etc.<br>
+Video metadata storage: A metadata database to store all the information about videos like title, file path in the system, uploading user, total views, likes, dislikes, etc. It will also be used to store all the video comments.</p>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></figure>
+<p><strong>Design Rate Limiter</strong></p>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1566091665748.png" alt=""></figure>
+<p>fixed window<br>
+<img src="https://ywang412.github.io/post-images/1566091776264.png" alt=""><br>
+sliding wondow<br>
+<img src="https://ywang412.github.io/post-images/1566091784751.png" alt=""><br>
+bucket counter<br>
+if we have an hourly rate limit we can keep a count for each minute and calculate the sum of all counters in the past hour when we receive a new request to calculate the throttling limit</p>
+<p><strong>Design Typeahead Suggestion</strong></p>
+<p>Should we have case insensitive trie? For simplicity and search use-case, let’s assume our data is case insensitive.</p>
+<p>How to find top suggestion? Now that we can find all the terms for a given prefix, how can we find the top 10 terms for the given prefix? One simple solution could be to store the count of searches that terminated at each node, e.g., if users have searched about ‘CAPTAIN’ 100 times and ‘CAPTION’ 500 times, we can store this number with the last character of the phrase. Now if the user types ‘CAP’ we know the top most searched word under the prefix ‘CAP’ is ‘CAPTION’. So, to find the top suggestions for a given prefix, we can traverse the sub-tree under it.</p>
+<p>Given a prefix, how much time will it take to traverse its sub-tree? Given the amount of data we need to index, we should expect a huge tree. Even traversing a sub-tree would take really long, e.g., the phrase ‘system design interview questions’ is 30 levels deep. Since we have very strict latency requirements we do need to improve the efficiency of our solution.</p>
+<p>Can we store top suggestions with each node? This can surely speed up our searches but will require a lot of extra storage. We can store top 10 suggestions at each node that we can return to the user. We have to bear the big increase in our storage capacity to achieve the required efficiency.</p>
+<p>We can optimize our storage by storing only references of the terminal nodes rather than storing the entire phrase. To find the suggested terms we need to traverse back using the parent reference from the terminal node. We will also need to store the frequency with each reference to keep track of top suggestions.</p>
+<p>How would we build this trie? We can efficiently build our trie bottom up. Each parent node will recursively call all the child nodes to calculate their top suggestions and their counts. Parent nodes will combine top suggestions from all of their children to determine their top suggestions.</p>
+<p>How to update the trie? Assuming five billion searches every day, which would give us approximately 60K queries per second. If we try to update our trie for every query it’ll be extremely resource intensive and this can hamper our read requests, too. One solution to handle this could be to update our trie offline after a certain interval.</p>
+<p>As the new queries come in we can log them and also track their frequencies. Either we can log every query or do sampling and log every 1000th query. For example, if we don’t want to show a term which is searched for less than 1000 times, it’s safe to log every 1000th searched term.</p>
+<p>We can have a Map-Reduce (MR) set-up to process all the logging data periodically say every hour. These MR jobs will calculate frequencies of all searched terms in the past hour. We can then update our trie with this new data. We can take the current snapshot of the trie and update it with all the new terms and their frequencies. We should do this offline as we don’t want our read queries to be blocked by update trie requests. We can have two options:</p>
+<p>We can make a copy of the trie on each server to update it offline. Once done we can switch to start using it and discard the old one.<br>
+Another option is we can have a master-slave configuration for each trie server. We can update slave while the master is serving traffic. Once the update is complete, we can make the slave our new master. We can later update our old master, which can then start serving traffic, too.<br>
+How can we update the frequencies of typeahead suggestions? Since we are storing frequencies of our typeahead suggestions with each node, we need to update them too! We can update only differences in frequencies rather than recounting all search terms from scratch. If we’re keeping count of all the terms searched in last 10 days, we’ll need to subtract the counts from the time period no longer included and add the counts for the new time period being included. We can add and subtract frequencies based on Exponential Moving Average (EMA) of each term. In EMA, we give more weight to the latest data. It’s also known as the exponentially weighted moving average.</p>
+<p>After inserting a new term in the trie, we’ll go to the terminal node of the phrase and increase its frequency. Since we’re storing the top 10 queries in each node, it is possible that this particular search term jumped into the top 10 queries of a few other nodes. So, we need to update the top 10 queries of those nodes then. We have to traverse back from the node to all the way up to the root. For every parent, we check if the current query is part of the top 10. If so, we update the corresponding frequency. If not, we check if the current query’s frequency is high enough to be a part of the top 10. If so, we insert this new term and remove the term with the lowest frequency.</p>
+<p>How can we remove a term from the trie? Let's say we have to remove a term from the trie because of some legal issue or hate or piracy etc. We can completely remove such terms from the trie when the regular update happens, meanwhile, we can add a filtering layer on each server which will remove any such term before sending them to users.</p>
+<p>What could be different ranking criteria for suggestions? In addition to a simple count, for terms ranking, we have to consider other factors too, e.g., freshness, user location, language, demographics, personal history etc.</p>
+<p>Typeahead Client<br>
+We can perform the following optimizations on the client side to improve user’s experience:</p>
+<p>The client should only try hitting the server if the user has not pressed any key for 50ms.<br>
+If the user is constantly typing, the client can cancel the in-progress requests.<br>
+Initially, the client can wait until the user enters a couple of characters.<br>
+Clients can pre-fetch some data from the server to save future requests.<br>
+Clients can store the recent history of suggestions locally. Recent history has a very high rate of being reused.<br>
+Establishing an early connection with the server turns out to be one of the most important factors. As soon as the user opens the search engine website, the client can open a connection with the server. So when a user types in the first character, the client doesn’t waste time in establishing the connection.<br>
+The server can push some part of their cache to CDNs and Internet Service Providers (ISPs) for efficiency.</p>
+<p><strong>Designing Twitter Search</strong></p>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1566094473812.png" alt=""></figure>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/semaphore-vs-lock">
+              <h3 class="post-title">
+                Java JUC (java.util.concurrent) 7 - ExceptionSemaphore vs Lock Example
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

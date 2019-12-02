@@ -1,0 +1,272 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Stack and Tree | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Stack and Tree
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-08-19 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
+                  # LeetCode
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p><strong>Minimum Stack</strong></p>
+<pre><code>class MinStack {
+    int min = Integer.MAX_VALUE;
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    public void push(int x) {
+        // only push the old minimum value when the current 
+        // minimum value changes after pushing the new value x
+        if(x &lt;= min){          
+            stack.push(min);
+            min=x;
+        }
+        stack.push(x);
+    }
+
+    public void pop() {
+        // if pop operation could result in the changing of the current minimum value, 
+        // pop twice and change the current minimum value to the last minimum value.
+        if(stack.pop() == min) min=stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return min;
+    }
+}
+</code></pre>
+<p><strong>Max and Min Stack</strong></p>
+<pre><code>public class GoogleInterview {
+
+    Stack&lt;Integer&gt; stack;
+    Stack&lt;Integer&gt; min;
+    Stack&lt;Integer&gt; max;
+
+    GoogleInterview() {
+        stack = min = max = new Stack&lt;&gt;();
+    }
+
+    void push(int data) {
+        stack.push(data);
+
+        if (min.size() == 0 || min.peek() &gt;= data) {
+            min.push(data);
+        }
+
+        if (max.size() == 0 || max.peek() &lt;= data) {
+            max.push(data);
+        }
+    }
+
+    int pop() throws StackEmptyException {
+        if (stack.isEmpty()) {
+            throw new StackEmptyException();
+        }
+
+        int data = stack.pop();
+        if (data &lt;= min.peek()) {
+            min.pop();
+        }
+
+        if (data &gt;= max.peek()) {
+            max.pop();
+        }
+
+        return data;
+    }
+
+    int popMax() throws StackEmptyException {
+        if (max.isEmpty()) {
+            throw new StackEmptyException();
+        }
+
+        int maxData = max.peek();
+        Stack&lt;Integer&gt; temp = new Stack&lt;&gt;();
+
+        while (stack.peek() != maxData) {
+            temp.push(stack.pop());
+        }
+
+        stack.pop();
+		max.pop();
+
+        while (!temp.isEmpty()) {
+            push(temp.pop());
+        }
+
+        return maxData;
+    }
+
+    int max() throws StackEmptyException {
+        return max.peek();
+    }
+
+
+    int min() throws StackEmptyException {
+        if (min.isEmpty()) {
+            throw new StackEmptyException();
+        }
+
+        return min.peek();
+    }
+
+}
+</code></pre>
+<p><strong>Max Freq Stack</strong></p>
+<pre><code>class FreqStack {
+    HashMap&lt;Integer, Integer&gt; freq = new HashMap&lt;&gt;();
+    HashMap&lt;Integer, Stack&lt;Integer&gt;&gt; m = new HashMap&lt;&gt;();
+    int maxfreq = 0;
+
+    public void push(int x) {
+        int f = freq.getOrDefault(x, 0) + 1;
+        freq.put(x, f);
+        maxfreq = Math.max(maxfreq, f);
+        if (!m.containsKey(f)) m.put(f, new Stack&lt;Integer&gt;());
+        m.get(f).add(x);
+    }
+
+    public int pop() {
+        int x = m.get(maxfreq).pop();
+        freq.put(x, maxfreq - 1);
+        if (m.get(maxfreq).size() == 0) maxfreq--;
+        return x;
+    }
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/examples-of-ood-class-diagrams">
+              <h3 class="post-title">
+                Examples of OOD class diagrams
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

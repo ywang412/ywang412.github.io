@@ -1,0 +1,218 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Coding tricks using Scala syntax | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Coding tricks using Scala syntax
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-01-16 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/mppVQr2L4" class="post-tag">
+                  # Scala
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>Underscore, &quot;_&quot;, can mean differents things in scala, such as default pattern matching, anonymous function, package import. There are some less frequently used cases that are worth mentioning. For example, _ can be used to maker a setter for a private variable.</p>
+<pre><code>class Test {
+   private var a = 0
+   def age = a
+   def age_=(n:Int) = {
+      require(n&gt;0)
+      a = n
+   }
+}
+val t = new Test
+t.age = 5
+</code></pre>
+<p>_ can convert a method to a function variable without actually invoking the method.</p>
+<pre><code>class Test {
+  def fun = {
+    // some code
+  }
+  val funLike = fun _
+}
+</code></pre>
+<p>To sort a List of object, java provide Comparator<T> interface to compare two objects. Scala used the Ordering[T] trait.</p>
+<pre><code>case class Employee(id: Int, firstName: String, lastName: String)
+object Employee {
+  // Note that because `Ordering[A]` is not contravariant, the declaration
+  // must be type-parametrized in the event that you want the implicit
+  // ordering to apply to subclasses of `Employee`.
+  implicit def orderingByName[A &lt;: Employee]: Ordering[A] = Ordering.by(e =&gt; (e.lastName, e.firstName))
+  val orderingById: Ordering[Employee] = Ordering.by(e =&gt; e.id)
+}
+</code></pre>
+<p>Given es: SeqLike[Employee], es.sorted() will sort by name, and es.sorted(Employee.orderingById) will sort by id.</p>
+<p>Implicit val can be used to define the ordering mechanism as below,</p>
+<pre><code>implicit val timestampordering: ordering[Timestamp] = Ordering.by(_.ts)
+</code></pre>
+<p>Scala flatmap() and for-comprehension are interchangable. For example,</p>
+<pre><code>for {
+  bound &lt;- list
+  out &lt;- f(bound)
+} yield out
+
+// is translated by the Scala compiler as  
+list.flatMap { bound =&gt;
+  f(bound).map { out =&gt;
+    out
+  }
+}
+</code></pre>
+<p>It is easy to figure out a recursive solution which tries to flat each element in a nested list. The problem is how to aggregate the integers and List[Int] into a new list. Foldleft() with an initial empty list will work but a more elegant solution is to create an one element list if the element is an integer. Below is the comparison.</p>
+<p>Foldleft</p>
+<pre><code>object FlattenArray {
+  def flatten(list : List[Any]) : List[Int] = {
+    list.foldLeft(List[Int]()){
+      (res, cur) =&gt; {
+        cur match {
+          case null =&gt; res
+          case cur: Int =&gt; res :+ cur
+          case cur: List[Any] =&gt; res ::: flatten(cur)
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Create single element list</p>
+<pre><code>object FlattenArray {
+  def flatten(input: List[_]): List[_] =
+    input
+      .filterNot(_ == null)
+      .flatMap {
+        case list: List[_] =&gt; flatten(list)
+        case elem =&gt; List(elem)
+      }
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/java-8-lambda-expressions-and-streams">
+              <h3 class="post-title">
+                Java 8 Lambda expressions and Streams
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

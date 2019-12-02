@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SQL 3 - Lock | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              SQL 3 - Lock
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-12-04 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
+                  # SQL
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <pre><code>FLUSH TABLES WITH READ LOCK;
+UNLOCK TABLES;
+</code></pre>
+<p>lock all tables. all tables read-only. current session write fail</p>
+<p>lock tables t14 write;<br>
+current session can read and write, other session read/write will block.</p>
+<p>lock tables t14 read;<br>
+all session can read. current session write will fail. other session write will block.</p>
+<p>metadata locking<br>
+avoid long transaction and avoid ddl during database busy hour</p>
+<p>InnoDB support transaction and row locking</p>
+<p>S read row lock<br>
+select * from table where ... lock in share mode;<br>
+X write row lock<br>
+select * from table whre ... for update;</p>
+<p>InnoBD locks:<br>
+record lock on index keys<br>
+gap lock between index keys<br>
+next-key lock : record lock + gap lock</p>
+<p>if select doesn't use index, innoDB will lock table.</p>
+<p>Transactions level:<br>
+Read uncommited. dirty read<br>
+read commited. phantom read<br>
+repeatable read. mysql default.<br>
+serializable.</p>
+<p>for RC level,<br>
+if select without index, table lock<br>
+if unique index, lock matched index and corresponding clustered index<br>
+if non unique index, lock matched index and corresponding clustered index</p>
+<p>for RR level<br>
+if non unique index, GAP lock will lock the gap around matched index.<br>
+if no index, table lock and gap lock locks all gaps.<br>
+if unique index, same as RC level.</p>
+<p><strong>Dead Lock</strong></p>
+<p>to fix dead lock<br>
+1 innodb_deadlock_detect on to return error<br>
+2 innodb_lock_wait_timeout to time out</p>
+<p>Scenario<br>
+different session lock different rows (same or different table) in different order.<br>
+RR level, different session lock rows and write the row locked by each other.</p>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/jvm-performance-tuning">
+              <h3 class="post-title">
+                JVM performance tuning
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

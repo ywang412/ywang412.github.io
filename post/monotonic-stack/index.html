@@ -1,0 +1,320 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Monotonic Stack | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Monotonic Stack
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-04-25 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
+                  # LeetCode
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p><strong>503. Next Greater Element II</strong></p>
+<pre><code>public int[] nextGreaterElements(int[] nums) {
+		int n = nums.length, next[] = new int[n];
+		Arrays.fill(next, -1);
+		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); // index stack
+		for (int i = 0; i &lt; n * 2; i++) {
+				int num = nums[i % n]; 
+				while (!stack.isEmpty() &amp;&amp; nums[stack.peek()] &lt; num)
+						next[stack.pop()] = num;
+				stack.push(i % n);
+		}   
+		return next;
+}
+</code></pre>
+<p><strong>1130. Minimum Cost Tree From Leaf Values</strong></p>
+<pre><code>public int mctFromLeafValues(int[] A) {
+		int res = 0, n = A.length;
+		Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+		stack.push(Integer.MAX_VALUE);
+		for (int a : A) {
+				while (stack.peek() &lt;= a) {
+						int mid = stack.pop();
+						res += mid * Math.min(stack.peek(), a);
+				}
+				stack.push(a);
+		}
+		while (stack.size() &gt; 2) {
+				res += stack.pop() * stack.peek();
+		}
+		return res;
+}
+</code></pre>
+<p><strong>739. Daily Temperatures and 496. Next Greater Element I</strong></p>
+<pre><code>class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        int[] ret = new int[temperatures.length];
+        for(int i = 0; i &lt; temperatures.length; i++) {
+            while(!stack.isEmpty() &amp;&amp; temperatures[i] &gt; temperatures[stack.peek()]) {
+                int idx = stack.pop();
+                ret[idx] = i - idx;
+            }
+            stack.push(i);
+        }
+        return ret;
+    }
+}
+</code></pre>
+<p><strong>Largest Rectangle in Histogram</strong></p>
+<pre><code>public class Solution {
+    public int largestRectangleArea(int[] height) {
+        int len = height.length;
+        Stack&lt;Integer&gt; s = new Stack&lt;Integer&gt;();
+        int maxArea = 0;
+        int i = 0;
+        while(i &lt;= len){
+            int h = (i == len ? 0 : height[i]);
+            if(s.isEmpty() || h &gt;= height[s.peek()]){
+                s.push(i);
+                i++;
+            }else{
+                int tp = s.pop();
+                maxArea = Math.max(maxArea, height[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
+                 
+            }
+        }
+        return maxArea;
+    }
+}
+</code></pre>
+<p><strong>239. Sliding Window Maximum</strong></p>
+<pre><code>class Solution {
+    public int[] maxSlidingWindow(int[] a, int k) {		
+            if (a == null || k &lt;= 0) {
+                return new int[0];
+            }
+            int n = a.length;
+            int[] r = new int[n-k+1];
+            int ri = 0;
+            // store index
+            Deque&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();
+            for (int i = 0; i &lt; a.length; i++) {
+                // remove numbers out of range k
+                while (!q.isEmpty() &amp;&amp; q.peek() &lt; i - k + 1) {
+                    q.poll();
+                }
+                // remove smaller numbers in k range as they are useless
+                while (!q.isEmpty() &amp;&amp; a[q.peekLast()] &lt; a[i]) {
+                    q.pollLast();
+                }
+                // q contains index... r contains content
+                q.offer(i);
+                if (i &gt;= k - 1) {
+                    r[ri++] = a[q.peek()];
+                }
+            }
+            return r;
+        }
+}
+</code></pre>
+<p><strong>862. Shortest Subarray with Sum at Least K</strong></p>
+<pre><code>class Solution {
+    public int shortestSubarray(int[] A, int K) {
+        int N = A.length, res = N + 1;
+        int[] B = new int[N + 1];
+        for (int i = 0; i &lt; N; i++) 
+            B[i + 1] = B[i] + A[i];
+        Deque&lt;Integer&gt; d = new ArrayDeque&lt;&gt;();
+        for (int i = 0; i &lt; N + 1; i++) {
+            while (d.size() &gt; 0 &amp;&amp; B[i] - B[d.getFirst()] &gt;=  K)
+                res = Math.min(res, i - d.pollFirst());
+            while (d.size() &gt; 0 &amp;&amp; B[i] &lt;= B[d.getLast()]) 
+                d.pollLast();
+            d.addLast(i);
+        }
+        return res &lt;= N ? res : -1;
+    }
+}
+</code></pre>
+<p><strong>901. Online Stock Span</strong></p>
+<p>The span of the stock's price today is defined as the maximum number of consecutive days (starting from today and going backwards) for which the price of the stock was less than or equal to today's price.</p>
+<pre><code>class StockSpanner {
+
+    public StockSpanner() {
+        
+    }
+    
+    Stack&lt;int[]&gt; stack = new Stack&lt;&gt;();
+    public int next(int price) {
+        int res = 1;
+        while (!stack.isEmpty() &amp;&amp; stack.peek()[0] &lt;= price)
+            res += stack.pop()[1];
+        stack.push(new int[]{price, res});
+        return res;
+    }
+}
+</code></pre>
+<p><strong>LC907. Sum of Subarray Minimums</strong></p>
+<pre><code>class Solution {
+    public int sumSubarrayMins(int[] A) {
+        int MOD = 1_000_000_007;
+        int N = A.length;
+
+        // prev has i* - 1 in increasing order of A[i* - 1]
+        // where i* is the answer to query j
+        Stack&lt;Integer&gt; stack = new Stack();
+        int[] prev = new int[N];
+        for (int i = 0; i &lt; N; ++i) {
+            while (!stack.isEmpty() &amp;&amp; A[i] &lt;= A[stack.peek()])
+                stack.pop();
+            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+
+        // next has k* + 1 in increasing order of A[k* + 1]
+        // where k* is the answer to query j
+        stack = new Stack();
+        int[] next = new int[N];
+        for (int k = N-1; k &gt;= 0; --k) {
+            while (!stack.isEmpty() &amp;&amp; A[k] &lt; A[stack.peek()])
+                stack.pop();
+            next[k] = stack.isEmpty() ? N : stack.peek();
+            stack.push(k);
+        }
+
+        // Use prev/next array to count answer
+        long ans = 0;
+        for (int i = 0; i &lt; N; ++i) {
+            ans += (i - prev[i]) * (next[i] - i) % MOD * A[i] % MOD;
+            ans %= MOD;
+        }
+        return (int) ans;
+
+    }
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/algorithm-2">
+              <h3 class="post-title">
+                Non-trival textbook algorithms - 2
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

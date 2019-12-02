@@ -1,0 +1,226 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-05-13 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
+<pre><code>// 修饰一个代码块
+public void test1(int j) {
+		synchronized (this) {
+				for (int i = 0; i &lt; 10; i++) {
+						log.info(&quot;test1 {} - {}&quot;, j, i);
+				}
+		}
+}
+
+// 修饰一个方法
+public synchronized void test2(int j) {
+		for (int i = 0; i &lt; 10; i++) {
+				log.info(&quot;test2 {} - {}&quot;, j, i);
+		}
+}
+
+public static void main(String[] args) {
+		SynchronizedExample1 example1 = new SynchronizedExample1();
+		SynchronizedExample1 example2 = new SynchronizedExample1();
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.execute(() -&gt; {
+				example1.test2(1);
+		});
+		executorService.execute(() -&gt; {
+				example2.test2(2);
+		});
+}
+</code></pre>
+<pre><code>// 修饰一个类
+public static void test1(int j) {
+		synchronized (SynchronizedExample2.class) {
+				for (int i = 0; i &lt; 10; i++) {
+						log.info(&quot;test1 {} - {}&quot;, j, i);
+				}
+		}
+}
+
+// 修饰一个静态方法
+public static synchronized void test2(int j) {
+		for (int i = 0; i &lt; 10; i++) {
+				log.info(&quot;test2 {} - {}&quot;, j, i);
+		}
+}
+
+public static void main(String[] args) {
+		SynchronizedExample2 example1 = new SynchronizedExample2();
+		SynchronizedExample2 example2 = new SynchronizedExample2();
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		executorService.execute(() -&gt; {
+				example1.test1(1);
+		});
+		executorService.execute(() -&gt; {
+				example2.test1(2);
+		});
+}
+</code></pre>
+<p>Java provide several thread safe synchronized containers out of the box.</p>
+<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
+private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
+private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
+private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
+private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
+</code></pre>
+<p>Java and Guava also provide several immutable containers out of the box.</p>
+<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
+static {
+		map.put(1, 2);
+		map.put(3, 4);
+		map.put(5, 6);
+		map = Collections.unmodifiableMap(map);
+}
+</code></pre>
+<pre><code>import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
+private final static ImmutableSet set = ImmutableSet.copyOf(list);
+private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
+private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
+				.put(1, 2).put(3, 4).put(5, 6).build();
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables">
+              <h3 class="post-title">
+                Java JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SQL 5 - Advanced | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              SQL 5 - Advanced
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-12-13 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
+                  # SQL
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p><strong>Auto increment primary key</strong></p>
+<p>Clustered index is (primary key -&gt; first unique not-nullable index -&gt; rowID)</p>
+<p>auto increment can maintain the B+ tree (only append new node at the end)<br>
+<img src="https://ywang412.github.io/post-images/1573358670278.png" alt=""></p>
+<p><strong>Master-slave</strong></p>
+<p>Master-slave asynchronous copy<br>
+<img src="https://ywang412.github.io/post-images/1573361198939.png" alt=""><br>
+Latency due to single thread in slave to consume relay log</p>
+<p>Master-slave semi-synchronous copy<br>
+<img src="https://ywang412.github.io/post-images/1573361277684.png" alt=""></p>
+<p>read-write seperation</p>
+<ol>
+<li>through program (set slave read-only to prevent write to slave)</li>
+<li>through middle-ware (MyCAT)</li>
+</ol>
+<p>Latency happends for<br>
+big transaction<br>
+big table ddl<br>
+master concurrent dml<br>
+master no primary key</p>
+<p><strong>Sharding</strong></p>
+<p>When to shard<br>
+Big table backup from slave takes too long<br>
+Big table DDL takes too long</p>
+<p>how to shard<br>
+vertical sharding frequently update field<br>
+vertical sharding text/blob field<br>
+vertical sharding of fast growing fields</p>
+<ol>
+<li>through program</li>
+<li>through middle-ware (MyCAT)</li>
+</ol>
+<p><strong>Bulk delete</strong></p>
+<p>if innodb_file_per_table on, each table has seperate file and drop table will clean space</p>
+<p>To delete a table</p>
+<ol>
+<li>alter table t29 rename t29_bak_20191011;</li>
+<li>wait a month to find dependence on the table</li>
+<li>drop table t29_bak_20191011;</li>
+</ol>
+<p>To clean a table (don't use delete because each row binlog, truncate will drop and create)</p>
+<ol>
+<li>create table t29_bak_20191011 like t29;</li>
+<li>insert into t29_bak_20191011  select * from t29;</li>
+<li>truncate table t29;</li>
+<li>back up table and then drop table t29_bak_20191011;</li>
+</ol>
+<p>delete some record in a table without partition</p>
+<ol>
+<li>back up table</li>
+<li>make sure index exist</li>
+<li>delete from table_name where date&lt;'2017-01-01' limit 1000;</li>
+<li>alter table table_name engine=InnoDB; or optimize table student;  to release space (delete record will not free space, future insert can reuse)</li>
+</ol>
+<p>delete some record in a table with partition<br>
+alter table t29_log drop partition p2016;</p>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/sql-4-transaction">
+              <h3 class="post-title">
+                SQL 4 - Transaction
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

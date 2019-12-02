@@ -1,0 +1,235 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Java JUC (java.util.concurrent) 6 - Exception | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Java JUC (java.util.concurrent) 6 - Exception
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-07-11 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <p>To stop a thread</p>
+<ol>
+<li>stop()  // deprecated<br>
+throws ThreadDeath exception and release lock</li>
+<li>interrupt()   // isInterrupted()</li>
+</ol>
+<pre><code>public class MyThread extends Thread {
+    @Override
+    public void run() {
+        try {
+            for (int i=0; i&lt;50000; i++){
+                if (this.isInterrupted()) {
+                    System.out.println(&quot; 已经是停止状态了！&quot;);
+                    throw new InterruptedException();   // or intead use return;
+                }
+                System.out.println(i);
+            }
+            System.out.println(&quot; 不抛出异常，我会被执行的哦！&quot;);
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+    }
+ 
+    public static void main(String[] args) throws InterruptedException {
+        MyThread myThread =new MyThread();
+        myThread.start();
+        Thread.sleep(100);
+        myThread.interrupt();
+    }
+ 
+}
+</code></pre>
+<p>suspend() and resume() // deprecated because occupy lock</p>
+<p>suspend can block println()</p>
+<pre><code>public void println(String x) {
+		synchronized (this) {
+				print(x);
+				newLine();
+		}
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1572150142349.jpg" alt=""></figure>
+<p><strong>uncaughtException</strong></p>
+<pre><code>ThreadGroup group = new ThreadGroup(&quot;&quot;){
+      @Override
+      public void uncaughtException(Thread t, Throwable e) {
+             super.uncaughtException(t, e);
+             // 一个线程出现异常，中断组内所有线程
+             this.interrupt();
+      }
+};
+</code></pre>
+<pre><code>public class MyThread{
+ 
+    public static void main(String[] args) {
+        ThreadGroup threadGroup = new ThreadGroup(&quot;ThreadGroup&quot;){
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程组的异常处理 &quot;);
+                super.uncaughtException(t, e);
+            }
+        };
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(&quot; 线程类的异常处理 &quot;);
+            }
+        });
+        Thread thread = new Thread(threadGroup,&quot;Thread&quot;){
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+&quot; 执行 &quot;);
+                int i= 2/0;
+            }
+        };
+//        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//            @Override
+//            public void uncaughtException(Thread t, Throwable e) {
+//                System.out.println(&quot; 线程对象的异常处理 &quot;);
+//            }
+//        });
+        thread.start();
+    }
+ 
+}
+
+//Thread 执行
+//线程组的异常处理
+//线程类的异常处理
+
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
+              <h3 class="post-title">
+                Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
