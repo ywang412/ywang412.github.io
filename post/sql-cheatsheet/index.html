@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575250580128">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575251791770">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575250580128" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575251791770" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-10-03 ·
+                · 2019-10-02 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -124,6 +124,23 @@
      ORDER BY start_terminal, duration_seconds
        ) sub
  WHERE sub.difference IS NOT NULL
+</code></pre>
+<p><strong>534. Game Play Analysis III</strong></p>
+<pre><code>--Method 1: Using Self Join 
+SELECT a1.player_id, a1.event_date,
+SUM(a2.games_played) AS games_played_so_far
+FROM activity a1, activity a2
+WHERE a1.player_id = a2.player_id
+AND a1.event_date &gt;=a2.event_date
+GROUP BY a1.player_id, a1.event_date
+ORDER BY a1.player_id, a1.event_date;
+--Method 2: Using window functions
+
+SELECT
+player_id, event_date, sum(games_played) over(PARTITION BY player_id ORDER BY event_date)
+AS 'games_played_so_far'
+FROM activity
+ORDER BY player_id, games_played_so_far;
 </code></pre>
 <p><strong>601. Human Traffic Of Stadium</strong></p>
 <pre><code>select distinct day1.* 

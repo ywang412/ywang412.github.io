@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-02T01:37:09.947Z</updated>
+    <updated>2019-12-02T01:56:37.932Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -174,7 +174,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-03T15:24:27.000Z</updated>
+        <updated>2019-10-03T02:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SQL window function</strong></p>
 <pre><code>SELECT start_terminal,
        duration_seconds,
@@ -211,6 +211,23 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
      ORDER BY start_terminal, duration_seconds
        ) sub
  WHERE sub.difference IS NOT NULL
+</code></pre>
+<p><strong>534. Game Play Analysis III</strong></p>
+<pre><code>--Method 1: Using Self Join 
+SELECT a1.player_id, a1.event_date,
+SUM(a2.games_played) AS games_played_so_far
+FROM activity a1, activity a2
+WHERE a1.player_id = a2.player_id
+AND a1.event_date &gt;=a2.event_date
+GROUP BY a1.player_id, a1.event_date
+ORDER BY a1.player_id, a1.event_date;
+--Method 2: Using window functions
+
+SELECT
+player_id, event_date, sum(games_played) over(PARTITION BY player_id ORDER BY event_date)
+AS 'games_played_so_far'
+FROM activity
+ORDER BY player_id, games_played_so_far;
 </code></pre>
 <p><strong>601. Human Traffic Of Stadium</strong></p>
 <pre><code>select distinct day1.* 
