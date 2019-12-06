@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575252443105">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575610330234">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575252443105" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575610330234" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-10-02 ·
+                · 2019-10-01 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -633,6 +633,30 @@ where sale_date not between '2019-01-01' and '2019-03-31');
 <pre><code>SELECT *
 FROM products
 WHERE category_id IS NOT NULL;
+</code></pre>
+<p><strong>608. Tree Node</strong></p>
+<pre><code>select T.id, 
+IF(isnull(T.p_id), 'Root', IF(T.id in (select p_id from tree), 'Inner', 'Leaf')) Type 
+from tree T
+
+select Id,
+case 
+    when p_id is null then &quot;Root&quot;
+    when (p_id is not null and id in (select p_id from Tree)) then &quot;Inner&quot;
+    else &quot;Leaf&quot;
+end as Type
+from tree
+
+SELECT DISTINCT t1.id, (
+    CASE
+    WHEN t1.p_id IS NULL  THEN 'Root'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NOT NULL THEN 'Inner'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NULL THEN 'Leaf'
+    END
+) AS Type 
+FROM tree t1
+LEFT JOIN tree t2
+ON t1.id = t2.p_id
 </code></pre>
 
             </div>

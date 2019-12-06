@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-02T02:07:28.531Z</updated>
+    <updated>2019-12-06T05:32:19.055Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -174,7 +174,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-02T13:24:27.000Z</updated>
+        <updated>2019-10-02T00:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>time function</strong></p>
 <pre><code>WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
 WHERE datediff( '2019-06-30', t.login_date)&lt;=90
@@ -720,6 +720,30 @@ where sale_date not between '2019-01-01' and '2019-03-31');
 <pre><code>SELECT *
 FROM products
 WHERE category_id IS NOT NULL;
+</code></pre>
+<p><strong>608. Tree Node</strong></p>
+<pre><code>select T.id, 
+IF(isnull(T.p_id), 'Root', IF(T.id in (select p_id from tree), 'Inner', 'Leaf')) Type 
+from tree T
+
+select Id,
+case 
+    when p_id is null then &quot;Root&quot;
+    when (p_id is not null and id in (select p_id from Tree)) then &quot;Inner&quot;
+    else &quot;Leaf&quot;
+end as Type
+from tree
+
+SELECT DISTINCT t1.id, (
+    CASE
+    WHEN t1.p_id IS NULL  THEN 'Root'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NOT NULL THEN 'Inner'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NULL THEN 'Leaf'
+    END
+) AS Type 
+FROM tree t1
+LEFT JOIN tree t2
+ON t1.id = t2.p_id
 </code></pre>
 ]]></content>
     </entry>
