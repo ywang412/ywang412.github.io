@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 1 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575760278078">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575761613218">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575760278078" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575761613218" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-03-28 ·
+                · 2018-03-27 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -765,8 +765,13 @@ public int g(int i, int j, int k) {
 		return res;
 }
 </code></pre>
-<p><strong>Decreasing Subsequences</strong></p>
-<p>The number of decreasing subsequence partitions is equal to the length of the longest non-decreasing subsequence.</p>
+<p><strong>Decreasing Subsequences</strong><br>
+Given an int array nums of length n. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get by splitting.<br>
+Input: [5, 2, 4, 3, 1, 6]<br>
+Output: 3<br>
+Explanation:<br>
+You can split this array into: [5, 2, 1], [4, 3], [6]. And there are 3 subsequences you get.<br>
+The number of decreasing subsequence partitions is equal to the length of the longest non-decreasing subsequence.</p>
 <pre><code>public static int leastSubsequences(int... nums) {
 		int[] piles = new int[nums.length];
 		int size = 0;
