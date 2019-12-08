@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 1 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575790882873">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575823987500">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575790882873" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575823987500" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-03-27 ·
+                · 2018-03-26 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -822,6 +822,70 @@ public static int binarySearch(int[] nums, int lo, int hi, int target) {
 <li>Repeat step#2 until there are (V-1) edges in the spanning tree.</li>
 </ol>
 <pre><code>
+class Edge implements Comparable&lt;Edge&gt; 
+{ 
+    int src, dest, weight; 
+
+    // Comparator function used for sorting edges  
+    // based on their weight 
+    public int compareTo(Edge compareEdge) 
+    { 
+        return this.weight-compareEdge.weight; 
+    } 
+}; 
+
+// A class to represent a subset for union-find 
+class subset 
+{ 
+    int parent, rank; 
+}; 
+
+int V, E;    // V-&gt; no. of vertices &amp; E-&gt;no.of edges 
+Edge edge[]; // collection of all edges 
+
+// Creates a graph with V vertices and E edges 
+Graph(int v, int e) 
+{ 
+    V = v; 
+    E = e; 
+    edge = new Edge[E]; 
+    for (int i=0; i&lt;e; ++i) 
+        edge[i] = new Edge(); 
+} 
+
+// A utility function to find set of an element i 
+// (uses path compression technique) 
+int find(subset subsets[], int i) 
+{ 
+    // find root and make root as parent of i (path compression) 
+    if (subsets[i].parent != i) 
+        subsets[i].parent = find(subsets, subsets[i].parent); 
+
+    return subsets[i].parent; 
+} 
+
+// A function that does union of two sets of x and y 
+// (uses union by rank) 
+void Union(subset subsets[], int x, int y) 
+{ 
+    int xroot = find(subsets, x); 
+    int yroot = find(subsets, y); 
+
+    // Attach smaller rank tree under root of high rank tree 
+    // (Union by Rank) 
+    if (subsets[xroot].rank &lt; subsets[yroot].rank) 
+        subsets[xroot].parent = yroot; 
+    else if (subsets[xroot].rank &gt; subsets[yroot].rank) 
+        subsets[yroot].parent = xroot; 
+
+    // If ranks are same, then make one as root and increment 
+    // its rank by one 
+    else
+    { 
+        subsets[yroot].parent = xroot; 
+        subsets[xroot].rank++; 
+    } 
+} 
 // The main function to construct MST using Kruskal's algorithm 
 void KruskalMST() 
 { 
@@ -874,8 +938,7 @@ void KruskalMST()
 
 		// print the contents of result[] to display 
 		// the built MST 
-		System.out.println(&quot;Following are the edges in &quot; +  
-																 &quot;the constructed MST&quot;); 
+		System.out.println(&quot;Following are the edges in &quot; + &quot;the constructed MST&quot;); 
 		for (i = 0; i &lt; e; ++i) 
 				System.out.println(result[i].src+&quot; -- &quot; +  
 							 result[i].dest+&quot; == &quot; + result[i].weight); 
@@ -931,7 +994,7 @@ void KruskalMST()
 			return n + 1; 
 	} 
 </code></pre>
-<p>**642. Design Search Autocomplete System -Trie **</p>
+<p><strong>642. Design Search Autocomplete System -Trie</strong></p>
 <pre><code>class AutocompleteSystem {
     
     class TrieNode {
