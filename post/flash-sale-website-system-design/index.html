@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Flash sale website system design | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575863945189">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575866986775">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575863945189" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575866986775" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -128,6 +128,14 @@ mycat cluster (use HaProxy + Keepalived) to sharding database write/read</p>
 <p><strong>Thread safety</strong></p>
 <p>lock/synchronzed keyword<br>
 AtomicInteger compare and swap</p>
+<p><strong>RateLimiter</strong></p>
+<p>Leaky bucket<br>
+smooth burst<br>
+p drain rate</p>
+<p>Token bucket<br>
+permit burst but bands it<br>
+in any T, rate &lt; b + t * p, b bucket size, p token rate<br>
+long term &lt; p</p>
 
             </div>
           </article>
