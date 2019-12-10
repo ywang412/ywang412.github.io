@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575866986775">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1575954506954">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575866986775" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1575954506954" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -657,6 +657,17 @@ SELECT DISTINCT t1.id, (
 FROM tree t1
 LEFT JOIN tree t2
 ON t1.id = t2.p_id
+</code></pre>
+<p><strong>1082. Sales Analysis I</strong></p>
+<pre><code>SELECT seller_id
+FROM Sales
+GROUP BY seller_id
+HAVING sum(price) = 
+(   SELECT sum(price)
+    FROM sales
+    group by seller_id
+    order by sum(price) desc
+    limit 1)
 </code></pre>
 
             </div>
