@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Flash sale website system design | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576337491643">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576338904240">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576337491643" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576338904240" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,8 +78,12 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-10-26 ·
+                · 2018-10-25 ·
               </time>
+              
+                <a href="https://ywang412.github.io/tag/Ior5oAFIx" class="post-tag">
+                  # Design
+                </a>
               
             </div>
             
@@ -136,6 +140,55 @@ p drain rate</p>
 permit burst but bands it<br>
 in any T, rate &lt; b + t * p, b bucket size, p token rate<br>
 long term &lt; p</p>
+<p><strong>JVM Reference</strong></p>
+<p>Strong reference GC when reference = null or method exit<br>
+SoftReference GC when memory not enough before throw OOM<br>
+WeakReference collect whenever GC  system.gc()<br>
+PhantomReference put object in a queue when GC for further analysis</p>
+<p>use SoftReference to make cache, collect to prevent OOM</p>
+<pre><code>class BigValue {
+   ...
+   //模拟大容量对象
+}
+
+public class ReferenceCache {
+    Map&lt;String, SoftReference&lt;BigValue&gt;&gt; caches = new HashMap();
+    //根据id存储缓存对象（缓存对象被装饰在了软引用中）
+    void setCache(String id, BigValue bigValue) {
+        caches.put(id, new SoftReference&lt;BigValue&gt;(bigValue));
+    }
+    //根据id获取缓存对象
+    BigValue getCache(String id) {
+        //根据id，获取缓存对象的软引用
+        SoftReference&lt;BigValue&gt; softRef = caches.get(id);
+        return softRef == null ? null : softRef.get();
+    }
+}
+</code></pre>
+<p><strong>Message Queue Idempotent</strong></p>
+<p>order -&gt; payment</p>
+<ol>
+<li>use db primary key to prevent duplicate insert<br>
+use order id or unique mapping of order id as payment id</li>
+<li>use set or redis to make a history table to check before insert</li>
+<li>implement CAS to prevent update</li>
+</ol>
+<p><strong>Message Queue Scaling</strong></p>
+<ol>
+<li>increase consumer and partition</li>
+<li>write to new temparory queue and consume at new queue</li>
+<li>prevent retry</li>
+</ol>
+<p><strong>Protobuf + Netty</strong></p>
+<pre><code>package com.yanqun.protobuf ;
+option java_package = &quot;com.yanqun.protobuf&quot; ;
+option java_outer_classname = &quot;MyMessage&quot; ;
+message MyMessage
+{
+    required string name = 1 ;
+    optional int32 age = 2 ;
+}
+</code></pre>
 
             </div>
           </article>
