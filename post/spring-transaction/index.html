@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Spring transaction | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576283202735">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576284495953">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576283202735" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576284495953" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -90,12 +90,22 @@
             <div class="post-content">
               <p>spring transaction can be implemented by</p>
 <ol>
-<li>TransactionTemplate</li>
-<li>XML</li>
-</ol>
-<p>Service DI transactionTemplate<br>
+<li>
+<p>TransactionTemplate<br>
+Service DI transactionTemplate<br>
 TransactionTemplate DI TransactionManager<br>
 TransactionManager DI datasource / Set autocommit false</p>
+</li>
+<li>
+<p>XML<br>
+1.TransactionProxyFactoryBean DI service and TransactionManager (PROPAGATION_REQUIRED, +exception)<br>
+2.AspectJ<br>
+single point / txadvice DI TransactionManager (tx:method propagation isolation)<br>
+multiple points / aop: pointcut expression<br>
+3. @Transactional(propagation, isolation, readOnly, rollbackfor exceptions, noRollbackFor)<br>
+&lt;tx:annotation-driven transaction-manager&gt;</p>
+</li>
+</ol>
 
             </div>
           </article>
