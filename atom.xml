@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-14T16:04:15.502Z</updated>
+    <updated>2019-12-15T03:30:57.276Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -3024,8 +3024,9 @@ songplay_table_df.write.parquet('data/songplays_table', partitionBy=['year', 'mo
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-02T05:48:51.000Z</updated>
-        <content type="html"><![CDATA[<p>byte 1 byte -128 to 127.<br>
+        <updated>2019-08-01T16:48:51.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576380638596.png" alt=""></figure>
+<p>byte 1 byte -128 to 127.<br>
 short 2 bytes -32,768 to 32,767.<br>
 int 4 bytes -2,147,483,648 to 2,147,483,647.<br>
 long 8 bytes -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807.</p>
@@ -3072,7 +3073,7 @@ auto-increment-offset = 2
 </code></pre>
 <p>We can put a load balancer in front of both of these databases to round robin between them and to deal with downtime. Both these servers could be out of sync with one generating more keys than the other, but this will not cause any issue in our system. We can extend this design by defining separate ID tables for Users, Photo-Comments, or other objects present in our system.</p>
 <p>Alternately, we can implement a ‘key’ generation scheme similar to what we have discussed in Designing a URL Shortening service like TinyURL.</p>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1565757623378.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1565757623378.png" alt=""></figure>
 <p><strong>Design Dropbox</strong></p>
 <p>The metadata Database should be storing information about following objects:</p>
 <p>Chunks<br>
@@ -3096,9 +3097,9 @@ Thumbnails generator: To generate a few thumbnails for each video.<br>
 Video and Thumbnail storage: To store video and thumbnail files in some distributed file storage.<br>
 User Database: To store user’s information, e.g., name, email, address, etc.<br>
 Video metadata storage: A metadata database to store all the information about videos like title, file path in the system, uploading user, total views, likes, dislikes, etc. It will also be used to store all the video comments.</p>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></figure>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1566070090262.png" alt=""></figure>
 <p><strong>Design Rate Limiter</strong></p>
-<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1566091665748.png" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1566091665748.png" alt=""></figure>
 <p>fixed window<br>
 <img src="https://ywang412.github.io/post-images/1566091776264.png" alt=""><br>
 sliding wondow<br>
@@ -3131,7 +3132,7 @@ Clients can store the recent history of suggestions locally. Recent history has 
 Establishing an early connection with the server turns out to be one of the most important factors. As soon as the user opens the search engine website, the client can open a connection with the server. So when a user types in the first character, the client doesn’t waste time in establishing the connection.<br>
 The server can push some part of their cache to CDNs and Internet Service Providers (ISPs) for efficiency.</p>
 <p><strong>Designing Twitter Search</strong></p>
-<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1566094473812.png" alt=""></figure>
+<figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1566094473812.png" alt=""></figure>
 ]]></content>
     </entry>
     <entry>

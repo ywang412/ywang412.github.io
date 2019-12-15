@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Flash sale website system design | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576338904240">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576380653286">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576338904240" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576380653286" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-10-25 ·
+                · 2018-10-24 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/Ior5oAFIx" class="post-tag">
@@ -189,6 +189,17 @@ message MyMessage
     optional int32 age = 2 ;
 }
 </code></pre>
+<p><strong>cookie and session</strong></p>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576358563615.png" alt=""></figure>
+<p>If cookie not allowed, put token in response.</p>
+<p>distributed session</p>
+<ol>
+<li>nginx ip_hash   same ip goes to same server</li>
+<li>tomcat cluster  copy session among all servers</li>
+<li>redis cluster</li>
+</ol>
+<p><strong>Redis distributed lock</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1576380520490.png" alt=""></figure>
 
             </div>
           </article>
