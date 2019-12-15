@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-15T05:49:43.228Z</updated>
+    <updated>2019-12-15T05:51:46.564Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -26,7 +26,7 @@
         <id>https://ywang412.github.io/post/spring-mvc</id>
         <link href="https://ywang412.github.io/post/spring-mvc">
         </link>
-        <updated>2019-12-14T13:32:12.000Z</updated>
+        <updated>2019-12-13T23:32:12.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576380797947.png" alt=""></figure>
 <figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1576380877003.png" alt=""></figure>
 ]]></content>
