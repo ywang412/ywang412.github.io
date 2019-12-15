@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-15T03:35:15.019Z</updated>
+    <updated>2019-12-15T04:33:06.885Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,17 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Java design pattern]]></title>
+        <id>https://ywang412.github.io/post/java-design-pattern</id>
+        <link href="https://ywang412.github.io/post/java-design-pattern">
+        </link>
+        <updated>2019-12-14T13:35:48.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://ywang412.github.io/post-images/1576381012394.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1576381064677.png" alt=""><br>
+<img src="https://ywang412.github.io/post-images/1576381098946.png" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring MVC]]></title>
         <id>https://ywang412.github.io/post/spring-mvc</id>
@@ -51,7 +62,7 @@ multiple points / aop: pointcut expression<br>
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
         <link href="https://ywang412.github.io/post/nosql-vs-sql">
         </link>
-        <updated>2019-11-05T17:25:02.000Z</updated>
+        <updated>2019-11-05T03:25:02.000Z</updated>
         <content type="html"><![CDATA[<p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -3313,35 +3324,6 @@ throws ThreadDeath exception and release lock</li>
 //线程组的异常处理
 //线程类的异常处理
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
-        </link>
-        <updated>2019-07-06T12:19:02.000Z</updated>
-        <content type="html"><![CDATA[<p>Java use Thread Pool pattern to save resources in a multithreaded application, and also to contain the parallelism in certain predefined limits. It controls several re-used threads for executing these tasks.</p>
-<pre><code>ExecutorService executorService = Executors.newCachedThreadPool();
-for (int i = 0; i &lt; 10; i++) {
-		final int index = i;
-		executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-						log.info(&quot;task:{}&quot;, index);
-				}
-		});
-}
-executorService.shutdown();
-</code></pre>
-<p>There are several pre-defined threadpool for various scenarios.</p>
-<pre><code>ExecutorService executorService = Executors.newFixedThreadPool(3);
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-</code></pre>
-<p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
-<pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
 </code></pre>
 ]]></content>
     </entry>
