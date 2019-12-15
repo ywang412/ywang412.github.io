@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-15T05:51:46.564Z</updated>
+    <updated>2019-12-15T22:59:21.222Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -3046,7 +3046,7 @@ songplay_table_df.write.parquet('data/songplays_table', partitionBy=['year', 'mo
         <id>https://ywang412.github.io/post/system-design</id>
         <link href="https://ywang412.github.io/post/system-design">
         </link>
-        <updated>2019-08-01T03:48:51.000Z</updated>
+        <updated>2019-07-31T14:48:51.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576380638596.png" alt=""></figure>
 <p><img src="https://ywang412.github.io/post-images/1576385934910.png" alt=""><br>
 <img src="https://ywang412.github.io/post-images/1576385942324.png" alt=""><br>
