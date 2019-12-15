@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-15T03:30:57.276Z</updated>
+    <updated>2019-12-15T03:35:15.019Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Spring MVC]]></title>
+        <id>https://ywang412.github.io/post/spring-mvc</id>
+        <link href="https://ywang412.github.io/post/spring-mvc">
+        </link>
+        <updated>2019-12-14T13:32:12.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576380797947.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1576380877003.png" alt=""></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring transaction]]></title>
         <id>https://ywang412.github.io/post/spring-transaction</id>
@@ -3332,133 +3342,6 @@ ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 </code></pre>
 <p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
 <pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 4 - Lock]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
-        </link>
-        <updated>2019-07-03T04:07:58.000Z</updated>
-        <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
-<p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
-<pre><code>private synchronized static void add() {
-        count++;
-}
-</code></pre>
-<pre><code>private final static Lock lock = new ReentrantLock();
-private static void add() {
-		lock.lock();
-		try {
-				count++;
-		} finally {
-				lock.unlock();
-		}
-}
-</code></pre>
-<p>Therefore, it is possible for both <code>synchronized</code> and Lock to introduce the well-know deadlock problem like below.</p>
-<pre><code>public class DeadLock implements Runnable {
-    public int flag = 1;
-    //静态对象是类的所有对象共享的
-    private static Object o1 = new Object(), o2 = new Object();
-
-    @Override
-    public void run() {
-        log.info(&quot;flag:{}&quot;, flag);
-        if (flag == 1) {
-            synchronized (o1) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o2) {
-                    log.info(&quot;1&quot;);
-                }
-            }
-        }
-        if (flag == 0) {
-            synchronized (o2) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o1) {
-                    log.info(&quot;0&quot;);
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        DeadLock td1 = new DeadLock();
-        DeadLock td2 = new DeadLock();
-        td1.flag = 1;
-        td2.flag = 0;
-        //td1,td2都处于可执行状态，但JVM线程调度先执行哪个线程是不确定的。
-        //td2的run()可能在td1的run()之前运行
-        new Thread(td1).start();
-        new Thread(td2).start();
-    }
-}
-</code></pre>
-<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
-<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
-
-private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-private final Lock readLock = lock.readLock();
-private final Lock writeLock = lock.writeLock();
-
-public Data get(String key) {
-		readLock.lock();
-		try {
-				return map.get(key);
-		} finally {
-				readLock.unlock();
-		}
-}
-
-public Data put(String key, Data value) {
-		writeLock.lock();
-		try {
-				return map.put(key, value);
-		} finally {
-				writeLock.unlock();
-		}
-}
-</code></pre>
-<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
-<pre><code>public static void main(String[] args) {
-		ReentrantLock reentrantLock = new ReentrantLock();
-		Condition condition = reentrantLock.newCondition();
-
-		new Thread(() -&gt; {
-				try {
-						reentrantLock.lock();
-						log.info(&quot;wait signal&quot;); // 1
-						condition.await();
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				log.info(&quot;get signal&quot;); // 4
-				reentrantLock.unlock();
-		}).start();
-
-		new Thread(() -&gt; {
-				reentrantLock.lock();
-				log.info(&quot;get lock&quot;); // 2
-				try {
-						Thread.sleep(3000);
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				condition.signalAll();
-				log.info(&quot;send signal ~ &quot;); // 3
-				reentrantLock.unlock();
-		}).start();
-}
 </code></pre>
 ]]></content>
     </entry>
