@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-15T23:29:59.510Z</updated>
+    <updated>2019-12-16T05:20:18.274Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,8 +175,36 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-10-01T11:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>time function</strong></p>
+        <updated>2019-09-30T22:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>group continuous range</strong></p>
+<pre><code># 1285. Find the Start and End Number of Continuous Ranges
+SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM
+(
+    SELECT log_id,@rank:=CASE WHEN @previous=log_id-1 THEN @rank ELSE @rank+1 END as r,@previous:=log_id as p
+    FROM Logs as a,
+    (
+        SELECT @rank:=0,@previous:=-1
+    ) as b
+) c
+GROUP BY c.r
+ORDER BY start_id;
+
+# 1225. Report Contiguous Dates
+select s as period_state, min(ed) as start_date, max(ed) as end_date from
+(select s, ed,
+    @rank := case when @prev = s then @rank else @rank + 1 end as rank,
+    @prev := s as prev
+from
+(select * from
+(select fail_date as ed, &quot;failed&quot; as s from Failed
+union all
+select success_date as ed, &quot;succeeded&quot; as s from Succeeded) a
+where ed between '2019-01-01' and '2019-12-31' order by ed asc) b,
+(select @rank := 0, @prev := &quot;unknown&quot;) c) d
+group by d.rank
+order by start_date asc
+</code></pre>
+<p><strong>time function</strong></p>
 <pre><code>WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
 WHERE datediff( '2019-06-30', t.login_date)&lt;=90
 </code></pre>

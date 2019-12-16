@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576451517490">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1576473610301">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576451517490" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1576473610301" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-10-01 ·
+                · 2019-09-30 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -88,7 +88,35 @@
             </div>
             
             <div class="post-content">
-              <p><strong>time function</strong></p>
+              <p><strong>group continuous range</strong></p>
+<pre><code># 1285. Find the Start and End Number of Continuous Ranges
+SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM
+(
+    SELECT log_id,@rank:=CASE WHEN @previous=log_id-1 THEN @rank ELSE @rank+1 END as r,@previous:=log_id as p
+    FROM Logs as a,
+    (
+        SELECT @rank:=0,@previous:=-1
+    ) as b
+) c
+GROUP BY c.r
+ORDER BY start_id;
+
+# 1225. Report Contiguous Dates
+select s as period_state, min(ed) as start_date, max(ed) as end_date from
+(select s, ed,
+    @rank := case when @prev = s then @rank else @rank + 1 end as rank,
+    @prev := s as prev
+from
+(select * from
+(select fail_date as ed, &quot;failed&quot; as s from Failed
+union all
+select success_date as ed, &quot;succeeded&quot; as s from Succeeded) a
+where ed between '2019-01-01' and '2019-12-31' order by ed asc) b,
+(select @rank := 0, @prev := &quot;unknown&quot;) c) d
+group by d.rank
+order by start_date asc
+</code></pre>
+<p><strong>time function</strong></p>
 <pre><code>WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
 WHERE datediff( '2019-06-30', t.login_date)&lt;=90
 </code></pre>
