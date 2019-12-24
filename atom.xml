@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-24T22:07:18.057Z</updated>
+    <updated>2019-12-24T22:37:40.229Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-30T09:24:27.000Z</updated>
+        <updated>2019-09-29T20:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>group continuous range</strong></p>
 <pre><code># 1285. Find the Start and End Number of Continuous Ranges
 SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM
@@ -246,6 +246,25 @@ HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
      ORDER BY start_terminal, duration_seconds
        ) sub
  WHERE sub.difference IS NOT NULL
+</code></pre>
+<p><strong>1194. Tournament Winners</strong></p>
+<pre><code>select group_id, player_id from 
+(
+    select p.player_id, p.group_id, 
+    row_number() over(partition by p.group_id order by player_total.score desc, p.player_id asc) rank
+    from players p join
+        (
+            select player_id, sum(player_score.score) as score
+            from (
+                    (select first_player as player_id, first_score as score from Matches)
+                        union all
+                    (select second_player as player_id, second_score as score from Matches)
+                 ) player_score 
+            group by player_id
+        ) player_total
+    on p.player_id = player_total.player_id
+) rank_table 
+where rank_table.rank = 1
 </code></pre>
 <p><strong>534. Game Play Analysis III</strong></p>
 <pre><code>--Method 1: Using Self Join 
