@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-25T00:46:37.156Z</updated>
+    <updated>2019-12-25T00:51:15.857Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-29T07:24:27.000Z</updated>
+        <updated>2019-09-28T18:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>IFNULL(), ISNULL(), COALESCE(), and NVL()</strong></p>
 <p>MySQL: IFNULL(), COALESCE()<br>
 SQL SERVER: ISNULL()<br>
@@ -269,6 +269,14 @@ HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+</code></pre>
+<p><strong>1164. Product Price at a Given Date</strong></p>
+<pre><code>select distinct a.product_id, ISNULL(b.new_price, 10) as price from Products as a
+left join
+(select product_id, rank() over(partition by product_id order by change_date DESC) as xrank, new_price from Products
+where change_date&lt;='2019-08-16') as b
+on a.product_id=b.product_id and b.xrank=1
+order by price DESC;
 </code></pre>
 <p><strong>534. Game Play Analysis III</strong></p>
 <pre><code>--Method 1: Using Self Join 

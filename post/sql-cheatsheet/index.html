@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577234791777">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577235072436">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577234791777" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577235072436" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-09-29 ·
+                · 2019-09-28 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -181,6 +181,14 @@ HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+</code></pre>
+<p><strong>1164. Product Price at a Given Date</strong></p>
+<pre><code>select distinct a.product_id, ISNULL(b.new_price, 10) as price from Products as a
+left join
+(select product_id, rank() over(partition by product_id order by change_date DESC) as xrank, new_price from Products
+where change_date&lt;='2019-08-16') as b
+on a.product_id=b.product_id and b.xrank=1
+order by price DESC;
 </code></pre>
 <p><strong>534. Game Play Analysis III</strong></p>
 <pre><code>--Method 1: Using Self Join 
