@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577235072436">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577329754771">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577235072436" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577329754771" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -181,6 +181,25 @@ HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+</code></pre>
+<p><strong>1077. Project Employees III</strong></p>
+<pre><code>select t.project_id, t.employee_id
+from
+    (select project_id,
+    p.employee_id,
+    rank() over(partition by project_id order by experience_years desc) as rank
+    from Project p join Employee e
+    on p.employee_id = e.employee_id) t
+where t.rank = 1;
+
+select p.project_id, p.employee_id
+from Project p join Employee e
+on p.employee_id = e.employee_id
+where (p.project_id, e.experience_years) in (
+    select a.project_id, max(b.experience_years)
+    from Project a join Employee b
+    on a.employee_id = b.employee_id
+    group by a.project_id);
 </code></pre>
 <p><strong>1164. Product Price at a Given Date</strong></p>
 <pre><code>select distinct a.product_id, ISNULL(b.new_price, 10) as price from Products as a

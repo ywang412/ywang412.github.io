@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-25T00:51:15.857Z</updated>
+    <updated>2019-12-26T03:09:19.037Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-28T18:24:27.000Z</updated>
+        <updated>2019-09-28T05:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>IFNULL(), ISNULL(), COALESCE(), and NVL()</strong></p>
 <p>MySQL: IFNULL(), COALESCE()<br>
 SQL SERVER: ISNULL()<br>
@@ -269,6 +269,25 @@ HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+</code></pre>
+<p><strong>1077. Project Employees III</strong></p>
+<pre><code>select t.project_id, t.employee_id
+from
+    (select project_id,
+    p.employee_id,
+    rank() over(partition by project_id order by experience_years desc) as rank
+    from Project p join Employee e
+    on p.employee_id = e.employee_id) t
+where t.rank = 1;
+
+select p.project_id, p.employee_id
+from Project p join Employee e
+on p.employee_id = e.employee_id
+where (p.project_id, e.experience_years) in (
+    select a.project_id, max(b.experience_years)
+    from Project a join Employee b
+    on a.employee_id = b.employee_id
+    group by a.project_id);
 </code></pre>
 <p><strong>1164. Product Price at a Given Date</strong></p>
 <pre><code>select distinct a.product_id, ISNULL(b.new_price, 10) as price from Products as a
