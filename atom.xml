@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-27T03:46:23.375Z</updated>
+    <updated>2019-12-28T05:20:56.741Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,11 +175,41 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-28T05:24:27.000Z</updated>
+        <updated>2019-09-27T16:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>IFNULL(), ISNULL(), COALESCE(), and NVL()</strong></p>
 <p>MySQL: IFNULL(), COALESCE()<br>
 SQL SERVER: ISNULL()<br>
 Oracle: NVL()</p>
+<p><strong>569. Median Employee Salary</strong></p>
+<pre><code>select Id, Company, Salary from
+(
+select e.Id, e.Salary, e.Company,  if( @prev = e.Company , @Rank := @Rank + 1, @Rank := 1) as rank, @prev := e.Company
+from Employee e , (select @Rank := 0, @prev := 0) as temp order by e.Company, e.Salary, e.Id
+) Ranking
+INNER JOIN
+(
+select count(*) as totalcount, Company as name from Employee e2 group by e2.Company
+) companycount
+on companycount.name = Ranking.Company
+where Rank = floor((totalcount+1)/2) or Rank = floor((totalcount+2)/2)
+
+SELECT
+  id,
+  Company,
+  Salary
+FROM Employee e
+WHERE 1 &gt;= ABS((SELECT COUNT(*) FROM Employee e1 WHERE e.company = e1.company AND e.Salary &gt;= e1.Salary) -
+           (SELECT COUNT(*) FROM Employee e2 WHERE e.company = e2.company AND e.Salary &lt;= e2.Salary)) 
+GROUP BY Company, Salary           
+
+SELECT Id, Company, Salary
+FROM (
+SELECT *, ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary ASC, Id ASC) AS RN_ASC,
+ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary DESC, Id DESC) AS RN_DESC
+FROM Employee) AS temp
+WHERE RN_ASC BETWEEN RN_DESC - 1 AND RN_DESC + 1
+ORDER BY Company, Salary;
+</code></pre>
 <p><strong>group continuous range</strong></p>
 <pre><code># 1285. Find the Start and End Number of Continuous Ranges
 SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM

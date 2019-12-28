@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577418378863">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577510449407">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577418378863" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577510449407" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -78,7 +78,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-09-28 ·
+                · 2019-09-27 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -92,6 +92,36 @@
 <p>MySQL: IFNULL(), COALESCE()<br>
 SQL SERVER: ISNULL()<br>
 Oracle: NVL()</p>
+<p><strong>569. Median Employee Salary</strong></p>
+<pre><code>select Id, Company, Salary from
+(
+select e.Id, e.Salary, e.Company,  if( @prev = e.Company , @Rank := @Rank + 1, @Rank := 1) as rank, @prev := e.Company
+from Employee e , (select @Rank := 0, @prev := 0) as temp order by e.Company, e.Salary, e.Id
+) Ranking
+INNER JOIN
+(
+select count(*) as totalcount, Company as name from Employee e2 group by e2.Company
+) companycount
+on companycount.name = Ranking.Company
+where Rank = floor((totalcount+1)/2) or Rank = floor((totalcount+2)/2)
+
+SELECT
+  id,
+  Company,
+  Salary
+FROM Employee e
+WHERE 1 &gt;= ABS((SELECT COUNT(*) FROM Employee e1 WHERE e.company = e1.company AND e.Salary &gt;= e1.Salary) -
+           (SELECT COUNT(*) FROM Employee e2 WHERE e.company = e2.company AND e.Salary &lt;= e2.Salary)) 
+GROUP BY Company, Salary           
+
+SELECT Id, Company, Salary
+FROM (
+SELECT *, ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary ASC, Id ASC) AS RN_ASC,
+ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary DESC, Id DESC) AS RN_DESC
+FROM Employee) AS temp
+WHERE RN_ASC BETWEEN RN_DESC - 1 AND RN_DESC + 1
+ORDER BY Company, Salary;
+</code></pre>
 <p><strong>group continuous range</strong></p>
 <pre><code># 1285. Find the Start and End Number of Continuous Ranges
 SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM
