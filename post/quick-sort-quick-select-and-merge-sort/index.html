@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577558260568">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577573492725">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577558260568" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577573492725" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -384,6 +384,40 @@ void sort(int arr[], int l, int r)
         for (int i = 0; i&lt;n; ++i) 
             arr[i] = output[i]; 
     } 
+</code></pre>
+<p><strong>791. Custom Sort String</strong></p>
+<pre><code>public String customSortString(String S, String T) {
+    int[] count = new int[26];
+    for (char c : T.toCharArray()) { ++count[c - 'a']; }  // count each char in T.
+    StringBuilder sb = new StringBuilder();
+    for (char c : S.toCharArray()) {                            
+        while (count[c - 'a']-- &gt; 0) { sb.append(c); }    // sort chars both in T and S by the order of S.
+    }
+    for (char c = 'a'; c &lt;= 'z'; ++c) {
+        while (count[c - 'a']-- &gt; 0) { sb.append(c); }    // group chars in T but not in S.
+    }
+    return sb.toString();
+}
+</code></pre>
+<p><strong>1122. Relative Sort Array</strong></p>
+<pre><code>class Solution {
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int[] cnt = new int[1001];
+        for(int n : arr1) cnt[n]++;
+        int i = 0;
+        for(int n : arr2) {
+            while(cnt[n]-- &gt; 0) {
+                arr1[i++] = n;
+            }
+        }
+        for(int n = 0; n &lt; cnt.length; n++) {
+            while(cnt[n]-- &gt; 0) {
+                arr1[i++] = n;
+            }
+        }
+        return arr1;
+    }
+}
 </code></pre>
 
             </div>
