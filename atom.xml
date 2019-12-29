@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-29T04:02:03.083Z</updated>
+    <updated>2019-12-29T04:04:32.639Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -3233,7 +3233,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
         <link href="https://ywang412.github.io/post/semaphore-vs-lock">
         </link>
-        <updated>2019-07-14T09:36:52.000Z</updated>
+        <updated>2019-07-13T20:36:52.000Z</updated>
         <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
 <pre><code>class Foo {
     
@@ -3376,55 +3376,52 @@ class BoundedBlockingQueue {
 
 
 class BoundedBlockingQueue {
-    private ReentrantLock lock = new ReentrantLock();
-    private Condition full = lock.newCondition();
-    private Condition empty = lock.newCondition();
-    private int[] queue;
-    private int tail = 0;
-    private int head = 0;
-    private int size = 0;
+
+    private int[] data;
+    private int capacity = 0, head = 0, tail = 0;
+    private volatile int size = 0;
+    private Lock lock = new ReentrantLock();
+    private Condition isFull = lock.newCondition(), isEmpty = lock.newCondition();
+    
     public BoundedBlockingQueue(int capacity) {
-        queue = new int[capacity];
+        this.data = new int[capacity];
+        this.capacity = capacity;
     }
     
     public void enqueue(int element) throws InterruptedException {
-		lock.lock();
         try {
-            while(size == queue.length) {
-                full.await();
+            lock.lock();  // due to lock, only one thread will await
+            while (size == capacity) {
+                isFull.await();
             }
-            queue[tail++] = element;
-            tail %= queue.length;
+            data[tail++ % capacity] = element;
             size++;
-            empty.signal();
+            isEmpty.signalAll();
+        } catch(InterruptedException e) {
         } finally {
             lock.unlock();
         }
     }
     
     public int dequeue() throws InterruptedException {
-		lock.lock();
+        int res = 0;
         try {
-            while(size == 0) {
-                empty.await();
+            lock.lock();
+            while (size == 0) {
+                isEmpty.await();
             }
-            int res = queue[head++];
-            head %= queue.length;
+            isFull.signalAll();
+            res = data[head++ % capacity];
             size--;
-            full.signal();
-            return res;
+        } catch(InterruptedException e) {
         } finally {
             lock.unlock();
         }
+        return res;
     }
     
-    public int size() throws InterruptedException {
-        lock.lock();
-		try {
-			return this.size;
-		} finally {
-			lock.unlock();
-		}
+    public int size() {
+        return size;
     }
 }
 </code></pre>

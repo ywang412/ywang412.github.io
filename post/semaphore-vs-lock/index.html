@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java JUC (java.util.concurrent) 7 - Semaphore vs Lock Example | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577592119369">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577592269055">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577592119369" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577592269055" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-07-14 ·
+                · 2019-07-13 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
@@ -239,55 +239,52 @@ class BoundedBlockingQueue {
 
 
 class BoundedBlockingQueue {
-    private ReentrantLock lock = new ReentrantLock();
-    private Condition full = lock.newCondition();
-    private Condition empty = lock.newCondition();
-    private int[] queue;
-    private int tail = 0;
-    private int head = 0;
-    private int size = 0;
+
+    private int[] data;
+    private int capacity = 0, head = 0, tail = 0;
+    private volatile int size = 0;
+    private Lock lock = new ReentrantLock();
+    private Condition isFull = lock.newCondition(), isEmpty = lock.newCondition();
+    
     public BoundedBlockingQueue(int capacity) {
-        queue = new int[capacity];
+        this.data = new int[capacity];
+        this.capacity = capacity;
     }
     
     public void enqueue(int element) throws InterruptedException {
-		lock.lock();
         try {
-            while(size == queue.length) {
-                full.await();
+            lock.lock();  // due to lock, only one thread will await
+            while (size == capacity) {
+                isFull.await();
             }
-            queue[tail++] = element;
-            tail %= queue.length;
+            data[tail++ % capacity] = element;
             size++;
-            empty.signal();
+            isEmpty.signalAll();
+        } catch(InterruptedException e) {
         } finally {
             lock.unlock();
         }
     }
     
     public int dequeue() throws InterruptedException {
-		lock.lock();
+        int res = 0;
         try {
-            while(size == 0) {
-                empty.await();
+            lock.lock();
+            while (size == 0) {
+                isEmpty.await();
             }
-            int res = queue[head++];
-            head %= queue.length;
+            isFull.signalAll();
+            res = data[head++ % capacity];
             size--;
-            full.signal();
-            return res;
+        } catch(InterruptedException e) {
         } finally {
             lock.unlock();
         }
+        return res;
     }
     
-    public int size() throws InterruptedException {
-        lock.lock();
-		try {
-			return this.size;
-		} finally {
-			lock.unlock();
-		}
+    public int size() {
+        return size;
     }
 }
 </code></pre>
