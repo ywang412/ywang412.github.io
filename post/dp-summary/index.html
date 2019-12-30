@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DP summary | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577730208450">
+<title>Dynamic programming summary | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577742742630">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577730208450" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577742742630" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -83,7 +83,7 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              DP summary
+              Dynamic programming summary
             </h2>
             <div class="post-info">
               <time class="post-time">
@@ -362,6 +362,32 @@ return K[n][W];
         return (int) dp[L][N];
     }
 }
+</code></pre>
+<p><strong>115. Distinct Subsequences</strong></p>
+<pre><code>public int numDistinct(String S, String T) {
+    // array creation
+    int[][] mem = new int[T.length()+1][S.length()+1];
+
+    // filling the first row: with 1s
+    for(int j=0; j&lt;=S.length(); j++) {
+        mem[0][j] = 1;
+    }
+    
+    // the first column is 0 by default in every other rows but the first, which we need.
+    
+    for(int i=0; i&lt;T.length(); i++) {
+        for(int j=0; j&lt;S.length(); j++) {
+            if(T.charAt(i) == S.charAt(j)) {
+                mem[i+1][j+1] = mem[i][j] + mem[i+1][j];
+            } else {
+                mem[i+1][j+1] = mem[i+1][j];
+            }
+        }
+    }
+    
+    return mem[T.length()][S.length()];
+}
+
 </code></pre>
 <p><strong>Edit Distance</strong></p>
 <pre><code>static int editDistDP(String str1, String str2, int m, int n) 
