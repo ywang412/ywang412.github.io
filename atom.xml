@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2019-12-30T06:02:06.853Z</updated>
+    <updated>2019-12-30T18:23:17.156Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -3252,7 +3252,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
         <link href="https://ywang412.github.io/post/semaphore-vs-lock">
         </link>
-        <updated>2019-07-13T20:36:52.000Z</updated>
+        <updated>2019-07-13T07:36:52.000Z</updated>
         <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
 <pre><code>class Foo {
     
@@ -3368,6 +3368,7 @@ class BoundedBlockingQueue {
     }
     
     public void enqueue(int element) throws InterruptedException {
+        //object level synchronized so either enqueu or dequeue can run
         synchronized(this) {
             while (this.queue.size() == this.capacity) {
                 wait();
@@ -3441,6 +3442,24 @@ class BoundedBlockingQueue {
     
     public int size() {
         return size;
+    }
+}
+</code></pre>
+<p>In order for the two methods to run concurrently they would have to use different locks,</p>
+<pre><code>class A {
+    private final Object lockA = new Object();
+    private final Object lockB = new Object();
+
+    public void methodA() {
+        synchronized(lockA) {
+            //method A
+        }
+    }
+
+    public void methodB() {
+        synchronized(lockB) {
+            //method B
+        }
     }
 }
 </code></pre>
