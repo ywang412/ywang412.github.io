@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577592269055">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577685718549">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577592269055" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577685718549" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-09-27 ·
+                · 2019-09-26 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -101,6 +101,25 @@
 <p>MySQL: IFNULL(), COALESCE()<br>
 SQL SERVER: ISNULL()<br>
 Oracle: NVL()</p>
+<p><strong>1077. Project Employees III</strong></p>
+<pre><code>select t.project_id, t.employee_id
+from
+    (select project_id,
+    p.employee_id,
+    rank() over(partition by project_id order by experience_years desc) as rank
+    from Project p join Employee e
+    on p.employee_id = e.employee_id) t
+where t.rank = 1;
+
+select p.project_id, p.employee_id
+from Project p join Employee e
+on p.employee_id = e.employee_id
+where (p.project_id, e.experience_years) in (
+    select a.project_id, max(b.experience_years)
+    from Project a join Employee b
+    on a.employee_id = b.employee_id
+    group by a.project_id);
+</code></pre>
 <p><strong>569. Median Employee Salary</strong></p>
 <pre><code>select Id, Company, Salary from
 (
