@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577742742630">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577743036758">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577742742630" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577743036758" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-05-28 ·
+                · 2018-05-27 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -416,6 +416,39 @@ void sort(int arr[], int l, int r)
             }
         }
         return arr1;
+    }
+}
+</code></pre>
+<p><strong>1099. Two Sum Less Than K</strong></p>
+<pre><code>class Solution {
+    public int twoSumLessThanK(int[] A, int K) {
+        int low=0, high=A.length-1, maxSum=-1;
+        Arrays.sort(A);
+        while(low&lt;high) {
+            int sum = A[low] + A[high];
+            if(sum &lt; K) {
+                maxSum = Math.max(sum, maxSum);
+                low++;
+            } else {
+                high--;
+            }
+        }
+        return maxSum;
+    }
+}
+
+class Solution {
+    public int twoSumLessThanK(int[] A, int K) {
+        TreeSet&lt;Integer&gt; set = new TreeSet&lt;&gt;();
+        int res = -1;
+        for (int a : A) {
+            Integer pre = set.lower(K - a);
+            if (pre != null) {
+                res = Math.max(res, a + pre);
+            }
+            set.add(a);
+        }
+        return res;
     }
 }
 </code></pre>
