@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spring - 1 MVC | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577771390376">
+<title>Spring - 1 IOC / MVC | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577812233463">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577771390376" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577812233463" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -83,11 +83,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Spring - 1 MVC
+              Spring - 1 IOC / MVC
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2017-12-14 ·
+                · 2017-12-13 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/4WLW2ZDIa" class="post-tag">
@@ -100,6 +100,108 @@
               <figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576380797947.png" alt=""></figure>
 <figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1576380877003.png" alt=""></figure>
 <figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1577222899702.png" alt=""></figure>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1577810271940.png" alt=""></figure>
+<ol>
+<li>getBean</li>
+</ol>
+<pre><code>public class Main {
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+        //FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext(&quot;F:\\workspace5\\workspace\\spring\\spring-ioc\\src\\main\\resources\\applicationContext.xml&quot;); 
+        Book book = (Book) ctx.getBean(&quot;book&quot;); \\better than Book book = ctx.getBean(Book.class) to avoid two beans of same class
+        System.out.println(book);
+    }
+} 
+</code></pre>
+<ol start="2">
+<li>Dependency Injection</li>
+</ol>
+<p>Constructor or setter dependency injection</p>
+<p>Factory method to inject external builder bean without constructor</p>
+<pre><code>OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+
+//use static factory
+public class OkHttpUtils {
+    private static OkHttpClient OkHttpClient;
+    public static OkHttpClient getInstance() {
+        if (OkHttpClient == null) {
+            OkHttpClient = new OkHttpClient.Builder().build();
+        }
+        return OkHttpClient;
+    }
+}
+&lt;bean class=&quot;org.javaboy.OkHttpUtils&quot; factory-method=&quot;getInstance&quot; id=&quot;okHttpClient&quot;&gt;&lt;/bean&gt;
+OkHttpClient okHttpClient = ctx.getBean(&quot;okHttpClient&quot;, OkHttpClient.class);
+</code></pre>
+<ol start="3">
+<li>
+<p>bean registration to spring context container</p>
+</li>
+<li>
+<p>xml</p>
+</li>
+<li>
+<p>java annotation (springboot)</p>
+</li>
+</ol>
+<pre><code>@Configuration // same as applicationContext.xml
+public class JavaConfig {
+    @Bean
+    SayHello sayHello() {
+        return new SayHello();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(JavaConfig.class); // load configuration
+        SayHello hello = ctx.getBean(SayHello.class);
+        System.out.println(hello.sayHello(&quot;javaboy&quot;));
+    }
+}
+
+//to have both xml and annotation
+@Configuration
+@ImportResource(&quot;classpath:applicationContext.xml&quot;)
+public class JavaConfig {
+}
+</code></pre>
+<ol start="3">
+<li>auto-config</li>
+</ol>
+<p>@Service, @Component, @Repository</p>
+<pre><code>@Configuration
+@ComponentScan(basePackages = &quot;org.javaboy.javaconfig.service&quot;)
+public class JavaConfig {
+}
+//
+&lt;context:component-scan base-package=&quot;org.javaboy.javaconfig&quot;/&gt;
+</code></pre>
+<p>@Autowired, @Resources, @Injected</p>
+<ol start="4">
+<li>Aware<br>
+Get context in bean</li>
+</ol>
+<pre><code>@Component
+public class SayHello implements ApplicationContextAware {
+    private ApplicationContext applicationContext;
+    public String sayHello(String name) {
+        //判断容器中是否存在某个 Bean
+        boolean userDao = applicationContext.containsBean(&quot;userDao333&quot;);
+        System.out.println(userDao);
+        return &quot;hello &quot; + name;
+    }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+}
+</code></pre>
+<ol start="5">
+<li>AOP</li>
+</ol>
+<p>two ways of proxy pattern<br>
+cglib<br>
+jdk needs interface</p>
 
             </div>
           </article>
