@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Alibaba Java Coding Guidelines | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577769988741">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577771390376">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577769988741" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577771390376" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-11-30 ·
+                · 2018-11-29 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
@@ -124,6 +124,36 @@ list.add(&quot;bao&quot;);
 String[] array = new String[list.size()];
 array = list.toArray(array);
 </code></pre>
+<ol start="3">
+<li>
+<p>RuntimeException<br>
+validate data and don't catch runtime exception</p>
+</li>
+<li>
+<p>try catch in transaction<br>
+roll back transaction in catch manually or use spring @Transactional annotation</p>
+</li>
+<li>
+<p>Log</p>
+</li>
+</ol>
+<p>use SLF4J API facade pattern not log4j or logback.</p>
+<pre><code>import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+public class HelloWorld{
+private static final Logger logger =
+    LoggerFactory.getLogger(HelloWorld.class);
+ public static void main(String[] args){
+ logger.info(&quot;please use SLF4J,rather than logback or log4j&quot;);
+ }
+}
+</code></pre>
+<p>log retention 15 days</p>
+<ol start="6">
+<li>Unit test</li>
+</ol>
+<p>use assert not system.out<br>
+test cases don't call each other (use mock) and order independent</p>
 
             </div>
           </article>
