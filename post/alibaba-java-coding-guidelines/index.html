@@ -1,9 +1,9 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Java | Yu&#39;s Github</title>
+<title>Alibaba Java Coding Guidelines | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577769988741">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -79,61 +79,91 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：#Java
-            </h2> 
-        </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://ywang412.github.io/post/jvm-performance-tuning">
-        <h2 class="post-title">JVM performance tuning</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2018-11-20 ·
-        </time>
-        
-          <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
-            # Java
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </di>
-    </article>
-  
-    <article class="post">
-      <a href="https://ywang412.github.io/post/java-io-stream">
-        <h2 class="post-title">Java IO stream</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2018-09-27 ·
-        </time>
-        
-          <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
-            # Java
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </di>
-    </article>
-  
-</div>
 
-        <div class="pagination-container">
-  
-    <a href="https://ywang412.github.io/tag/3_nfzv-ZX/" class="prev-page">上一页</a>
-  
-  
-</div>
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Alibaba Java Coding Guidelines
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2018-11-30 ·
+              </time>
+              
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
+                </a>
+              
+            </div>
+            
+            <div class="post-content">
+              <ol>
+<li>Switch add comment to case with no break.</li>
+</ol>
+<pre><code>switch(condition){
+case ABC:
+statements;
+/*程序继续执行直到 DEF 分支*/
+case DEF:
+statements;
+break;
+case XYZ:
+statements;
+break;
+default:
+statements;
+break;
+}
+</code></pre>
+<ol start="2">
+<li>collections to array</li>
+</ol>
+<pre><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;(2);
+list.add(&quot;guan&quot;);
+list.add(&quot;bao&quot;);
+String[] array = new String[list.size()];
+array = list.toArray(array);
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/jvm-performance-tuning">
+              <h3 class="post-title">
+                JVM performance tuning
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
 
         <div class="site-footer">
    | 
