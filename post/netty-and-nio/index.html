@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Netty | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577812233463">
+<title>Netty chat room | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577827336978">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577812233463" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577827336978" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -83,17 +83,138 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Netty
+              Netty chat room
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2017-12-05 ·
+                · 2017-12-04 ·
               </time>
+              
+                <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
+                  # Java
+                </a>
               
             </div>
             
             <div class="post-content">
-              
+              <p>Server side</p>
+<pre><code>public class MoocServerTest {
+    public static void main(String[] args) {
+        //本次定义的两个EventLoopGroup对象，类似于master、slave角色。
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        try {
+            new ServerBootstrap().group(bossGroup, workerGroup)
+              .channel(NioServerSocketChannel.class)
+              //注册自定义初始化类MoocServerInitializer
+              .childHandler(new MoocServerInitializer())
+              //将服务地址设置为本机IP（192.168.2.100），端口号是10001
+              .bind(10001).sync().channel()
+              .closeFuture().sync();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //释放资源
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+    }
+}
+//自定义初始化类
+class MoocServerInitializer extends ChannelInitializer&lt;SocketChannel&gt; {
+    protected void initChannel(SocketChannel sc) throws Exception {
+        ChannelPipeline pipeline = sc.pipeline();
+        //使用Netty内置的分隔符处理器，用于将接收到的消息通过回车符进行分割。
+        pipeline.addLast(&quot;DelimiterBasedFrameDecoder&quot;, new DelimiterBasedFrameDecoder(2048, Delimiters.lineDelimiter()));
+        //使用Netty内置的解码处理器
+        pipeline.addLast(&quot;StringDecoder&quot;, new StringDecoder(CharsetUtil.UTF_8));
+        //使用Netty内置的编码处理器
+        pipeline.addLast(&quot;StringEncoder&quot;, new StringEncoder(CharsetUtil.UTF_8));
+        //自定义处理器
+        pipeline.addLast(&quot;MoocServerHandler&quot;, new MoocServerHandler());
+    }
+}
+//自定义处理器(用于模拟聊天室功能：将接收到的消息，转播给所有客户端)
+class MoocServerHandler extends SimpleChannelInboundHandler&lt;String&gt; {
+    private static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String receiveMsg) 
+      throws Exception {
+        Channel channel = ctx.channel();
+        //区分“我(I)”和“别人”发出的消息
+        channelGroup.forEach(chnl -&gt; {
+            if (channel == chnl)
+                chnl.writeAndFlush(&quot;I send message:&quot; + receiveMsg + &quot;\n&quot;);
+            else
+                chnl.writeAndFlush(channel.remoteAddress() + &quot; send message:&quot; + receiveMsg + &quot;\n&quot;);
+        });
+    }
+
+    //每当从服务端收到新的客户端连接时，就告知其他客户端Channel对象
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        Channel channel = ctx.channel();
+        channelGroup.writeAndFlush(&quot;client -&quot; + channel.remoteAddress() + &quot;join\n&quot;);
+        channelGroup.add(channel);
+    }
+
+    //每当从服务端感知有客户端断开时，就告知列表中的其他客户端Channel对象
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        Channel channel = ctx.channel();
+        channelGroup.writeAndFlush(&quot;client -&quot; + channel.remoteAddress() + &quot;leave\n&quot;);
+    }
+}
+</code></pre>
+<p>Client side</p>
+<pre><code>public class MoocClientTest {
+    public static void main(String[] args) {
+        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+        try {
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(eventLoopGroup)
+              .channel(NioSocketChannel.class)
+              //注册自定义初始化类MoocClientInitializer
+              .handler(new MoocClientInitializer());
+            Channel channel = bootstrap.connect(&quot;192.168.2.100&quot;, 10001).sync().channel();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            //客户端向服务端发送消息，消息的分隔符是回车符（\r\n）
+            while (true) {
+                channel.writeAndFlush(bufferedReader.readLine() + &quot;\r\n&quot;);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            eventLoopGroup.shutdownGracefully();
+        }
+    }
+}
+
+//自定义初始化类
+class MoocClientInitializer extends ChannelInitializer&lt;SocketChannel&gt; {
+    protected void initChannel(SocketChannel sc) throws Exception {
+        ChannelPipeline pipeline = sc.pipeline();
+        //增加Netty内置的分隔符处理器
+        pipeline.addLast(&quot;DelimiterBasedFrameDecoder&quot;,
+                new DelimiterBasedFrameDecoder(2048, Delimiters.lineDelimiter()));
+        //增加Netty内置的解码处理器
+        pipeline.addLast(&quot;StringDecoder&quot;, new StringDecoder(CharsetUtil.UTF_8));
+        //增加Netty内置的编码处理器
+        pipeline.addLast(&quot;StringEncoder&quot;, new StringEncoder(CharsetUtil.UTF_8));
+        //增加自定义处理器
+        pipeline.addLast(&quot;MoocClientHandler&quot;, new MoocClientHandler());
+    }
+}
+//自定义处理器，用于实现聊天室的客户端功能：打印服务端转播的消息（即其他客户端发送给服务端的消息）
+class MoocClientHandler extends SimpleChannelInboundHandler&lt;String&gt; {
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, String receiveMsg) {
+        System.out.println(receiveMsg);
+    }
+}
+</code></pre>
+
             </div>
           </article>
         </div>
