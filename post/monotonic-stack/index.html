@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Monotonic Stack | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577897224582">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577900966262">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577897224582" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577900966262" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-04-24 ·
+                · 2018-04-23 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -97,7 +97,46 @@
             </div>
             
             <div class="post-content">
-              <p><strong>456. 132 Pattern</strong></p>
+              <p><strong>402. Remove K Digits</strong></p>
+<pre><code>class Solution {
+    public String removeKdigits(String num, int k) {
+        int len = num.length();
+        //corner case
+        if(k==len)        
+            return &quot;0&quot;;
+            
+        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+        int i =0;
+        while(i&lt;num.length()){
+            //whenever meet a digit which is less than the previous digit, discard the previous one
+            while(k&gt;0 &amp;&amp; !stack.isEmpty() &amp;&amp; stack.peek()&gt;num.charAt(i)){
+                stack.pop();
+                k--;
+            }
+            stack.push(num.charAt(i));
+            i++;
+        }
+        
+        // corner case like &quot;1111&quot;
+        while(k&gt;0){
+            stack.pop();
+            k--;            
+        }
+        
+        //construct the number from the stack
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty())
+            sb.append(stack.pop());
+        sb.reverse();
+        
+        //remove all the 0 at the head
+        while(sb.length()&gt;1 &amp;&amp; sb.charAt(0)=='0')
+            sb.deleteCharAt(0);
+        return sb.toString();
+    }
+}
+</code></pre>
+<p><strong>456. 132 Pattern</strong></p>
 <pre><code>public boolean find132pattern(int[] nums) {
     Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
     int max = Integer.MIN_VALUE;
