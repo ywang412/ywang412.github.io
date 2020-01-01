@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding tricks using Java syntax  | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577827336978">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1577897224582">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577827336978" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1577897224582" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-06-03 ·
+                · 2018-06-02 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -142,11 +142,32 @@ Replaces the first substring of this string that matches the given regular expre
 </code></pre>
 <p><strong>LeetCode 791. Custom Sort String</strong><br>
 Below is the code snippet to create a priorityqueue with custom comparator.</p>
-<pre><code>			PriorityQueue&lt;Character&gt; queue = new PriorityQueue&lt;&gt;(new Comparator&lt;Character&gt;(){
-					public int compare(Character a, Character b) {
-							return Integer.compare(map.getOrDefault(a, Integer.MAX_VALUE), map.getOrDefault(b, Integer.MAX_VALUE));
-					}
-			});
+<pre><code>PriorityQueue&lt;Character&gt; queue = new PriorityQueue&lt;&gt;(new Comparator&lt;Character&gt;(){
+        public int compare(Character a, Character b) {
+                return Integer.compare(map.getOrDefault(a, Integer.MAX_VALUE), map.getOrDefault(b, Integer.MAX_VALUE));
+        }
+});
+</code></pre>
+<p><strong>Top K Frequent Words</strong></p>
+<pre><code>class Solution {
+    public List&lt;String&gt; topKFrequent(String[] words, int k) {
+        
+        Map&lt;String, Integer&gt; count = new HashMap&lt;&gt;();
+        for (String word : words) {
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        }
+        List&lt;String&gt; list = new ArrayList(count.keySet());
+        Collections.sort(list, new Comparator&lt;String&gt;(){
+            public int compare(String a, String b){
+                if (count.get(a) == count.get(b)) {
+                    return a.compareTo(b);
+                }
+                return -Integer.compare(count.get(a), count.get(b));
+            }
+        });
+        return list.subList(0, k);
+    }
+}
 </code></pre>
 <p><strong>LeetCode 957. Prison Cells After N Days</strong></p>
 <p>The state change cycle might start at a state that is not the initital state, therefore a map is used to record past state at each day. When fastforward the N using N % cycle, the N could already be 0 and the last state change should be skipped.</p>
