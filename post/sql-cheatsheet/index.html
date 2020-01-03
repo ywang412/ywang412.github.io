@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578021208555">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578024219932">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578021208555" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578024219932" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-09-26 ·
+                · 2019-09-25 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -160,14 +160,16 @@ select count(*) as totalcount, Company as name from Employee e2 group by e2.Comp
 on companycount.name = Ranking.Company
 where Rank = floor((totalcount+1)/2) or Rank = floor((totalcount+2)/2)
 
-SELECT
-  id,
-  Company,
-  Salary
-FROM Employee e
-WHERE 1 &gt;= ABS((SELECT COUNT(*) FROM Employee e1 WHERE e.company = e1.company AND e.Salary &gt;= e1.Salary) -
-           (SELECT COUNT(*) FROM Employee e2 WHERE e.company = e2.company AND e.Salary &lt;= e2.Salary)) 
-GROUP BY Company, Salary           
+select t1.Id as Id, t1.Company, t1.Salary
+from Employee as t1 inner join Employee as t2
+on t1.Company = t2.Company
+group by t1.Id
+having abs(sum(CASE when t2.Salary&lt;t1.Salary then 1
+                  when t2.Salary&gt;t1.Salary then -1
+                  when t2.Salary=t1.Salary and t2.Id&lt;t1.Id then 1
+                  when t2.Salary=t1.Salary and t2.Id&gt;t1.Id then -1
+                  else 0 end)) &lt;= 1
+order by t1.Company, t1.Salary, t1.Id         
 
 SELECT Id, Company, Salary
 FROM (

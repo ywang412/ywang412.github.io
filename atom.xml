@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-03T03:13:32.884Z</updated>
+    <updated>2020-01-03T04:03:44.041Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-26T14:24:27.000Z</updated>
+        <updated>2019-09-26T01:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -239,14 +239,16 @@ select count(*) as totalcount, Company as name from Employee e2 group by e2.Comp
 on companycount.name = Ranking.Company
 where Rank = floor((totalcount+1)/2) or Rank = floor((totalcount+2)/2)
 
-SELECT
-  id,
-  Company,
-  Salary
-FROM Employee e
-WHERE 1 &gt;= ABS((SELECT COUNT(*) FROM Employee e1 WHERE e.company = e1.company AND e.Salary &gt;= e1.Salary) -
-           (SELECT COUNT(*) FROM Employee e2 WHERE e.company = e2.company AND e.Salary &lt;= e2.Salary)) 
-GROUP BY Company, Salary           
+select t1.Id as Id, t1.Company, t1.Salary
+from Employee as t1 inner join Employee as t2
+on t1.Company = t2.Company
+group by t1.Id
+having abs(sum(CASE when t2.Salary&lt;t1.Salary then 1
+                  when t2.Salary&gt;t1.Salary then -1
+                  when t2.Salary=t1.Salary and t2.Id&lt;t1.Id then 1
+                  when t2.Salary=t1.Salary and t2.Id&gt;t1.Id then -1
+                  else 0 end)) &lt;= 1
+order by t1.Company, t1.Salary, t1.Id         
 
 SELECT Id, Company, Salary
 FROM (
