@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578024219932">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578025455783">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578024219932" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578025455783" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -171,13 +171,17 @@ having abs(sum(CASE when t2.Salary&lt;t1.Salary then 1
                   else 0 end)) &lt;= 1
 order by t1.Company, t1.Salary, t1.Id         
 
-SELECT Id, Company, Salary
-FROM (
-SELECT *, ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary ASC, Id ASC) AS RN_ASC,
-ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary DESC, Id DESC) AS RN_DESC
-FROM Employee) AS temp
-WHERE RN_ASC BETWEEN RN_DESC - 1 AND RN_DESC + 1
-ORDER BY Company, Salary;
+select
+cr.Id, cr.Company, cr.Salary
+from (
+SELECT Id, Company, Salary, ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary ASC, Id ASC) AS r 
+FROM Employee) AS cr
+join 
+(select Company, count(Id) as total
+from Employee
+group by Company) as ct
+on cr.Company = ct.Company
+where cr.r = floor(( ct.total + 1) /2) or cr.r = floor((ct.total + 2) /2)
 </code></pre>
 <p><strong>group continuous range</strong></p>
 <pre><code># 1285. Find the Start and End Number of Continuous Ranges
