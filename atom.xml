@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-03T05:07:50.533Z</updated>
+    <updated>2020-01-03T05:08:18.925Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-24T23:24:27.000Z</updated>
+        <updated>2019-09-24T10:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -293,6 +293,9 @@ order by start_date asc
 <p><strong>time function</strong></p>
 <pre><code>both:
 HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
+WHERE
+   payment_date BETWEEN '2007-02-07'
+AND '2007-02-15';
 
 postgresql:
 WHERE
