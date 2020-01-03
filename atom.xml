@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-03T04:24:51.311Z</updated>
+    <updated>2020-01-03T05:07:50.533Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-25T12:24:27.000Z</updated>
+        <updated>2019-09-24T23:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -291,10 +291,18 @@ group by d.rank
 order by start_date asc
 </code></pre>
 <p><strong>time function</strong></p>
-<pre><code>WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
+<pre><code>both:
+HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
+
+postgresql:
+WHERE
+      DATEPART('year',  login_date) = 2014
+  AND DATEPART('month', login_date) = 2
+
+mysql:
+WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
 WHERE datediff( '2019-06-30', t.login_date)&lt;=90
 WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 DAY) AND DATE(&quot;2019-07-27&quot;) 
-HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
 </code></pre>
 <p><strong>SQL window function</strong></p>
 <pre><code>SELECT start_terminal,
