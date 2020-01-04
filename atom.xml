@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-03T05:08:18.925Z</updated>
+    <updated>2020-01-04T02:32:38.386Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-24T10:24:27.000Z</updated>
+        <updated>2019-09-23T21:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -362,6 +362,40 @@ WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 D
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+
+
+#1 . partition by p.group_id order by player_total.score desc, p.player_id asc
+#-&gt;  order by m.group_id asc, m.tot desc, m.player_id asc
+#2 . have to make intermediate table 
+#select  p.group_id, player_total.tot,  p.player_id
+#     from
+#	players p join player_total
+
+select group_id, player_id from 
+(
+ select  m.group_id, m.tot,  m.player_id,
+	(@rank:= case when @prev = m.group_id then @rank+1 else 1 end) as rank,
+	@prev:=m.group_id as prev
+    from 
+    (select  p.group_id, player_total.tot,  p.player_id
+     from
+	players p join
+        (
+            select player_id, sum(player_score.score) as tot
+            from (
+                    (select first_player as player_id, first_score as score from Matches)
+                        union all
+                    (select second_player as player_id, second_score as score from Matches)
+                 ) player_score 
+            group by player_id
+        ) player_total
+	on p.player_id = player_total.player_id) as m,
+	(select @prev:= -1, @rank:= 1) as temp 
+    order by m.group_id asc, m.tot desc, m.player_id asc
+    
+ ) as rank_table 
+ where rank_table.rank = 1 
+
 </code></pre>
 <p><strong>1077. Project Employees III</strong></p>
 <pre><code>select t.project_id, t.employee_id

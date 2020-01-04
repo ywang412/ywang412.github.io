@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578028095782">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578105150998">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578028095782" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578105150998" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2019-09-24 ·
+                · 2019-09-23 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -283,6 +283,40 @@ WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 D
     on p.player_id = player_total.player_id
 ) rank_table 
 where rank_table.rank = 1
+
+
+#1 . partition by p.group_id order by player_total.score desc, p.player_id asc
+#-&gt;  order by m.group_id asc, m.tot desc, m.player_id asc
+#2 . have to make intermediate table 
+#select  p.group_id, player_total.tot,  p.player_id
+#     from
+#	players p join player_total
+
+select group_id, player_id from 
+(
+ select  m.group_id, m.tot,  m.player_id,
+	(@rank:= case when @prev = m.group_id then @rank+1 else 1 end) as rank,
+	@prev:=m.group_id as prev
+    from 
+    (select  p.group_id, player_total.tot,  p.player_id
+     from
+	players p join
+        (
+            select player_id, sum(player_score.score) as tot
+            from (
+                    (select first_player as player_id, first_score as score from Matches)
+                        union all
+                    (select second_player as player_id, second_score as score from Matches)
+                 ) player_score 
+            group by player_id
+        ) player_total
+	on p.player_id = player_total.player_id) as m,
+	(select @prev:= -1, @rank:= 1) as temp 
+    order by m.group_id asc, m.tot desc, m.player_id asc
+    
+ ) as rank_table 
+ where rank_table.rank = 1 
+
 </code></pre>
 <p><strong>1077. Project Employees III</strong></p>
 <pre><code>select t.project_id, t.employee_id
