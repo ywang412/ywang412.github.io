@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-04T02:32:38.386Z</updated>
+    <updated>2020-01-04T03:20:13.373Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-23T21:24:27.000Z</updated>
+        <updated>2019-09-23T08:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -417,12 +417,16 @@ where (p.project_id, e.experience_years) in (
     group by a.project_id);
 </code></pre>
 <p><strong>1164. Product Price at a Given Date</strong></p>
-<pre><code>select distinct a.product_id, ISNULL(b.new_price, 10) as price from Products as a
-left join
-(select product_id, rank() over(partition by product_id order by change_date DESC) as xrank, new_price from Products
-where change_date&lt;='2019-08-16') as b
-on a.product_id=b.product_id and b.xrank=1
-order by price DESC;
+<pre><code>select b.product_id, coalesce(a.new_price, 10) as price
+from 
+(select product_id, new_price,
+row_number() over (partition by product_id order by change_date desc) as rank
+from Products
+where change_date &lt;= '2019-08-16') as a
+right join
+(select distinct(product_id)
+from Products) as b
+on a.product_id = b.product_id and a.rank =1
 </code></pre>
 <p><strong>534. Game Play Analysis III</strong></p>
 <pre><code>--Method 1: Using Self Join 
