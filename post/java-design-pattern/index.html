@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java design pattern | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578247568389">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1578249471690">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578247568389" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1578249471690" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2017-12-03 ·
+                · 2017-12-02 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
@@ -98,8 +98,52 @@
             
             <div class="post-content">
               <figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576381012394.png" alt=""></figure>
-<p><img src="https://ywang412.github.io/post-images/1576381064677.png" alt=""><br>
-<img src="https://ywang412.github.io/post-images/1576381098946.png" alt=""></p>
+<p>Factory Design Pattern Examples in JDK<br>
+ava.util.Calendar, ResourceBundle and NumberFormat getInstance() methods uses Factory pattern.<br>
+valueOf() method in wrapper classes like Boolean, Integer etc.</p>
+<pre><code>public class ComputerFactory {
+public static Computer createComputer(ComputerType type, String ram, String hdd, String cpu) { 
+	Computer comp = null;
+	switch (type) {
+	case PC:
+		comp = new PC(ram, hdd, cpu);
+		break;
+	case SERVER:
+		comp = new Server(ram, hdd, cpu);
+		break;
+	} 
+	return comp;
+    }
+}
+</code></pre>
+<p>Abstract Factory Design Pattern Examples in JDK<br>
+javax.xml.parsers.DocumentBuilderFactory#newInstance()<br>
+javax.xml.transform.TransformerFactory#newInstance()<br>
+javax.xml.xpath.XPathFactory#newInstance()</p>
+<p>Builder Design Pattern Example in JDK<br>
+java.lang.StringBuilder#append() (unsynchronized)<br>
+java.lang.StringBuffer#append() (synchronized)</p>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1576381064677.png" alt=""></figure>
+<p>Adapter Design Pattern Example in JDK<br>
+java.util.Arrays#asList()<br>
+java.io.InputStreamReader(InputStream) (returns a Reader)<br>
+java.io.OutputStreamWriter(OutputStream) (returns a Writer)</p>
+<p>Decorator Design Pattern – Important Points<br>
+Decorator design pattern is helpful in providing runtime modification abilities and hence more flexible. Its easy to maintain and extend when the number of choices are more.<br>
+The disadvantage of decorator design pattern is that it uses a lot of similar kind of objects (decorators).<br>
+Decorator pattern is used a lot in Java IO classes, such as FileReader, BufferedReader etc.</p>
+<p>Flyweight Design Pattern Example in JDK<br>
+All the wrapper classes valueOf() method uses cached objects showing use of Flyweight design pattern. The best example is Java String class String Pool implementation.</p>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1576381098946.png" alt=""></figure>
+<p>Chain of Responsibility Pattern Examples in JDK<br>
+java.util.logging.Logger#log()<br>
+javax.servlet.Filter#doFilter()</p>
+<p>Command Design Pattern JDK Example<br>
+Runnable interface (java.lang.Runnable) and Swing Action (javax.swing.Action) uses command pattern.</p>
+<p>Observer design pattern is also called as publish-subscribe pattern. Some of it’s implementations are;<br>
+java.util.EventListener in Swing<br>
+javax.servlet.http.HttpSessionBindingListener<br>
+javax.servlet.http.HttpSessionAttributeListener</p>
 
             </div>
           </article>
