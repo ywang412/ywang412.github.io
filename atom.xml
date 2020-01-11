@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-05T18:44:58.759Z</updated>
+    <updated>2020-01-11T02:38:17.169Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-23T08:24:27.000Z</updated>
+        <updated>2019-09-22T19:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -544,15 +544,13 @@ select *,
 
 </code></pre>
 <p><strong>Friend requests I</strong></p>
-<p>round + ifnull</p>
-<pre><code>select
-round(
-    ifnull(
-    (select count(*) from (select distinct requester_id, accepter_id from request_accepted) as A)
-    /
-    (select count(*) from (select distinct sender_id, send_to_id from friend_request) as B),
-    0)
-, 2) as accept_rate;
+<p>round + ifnull vs coalesce</p>
+<pre><code>select coalesce(round(
+(select count(distinct requester_id, accepter_id)
+from request_accepted)
+/ 
+(select count(distinct sender_id, send_to_id)
+from friend_request), 2), 0) as accept_rate
 
 select ifnull(round((count(distinct requester_id,accepter_id)/count(distinct sender_id,send_to_id)),2),0.00) as accept_rate
 from friend_request, request_accepted
