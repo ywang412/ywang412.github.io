@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-11T02:38:17.169Z</updated>
+    <updated>2020-01-13T04:55:33.925Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-22T19:24:27.000Z</updated>
+        <updated>2019-09-22T06:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
@@ -594,25 +594,21 @@ group by t.team_id
 order by num_points desc, t.team_id asc
 </code></pre>
 <p><strong>Monthly Transactions II</strong></p>
-<pre><code>SELECT month, country, 
+<pre><code>--SELECT DATE_FORMAT(c.trans_date, '%Y-%m') AS month, country,   -- LEFT(trans_date, 7)
 
-SUM(IF( state = &quot;approved&quot;,1,0)) AS approved_count,
-SUM(CASE WHEN state = &quot;approved&quot; THEN amount ELSE 0 END) AS approved_amount, 
-SUM(IF(state='back',1,0)) AS chargeback_count,
-SUM(CASE WHEN state = &quot;back&quot; THEN amount ELSE 0 END) AS chargeback_amount
-FROM
-(
-   SELECT DATE_FORMAT(c.trans_date, '%Y-%m') AS month, country,   -- LEFT(trans_date, 7)
-   &quot;back&quot; AS state, amount
-   FROM chargebacks AS c
-   JOIN transactions AS t ON c.trans_id = t.id
-   UNION ALL
-   
-   SELECT DATE_FORMAT(t.trans_date, '%Y-%m') AS month, country, state, amount
-   FROM transactions AS t
-   WHERE state = &quot;approved&quot;
-) s
-GROUP BY month, country
+select month, country, sum(case when state = 'approved' then 1 else 0 end) as approved_count,
+sum(case when state = 'approved' then amount else 0 end) as approved_amount,
+sum(case when state = 'chargeback' then 1 else 0 end) as chargeback_count,
+sum(case when state = 'chargeback' then amount else 0 end) as chargeback_amount  
+from
+(select Left(c.trans_date, 7) as month, t.country, 'chargeback' as state, t.amount
+from Chargebacks c  join Transactions t
+on c.trans_id = t.id
+union all
+select Left(t.trans_date, 7) as month, t.country, state, t.amount
+from Transactions t
+where state = 'approved') temp
+group by month, country
 </code></pre>
 <p><strong>Students Report By Geography</strong></p>
 <p>@variable</p>
