@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-17T05:17:14.426Z</updated>
+    <updated>2020-01-17T05:20:17.556Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,8 +175,21 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-21T17:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
+        <updated>2019-09-21T04:24:27.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>use rank from window function</strong></p>
+<p>rank has to be outside window function scope.</p>
+<pre><code>select Department, Employee, Salary
+from  
+(select Department.Name as Department, Employee.Name as Employee, Salary, DepartmentId,
+Dense_Rank() over (partition by DepartmentId order by Salary desc) as drank
+from Employee
+-- cannot put where drank &lt;= 3 here
+join 
+Department
+on Department.Id = Employee.DepartmentId) temp
+where drank &lt;= 3 
+</code></pre>
+<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
 <pre><code>SELECT * 
 INTO CustomersGermany
 FROM Customers
