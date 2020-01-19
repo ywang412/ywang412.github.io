@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-17T05:20:17.556Z</updated>
+    <updated>2020-01-19T05:16:58.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -175,7 +175,7 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
         <id>https://ywang412.github.io/post/sql-cheatsheet</id>
         <link href="https://ywang412.github.io/post/sql-cheatsheet">
         </link>
-        <updated>2019-09-21T04:24:27.000Z</updated>
+        <updated>2019-09-20T15:24:27.000Z</updated>
         <content type="html"><![CDATA[<p><strong>use rank from window function</strong></p>
 <p>rank has to be outside window function scope.</p>
 <pre><code>select Department, Employee, Salary
@@ -876,6 +876,11 @@ SET
 from insurance
 where TIV_2015 in (select TIV_2015 from insurance group by TIV_2015 having count(1)&gt;1)
 and (lat, lon) in (select lat, lon from insurance group by lat, lon having count(1)=1)
+
+select sum(TIV_2016) TIV_2016
+from insurance a
+where 1 = (select count(*) from insurance b where a.LAT=b.LAT and a.LON=b.LON) 
+and 1 &lt; (select count(*) from insurance c where a.TIV_2015=c.TIV_2015)  ;
 </code></pre>
 <p><strong>569. Median Employee Salary</strong></p>
 <pre><code>SELECT 
@@ -908,6 +913,20 @@ JOIN Employee e2 ON (e.Id = e2.Id AND e.Month &gt;= e2.Month AND (e.Month - e2.M
 WHERE e.Month &lt; (SELECT MAX(Month) from Employee where Id = e.Id)
 GROUP BY e.Id, e.Month
 ORDER BY e.Id, e.Month DESC
+
+select ct.Id, ct.Month, ct.Salary
+from
+(select e1.Id, e1.Month, sum(e2.Salary) as Salary
+from
+Employee e1 join
+Employee e2
+on e1.Id = e2.Id and e1.Month &gt;= e2.Month and e1.Month - 2 &lt;= e2.Month
+group by Id, e1.Month) ct
+where (ct.Id, ct.Month) not in (
+select e3.Id, Max(e3.Month) as Month
+from Employee e3
+group by e3.Id)
+order by Id, Month desc
 </code></pre>
 <p><strong>608. Tree Node</strong></p>
 <pre><code>SELECT
@@ -927,6 +946,17 @@ else CASE WHEN EXISTS (SELECT 1 FROM tree t2 WHERE t2.p_id = t1.id)
                  END
     END AS Type
 from tree t1 order by id;
+
+SELECT DISTINCT t1.id, (
+    CASE
+    WHEN t1.p_id IS NULL  THEN 'Root'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NOT NULL THEN 'Inner'
+    WHEN t1.p_id IS NOT NULL AND t2.id IS NULL THEN 'Leaf'
+    END
+) AS Type 
+FROM tree t1
+LEFT JOIN tree t2
+ON t1.id = t2.p_id
 </code></pre>
 <p><strong>1084. Sales Analysis III</strong></p>
 <p>Group by having</p>
