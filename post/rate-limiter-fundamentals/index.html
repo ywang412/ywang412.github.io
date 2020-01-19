@@ -1,0 +1,329 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rate limiter fundamentals | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579461934255">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143424668-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143424668-1');
+</script>
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ywang412.github.io">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579461934255" alt="">
+  </a>
+  <h1 class="site-title">
+    Yu&#39;s Github
+  </h1>
+  <p class="site-description">
+    Java, SQL, Python and a little bit of Scala 
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          Home
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          Archive
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          Tag
+        </a>
+      
+    
+      
+        <a href="/post/resume" class="menu">
+          Resume
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Rate limiter fundamentals
+            </h2>
+            <div class="post-info">
+              <time class="post-time">
+                · 2019-10-17 ·
+              </time>
+              
+            </div>
+            
+            <div class="post-content">
+              <p><strong>Leaky bucket</strong></p>
+<pre><code>public abstract class RateLimiter {
+
+  protected final int maxRequestPerSec;
+  protected RateLimiter(int maxRequestPerSec) {
+    this.maxRequestPerSec = maxRequestPerSec;
+  }
+
+  abstract boolean allow();
+}
+
+public class LeakyBucket extends RateLimiter {
+
+  private long nextAllowedTime;
+  private final long REQUEST_INTERVAL_MILLIS;
+
+  protected LeakyBucket(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    REQUEST_INTERVAL_MILLIS = 1000 / maxRequestPerSec;
+    nextAllowedTime = System.currentTimeMillis();
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    synchronized (this) {
+      if (curTime &gt;= nextAllowedTime) {
+        nextAllowedTime = curTime + REQUEST_INTERVAL_MILLIS;
+        return true;
+      }
+      return false;
+    }
+  }
+}
+</code></pre>
+<p><strong>Token Bucket</strong></p>
+<p>Eager mode</p>
+<pre><code>public class TokenBucket extends RateLimiter {
+
+  private int tokens;
+
+  public TokenBucket(int maxRequestsPerSec) {
+    super(maxRequestsPerSec);
+    this.tokens = maxRequestsPerSec;
+    new Thread(() -&gt; {
+      while (true) {
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        refillTokens(maxRequestsPerSec);
+      }
+    }).start();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens(int cnt) {
+    synchronized (this) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      notifyAll();
+    }
+  }
+}
+</code></pre>
+<p>Lazy mode</p>
+<pre><code>public class TokenBucketLazyRefill extends RateLimiter {
+
+  private int tokens;
+  private long lastRefillTime;
+
+  public TokenBucketLazyRefill(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    this.tokens = maxRequestPerSec;
+    this.lastRefillTime = System.currentTimeMillis();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      refillTokens();
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens() {
+    long curTime = System.currentTimeMillis();
+    double secSinceLastRefill = (curTime - lastRefillTime) / 1000.0;
+    int cnt = (int) (secSinceLastRefill * maxRequestPerSec);
+    if (cnt &gt; 0) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      lastRefillTime = curTime;
+    }
+  }
+}
+</code></pre>
+<p><strong>Fixed Window Counter</strong></p>
+<pre><code>public class FixedWindowCounter extends RateLimiter {
+
+  // TODO: Clean up stale entries
+  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
+
+  protected FixedWindowCounter(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long windowKey = System.currentTimeMillis() / 1000 * 1000;
+    windows.putIfAbsent(windowKey, new AtomicInteger(0));
+    return windows.get(windowKey).incrementAndGet() &lt;= maxRequestPerSec;
+  }
+}
+</code></pre>
+<p><strong>Sliding Window Log</strong></p>
+<pre><code>public class SlidingWindowLog extends RateLimiter {
+
+  private final Queue&lt;Long&gt; log = new LinkedList&lt;&gt;();
+
+  protected SlidingWindowLog(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    long boundary = curTime - 1000;
+    synchronized (log) {
+      while (!log.isEmpty() &amp;&amp; log.element() &lt;= boundary) {
+        log.poll();
+      }
+      log.add(curTime);
+      return log.size() &lt;= maxRequestPerSec;
+    }
+  }
+}
+</code></pre>
+<p><strong>Sliding Window</strong></p>
+<p>This is still not accurate becasue it assumes that the distribution of requests in previous window is even, which may not be true. But compares to fixed window counter, which only guarantees rate within each window, and sliding window log, which has huge memory footprint, sliding window is more practical.</p>
+<pre><code>public class SlidingWindow extends RateLimiter {
+
+  // TODO: Clean up stale entries
+  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
+
+  protected SlidingWindow(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    long curWindowKey = curTime / 1000 * 1000;
+    windows.putIfAbsent(curWindowKey, new AtomicInteger(0));
+    long preWindowKey = curWindowKey - 1000;
+    AtomicInteger preCount = windows.get(preWindowKey);
+    if (preCount == null) {
+      return windows.get(curWindowKey).incrementAndGet() &lt;= maxRequestPerSec;
+    }
+
+    double preWeight = 1 - (curTime - curWindowKey) / 1000.0;
+    long count = (long) (preCount.get() * preWeight
+        + windows.get(curWindowKey).incrementAndGet());
+    return count &lt;= maxRequestPerSec;
+  }
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ywang412.github.io/post/rate-limiter">
+              <h3 class="post-title">
+                Rate Limiter
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+
+          
+            <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+
+<div id="disqus_thread"></div>
+
+<script>
+
+var options = {
+  shortname: 'ywang412',
+  apikey: 'gmr5wORrpUmczJ0fs6x1CjNX2WgIP2riU2sSqLrIo6Idh3GkyiY8WIpUwBaP70X5',
+}
+if ('') {
+  options.api = ''
+}
+var dsqjs = new DisqusJS(options)
+
+</script>
+
+          
+        
+
+        <div class="site-footer">
+   | 
+  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

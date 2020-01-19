@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579460028507">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579461934255">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579460028507" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579461934255" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -103,6 +103,166 @@
       
       <div class="post-abstract">
         
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/rate-limiter-fundamentals">
+        <h2 class="post-title">Rate limiter fundamentals</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-10-17 ·
+        </time>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/rate-limiter">
+        <h2 class="post-title">Rate Limiter</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-10-17 ·
+        </time>
+        
+      </div>
+      
+      <div class="post-abstract">
+        
+      </di>
+    </article>
+  
+    <article class="post">
+      <a href="https://ywang412.github.io/post/rate-limiting-fundamentals">
+        <h2 class="post-title">Rate limiting fundamentals</h2>
+      </a>
+      <div class="post-info">
+        <time class="post-time">
+          · 2019-10-17 ·
+        </time>
+        
+      </div>
+      
+      <div class="post-abstract">
+        <p><strong>Leaky bucket</strong></p>
+<pre><code>public abstract class RateLimiter {
+
+  protected final int maxRequestPerSec;
+  protected RateLimiter(int maxRequestPerSec) {
+    this.maxRequestPerSec = maxRequestPerSec;
+  }
+
+  abstract boolean allow();
+}
+
+public class LeakyBucket extends RateLimiter {
+
+  private long nextAllowedTime;
+  private final long REQUEST_INTERVAL_MILLIS;
+
+  protected LeakyBucket(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    REQUEST_INTERVAL_MILLIS = 1000 / maxRequestPerSec;
+    nextAllowedTime = System.currentTimeMillis();
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    synchronized (this) {
+      if (curTime &gt;= nextAllowedTime) {
+        nextAllowedTime = curTime + REQUEST_INTERVAL_MILLIS;
+        return true;
+      }
+      return false;
+    }
+  }
+}
+</code></pre>
+<p><strong>Token Bucket</strong></p>
+<p>Eager mode</p>
+<pre><code>public class TokenBucket extends RateLimiter {
+
+  private int tokens;
+
+  public TokenBucket(int maxRequestsPerSec) {
+    super(maxRequestsPerSec);
+    this.tokens = maxRequestsPerSec;
+    new Thread(() -&gt; {
+      while (true) {
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        refillTokens(maxRequestsPerSec);
+      }
+    }).start();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens(int cnt) {
+    synchronized (this) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      notifyAll();
+    }
+  }
+}
+</code></pre>
+<p>Lazy mode</p>
+<pre><code>public class TokenBucketLazyRefill extends RateLimiter {
+
+  private int tokens;
+  private long lastRefillTime;
+
+  public TokenBucketLazyRefill(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    this.tokens = maxRequestPerSec;
+    this.lastRefillTime = System.currentTimeMillis();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      refillTokens();
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens() {
+    long curTime = System.currentTimeMillis();
+    double secSinceLastRefill = (curTime - lastRefillTime) / 1000.0;
+    int cnt = (int) (secSinceLastRefill * maxRequestPerSec);
+    if (cnt &gt; 0) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      lastRefillTime = curTime;
+    }
+  }
+}
+</code></pre>
+<p><strong>Fixed Window Counter</strong><br>
+<img src="https://ywang412.github.io/post-images/1579461852072.png" alt=""></p>
+
       </di>
     </article>
   
@@ -219,66 +379,6 @@
       <div class="post-info">
         <time class="post-time">
           · 2019-07-06 ·
-        </time>
-        
-          <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
-            # Java
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </di>
-    </article>
-  
-    <article class="post">
-      <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
-        <h2 class="post-title">Java JUC (java.util.concurrent) 4 - Lock</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-07-02 ·
-        </time>
-        
-          <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
-            # Java
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </di>
-    </article>
-  
-    <article class="post">
-      <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
-        <h2 class="post-title">Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-05-13 ·
-        </time>
-        
-          <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
-            # Java
-          </a>
-        
-      </div>
-      
-      <div class="post-abstract">
-        
-      </di>
-    </article>
-  
-    <article class="post">
-      <a href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables">
-        <h2 class="post-title">Java JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection</h2>
-      </a>
-      <div class="post-info">
-        <time class="post-time">
-          · 2019-04-24 ·
         </time>
         
           <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">

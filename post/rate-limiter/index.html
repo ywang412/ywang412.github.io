@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Python 3 quick start - 2 PEP8 | Yu&#39;s Github</title>
+<title>Rate Limiter | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579461934255">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -83,39 +83,90 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Python 3 quick start - 2 PEP8
+              Rate Limiter
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-13 ·
+                · 2019-10-17 ·
               </time>
-              
-                <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
-                  # Python
-                </a>
               
             </div>
             
             <div class="post-content">
-              <p>variable and function_name</p>
-<pre><code>seconds_per_day
-print_hello()
+              <p><strong>Leaky bucket</strong></p>
+<pre><code>public abstract class RateLimiter {
+
+  protected final int maxRequestPerSec;
+  protected RateLimiter(int maxRequestPerSec) {
+    this.maxRequestPerSec = maxRequestPerSec;
+  }
+
+  abstract boolean allow();
+}
+
+public class LeakyBucket extends RateLimiter {
+
+  private long nextAllowedTime;
+  private final long REQUEST_INTERVAL_MILLIS;
+
+  protected LeakyBucket(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    REQUEST_INTERVAL_MILLIS = 1000 / maxRequestPerSec;
+    nextAllowedTime = System.currentTimeMillis();
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    synchronized (this) {
+      if (curTime &gt;= nextAllowedTime) {
+        nextAllowedTime = curTime + REQUEST_INTERVAL_MILLIS;
+        return true;
+      }
+      return false;
+    }
+  }
+}
 </code></pre>
-<p>ClassName</p>
-<pre><code>MyClass
-FileParseError
+<p><strong>Token Bucket</strong></p>
+<pre><code>public class TokenBucket extends RateLimiter {
+
+  private int tokens;
+
+  public TokenBucket(int maxRequestsPerSec) {
+    super(maxRequestsPerSec);
+    this.tokens = maxRequestsPerSec;
+    new Thread(() -&gt; {
+      while (true) {
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        refillTokens(maxRequestsPerSec);
+      }
+    }).start();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens(int cnt) {
+    synchronized (this) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      notifyAll();
+    }
+  }
+}
 </code></pre>
-<p>CONSTANT</p>
-<p><code>MAX_RETRY_TIMES</code></p>
-<p>package_name</p>
-<p><code>open_api</code></p>
-<p>newLine &quot;&quot;</p>
-<pre><code>with open('/path/to/some/file/you/want/to/read') as file_1, \
-     open('/path/to/some/file/being/written', 'w') as file_2:
-    file_2.write(file_1.read())
-</code></pre>
-<p>Comment</p>
-<p><code>#</code></p>
 
             </div>
           </article>
@@ -124,9 +175,9 @@ FileParseError
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/python-3-quick-start-1">
+            <a href="https://ywang412.github.io/post/rate-limiting-fundamentals">
               <h3 class="post-title">
-                Python 3 quick start - 1 Basics
+                Rate limiting fundamentals
               </h3>
             </a>
           </div>
