@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 2 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579465604192">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579466561981">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579465604192" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579466561981" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-04-08 ·
+                · 2018-04-07 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -188,6 +188,25 @@ public int minCostToSupplyWater(int n, int[] wells, int[][] pipes) {
 private int find(int x) {
     if (x != uf[x]) uf[x] = find(uf[x]);
     return uf[x];
+}
+</code></pre>
+<p><strong>918. Maximum Sum Circular Subarray</strong></p>
+<pre><code>class Solution {
+    public int maxSubarraySumCircular(int[] A) {
+        int maxSum = Integer.MIN_VALUE, minSum = Integer.MAX_VALUE;
+        int totalSum = 0, curSum1 = 0, curSum2 = 0;
+        for (int a : A) {
+            totalSum += a;
+            curSum1 += a;
+            maxSum = Math.max(curSum1, maxSum);
+            if (curSum1 &lt; 0) curSum1 = 0;
+            curSum2 += a;
+            minSum = Math.min(curSum2, minSum);
+            if (curSum2 &gt; 0) curSum2 = 0;
+        }
+        if (maxSum &lt; 0) return maxSum;
+        return Math.max(maxSum, totalSum - minSum);
+    }
 }
 </code></pre>
 
