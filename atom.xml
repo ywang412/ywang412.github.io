@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-19T18:53:15.599Z</updated>
+    <updated>2020-01-19T18:53:52.888Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -167,853 +167,6 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
 (user)-[:PURCHASED]-&gt;(product)&lt;-[:PURCHASED]-()-[:PURCHASED]-&gt;(otherProduct)
 // Tree navigation 
 (root)&lt;-[:PARENT*]-(leaf:Category)-[:ITEM]-&gt;(data:Product)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SQL cheatsheet]]></title>
-        <id>https://ywang412.github.io/post/sql-cheatsheet</id>
-        <link href="https://ywang412.github.io/post/sql-cheatsheet">
-        </link>
-        <updated>2019-09-20T02:24:27.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>use rank from window function</strong></p>
-<p>rank has to be outside window function scope.</p>
-<pre><code>select Department, Employee, Salary
-from  
-(select Department.Name as Department, Employee.Name as Employee, Salary, DepartmentId,
-Dense_Rank() over (partition by DepartmentId order by Salary desc) as drank
-from Employee
--- cannot put where drank &lt;= 3 here
-join 
-Department
-on Department.Id = Employee.DepartmentId) temp
-where drank &lt;= 3 
-</code></pre>
-<p><strong>SELECT * INTO TABLE VS INSERT INTO TABLE SELECT</strong></p>
-<pre><code>SELECT * 
-INTO CustomersGermany
-FROM Customers
-WHERE Country = 'Germany';
-
-INSERT INTO Customers (CustomerName, City, Country)
-SELECT SupplierName, City, Country 
-FROM Suppliers;
-
-INSERT INTO table_name (column_list)
-VALUES
-    (value_list_1),
-    (value_list_2),
-    ...
-    (value_list_n);
-</code></pre>
-<p><strong>IFNULL(), ISNULL(), COALESCE(), and NVL()</strong></p>
-<p>PostgreSQL: COALESCE()<br>
-MySQL: IFNULL(), COALESCE()<br>
-SQL SERVER: ISNULL()<br>
-Oracle: NVL()</p>
-<p><strong>IF() vs CASE WHEN</strong><br>
-if() only in mysql</p>
-<pre><code>CASE
-    WHEN condition1 THEN result1
-    WHEN condition2 THEN result2
-    WHEN conditionN THEN resultN
-    ELSE result
-END;
-</code></pre>
-<p><strong>1077. Project Employees III</strong></p>
-<pre><code>select t.project_id, t.employee_id
-from
-    (select project_id,
-    p.employee_id,
-    rank() over(partition by project_id order by experience_years desc) as rank
-    from Project p join Employee e
-    on p.employee_id = e.employee_id) t
-where t.rank = 1;
-
-select p.project_id, p.employee_id
-from Project p join Employee e
-on p.employee_id = e.employee_id
-where (p.project_id, e.experience_years) in (
-    select a.project_id, max(b.experience_years)
-    from Project a join Employee b
-    on a.employee_id = b.employee_id
-    group by a.project_id);
-</code></pre>
-<p><strong>569. Median Employee Salary</strong></p>
-<pre><code>select Id, Company, Salary from
-(
-select e.Id, e.Salary, e.Company,  if( @prev = e.Company , @Rank := @Rank + 1, @Rank := 1) as rank, @prev := e.Company
-from Employee e , (select @Rank := 0, @prev := 0) as temp order by e.Company, e.Salary, e.Id
-) Ranking
-INNER JOIN
-(
-select count(*) as totalcount, Company as name from Employee e2 group by e2.Company
-) companycount
-on companycount.name = Ranking.Company
-where Rank = floor((totalcount+1)/2) or Rank = floor((totalcount+2)/2)
-
-select t1.Id as Id, t1.Company, t1.Salary
-from Employee as t1 inner join Employee as t2
-on t1.Company = t2.Company
-group by t1.Id
-having abs(sum(CASE when t2.Salary&lt;t1.Salary then 1
-                  when t2.Salary&gt;t1.Salary then -1
-                  when t2.Salary=t1.Salary and t2.Id&lt;t1.Id then 1
-                  when t2.Salary=t1.Salary and t2.Id&gt;t1.Id then -1
-                  else 0 end)) &lt;= 1
-order by t1.Company, t1.Salary, t1.Id         
-
-select
-cr.Id, cr.Company, cr.Salary
-from (
-SELECT Id, Company, Salary, ROW_NUMBER() OVER(PARTITION BY COMPANY ORDER BY Salary ASC, Id ASC) AS r 
-FROM Employee) AS cr
-join 
-(select Company, count(Id) as total
-from Employee
-group by Company) as ct
-on cr.Company = ct.Company
-where cr.r = floor(( ct.total + 1) /2) or cr.r = floor((ct.total + 2) /2)
-</code></pre>
-<p><strong>group continuous range</strong></p>
-<pre><code># 1285. Find the Start and End Number of Continuous Ranges
-SELECT MIN(log_id) AS start_id,MAX(log_id) AS end_id FROM
-(
-    SELECT log_id,@rank:=CASE WHEN @previous=log_id-1 THEN @rank ELSE @rank+1 END as r,@previous:=log_id as p
-    FROM Logs as a,
-    (
-        SELECT @rank:=0,@previous:=-1
-    ) as b
-) c
-GROUP BY c.r
-ORDER BY start_id;
-
-# 1225. Report Contiguous Dates
-select s as period_state, min(ed) as start_date, max(ed) as end_date from
-(select s, ed,
-    @rank := case when @prev = s then @rank else @rank + 1 end as rank,
-    @prev := s as prev
-from
-(select * from
-(select fail_date as ed, &quot;failed&quot; as s from Failed
-union all
-select success_date as ed, &quot;succeeded&quot; as s from Succeeded) a
-where ed between '2019-01-01' and '2019-12-31' order by ed asc) b,
-(select @rank := 0, @prev := &quot;unknown&quot;) c) d
-group by d.rank
-order by start_date asc
-</code></pre>
-<p><strong>time function</strong></p>
-<pre><code>both:
-HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
-WHERE
-   payment_date BETWEEN '2007-02-07'
-AND '2007-02-15';
-
-postgresql:
-WHERE
-      DATEPART('year',  login_date) = 2014
-  AND DATEPART('month', login_date) = 2
-
-mysql:
-WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
-WHERE datediff( '2019-06-30', t.login_date)&lt;=90
-WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 DAY) AND DATE(&quot;2019-07-27&quot;) 
-</code></pre>
-<p><strong>SQL window function</strong></p>
-<pre><code>SELECT start_terminal,
-       duration_seconds,
-       SUM(duration_seconds) OVER
-         (PARTITION BY start_terminal ORDER BY start_time)
-         AS running_total,
-       COUNT(duration_seconds) OVER
-         (PARTITION BY start_terminal ORDER BY start_time)
-         AS running_count,
-       AVG(duration_seconds) OVER
-         (PARTITION BY start_terminal ORDER BY start_time)
-         AS running_avg
-			 ROW_NUMBER() OVER (PARTITION BY start_terminal
-									ORDER BY start_time)
-						AS row_numbe
-			-- RANK() would give the identical rows and then skip
-			-- DENSE_RANK() would give the identical rows and then no-skip
-			 RANK() OVER (PARTITION BY start_terminal  
-							ORDER BY start_time)
-				AS rank
-  FROM tutorial.dc_bikeshare_q1_2012
- WHERE start_time &lt; '2012-01-08'
-</code></pre>
-<p>LAG pulls from previous rows and LEAD pulls from following rows</p>
-<pre><code>SELECT *
-  FROM (
-    SELECT start_terminal,
-           duration_seconds,
-           duration_seconds -LAG(duration_seconds, 1) OVER
-             (PARTITION BY start_terminal ORDER BY duration_seconds)
-             AS difference
-      FROM tutorial.dc_bikeshare_q1_2012
-     WHERE start_time &lt; '2012-01-08'
-     ORDER BY start_terminal, duration_seconds
-       ) sub
- WHERE sub.difference IS NOT NULL
-</code></pre>
-<p><strong>1194. Tournament Winners</strong></p>
-<pre><code>select group_id, player_id from 
-(
-    select p.player_id, p.group_id, 
-    row_number() over(partition by p.group_id order by player_total.score desc, p.player_id asc) rank
-    from players p join
-        (
-            select player_id, sum(player_score.score) as score
-            from (
-                    (select first_player as player_id, first_score as score from Matches)
-                        union all
-                    (select second_player as player_id, second_score as score from Matches)
-                 ) player_score 
-            group by player_id
-        ) player_total
-    on p.player_id = player_total.player_id
-) rank_table 
-where rank_table.rank = 1
-
-
-#1 . partition by p.group_id order by player_total.score desc, p.player_id asc
-#-&gt;  order by m.group_id asc, m.tot desc, m.player_id asc
-#2 . have to make intermediate table 
-#select  p.group_id, player_total.tot,  p.player_id
-#     from
-#	players p join player_total
-
-select group_id, player_id from 
-(
- select  m.group_id, m.tot,  m.player_id,
-	(@rank:= case when @prev = m.group_id then @rank+1 else 1 end) as rank,
-	@prev:=m.group_id as prev
-    from 
-    (select  p.group_id, player_total.tot,  p.player_id
-     from
-	players p join
-        (
-            select player_id, sum(player_score.score) as tot
-            from (
-                    (select first_player as player_id, first_score as score from Matches)
-                        union all
-                    (select second_player as player_id, second_score as score from Matches)
-                 ) player_score 
-            group by player_id
-        ) player_total
-	on p.player_id = player_total.player_id) as m,
-	(select @prev:= -1, @rank:= 1) as temp 
-    order by m.group_id asc, m.tot desc, m.player_id asc
-    
- ) as rank_table 
- where rank_table.rank = 1 
-
-</code></pre>
-<p><strong>1077. Project Employees III</strong></p>
-<pre><code>select t.project_id, t.employee_id
-from
-    (select project_id,
-    p.employee_id,
-    rank() over(partition by project_id order by experience_years desc) as rank
-    from Project p join Employee e
-    on p.employee_id = e.employee_id) t
-where t.rank = 1;
-
-select p.project_id, p.employee_id
-from Project p join Employee e
-on p.employee_id = e.employee_id
-where (p.project_id, e.experience_years) in (
-    select a.project_id, max(b.experience_years)
-    from Project a join Employee b
-    on a.employee_id = b.employee_id
-    group by a.project_id);
-</code></pre>
-<p><strong>1164. Product Price at a Given Date</strong></p>
-<pre><code>select b.product_id, coalesce(a.new_price, 10) as price
-from 
-(select product_id, new_price,
-row_number() over (partition by product_id order by change_date desc) as rank
-from Products
-where change_date &lt;= '2019-08-16') as a
-right join
-(select distinct(product_id)
-from Products) as b
-on a.product_id = b.product_id and a.rank =1
-</code></pre>
-<p><strong>534. Game Play Analysis III</strong></p>
-<pre><code>--Method 1: Using Self Join 
-SELECT a1.player_id, a1.event_date,
-SUM(a2.games_played) AS games_played_so_far
-FROM activity a1, activity a2
-WHERE a1.player_id = a2.player_id
-AND a1.event_date &gt;=a2.event_date
-GROUP BY a1.player_id, a1.event_date
-ORDER BY a1.player_id, a1.event_date;
---Method 2: Using window functions
-
-SELECT
-player_id, event_date, sum(games_played) over(PARTITION BY player_id ORDER BY event_date)
-AS 'games_played_so_far'
-FROM activity
-ORDER BY player_id, games_played_so_far;
-</code></pre>
-<p><strong>601. Human Traffic Of Stadium</strong></p>
-<pre><code>select distinct day1.* 
-from 
-stadium day1, stadium day2, stadium day3
-where 
-day1.people &gt;= 100 and day2.people &gt;= 100 and day3.people &gt;= 100 and
-((day1.id + 1 =  day2.id and day1.id + 2 = day3.id) or 
-(day1.id - 1 = day2.id and day1.id + 1 = day3.id) or 
-(day1.id - 2 = day2.id and day1.id - 1 = day3.id)) 
-order by day1.id; 
-
-select day1.* 
-from 
-stadium day1, stadium day2, stadium day3
-where 
-day1.people &gt;= 100 and day2.people &gt;= 100 and day3.people &gt;= 100 and
-((day1.id + 1 =  day2.id and day1.id + 2 = day3.id) or 
-(day1.id - 1 = day2.id and day1.id + 1 = day3.id) or 
-(day1.id - 2 = day2.id and day1.id - 1 = day3.id)) 
-GROUP BY day1.id; 
-</code></pre>
-<p><strong>612. Shortest Distance in a Plane</strong></p>
-<pre><code>SELECT
-    round(min(sqrt(pow(P1.y-P2.y,2)+pow(P1.x-P2.x,2))),2) as shortest
-FROM
-    point_2d P1,
-    point_2d P2
-WHERE
-    P1.x &lt;&gt; P2.x OR
-    P1.y &lt;&gt; P2.y
-</code></pre>
-<p><strong>Delete duplicate emails</strong></p>
-<pre><code>DELETE p1
-FROM Person p1, Person p2
-WHERE p1.Email = p2.Email AND
-p1.Id &gt; p2.Id
-
-Delete From Person
-Where Id not in (
-    Select minId From (
-        Select min(Id) AS minId, Email
-        From Person
-        Group by Email
-    ) AS tmp
-);
-</code></pre>
-<p><strong>Rank scores</strong></p>
-<p>join vs subquery</p>
-<pre><code>SELECT Score, 
-(SELECT COUNT(DISTINCT Score) FROM Scores WHERE Score &gt;= s.Score) Rank 
-FROM Scores s ORDER BY Score DESC;
-
-SELECT s.Score, COUNT(DISTINCT t.Score) Rank
-FROM Scores s JOIN Scores t ON s.Score &lt;= t.Score
-GROUP BY s.Id ORDER BY s.Score DESC;
---Group by s.Id so COUNT is per id
-
-Select Score, Rank From (
-    Select Id, Score,
-        @rank := if(@preScore = Score, @rank, @rank+1) AS Rank,
-        @preScore := Score AS preScore
-    From Scores, (Select @rank:=0, @preScore:=-1) var
-    Order by Score DESC
-    ) tmp;
-</code></pre>
-<p><strong>Exchange seat</strong></p>
-<p>if clause</p>
-<pre><code>select
-if(id &lt; (select count(*) from seat), if(id mod 2=0, id-1, id+1), if(id mod 2=0, id-1, id)) as id, student
-from seat
-order by id asc;
-
-SELECT (CASE 
-    WHEN mod(id, 2) != 0 and records != id THEN id + 1
-    WHEN mod(id, 2) != 0 and records = id THEN id
-    ELSE id - 1
-END) AS id, student
-FROM seat, (select count(*) as records from seat) as seat_records 
--- as seat_records because Every derived table must have its own alias
-ORDER BY id asc;
-</code></pre>
-<p><strong>610. Triangle Judgement</strong></p>
-<pre><code>SELECT 
-    x,
-    y,
-    z,
-    CASE
-        WHEN x + y &gt; z AND x + z &gt; y AND y + z &gt; x THEN 'Yes'
-        ELSE 'No'
-    END AS 'triangle'
-FROM
-    triangle;
-
-select *, 
-    IF(x + y &gt; z AND x + z &gt; y AND y + z &gt; x, 'Yes', 'No') as triangle 
-    from triangle;
-
-</code></pre>
-<p><strong>Friend requests I</strong></p>
-<p>round + ifnull vs coalesce</p>
-<pre><code>select coalesce(round(
-(select count(distinct requester_id, accepter_id)
-from request_accepted)
-/ 
-(select count(distinct sender_id, send_to_id)
-from friend_request), 2), 0) as accept_rate
-
-select ifnull(round((count(distinct requester_id,accepter_id)/count(distinct sender_id,send_to_id)),2),0.00) as accept_rate
-from friend_request, request_accepted
-</code></pre>
-<p><strong>Friend requests II</strong></p>
-<p>union all</p>
-<pre><code>SELECT ids as id , COUNT(*) as num
-FROM 
-  (SELECT requester_id as ids FROM request_accepted
-   UNION ALL
-   SELECT accepter_id as ids FROM request_accepted) AS u
-GROUP BY ids
-ORDER BY COUNT(*) DESC
-LIMIT 1
-</code></pre>
-<p><strong>Team Scores in Football Tournament</strong></p>
-<p>Left join on or</p>
-<pre><code>SELECT team_id,team_name,
-SUM(CASE WHEN team_id=host_team AND host_goals&gt;guest_goals THEN 3 ELSE 0 END)+
-SUM(CASE WHEN team_id=guest_team AND guest_goals&gt;host_goals THEN 3 ELSE 0 END)+
-SUM(CASE WHEN team_id=host_team AND host_goals=guest_goals THEN 1 ELSE 0 END)+
-SUM(CASE WHEN team_id=guest_team AND guest_goals=host_goals THEN 1 ELSE 0 END)
-as num_points
-FROM Teams
-LEFT JOIN Matches
-ON team_id=host_team OR team_id=guest_team
-GROUP BY team_id
-ORDER BY num_points DESC, team_id ASC;
-
-select t.team_id, t.team_name, 
-        sum(case 
-            when T.host_goals &gt; T.guest_goals then 3 
-            when T.host_goals = T.guest_goals then 1
-            else 0
-            end) as num_points
-from teams t left join
-(select * from matches
-union all
-select match_id, guest_team, host_team, guest_goals, host_goals from matches) as T on t.team_id = T.host_team
-group by t.team_id
-order by num_points desc, t.team_id asc
-</code></pre>
-<p><strong>Monthly Transactions II</strong></p>
-<pre><code>--SELECT DATE_FORMAT(c.trans_date, '%Y-%m') AS month, country,   -- LEFT(trans_date, 7)
-
-select month, country, sum(case when state = 'approved' then 1 else 0 end) as approved_count,
-sum(case when state = 'approved' then amount else 0 end) as approved_amount,
-sum(case when state = 'chargeback' then 1 else 0 end) as chargeback_count,
-sum(case when state = 'chargeback' then amount else 0 end) as chargeback_amount  
-from
-(select Left(c.trans_date, 7) as month, t.country, 'chargeback' as state, t.amount
-from Chargebacks c  join Transactions t
-on c.trans_id = t.id
-union all
-select Left(t.trans_date, 7) as month, t.country, state, t.amount
-from Transactions t
-where state = 'approved') temp
-group by month, country
-</code></pre>
-<p><strong>Students Report By Geography</strong></p>
-<p>@variable</p>
-<pre><code>SELECT 
-    America, Asia, Europe
-FROM
-    (SELECT @as:=0, @am:=0, @eu:=0) t,
-    (SELECT 
-        @as:=@as + 1 AS asid, name AS Asia
-    FROM
-        student
-    WHERE
-        continent = 'Asia'
-    ORDER BY Asia) AS t1
-        RIGHT JOIN
-    (SELECT 
-        @am:=@am + 1 AS amid, name AS America
-    FROM
-        student
-    WHERE
-        continent = 'America'
-    ORDER BY America) AS t2 ON asid = amid
-        LEFT JOIN
-    (SELECT 
-        @eu:=@eu + 1 AS euid, name AS Europe
-    FROM
-        student
-    WHERE
-        continent = 'Europe'
-    ORDER BY Europe) AS t3 ON amid = euid
-;
-</code></pre>
-<p><strong>571. Find Median Given Frequency of Numbers</strong></p>
-<pre><code>select  avg(n.Number) median
-from Numbers n
-where n.Frequency &gt;= abs((select sum(Frequency) from Numbers where Number&lt;=n.Number) -
-                         (select sum(Frequency) from Numbers where Number&gt;=n.Number))
-												 
-select avg(t3.Number) as median
-from Numbers as t3 
-inner join 
-    (select t1.Number, 
-        abs(sum(case when t1.Number&gt;t2.Number then t2.Frequency else 0 end) -
-            sum(case when t1.Number&lt;t2.Number then t2.Frequency else 0 end)) as count_diff
-    from numbers as t1, numbers as t2
-    group by t1.Number) as t4
-on t3.Number = t4.Number
-where t3.Frequency&gt;=t4.count_diff
-</code></pre>
-<p><strong>603. Consecutive Available Seats</strong></p>
-<pre><code>select distinct a.seat_id
-from cinema a join cinema b
-  on abs(a.seat_id - b.seat_id) = 1
-  and a.free = true and b.free = true
-order by a.seat_id
-;
-</code></pre>
-<p><strong>184. Department Highest Salary</strong></p>
-<pre><code>SELECT D.Name AS Department ,E.Name AS Employee ,E.Salary 
-FROM
-	Employee E,
-	(SELECT DepartmentId,max(Salary) as max FROM Employee GROUP BY DepartmentId) T,
-	Department D
-WHERE E.DepartmentId = T.DepartmentId 
-  AND E.Salary = T.max
-  AND E.DepartmentId = D.id
-  
-SELECT D.Name AS Department ,E.Name AS Employee ,E.Salary 
-from 
-	Employee E,
-	Department D 
-WHERE E.DepartmentId = D.id 
-  AND (DepartmentId,Salary) in 
-  (SELECT DepartmentId,max(Salary) as max FROM Employee GROUP BY DepartmentId)
-</code></pre>
-<p><strong>185. Department Top Three Salaries</strong></p>
-<pre><code>select d.Name Department, e1.Name Employee, e1.Salary
-from Employee e1 
-join Department d
-on e1.DepartmentId = d.Id
-where 3 &gt; (select count(distinct(e2.Salary)) 
-                  from Employee e2 
-                  where e2.Salary &gt; e1.Salary 
-                  and e1.DepartmentId = e2.DepartmentId
-                  );
-									
-Select D.Name AS Department, T.Name AS Employee, T.Salary
-From 
-(
-Select DepartmentId, Name, Salary,
-    (CASE WHEN @id=DepartmentId THEN @rank:= IF(@preSalary = Salary, @rank, @rank+1)
-         ELSE @rank:= 1
-    END) AS Rank,
-    @preSalary:= Salary AS preSalary,
-    @id:= DepartmentId AS preId
-From Employee, (Select @rank:=0, @preSalary:=-1, @id:=NULL) var
-Order by DepartmentId, Salary DESC
-) T JOIN Department D
-ON T.DepartmentId = D.Id
-Where T.Rank &lt;=3;
-
-select Department, Employee, Salary
-from  
-(select Department.Name as Department, Employee.Name as Employee, Salary, DepartmentId,
-Dense_Rank() over (partition by DepartmentId order by Salary desc) as drank
-from Employee
-join 
-Department
-on Department.Id = Employee.DepartmentId) temp
-where drank &lt;= 3 
-</code></pre>
-<p><strong>176. Second Highest Salary</strong></p>
-<pre><code>CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
-BEGIN
-  RETURN (
-      SELECT MAX(Salary) FROM Employee E1
-      WHERE N - 1 =
-      (SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
-      WHERE E2.Salary &gt; E1.Salary)
-  );
-END
-
-SELECT max(Salary)
-FROM Employee
-WHERE Salary &lt; (SELECT max(Salary) FROM Employee)
-</code></pre>
-<p><strong>Nth Highest Salary</strong></p>
-<pre><code>SELECT Salary FROM Employee GROUP BY Salary
-UNION ALL (SELECT NULL AS Salary)
-ORDER BY Salary DESC LIMIT 1 OFFSET 1;
- 
-
-SELECT MAX(Salary) FROM Employee E1
-WHERE N =
-(SELECT COUNT(DISTINCT(E2.Salary)) FROM Employee E2
-WHERE E2.Salary &gt;= E1.Salary);
-
-Select Distinct Salary From (
-    Select Id, Salary,
-        @rank := if(@preSalary = Salary, @rank, @rank+1) AS Rank,
-        @preSalary := Salary AS preSalary
-    From Employee, (Select @rank:=0, @preSalary:=-1) var
-    Order by Salary DESC
-    ) tmp
-Where Rank=N;
-</code></pre>
-<p><strong>1204. Last Person to Fit in the Elevator</strong></p>
-<pre><code>SELECT q1.person_name
-FROM Queue q1 JOIN Queue q2 ON q1.turn &gt;= q2.turn
-GROUP BY q1.turn
-HAVING SUM(q2.weight) &lt;= 1000
-ORDER BY SUM(q2.weight) DESC
-LIMIT 1
-
-SELECT person_name FROM Queue as a
-WHERE
-(
-    SELECT SUM(weight) FROM Queue as b
-    WHERE b.turn&lt;=a.turn
-    ORDER By turn
-)&lt;=1000
-ORDER BY a.turn DESC limit 1;
-</code></pre>
-<p><strong>NOT EXISTS vs. NOT IN vs. LEFT JOIN WHERE IS NULL</strong></p>
-<p>NOT IN never matches if there is a single NULL in the list.</p>
-<pre><code>SELECT a FROM table1 WHERE a NOT IN (SELECT a FROM table2)
-SELECT a FROM table1 WHERE NOT EXISTS (SELECT * FROM table2 WHERE table1.a = table2.a)
-SELECT a FROM table1 LEFT JOIN table2 ON table1.a = table2.a WHERE table1.a IS NULL
-
-DELETE b FROM BLOB b 
-  LEFT JOIN FILES f ON f.id = b.fileid 
-      WHERE f.id IS NULL
-
-DELETE FROM BLOB 
- WHERE NOT EXISTS(SELECT NULL
-                    FROM FILES f
-                   WHERE f.id = fileid)
-									 
-DELETE FROM BLOB
- WHERE fileid NOT IN (SELECT f.id 
-                        FROM FILES f)
-</code></pre>
-<p><strong>Find Local Maximum</strong></p>
-<pre><code>SELECT b.index
-FROM points AS a, points AS b, points AS c
-WHERE  a.index = b.index-1 AND c.index = b.index+1
-AND a.value &lt; b.value   AND c.value &lt; b.value 
-	 
-select ind
-from tmp1 t1
-where val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind-1)
-and val &gt; (select val from jdoyle.tmp1 t2 where t2.ind = t1.ind+1);
-</code></pre>
-<p><strong>Consecutive Numbers</strong></p>
-<pre><code>Select Distinct Num As ConsecutiveNums From (
-    Select Id, Num, 
-        @count := If(@preNum = Num, @count+1, 1) AS Count,
-        @preNum := Num AS preNum
-    From Logs, (Select @preNum:=NULL, @count:=1) var 
-    ) tmp
-Where Count &gt;=3;
-</code></pre>
-<p><strong>197. Rising Temperature</strong></p>
-<pre><code>Select W1.Id
-From Weather W1 JOIN Weather W2 
-ON to_days(W1.Date) = to_days(W2.Date) + 1 --DATEDIFF(a.Date, b.Date)=1
-Where W1.Temperature &gt; W2.Temperature;
-
-Select Id From (
-Select Id, Date, Temperature,
-    @Higher := If(Temperature &gt; @preTemp, 'Yes', 'No') AS Higher,
-    @DateContinuous := If(Datediff(Date, @preDate) = 1, 'Yes', 'No') AS DateContinuous,
-    @preTemp := Temperature AS preTemp,
-    @preDate := Date
-From Weather, (Select @preTemp:=NULL, @Higher:=NULL, @preDate:=NULL) var
-Order by Date
-) tmp
-Where Higher = 'Yes' AND DateContinuous = 'Yes';
-</code></pre>
-<p><strong>262 Trips and Users</strong></p>
-<pre><code>SELECT t.Request_at as Day,
-       ROUND(COUNT(IF(Status &lt;&gt; 'completed', TRUE, NULL)) / COUNT(*), 2) AS 'Cancellation Rate' 
-from Trips t 
-inner join Users u 
-on t.Client_Id = u.Users_Id and u.Banned='No'
-and t.Request_at between '2013-10-01' and '2013-10-03'
-group by t.Request_at
-
-SELECT request_at AS &quot;Day&quot;, 
-            ROUND(((SUM(CASE WHEN LOWER(Status) LIKE &quot;cancelled%&quot; THEN 1.000 ELSE 0 END)) / COUNT(id)), 2) AS &quot;Cancellation Rate&quot; 
-FROM        trips
-WHERE       client_id NOT IN (SELECT users_id FROM users WHERE banned = 'Yes')
-AND         request_at BETWEEN '2013-10-01' AND '2013-10-03'
-GROUP BY    request_at;
-</code></pre>
-<p><strong>182. Select duplicated email</strong></p>
-<pre><code>select Email
-from Person
-group by Email
-having count(Email) &gt; 1;
-</code></pre>
-<p><strong>627. Swap Salary</strong></p>
-<pre><code>UPDATE salary
-SET
-    sex = CASE sex
-        WHEN 'm' THEN 'f'
-        ELSE 'm'
-    END;
-</code></pre>
-<p><strong>585. Investments in 2016</strong></p>
-<pre><code>select sum(TIV_2016) TIV_2016
-from insurance
-where TIV_2015 in (select TIV_2015 from insurance group by TIV_2015 having count(1)&gt;1)
-and (lat, lon) in (select lat, lon from insurance group by lat, lon having count(1)=1)
-
-select sum(TIV_2016) TIV_2016
-from insurance a
-where 1 = (select count(*) from insurance b where a.LAT=b.LAT and a.LON=b.LON) 
-and 1 &lt; (select count(*) from insurance c where a.TIV_2015=c.TIV_2015)  ;
-</code></pre>
-<p><strong>569. Median Employee Salary</strong></p>
-<pre><code>SELECT 
-    Id, Company, Salary
-FROM
-    (SELECT 
-        e.Id,
-            e.Salary,
-            e.Company,
-            IF(@prev = e.Company, @Rank:=@Rank + 1, @Rank:=1) AS rank,
-            @prev:=e.Company
-    FROM
-        Employee e, (SELECT @Rank:=0, @prev:=0) AS temp
-    ORDER BY e.Company , e.Salary , e.Id) Ranking
-        INNER JOIN
-    (SELECT 
-        COUNT(*) AS totalcount, Company AS name
-    FROM
-        Employee e2
-    GROUP BY e2.Company) companycount ON companycount.name = Ranking.Company
-WHERE
-    Rank = FLOOR((totalcount + 1) / 2)
-        OR Rank = FLOOR((totalcount + 2) / 2)
-</code></pre>
-<p><strong>579. Find Cumulative Salary of an Employee</strong></p>
-<pre><code>SELECT e.id, e.month,
-    SUM(e2.Salary) as Salary
-FROM Employee e
-JOIN Employee e2 ON (e.Id = e2.Id AND e.Month &gt;= e2.Month AND (e.Month - e2.Month &lt;= 2))
-WHERE e.Month &lt; (SELECT MAX(Month) from Employee where Id = e.Id)
-GROUP BY e.Id, e.Month
-ORDER BY e.Id, e.Month DESC
-
-select ct.Id, ct.Month, ct.Salary
-from
-(select e1.Id, e1.Month, sum(e2.Salary) as Salary
-from
-Employee e1 join
-Employee e2
-on e1.Id = e2.Id and e1.Month &gt;= e2.Month and e1.Month - 2 &lt;= e2.Month
-group by Id, e1.Month) ct
-where (ct.Id, ct.Month) not in (
-select e3.Id, Max(e3.Month) as Month
-from Employee e3
-group by e3.Id)
-order by Id, Month desc
-</code></pre>
-<p><strong>608. Tree Node</strong></p>
-<pre><code>SELECT
-    atree.id,
-    IF(ISNULL(atree.p_id),
-        'Root',
-        IF(atree.id IN (SELECT p_id FROM tree), 'Inner','Leaf')) Type
-FROM
-    tree atree
-ORDER BY atree.id
-
-select id, 
-case when p_id is null then 'Root' 
-else CASE WHEN EXISTS (SELECT 1 FROM tree t2 WHERE t2.p_id = t1.id)
-                      THEN 'Inner'
-                       ELSE 'Leaf'
-                 END
-    END AS Type
-from tree t1 order by id;
-
-SELECT DISTINCT t1.id, (
-    CASE
-    WHEN t1.p_id IS NULL  THEN 'Root'
-    WHEN t1.p_id IS NOT NULL AND t2.id IS NOT NULL THEN 'Inner'
-    WHEN t1.p_id IS NOT NULL AND t2.id IS NULL THEN 'Leaf'
-    END
-) AS Type 
-FROM tree t1
-LEFT JOIN tree t2
-ON t1.id = t2.p_id
-</code></pre>
-<p><strong>1084. Sales Analysis III</strong></p>
-<p>Group by having</p>
-<pre><code>SELECT s.product_id, product_name
-FROM Sales s
-LEFT JOIN Product p
-ON s.product_id = p.product_id
-GROUP BY s.product_id
-HAVING MIN(sale_date) &gt;= CAST('2019-01-01' AS DATE) AND
-       MAX(sale_date) &lt;= CAST('2019-03-31' AS DATE)
-
-select product_id, product_name
-from product
-where product_id not in
-(select product_id
-from sales
-where sale_date not between '2019-01-01' and '2019-03-31');
-</code></pre>
-<p><strong>IS NOT NULL</strong></p>
-<pre><code>SELECT *
-FROM products
-WHERE category_id IS NOT NULL;
-</code></pre>
-<p><strong>608. Tree Node</strong></p>
-<pre><code>select T.id, 
-IF(isnull(T.p_id), 'Root', IF(T.id in (select p_id from tree), 'Inner', 'Leaf')) Type 
-from tree T
-
-select Id,
-case 
-    when p_id is null then &quot;Root&quot;
-    when (p_id is not null and id in (select p_id from Tree)) then &quot;Inner&quot;
-    else &quot;Leaf&quot;
-end as Type
-from tree
-
-SELECT DISTINCT t1.id, (
-    CASE
-    WHEN t1.p_id IS NULL  THEN 'Root'
-    WHEN t1.p_id IS NOT NULL AND t2.id IS NOT NULL THEN 'Inner'
-    WHEN t1.p_id IS NOT NULL AND t2.id IS NULL THEN 'Leaf'
-    END
-) AS Type 
-FROM tree t1
-LEFT JOIN tree t2
-ON t1.id = t2.p_id
-</code></pre>
-<p><strong>1082. Sales Analysis I</strong></p>
-<pre><code>SELECT seller_id
-FROM Sales
-GROUP BY seller_id
-HAVING sum(price) = 
-(   SELECT sum(price)
-    FROM sales
-    group by seller_id
-    order by sum(price) desc
-    limit 1)
 </code></pre>
 ]]></content>
     </entry>
@@ -3936,6 +3089,116 @@ private final static ImmutableSet set = ImmutableSet.copyOf(list);
 private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
 private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
 				.put(1, 2).put(3, 4).put(5, 6).build();
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 2 - Atomic Variables and Concurrent Collection]]></title>
+        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables</id>
+        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-atomic-variables">
+        </link>
+        <updated>2019-04-24T12:22:48.000Z</updated>
+        <content type="html"><![CDATA[<p>Atomic varaibles are important parts of java concurrency API. It allows multiple threads safely access the same variables. The java.util.concurrent.atomic classes heavily used compare-and-swap (CAS) technique. CAS happens at CPU instruction level and is much more light weighted than synchronizing through locks or <code>synchronized</code> key word.</p>
+<p>AtomicInteger, AtomicLong, LongAdder, AtomicBoolean, and AtomicReference<Integer> are some of the most used Atomic classes.</p>
+<p><strong>AtomicInteger</strong></p>
+<pre><code>// 请求总数
+public static int clientTotal = 5000;
+// 同时并发执行的线程数
+public static int threadTotal = 200;
+public static AtomicInteger count = new AtomicInteger(0);
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		final Semaphore semaphore = new Semaphore(threadTotal);
+		final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		for (int i = 0; i &lt; clientTotal ; i++) {
+				executorService.execute(() -&gt; {
+						try {
+								semaphore.acquire();
+								add();
+								semaphore.release();
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+						countDownLatch.countDown();
+				});
+		}
+		countDownLatch.await();
+		executorService.shutdown();
+		log.info(&quot;count:{}&quot;, count.get());
+}
+
+private static void add() {
+		count.incrementAndGet();
+		// count.getAndIncrement();
+}
+</code></pre>
+<p>Another way to acheive correct counting result like above is <code>synchronized</code> keyword.</p>
+<pre><code>// 请求总数
+public static int clientTotal = 5000;
+// 同时并发执行的线程数
+public static int threadTotal = 200;
+public static int count = 0;
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		final Semaphore semaphore = new Semaphore(threadTotal);
+		final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		for (int i = 0; i &lt; clientTotal ; i++) {
+				executorService.execute(() -&gt; {
+						try {
+								semaphore.acquire();
+								add();
+								semaphore.release();
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+						countDownLatch.countDown();
+				});
+		}
+		countDownLatch.await();
+		executorService.shutdown();
+		log.info(&quot;count:{}&quot;, count);
+}
+
+private synchronized static void add() {
+		count++;
+}
+</code></pre>
+<p>However, volatile keyword as in <code>public static volatile int count = 0;</code> will not be able to ensure threadsafety to due CPU instruction reorder.</p>
+<p>ConcurrentHashMap, ConcurrentSkipListMap, ConcurrentSkipListSet, CopyOnWriteArrayList, CopyOnWriteArraySet are some typical concurrency collection classes in Java 8.</p>
+<p><strong>CopyOnWriteArrayList</strong></p>
+<pre><code>// 请求总数
+public static int clientTotal = 5000;
+// 同时并发执行的线程数
+public static int threadTotal = 200;
+private static List&lt;Integer&gt; list = new CopyOnWriteArrayList&lt;&gt;();
+
+public static void main(String[] args) throws Exception {
+		ExecutorService executorService = Executors.newCachedThreadPool();
+		final Semaphore semaphore = new Semaphore(threadTotal);
+		final CountDownLatch countDownLatch = new CountDownLatch(clientTotal);
+		for (int i = 0; i &lt; clientTotal; i++) {
+				final int count = i;
+				executorService.execute(() -&gt; {
+						try {
+								semaphore.acquire();
+								update(count);
+								semaphore.release();
+						} catch (Exception e) {
+								log.error(&quot;exception&quot;, e);
+						}
+						countDownLatch.countDown();
+				});
+		}
+		countDownLatch.await();
+		executorService.shutdown();
+		log.info(&quot;size:{}&quot;, list.size());
+}
+
+private static void update(int i) {
+		list.add(i);
+}
 </code></pre>
 ]]></content>
     </entry>
