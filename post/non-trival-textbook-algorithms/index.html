@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 1 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579461993917">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579465604192">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579461993917" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579465604192" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-03-26 ·
+                · 2018-03-25 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -631,7 +631,8 @@ public int g(int i, int j, int k) {
 		return (i * n + j) * 4 + k;
 }
 </code></pre>
-<p><strong>Reservoir Sampling</strong></p>
+<p><strong>Reservoir Sampling</strong><br>
+order is not important</p>
 <ol>
 <li>Create an array reservoir[0..k-1] and copy first k items of stream[] to it.</li>
 <li>Now one by one consider all items from (k+1)th item to nth item.<br>
@@ -666,6 +667,26 @@ public int g(int i, int j, int k) {
 		System.out.println(&quot;Following are k randomly selected items&quot;); 
 		System.out.println(Arrays.toString(reservoir)); 
 } 
+</code></pre>
+<p><strong>Fisher–Yates shuffle</strong><br>
+order is important<br>
+-- To shuffle an array a of n elements (indices 0..n-1):<br>
+for i from n−1 downto 1 do<br>
+j ← random integer such that 0 ≤ j ≤ i<br>
+exchange a[j] and a[i]<br>
+or<br>
+-- To shuffle an array a of n elements (indices 0..n-1):<br>
+for i from 0 to n−2 do<br>
+j ← random integer such that i ≤ j &lt; n<br>
+exchange a[i] and a[j]</p>
+<pre><code>public static &lt;T&gt; void shuffle(T[] array) {
+    Random random = new Random();
+    int n = array.length;
+    for (int i = n - 1; i &gt;= 1; i--) {
+        int j = random.nextInt(i + 1);
+        swap(array, i, j);
+    }
+}
 </code></pre>
 <p><strong>398. Random Pick Index</strong></p>
 <pre><code>class Solution {
