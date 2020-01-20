@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-20T00:16:32.664Z</updated>
+    <updated>2020-01-20T06:25:18.749Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -2725,7 +2725,7 @@ The server can push some part of their cache to CDNs and Internet Service Provid
         <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
         <link href="https://ywang412.github.io/post/semaphore-vs-lock">
         </link>
-        <updated>2019-07-12T18:36:52.000Z</updated>
+        <updated>2019-07-12T05:36:52.000Z</updated>
         <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
 <pre><code>class Foo {
     
@@ -2791,6 +2791,13 @@ class Foo {
 }
 </code></pre>
 <p><strong>1188. Design Bounded Blocking Queue</strong></p>
+<p>When await() is called, the lock associated with this Condition is atomically released and the current thread becomes disabled for thread scheduling purposes. The current thread is assumed to hold the lock associated with this Condition when this method is called.</p>
+<p>newCondition()<br>
+await/signal/signalAll</p>
+<p>synchonized<br>
+wait/notify/notifyAll</p>
+<p>The ReentrantLock is an exclusive lock so only one thread can acquire the lock.<br>
+See #1. When a thread call signal or signalAll, it releases respectively one thread or all threads awaiting for the corresponding Condition such that the thread or those threads will be eligible to acquire the lock again. But for now the lock is still owned by the thread that called signal or signalAll until it releases explicitly the lock by calling lock.unlock(). Then the thread(s) that has/have been released will be able to try to acquire the lock again, the thread that could acquire the lock will be able to check the condition again (by condition this time I mean count == items.length or count == 0 in this example), if it is ok it will proceed otherwise it will await again and release the lock to make it available to another thread.</p>
 <pre><code>class BoundedBlockingQueue {
     
     private Queue&lt;Integer&gt; queue;
@@ -2883,9 +2890,9 @@ class BoundedBlockingQueue {
     
     public void enqueue(int element) throws InterruptedException {
         try {
-            lock.lock();  // due to lock, only one thread will await
+            lock.lock();  
             while (size == capacity) {
-                isFull.await();
+                isFull.await();     // only one thread will get lock after all threads wake up by signalAll().
             }
             data[tail++ % capacity] = element;
             size++;

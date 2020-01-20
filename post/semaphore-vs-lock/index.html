@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java JUC (java.util.concurrent) 7 - Semaphore vs Lock Example | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579479388834">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579501514554">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579479388834" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579501514554" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -162,6 +162,13 @@ class Foo {
 }
 </code></pre>
 <p><strong>1188. Design Bounded Blocking Queue</strong></p>
+<p>When await() is called, the lock associated with this Condition is atomically released and the current thread becomes disabled for thread scheduling purposes. The current thread is assumed to hold the lock associated with this Condition when this method is called.</p>
+<p>newCondition()<br>
+await/signal/signalAll</p>
+<p>synchonized<br>
+wait/notify/notifyAll</p>
+<p>The ReentrantLock is an exclusive lock so only one thread can acquire the lock.<br>
+See #1. When a thread call signal or signalAll, it releases respectively one thread or all threads awaiting for the corresponding Condition such that the thread or those threads will be eligible to acquire the lock again. But for now the lock is still owned by the thread that called signal or signalAll until it releases explicitly the lock by calling lock.unlock(). Then the thread(s) that has/have been released will be able to try to acquire the lock again, the thread that could acquire the lock will be able to check the condition again (by condition this time I mean count == items.length or count == 0 in this example), if it is ok it will proceed otherwise it will await again and release the lock to make it available to another thread.</p>
 <pre><code>class BoundedBlockingQueue {
     
     private Queue&lt;Integer&gt; queue;
@@ -254,9 +261,9 @@ class BoundedBlockingQueue {
     
     public void enqueue(int element) throws InterruptedException {
         try {
-            lock.lock();  // due to lock, only one thread will await
+            lock.lock();  
             while (size == capacity) {
-                isFull.await();
+                isFull.await();     // only one thread will get lock after all threads wake up by signalAll().
             }
             data[tail++ % capacity] = element;
             size++;
