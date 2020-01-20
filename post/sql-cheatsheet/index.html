@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579501514554">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579542786816">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579501514554" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579542786816" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-01-18 ·
+                · 2018-01-17 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -97,7 +97,73 @@
             </div>
             
             <div class="post-content">
-              <p><strong>use rank from window function</strong></p>
+              <p><strong>time function</strong></p>
+<pre><code>both:
+HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
+WHERE
+   payment_date BETWEEN '2007-02-07'
+AND '2007-02-15';
+
+postgresql:
+WHERE
+      DATEPART('year',  login_date) = 2014
+  AND DATEPART('month', login_date) = 2
+
+WHERE date_trunc('month', QUERY_DATE) BETWEEN 
+    date_trunc('month', now()) - INTERVAL '4 MONTH' AND 
+    date_trunc('month', now() - INTERVAL '1 WEEK')
+
+postgresql casting:
+select '2010-01-01 12:00:00'::timestamp;  --return timestamp
+SELECT yourtimestamp::date;  --return date
+SELECT value::float;
+SELECT EXTRACT(DAY FROM TIMESTAMP '2001-02-16 20:38:40');--return double
+SELECT date_trunc('day', TIMESTAMP '2001-02-16 20:38:40'); --return timestamptz 
+
+
+mysql:
+WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
+WHERE datediff( '2019-06-30', t.login_date)&lt;=90
+WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 DAY) AND DATE(&quot;2019-07-27&quot;) 
+
+WHERE EXTRACT(YEAR_MONTH FROM QUERY_DATE)
+      BETWEEN
+          EXTRACT(YEAR_MONTH FROM NOW() - INTERVAL 4 MONTH)
+      AND
+          EXTRACT(YEAR_MONTH FROM NOW() - INTERVAL 1 WEEK)
+</code></pre>
+<p><strong>DAU/MAU</strong></p>
+<p>PostgreSql</p>
+<pre><code>with dau as (
+      select date, count(distinct userid) as dau
+      from dailysessions ds
+      group by date
+     )
+select date, dau,
+       (select count(distinct user_id)
+        from dailysessions ds
+        where ds.date between date - 29 * interval '1 day' and date
+       ) as mau
+from dau;
+
+WITH dau AS (
+  SELECT created_at::DATE AS &quot;date&quot;, count(distinct user_id) AS dau          	
+  FROM events
+  WHERE created_at &gt; '2016-10-01'
+  GROUP BY 1 
+)
+SELECT &quot;date&quot;, dau,
+         (SELECT count(distinct user_id)
+          FROM events
+          WHERE events.created_at::DATE BETWEEN dau.date - 29 AND dau.date            	  AND created_at &gt; '2016-10-01'
+         ) AS mau,
+         (SELECT count(distinct user_id)
+          FROM events
+          WHERE events.created_at::DATE BETWEEN dau.date - 7 AND dau.date            	  AND created_at &gt; '2016-10-01'
+         ) AS wau
+FROM dau
+</code></pre>
+<p><strong>Use rank from window function</strong></p>
 <p>rank has to be outside window function scope.</p>
 <pre><code>select Department, Employee, Salary
 from  
@@ -223,23 +289,6 @@ where ed between '2019-01-01' and '2019-12-31' order by ed asc) b,
 (select @rank := 0, @prev := &quot;unknown&quot;) c) d
 group by d.rank
 order by start_date asc
-</code></pre>
-<p><strong>time function</strong></p>
-<pre><code>both:
-HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
-WHERE
-   payment_date BETWEEN '2007-02-07'
-AND '2007-02-15';
-
-postgresql:
-WHERE
-      DATEPART('year',  login_date) = 2014
-  AND DATEPART('month', login_date) = 2
-
-mysql:
-WHERE t.login_date BETWEEN DATE_SUB('2019-06-30', interval 90 day) AND '2019-06-30' 
-WHERE datediff( '2019-06-30', t.login_date)&lt;=90
-WHERE activity_date BETWEEN DATE_SUB(DATE(&quot;2019-07-27&quot;), INTERVAL 29 DAY) AND DATE(&quot;2019-07-27&quot;) 
 </code></pre>
 <p><strong>SQL window function</strong></p>
 <pre><code>SELECT start_terminal,
