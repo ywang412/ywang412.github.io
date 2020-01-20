@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-01-20T17:54:46.480Z</updated>
+    <updated>2020-01-20T20:44:54.126Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,87 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[DAU analysis]]></title>
+        <id>https://ywang412.github.io/post/dau-analysis</id>
+        <link href="https://ywang412.github.io/post/dau-analysis">
+        </link>
+        <updated>2020-01-20T06:39:30.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
+<pre><code>SELECT date_trunc('day', e.occurred_at),
+    CASE WHEN flag = 'true' 
+      THEN 'treatment' ELSE 'control' END as flag,
+    COUNT(e.event_name)
+FROM tutorial.yammer_events e
+WHERE e.event_name = 'login'
+GROUP BY 1,2
+ORDER BY 1 DESC, 2 DESC
+</code></pre>
+<p><strong>Click through rates</strong></p>
+<pre><code>SELECT date_trunc('day', occurred_at) as day,
+  1.00 * COUNT (CASE WHEN action = 'email_clickthrough' THEN user_id ELSE NULL END) 
+        / COUNT (CASE WHEN action = 'email_open' THEN user_id ELSE NULL END) as CTR,
+  COUNT (CASE WHEN action = 'email_clickthrough' THEN user_id ELSE NULL END) as clickthroughs,
+  COUNT (CASE WHEN action = 'email_open' THEN user_id ELSE NULL END) as opens
+FROM tutorial.yammer_emails
+GROUP BY 1
+---
+
+WITH open as (
+  SELECT date_trunc('day', occurred_at) as day,
+         COUNT(action) as opens
+  FROM tutorial.yammer_emails
+  WHERE action = 'email_open'
+  GROUP BY 1
+),
+  clickthrough as (
+  SELECT date_trunc('day', occurred_at) as day,
+         COUNT(action) as clickthroughs
+  FROM tutorial.yammer_emails
+  WHERE action = 'email_clickthrough'
+  GROUP BY 1
+)
+
+SELECT clickthrough.day,
+       1.00*clickthroughs/opens as CTR, 
+       clickthroughs, 
+       opens
+FROM clickthrough
+JOIN open ON clickthrough.day = open.day
+ORDER BY 1 DESC
+</code></pre>
+<p><strong>DAU, WAU, MAU, and ratios between them</strong></p>
+<pre><code>WITH dailies AS (
+  SELECT DATE_TRUNC('day', e.occurred_at) as date,
+       COUNT(DISTINCT e.user_id) as dau
+  FROM tutorial.yammer_events e
+  WHERE e.event_name = 'login'
+  GROUP BY 1 
+)
+SELECT d, 
+    dau, 
+    (SELECT COUNT(DISTINCT e.user_id) as wau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 7 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as wau_count,
+    (SELECT COUNT(DISTINCT e.user_id) as mau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 30 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as mau_count,
+    100.00 * dau/(SELECT COUNT(DISTINCT e.user_id) as mau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 30 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as dau_mau
+FROM dailies
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NoSQL vs SQL]]></title>
         <id>https://ywang412.github.io/post/nosql-vs-sql</id>
@@ -3197,96 +3278,6 @@ public Data put(String key, Data value) {
 				reentrantLock.unlock();
 		}).start();
 }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 3 - Synchronized and Synchronized Container]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-3-synchronzied-and-synchronzied-container">
-        </link>
-        <updated>2019-05-13T22:31:10.000Z</updated>
-        <content type="html"><![CDATA[<p><code>Synchronized</code> keyword bounds monitor to an object and has made concurrency programing simple. It can be added to method or object to achieve object level synchronization. It can also modify static method or class for class level synchronization.</p>
-<pre><code>// 修饰一个代码块
-public void test1(int j) {
-		synchronized (this) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个方法
-public synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample1 example1 = new SynchronizedExample1();
-		SynchronizedExample1 example2 = new SynchronizedExample1();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test2(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test2(2);
-		});
-}
-</code></pre>
-<pre><code>// 修饰一个类
-public static void test1(int j) {
-		synchronized (SynchronizedExample2.class) {
-				for (int i = 0; i &lt; 10; i++) {
-						log.info(&quot;test1 {} - {}&quot;, j, i);
-				}
-		}
-}
-
-// 修饰一个静态方法
-public static synchronized void test2(int j) {
-		for (int i = 0; i &lt; 10; i++) {
-				log.info(&quot;test2 {} - {}&quot;, j, i);
-		}
-}
-
-public static void main(String[] args) {
-		SynchronizedExample2 example1 = new SynchronizedExample2();
-		SynchronizedExample2 example2 = new SynchronizedExample2();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService.execute(() -&gt; {
-				example1.test1(1);
-		});
-		executorService.execute(() -&gt; {
-				example2.test1(2);
-		});
-}
-</code></pre>
-<p>Java provide several thread safe synchronized containers out of the box.</p>
-<pre><code>private static List&lt;Integer&gt; list = Collections.synchronizedList(Lists.newArrayList());
-private static Set&lt;Integer&gt; set = Collections.synchronizedSet(Sets.newHashSet());
-private static Map&lt;Integer, Integer&gt; map = Collections.synchronizedMap(new HashMap&lt;&gt;());
-private static Map&lt;Integer, Integer&gt; map = new Hashtable&lt;&gt;();
-private static List&lt;Integer&gt; list = new Vector&lt;&gt;();
-</code></pre>
-<p>Java and Guava also provide several immutable containers out of the box.</p>
-<pre><code>private static Map&lt;Integer, Integer&gt; map = Maps.newHashMap();
-static {
-		map.put(1, 2);
-		map.put(3, 4);
-		map.put(5, 6);
-		map = Collections.unmodifiableMap(map);
-}
-</code></pre>
-<pre><code>import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-private final static ImmutableList&lt;Integer&gt; list = ImmutableList.of(1, 2, 3);
-private final static ImmutableSet set = ImmutableSet.copyOf(list);
-private final static ImmutableMap&lt;Integer, Integer&gt; map = ImmutableMap.of(1, 2, 3, 4);
-private final static ImmutableMap&lt;Integer, Integer&gt; map2 = ImmutableMap.&lt;Integer, Integer&gt;builder()
-				.put(1, 2).put(3, 4).put(5, 6).build();
 </code></pre>
 ]]></content>
     </entry>

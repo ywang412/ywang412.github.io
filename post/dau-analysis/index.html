@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spring - 2 Transaction | Yu&#39;s Github</title>
+<title>DAU analysis | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579553090059">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -83,38 +83,89 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Spring - 2 Transaction
+              DAU analysis
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2017-12-10 ·
+                · 2020-01-20 ·
               </time>
-              
-                <a href="https://ywang412.github.io/tag/4WLW2ZDIa" class="post-tag">
-                  # Spring
-                </a>
               
             </div>
             
             <div class="post-content">
-              <p>spring transaction can be implemented by</p>
-<ol>
-<li>
-<p>TransactionTemplate<br>
-Service DI transactionTemplate<br>
-TransactionTemplate DI TransactionManager<br>
-TransactionManager DI datasource / Set autocommit false</p>
-</li>
-<li>
-<p>XML<br>
-1.TransactionProxyFactoryBean DI service and TransactionManager (PROPAGATION_REQUIRED, +exception)  one ProxyFactoryBean per service class<br>
-2.AspectJ<br>
-single point / txadvice DI TransactionManager (tx:method propagation isolation)<br>
-multiple points / aop: pointcut expression<br>
-3. @Transactional(propagation, isolation, readOnly, rollbackfor exceptions, noRollbackFor)<br>
-&lt;tx:annotation-driven transaction-manager&gt;</p>
-</li>
-</ol>
+              <p><strong>Comparing test and control groups</strong></p>
+<pre><code>SELECT date_trunc('day', e.occurred_at),
+    CASE WHEN flag = 'true' 
+      THEN 'treatment' ELSE 'control' END as flag,
+    COUNT(e.event_name)
+FROM tutorial.yammer_events e
+WHERE e.event_name = 'login'
+GROUP BY 1,2
+ORDER BY 1 DESC, 2 DESC
+</code></pre>
+<p><strong>Click through rates</strong></p>
+<pre><code>SELECT date_trunc('day', occurred_at) as day,
+  1.00 * COUNT (CASE WHEN action = 'email_clickthrough' THEN user_id ELSE NULL END) 
+        / COUNT (CASE WHEN action = 'email_open' THEN user_id ELSE NULL END) as CTR,
+  COUNT (CASE WHEN action = 'email_clickthrough' THEN user_id ELSE NULL END) as clickthroughs,
+  COUNT (CASE WHEN action = 'email_open' THEN user_id ELSE NULL END) as opens
+FROM tutorial.yammer_emails
+GROUP BY 1
+---
+
+WITH open as (
+  SELECT date_trunc('day', occurred_at) as day,
+         COUNT(action) as opens
+  FROM tutorial.yammer_emails
+  WHERE action = 'email_open'
+  GROUP BY 1
+),
+  clickthrough as (
+  SELECT date_trunc('day', occurred_at) as day,
+         COUNT(action) as clickthroughs
+  FROM tutorial.yammer_emails
+  WHERE action = 'email_clickthrough'
+  GROUP BY 1
+)
+
+SELECT clickthrough.day,
+       1.00*clickthroughs/opens as CTR, 
+       clickthroughs, 
+       opens
+FROM clickthrough
+JOIN open ON clickthrough.day = open.day
+ORDER BY 1 DESC
+</code></pre>
+<p><strong>DAU, WAU, MAU, and ratios between them</strong></p>
+<pre><code>WITH dailies AS (
+  SELECT DATE_TRUNC('day', e.occurred_at) as date,
+       COUNT(DISTINCT e.user_id) as dau
+  FROM tutorial.yammer_events e
+  WHERE e.event_name = 'login'
+  GROUP BY 1 
+)
+SELECT d, 
+    dau, 
+    (SELECT COUNT(DISTINCT e.user_id) as wau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 7 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as wau_count,
+    (SELECT COUNT(DISTINCT e.user_id) as mau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 30 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as mau_count,
+    100.00 * dau/(SELECT COUNT(DISTINCT e.user_id) as mau
+          FROM tutorial.yammer_events e
+          WHERE e.occurred_at::DATE BETWEEN 
+            dailies.date - 30 * Interval '1 day' AND dailies.date
+          AND e.event_name = 'login'
+          ) as dau_mau
+FROM dailies
+</code></pre>
 
             </div>
           </article>
@@ -123,9 +174,9 @@ multiple points / aop: pointcut expression<br>
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/netty-and-nio">
+            <a href="https://ywang412.github.io/post/nosql-vs-sql">
               <h3 class="post-title">
-                Netty chat room
+                NoSQL vs SQL
               </h3>
             </a>
           </div>
