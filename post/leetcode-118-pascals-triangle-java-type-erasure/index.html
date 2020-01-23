@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding tricks using Java syntax  | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579558965678">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579757612468">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579558965678" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579757612468" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-06-01 ·
+                · 2018-05-31 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -115,6 +115,34 @@ Integer.parseInt()   //int</p>
 
 false
 true
+</code></pre>
+<p><strong>Flatten Array</strong></p>
+<pre><code>public class IntegerArrayFlattener {
+
+    /**
+     * Flatten an array of arbitrarily nested arrays of integers into a flat array of integers. e.g. [[1,2,[3]],4] -&gt; [1,2,3,4].
+     *
+     * @param inputArray an array of Integers or nested arrays of Integers
+     * @return flattened array of Integers or null if input is null
+     * @throws IllegalArgumentException
+     */
+    public static Integer[] flatten(Object[] inputArray) throws IllegalArgumentException {
+
+        if (inputArray == null) return null;
+        List&lt;Integer&gt; flatList = new ArrayList&lt;Integer&gt;();
+
+        for (Object element : inputArray) {
+            if (element instanceof Integer) {
+                flatList.add((Integer) element);
+            } else if (element instanceof Object[]) {
+                flatList.addAll(Arrays.asList(flatten((Object[]) element)));
+            } else {
+                throw new IllegalArgumentException(&quot;Input must be an array of Integers or nested arrays of Integers&quot;);
+            }
+        }
+        return flatList.toArray(new Integer[flatList.size()]);
+    }
+}
 </code></pre>
 <p><strong>LeetCode 118</strong> Pascal's Triangle<br>
 Due to Java type erasure, in order to instantiate a list of list, one can use<br>
