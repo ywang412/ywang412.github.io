@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Quick sort, quick select, merge sort, bucket sort, bubble sort and topological sort | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580065657503">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580081705721">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580065657503" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580081705721" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -450,6 +450,29 @@ class Solution {
         }
         return res;
     }
+}
+</code></pre>
+<p><strong>4. Median of Two Sorted Arrays</strong></p>
+<pre><code>public double findMedianSortedArrays(int[] A, int[] B) {
+	    int m = A.length, n = B.length;
+	    int l = (m + n + 1) / 2;
+	    int r = (m + n + 2) / 2;
+	    return (getkth(A, 0, B, 0, l) + getkth(A, 0, B, 0, r)) / 2.0;
+	}
+
+public double getkth(int[] A, int aStart, int[] B, int bStart, int k) {
+	if (aStart &gt; A.length - 1) return B[bStart + k - 1];            
+	if (bStart &gt; B.length - 1) return A[aStart + k - 1];                
+	if (k == 1) return Math.min(A[aStart], B[bStart]);
+	
+	int aMid = Integer.MAX_VALUE, bMid = Integer.MAX_VALUE;
+	if (aStart + k/2 - 1 &lt; A.length) aMid = A[aStart + k/2 - 1]; 
+	if (bStart + k/2 - 1 &lt; B.length) bMid = B[bStart + k/2 - 1];        
+	
+	if (aMid &lt; bMid) 
+	    return getkth(A, aStart + k/2, B, bStart,       k - k/2);// Check: aRight + bLeft 
+	else 
+	    return getkth(A, aStart,       B, bStart + k/2, k - k/2);// Check: bRight + aLeft
 }
 </code></pre>
 
