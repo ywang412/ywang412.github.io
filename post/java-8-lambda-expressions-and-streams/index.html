@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Java 8 Lambda expressions and Streams | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1579906363146">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580065657503">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1579906363146" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580065657503" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-12-31 ·
+                · 2018-12-30 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/3_nfzv-ZX" class="post-tag">
@@ -143,6 +143,31 @@
    private int operate(int a, int b, MathOperation mathOperation) {
       return mathOperation.operation(a, b);
    }
+}
+</code></pre>
+<p>IntBinaryOperator	<br>
+Represents an operation upon two int-valued operands and producing an int-valued result.<br>
+IntConsumer	<br>
+Represents an operation that accepts a single int-valued argument and returns no result.<br>
+IntFunction<R>	<br>
+Represents a function that accepts an int-valued argument and produces a result.<br>
+IntPredicate	<br>
+Represents a predicate (boolean-valued function) of one int-valued argument.<br>
+IntSupplier	<br>
+Represents a supplier of int-valued results.</p>
+<pre><code>//int applyAsInt(int left, int right) method in java.util.function.IntBinaryOperator 
+
+static int method(IntBinaryOperator op){
+    return op.applyAsInt(5, 10);
+}
+
+//or define own interface:
+public interface TwoArgIntOperator {
+    public int op(int a, int b);
+}
+ 
+static int method(TwoArgIntOperator operator) {
+    return operator.op(5, 10);
 }
 </code></pre>
 <p><strong>Streams</strong></p>
