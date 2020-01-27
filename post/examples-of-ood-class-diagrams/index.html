@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Examples of OOD class diagrams | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580081705721">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580084419472">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580081705721" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580084419472" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -111,7 +111,111 @@ Flight<br>
 <img src="https://ywang412.github.io/post-images/1562126309435.png" alt=""><br>
 ATM<br>
 <img src="https://ywang412.github.io/post-images/1562126330414.png" alt=""><br>
-BlackJack<br>
+<img src="https://ywang412.github.io/post-images/1580083775549.png" alt=""></p>
+<pre><code>public enum TransactionType {
+  BALANCE_INQUIRY, DEPOSIT_CASH, DEPOSIT_CHECK, WITHDRAW, TRANSFER
+}
+public enum TransactionStatus {
+  SUCCESS, FAILURE, BLOCKED, FULL, PARTIAL, NONE
+}
+public enum CustomerStatus {
+  ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, CLOSED, UNKNOWN
+}
+
+public class Customer {
+  private String name;
+  private String email;
+  private String phone;
+  private Address address;
+  private CustomerStatus status;
+
+  private Card card;
+  private Account account;
+
+  public boolean makeTransaction(Transaction transaction);
+  public Address getBillingAddress();
+}
+
+public class Card {
+  private String cardNumber;
+  private String customerName;
+  private Date cardExpiry;
+  private int pin;
+
+  public Address getBillingAddress();
+}
+
+public class Account {
+  private int accountNumber;
+  private double totalBalance;
+  private double availableBalance;
+
+  public double getAvailableBalance();
+}
+
+public class SavingAccount extends Account {
+  private double withdrawLimit;
+}
+
+public class CheckingAccount extends Account {
+  private String debitCardNumber;
+}
+
+public class ATM {
+  private int atmID;
+  private Address location;
+
+  private CashDispenser cashDispenser;
+  private Keypad keypad;
+  private Screen screen;
+  private Printer printer;
+  private CheckDeposit checkDeposit;
+  private CashDeposit cashDeposit;
+
+  public boolean authenticateUser();
+  public boolean makeTransaction(Customer customer, Transaction transaction);
+}
+
+public abstract class Transaction {
+  private int transactionId;
+  private Date creationTime;
+  private TransactionStatus status;
+  public boolean makeTransation();
+}
+
+public class BalanceInquiry extends Transaction {
+  private int accountId;
+  public double getAccountId();
+}
+
+public abstract class Deposit extends Transaction {
+  private double amount;
+  public double getAmount();
+}
+
+public class CheckDeposit extends Deposit {
+  private String checkNumber;
+  private String bankCode;
+
+  public String getCheckNumber();
+}
+
+public class CashDeposit extends Deposit {
+  private double cashDepositLimit;
+}
+
+public class Withdraw extends Transaction {
+  private double amount;
+  public double getAmount();
+}
+
+public class Transfer extends Transaction {
+  private int destinationAccountNumber;
+  public int getDestinationAccount();
+}
+
+</code></pre>
+<p>BlackJack<br>
 <img src="https://ywang412.github.io/post-images/1562127573365.png" alt=""><br>
 Car rental<br>
 <img src="https://ywang412.github.io/post-images/1562818933938.png" alt=""><br>
