@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1580084419472">
+<title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581185420281">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1580084419472" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581185420281" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -83,11 +83,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Pandas, Numpy and Matplot
+              Python - Pandas, Numpy and Matplot
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-15 ·
+                · 2018-09-14 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -194,6 +194,18 @@ df.loc[['a',],['one','two']]
 #iloc using index
 df.iloc[0:2,0:1]
 df.iloc[[0,2],[0,1]]
+
+#iloc inclusive vs loc exclusive
+&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; df = pd.DataFrame(dict(A=range(3), B=range(3)))
+&gt;&gt;&gt; df.iloc[:1]
+   A  B
+0  0  0
+&gt;&gt;&gt; df.loc[:1]
+   A  B
+0  0  0
+1  1  1
+
 
 # read csv via pandas
 data = pd.read_csv('gdp_per_capita.csv')
