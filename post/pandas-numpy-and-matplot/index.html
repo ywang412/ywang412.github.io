@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581268740915">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581271845084">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581268740915" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581271845084" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-13 ·
+                · 2018-09-12 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -141,7 +141,7 @@ True
 False
 &gt;&gt;&gt; np.where(a &lt; 3, 0, a)
 array([0, 0, 4, 5])
-
+ 
 </code></pre>
 <p>If you are not dealing with arrays and are not performing math manipulations of integers, you probably want and.</p>
 <p>If you have vectors of truth values that you wish to combine, use numpy with &amp;.</p>
@@ -282,6 +282,23 @@ example_df
 # get sum of each group
 print(example_df.groupby(['even']).sum())
  
+df = pd.DataFrame({'Age': [30, 20, 22, 40, 32, 28, 39],
+                   'Color': ['Blue', 'Green', 'Red', 'White', 'Gray', 'Black',
+                             'Red'],
+                   'Food': ['Steak', 'Lamb', 'Mango', 'Apple', 'Cheese',
+                            'Melon', 'Beans'],
+                   'Height': [165, 70, 120, 80, 180, 172, 150],
+                   'Score': [4.6, 8.3, 9.0, 3.3, 1.8, 9.5, 2.2],
+                   'State': ['NY', 'TX', 'FL', 'AL', 'AK', 'TX', 'TX']
+                   },
+                  index=['Jane', 'Nick', 'Aaron', 'Penelope', 'Dean',
+                         'Christina', 'Cornelia'])
+ 
+print(&quot;\n -- loc -- \n&quot;)
+print(df.loc[df['Age'] &lt; 30, ['Color', 'Height']])
+ 
+print(&quot;\n -- iloc -- \n&quot;)
+print(df.iloc[(df['Age'] &lt; 30).values, [1, 3]])
 </code></pre>
 <p><strong>CSV</strong></p>
 <pre><code>df_csvload  =  pd.read_csv('C:\\Users\\Administrator\\Desktop\\table.csv',parse_dates=True,index_col=0,encoding='gb2312')
@@ -557,9 +574,9 @@ plt.show()
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/python-3-quick-start-2-pep8">
+            <a href="https://ywang412.github.io/post/python-3-quick-start-1">
               <h3 class="post-title">
-                Python 3 quick start - 2 PEP8
+                Python 3 quick start - 1 Basics
               </h3>
             </a>
           </div>
