@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581185420281">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581268740915">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581185420281" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581268740915" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-14 ·
+                · 2018-09-13 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -133,7 +133,18 @@ data[[True, False, False],1]
 [ 0.54699707]
 data[data &lt; 0]
 [-0.35725194 -0.1594436  -0.51086806 -0.82336626 -0.76274312] 
+
+&gt;&gt;&gt; a = np.array([1,2,4,5])
+&gt;&gt;&gt; np.any(a &lt; 3)
+True
+&gt;&gt;&gt; np.all(a &lt; 3)
+False
+&gt;&gt;&gt; np.where(a &lt; 3, 0, a)
+array([0, 0, 4, 5])
+
 </code></pre>
+<p>If you are not dealing with arrays and are not performing math manipulations of integers, you probably want and.</p>
+<p>If you have vectors of truth values that you wish to combine, use numpy with &amp;.</p>
 <p><strong>Pandas Series</strong></p>
 <pre><code>s = pd.Series([-1.55666192,-0.75414753,0.47251231,-1.37775038,-1.64899442], index=['a', 'b', 'c', 'd', 'e'],dtype='int8' )
 s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
