@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-10T04:53:32.569Z</updated>
+    <updated>2020-02-10T05:22:53.707Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-09T11:54:53.000Z</updated>
+        <updated>2020-02-08T21:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
@@ -42,6 +42,9 @@ retain current users -&gt; engagement -&gt; average messages per day per user</p
 <p>predict fraud -&gt; Device ID, IP address, Ratings, Price, pictures, description, Browsing behavior that led to the seller creating the account.</p>
 <p>A/B test drawbacks -&gt; never be as similar markets, no full independence. Check one metric that's not supposed to be affected by your test. Make sure that during the test keeps behaving similarly for both markets</p>
 <p>customer service performance measurement -&gt; average user lifetime value (1 year) -&gt; user bought within 1 year after the ticket -&gt; Build a model to predict -&gt; response time and user feedback feature</p>
+<p>whether to add new feature -&gt; 1. good for site? engagement 2. demand. already doing it. 3. simply current flow.</p>
+<p>Two step authentication -&gt; ROC threshold -&gt; cost of false negatives (actual frauds happening) and value of true negatives (value of a legitimate user) -&gt; A/B testing, is the number of bad actors that two-step is blocking worth the number of good actors that the site is losing since it is harder to log-in.</p>
+<p>why a metric is down? -&gt; year over year metrics -&gt; numerator and denominator -&gt; if numberator down -&gt; new user are not liking as much as the usual ones or number of users is normal and number of likes suddenly down. -&gt; if new users are less engaged, find feature to predict &quot;up week&quot; new user and previous week old user -&gt; way more users from China this week. This might depend on a marketing campaign there that got a huge number of users, but these users are less engaged, as often when users come from sudden marketing campaigns. Or that all these new users come from very few different IP addresses. That would mean that all these users are probably fake accounts.</p>
 ]]></content>
     </entry>
     <entry>
