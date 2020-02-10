@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-09T18:30:40.273Z</updated>
+    <updated>2020-02-10T04:53:32.569Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,40 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Data Metrics]]></title>
+        <id>https://ywang412.github.io/post/data-metrics</id>
+        <link href="https://ywang412.github.io/post/data-metrics">
+        </link>
+        <updated>2020-02-09T11:54:53.000Z</updated>
+        <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
+user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
+<p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
+<p>optimize a long term metric like retention rate or lifetime value -&gt; find a short term metric that can predict the long term one</p>
+<p>pick variables -&gt; pick a combination of user characteristics (age, sex, country, etc.) and behavioral ones (device, they came from ads/SEO/direct link, session time, etc.)</p>
+<p>Engagement on FB -&gt; proportion of users who take at least one action per day<br>
+response rate on Quora -&gt; percentage of questions that get at least one response with at least 3 up-votes within a day<br>
+Airbnb -&gt; if you want to go to a given place, you can do it<br>
+uber new UI -&gt; AB test in two comparable markets (To identify required sample size, choose power, significance level, minimum difference between test and control, and std deviation)</p>
+<p>novelty effect -&gt; control for this by subsetting by drivers for which it is the first experience. Look at test results between new users in the control group vs new users in test group</p>
+<p>A/B test win but cost of change -&gt; Human labor costs (engineering time to make the change), opportunity-cost (not working on something else with a possibly higher expected value), Risk of bugs</p>
+<p>missing value in a varibale (Uber trips without rider review) -&gt; missing value is important information. predict missing value or use -1 as missing value</p>
+<p>e-commerce demand -&gt; going to a site and searching for &quot;jeans&quot;,  ads click-through-rate (CTR)</p>
+<p>e-commerce supply -&gt; # conversions/# searches only considering people who used filters in their search. Or people whose session time is above a given value.</p>
+<p>site funnel -&gt; home page, search results, click on item, buy it</p>
+<p>predict Y (Instagram usage), how to find out whether X (here mobile Operative System - OS ) is a discriminant variable or not -&gt; 1. build a decision tree using user-related variables + OS to predict Instagram usage. 2.  building two models: one including OS and one without. 3. generate simulated datasets where you adjust the distributions of all other variables. So that now you have the same age, country, etc, distribution for both iOS and Android</p>
+<p>subscription retention -&gt;  percentage of users who don't unsubscribe within the first 12 months too long -&gt; proportion of people who unsubscribed or never used my product within the first week / three weeks</p>
+<p>user demographic vs behavioral characteristics -&gt; 1. Looking at a user browsing history gives information about what a user is interested in buying regardless of whether it is a gift or for herself. 2. Timing Browsing data tells the moment in which a certain user is thinking about buying a product.</p>
+<p>acquiring new users -&gt; new sign ups per day from users who send at least 1 message within the first 2 days<br>
+retain current users -&gt; engagement -&gt; average messages per day per user</p>
+<p>new feature -&gt; find something that people are already doing, but in a complicated way requiring multiple steps. An example of this could be identifying that the last message of a conversation is about calling Uber, ordering food, or using any kind of other app. And a possible next step could be to integrate that functionality from within WhatsApp, kind of like Google Map can be called from inside WhatsApp.</p>
+<p>user lifetime value -&gt; pay for a click -&gt; revenue coming from that user within the first year -&gt; using short term data to predict -&gt; find features user location, user device, operative system, type of browser, source</p>
+<p>recommendation -&gt; shared connection, shared cluster (work friends, high school friends, university friends)</p>
+<p>predict fraud -&gt; Device ID, IP address, Ratings, Price, pictures, description, Browsing behavior that led to the seller creating the account.</p>
+<p>A/B test drawbacks -&gt; never be as similar markets, no full independence. Check one metric that's not supposed to be affected by your test. Make sure that during the test keeps behaving similarly for both markets</p>
+<p>customer service performance measurement -&gt; average user lifetime value (1 year) -&gt; user bought within 1 year after the ticket -&gt; Build a model to predict -&gt; response time and user feedback feature</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DAU analysis]]></title>
         <id>https://ywang412.github.io/post/dau-analysis</id>
@@ -3151,133 +3185,6 @@ ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 </code></pre>
 <p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
 <pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 4 - Lock]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-2-lock">
-        </link>
-        <updated>2019-07-03T04:07:58.000Z</updated>
-        <content type="html"><![CDATA[<p>Compare to <code>synchronized</code> keyword, Locks support various methods for finer grained control thus are more expressive than <code>synchronized</code>.</p>
-<p>Since <code>synchronized</code> keyword create lock implicitly, one can convert the  <code>synchronized</code> keyword to ReentrantLock.</p>
-<pre><code>private synchronized static void add() {
-        count++;
-}
-</code></pre>
-<pre><code>private final static Lock lock = new ReentrantLock();
-private static void add() {
-		lock.lock();
-		try {
-				count++;
-		} finally {
-				lock.unlock();
-		}
-}
-</code></pre>
-<p>Therefore, it is possible for both <code>synchronized</code> and Lock to introduce the well-know deadlock problem like below.</p>
-<pre><code>public class DeadLock implements Runnable {
-    public int flag = 1;
-    //静态对象是类的所有对象共享的
-    private static Object o1 = new Object(), o2 = new Object();
-
-    @Override
-    public void run() {
-        log.info(&quot;flag:{}&quot;, flag);
-        if (flag == 1) {
-            synchronized (o1) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o2) {
-                    log.info(&quot;1&quot;);
-                }
-            }
-        }
-        if (flag == 0) {
-            synchronized (o2) {
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                synchronized (o1) {
-                    log.info(&quot;0&quot;);
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        DeadLock td1 = new DeadLock();
-        DeadLock td2 = new DeadLock();
-        td1.flag = 1;
-        td2.flag = 0;
-        //td1,td2都处于可执行状态，但JVM线程调度先执行哪个线程是不确定的。
-        //td2的run()可能在td1的run()之前运行
-        new Thread(td1).start();
-        new Thread(td2).start();
-    }
-}
-</code></pre>
-<p>The <code>synchronized</code> keyword provides a simplified model while Lock offers more APIs such as ReentrantReadWriteLock and Condition. The interface ReadWriteLock specifies a pair of locks for read and write access. This can improve performance and throughput in cases where write-accesses are much less frequent.</p>
-<pre><code>private final Map&lt;String, Data&gt; map = new TreeMap&lt;&gt;();
-
-private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-private final Lock readLock = lock.readLock();
-private final Lock writeLock = lock.writeLock();
-
-public Data get(String key) {
-		readLock.lock();
-		try {
-				return map.get(key);
-		} finally {
-				readLock.unlock();
-		}
-}
-
-public Data put(String key, Data value) {
-		writeLock.lock();
-		try {
-				return map.put(key, value);
-		} finally {
-				writeLock.unlock();
-		}
-}
-</code></pre>
-<p><code>Condition.signalAll()</code> is a very important API in consumer-producer model.</p>
-<pre><code>public static void main(String[] args) {
-		ReentrantLock reentrantLock = new ReentrantLock();
-		Condition condition = reentrantLock.newCondition();
-
-		new Thread(() -&gt; {
-				try {
-						reentrantLock.lock();
-						log.info(&quot;wait signal&quot;); // 1
-						condition.await();
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				log.info(&quot;get signal&quot;); // 4
-				reentrantLock.unlock();
-		}).start();
-
-		new Thread(() -&gt; {
-				reentrantLock.lock();
-				log.info(&quot;get lock&quot;); // 2
-				try {
-						Thread.sleep(3000);
-				} catch (InterruptedException e) {
-						e.printStackTrace();
-				}
-				condition.signalAll();
-				log.info(&quot;send signal ~ &quot;); // 3
-				reentrantLock.unlock();
-		}).start();
-}
 </code></pre>
 ]]></content>
     </entry>
