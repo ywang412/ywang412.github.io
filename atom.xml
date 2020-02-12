@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-12T10:06:11.163Z</updated>
+    <updated>2020-02-12T11:47:21.833Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-08T07:54:53.000Z</updated>
+        <updated>2020-02-07T17:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
@@ -46,6 +46,16 @@ retain current users -&gt; engagement -&gt; average messages per day per user</p
 <p>Two step authentication -&gt; ROC threshold -&gt; cost of false negatives (actual frauds happening) and value of true negatives (value of a legitimate user) -&gt; A/B testing, is the number of bad actors that two-step is blocking worth the number of good actors that the site is losing since it is harder to log-in.</p>
 <p>why a metric is down? -&gt; year over year metrics -&gt; numerator and denominator -&gt; if numberator down -&gt; new user are not liking as much as the usual ones or number of users is normal and number of likes suddenly down. -&gt; if new users are less engaged, find feature to predict &quot;up week&quot; new user and previous week old user -&gt; way more users from China this week. This might depend on a marketing campaign there that got a huge number of users, but these users are less engaged, as often when users come from sudden marketing campaigns. Or that all these new users come from very few different IP addresses. That would mean that all these users are probably fake accounts.</p>
 <p>30 tests and 1 test (20 data segment countries and 1 segment country win) wins with p-value 0.04 -&gt; Bonferroni correction, simply dividing 0.05 by the number of tests and this becomes the new threshold for significance. -&gt; make the change only if test is better and p-value were less than 0.05/30.</p>
+<p>Test wins by 5%, Will that metric actually go up by ~5%, more, or less? -&gt;  Control group numbers are likely inflated and it is likely that, if applied to all users, this change will lead to a larger gain than 5% vs old UI.</p>
+<p>cost of a false positive is way higher than false negative -&gt; recruiting process</p>
+<p>cost of a false positive is way lower than false negative -&gt; cancer detection</p>
+<p>how long I should run an A/B test? -&gt; 1. Significance level, usually 0.05. 2. Power, usually 0.8. 3. Expected standard deviation of the change in the metric. 4. Minimum effect size you are interested in detecting via your test. If the final number is less than 14 days, you still want to run the test for 14 days in order to reliably capture weekly patterns.</p>
+<p>We found a drop in pictures uploads. How to find out the reason?  segment users by various features, such as browser, device, country, etc. Then you assume that you discovered that one segment dropped to zero. So you say it is likely a bug and, finally, explain where the bug could be.</p>
+<p>Isolate the impact of the algorithm and the UI change -&gt; Version 1 is the old version. Version 2 is the site with new Feature and machine learning model. Version 3 is the site with the People You May Know Feature, but suggestions are random or history-based model.</p>
+<p>detect fake information school -&gt; 1. email validation negatively affect legitimate users 2. user info from their profile + how they interacted with LinkedIn. (how many connection requests they sent, how they were distributed over time, acceptance rate, whether they visited other people profiles before sending the connection request.) build clusters.</p>
+<p>small dataset -&gt; 1. cross-validate 2. bootstrapping your original dataset. bagging</p>
+<p>predict job change -&gt; monthly -&gt; user profile data, data about when you took the snapshot, user behavior on the site, and some external data about job demand.</p>
+<p>response time of an inquiry at Airbnb -&gt;</p>
 ]]></content>
     </entry>
     <entry>
