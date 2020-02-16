@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-15T14:34:32.733Z</updated>
+    <updated>2020-02-16T15:27:55.783Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-04T19:54:53.000Z</updated>
+        <updated>2020-02-04T05:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
@@ -59,6 +59,11 @@ retain current users -&gt; engagement -&gt; average messages per day per user</p
 <p>re-run the same A/B test -&gt; the underlying distribution of users has changed. early adopter vs new users</p>
 <p>identify clickbait -&gt; high than usual CTR + medium term (say 2 weeks) change in CTR</p>
 <p>revenue -&gt; 1. Increase CTR by better targeting. 2. Increase number of page views. 3. maximizing probability of conversion or working with the advertisers to improve the user flow after people click on an ad.</p>
+<p>H0 mu = 20<br>
+Ha mu &gt;= 20</p>
+<p>A/B test power-&gt; p(reject H0 | H0 false) = 1 - p(not reject H0 | H0 false) = 1 - Type II error</p>
+<p>A/B test alpha 0.05 -&gt; Significance level. p-value lower than significance level reject null hypothesis</p>
+<p>A/B test p-value -&gt; take sample mean = 25, P(mu &gt;= sample mean| H0 true) &lt; 0.05 reject null hypothesis</p>
 ]]></content>
     </entry>
     <entry>
