@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581871180281">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581872231773">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581871180281" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581872231773" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-11 ·
+                · 2018-09-10 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -346,7 +346,7 @@ print(df_csvload[df_csvload.isnull().T.any().T])#查看NAN值所在行
 #print(df_csvload)
 df_csvload = df_csvload.dropna(axis=0,how='all')#NAN值删除 所有值都为缺失值时才删除该行
 df_csvload.fillna(method='bfill',axis=0,inplace=True)#NAN值填充 列方向前值填充
-print(df_csvload[df_csvload.isnull().values==True])#查看NAN值删除填充后值
+print(df_csvload[df_csvload.isnull().values])#查看NAN值删除填充后值  row
 
 print(u&quot;**********************************1.3、特殊值处理*********************************************************&quot;)
 
@@ -356,7 +356,7 @@ print(u&quot;**********************************1.3、特殊值处理************
 df_csvload = df_csvload.round(2)#保留2位小数
 print(df_csvload)
 print(df_csvload.info())
-print(df_csvload[df_csvload.values==0])#查看df_csvload数据中所有0值的元素
+print(df_csvload[df_csvload.values==0])#查看df_csvload数据中所有0值的元素 row
 df_csvload.loc[df_csvload.loc[:,'Low']==0,'Low'] = df_csvload.Low.median()#
 print(df_csvload.loc['2018-01-15'])
 
