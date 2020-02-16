@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581872231773">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581877363757">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581872231773" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581877363757" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -315,6 +315,11 @@ df_1[&quot;Percent_of_Order&quot;] = df_1[&quot;ext price&quot;] / df_1[&quot;Or
 
 df[&quot;Order_Total&quot;] = df.groupby('order')[&quot;ext price&quot;].transform('sum')
 df[&quot;Percent_of_Order&quot;] = df[&quot;ext price&quot;] / df[&quot;Order_Total&quot;]
+
+groupby apply applies the function to each group  
+
+groupby agg aggregates each column (feature) for each group 
+
 </code></pre>
 <p><strong>CSV</strong></p>
 <pre><code>df_csvload  =  pd.read_csv('C:\\Users\\Administrator\\Desktop\\table.csv',parse_dates=True,index_col=0,encoding='gb2312')
