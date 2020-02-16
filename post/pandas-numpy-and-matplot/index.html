@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581866868928">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581871180281">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581866868928" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581871180281" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -143,8 +143,8 @@ False
 array([0, 0, 4, 5])
  
 </code></pre>
-<p>If you are not dealing with arrays and are not performing math manipulations of integers, you probably want and.</p>
-<p>If you have vectors of truth values that you wish to combine, use numpy with &amp;.</p>
+<p>If you are not dealing with arrays and are not performing math manipulations of integers, you probably want use &quot;and, or, not&quot;.</p>
+<p>If you have vectors of truth values that you wish to combine, use numpy with &quot;&amp;, |, ~&quot;.</p>
 <p><strong>Pandas Series</strong></p>
 <pre><code>s = pd.Series([-1.55666192,-0.75414753,0.47251231,-1.37775038,-1.64899442], index=['a', 'b', 'c', 'd', 'e'],dtype='int8' )
 s = pd.Series(np.random.randn(5), index=['a', 'b', 'c', 'd', 'e'])
@@ -190,23 +190,24 @@ df = pd.DataFrame(data2)
 0  1   2   NaN
 1  5  10  20.0
  
-# visit  
+# visit column  
 df['one']
+df[['one', 'two']]     df.loc[:, ['one', 'two']]
 df.one
 
 #visit row
-df[0:1]
+df[0:1]   df.loc[:]
 
 # loc using label
 df.loc['a']    # get a row
 df.loc[:,['one','two'] ]    # get all rows for two columns
-df.loc[['a',],['one','two']]
+df.loc[['a',],['one','two']]    df.loc['a',['one','two']]
 
 #iloc using index
 df.iloc[0:2,0:1]
 df.iloc[[0,2],[0,1]]
 
-#iloc inclusive vs loc exclusive
+#iloc exclusive vs loc inclusive
 &gt;&gt;&gt; import pandas as pd
 &gt;&gt;&gt; df = pd.DataFrame(dict(A=range(3), B=range(3)))
 &gt;&gt;&gt; df.iloc[:1]
@@ -222,8 +223,11 @@ df.iloc[[0,2],[0,1]]
 data = pd.read_csv('gdp_per_capita.csv')
 
 # check the unique items in a column
-len(data['Country'].unique())
+len(data['Country'].unique())      data['Country'].nunique()
 
+DataFrame apply: applying a function on 1D arrays to each column (axis = 0) or row (axis = 1).
+DataFrame applymap: element wise
+Series map: element wise
 
 # applymap()
 df = pd.DataFrame({
@@ -250,7 +254,7 @@ df = pd.DataFrame({
     'b': [20, 10, 40, 50, 30],
     'c': [25, 20, 5, 15, 10]
 })
-print(df.apply(np.max))
+print(df.apply(np.max))  same as  df.max(axis = 0)
 
 
 def standardize(df): 
@@ -281,6 +285,11 @@ example_df
 
 # get sum of each group
 print(example_df.groupby(['even']).sum())
+print(example_df.groupby(['even']).apply(np.sum)[['value','above_three']])
+print(example_df.groupby(['even']).apply(lambda x : x[['value','above_three']].sum()))
+print(example_df.groupby(['even']).agg(np.sum))
+print(example_df.groupby(['even']).agg(['sum']))
+
  
 df = pd.DataFrame({'Age': [30, 20, 22, 40, 32, 28, 39],
                    'Color': ['Blue', 'Green', 'Red', 'White', 'Gray', 'Black',
