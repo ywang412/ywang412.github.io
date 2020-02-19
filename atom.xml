@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-17T16:59:01.597Z</updated>
+    <updated>2020-02-19T04:46:41.680Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -67,11 +67,11 @@ Ha mu &gt;= 20</p>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[DAU analysis]]></title>
+        <title type="html"><![CDATA[DAU and retention analysis]]></title>
         <id>https://ywang412.github.io/post/dau-analysis</id>
         <link href="https://ywang412.github.io/post/dau-analysis">
         </link>
-        <updated>2020-01-19T16:39:30.000Z</updated>
+        <updated>2020-01-19T02:39:30.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
 <pre><code>SELECT date_trunc('day', e.occurred_at),
     CASE WHEN flag = 'true' 
@@ -144,6 +144,80 @@ SELECT d,
           AND e.event_name = 'login'
           ) as dau_mau
 FROM dailies
+</code></pre>
+<p><strong>Retention</strong></p>
+<pre><code>with monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+)
+select
+  this_month.month,
+  count(distinct user_id)
+from monthly_activity this_month
+join monthly_activity last_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+group by month
+</code></pre>
+<p><strong>Churn</strong></p>
+<pre><code>with monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+)
+select
+  last_month.month + add_months(last_month.month,1),
+  count(distinct last_month.user_id)
+from monthly_activity last_month
+left join monthly_activity this_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+where this_month.user_id is null
+group by 1
+</code></pre>
+<p><strong>Reactivated Users</strong></p>
+<pre><code>with
+monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+),
+first_activity as (
+  select user_id, date(min(created_at)) as month
+  from events
+  group by 1
+)
+select
+  this_month.month,
+  count(distinct user_id)
+from monthly_activity this_month
+left join monthly_activity last_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+join first_activity
+  on this_month.user_id = first_activity.user_id
+  and first_activity.month != this_month.month
+where last_month.user_id is null
+group by 1
+</code></pre>
+<p><strong>Percent Change</strong></p>
+<pre><code>with monthly_active_users as (
+ select
+   date_trunc('month', created_at) as month,
+   count (distinct user_id) as mau
+ from events
+ group by 1
+)
+select
+ this_month.month,
+ [(this_month.mau - last_month.mau)*1.0/last_month.mau:%] as pct_change
+from monthly_active_users this_month
+join monthly_active_users last_month
+ on this_month.month = add_months(last_month.month,1)
 </code></pre>
 ]]></content>
     </entry>

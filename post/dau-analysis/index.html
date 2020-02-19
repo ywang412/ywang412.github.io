@@ -3,8 +3,8 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DAU analysis | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1581957724135">
+<title>DAU and retention analysis | Yu&#39;s Github</title>
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1582087593496">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1581957724135" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1582087593496" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -83,11 +83,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              DAU analysis
+              DAU and retention analysis
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-01-19 ·
+                · 2020-01-18 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -169,6 +169,80 @@ SELECT d,
           AND e.event_name = 'login'
           ) as dau_mau
 FROM dailies
+</code></pre>
+<p><strong>Retention</strong></p>
+<pre><code>with monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+)
+select
+  this_month.month,
+  count(distinct user_id)
+from monthly_activity this_month
+join monthly_activity last_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+group by month
+</code></pre>
+<p><strong>Churn</strong></p>
+<pre><code>with monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+)
+select
+  last_month.month + add_months(last_month.month,1),
+  count(distinct last_month.user_id)
+from monthly_activity last_month
+left join monthly_activity this_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+where this_month.user_id is null
+group by 1
+</code></pre>
+<p><strong>Reactivated Users</strong></p>
+<pre><code>with
+monthly_activity as (
+  select distinct
+    date_trunc('month', created_at) as month,
+    user_id
+  from events
+),
+first_activity as (
+  select user_id, date(min(created_at)) as month
+  from events
+  group by 1
+)
+select
+  this_month.month,
+  count(distinct user_id)
+from monthly_activity this_month
+left join monthly_activity last_month
+  on this_month.user_id = last_month.user_id
+  and this_month.month = add_months(last_month.month,1)
+join first_activity
+  on this_month.user_id = first_activity.user_id
+  and first_activity.month != this_month.month
+where last_month.user_id is null
+group by 1
+</code></pre>
+<p><strong>Percent Change</strong></p>
+<pre><code>with monthly_active_users as (
+ select
+   date_trunc('month', created_at) as month,
+   count (distinct user_id) as mau
+ from events
+ group by 1
+)
+select
+ this_month.month,
+ [(this_month.mau - last_month.mau)*1.0/last_month.mau:%] as pct_change
+from monthly_active_users this_month
+join monthly_active_users last_month
+ on this_month.month = add_months(last_month.month,1)
 </code></pre>
 
             </div>
