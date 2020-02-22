@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 3 quick start - 1 Basics | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1582409761965">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1582410591128">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1582409761965" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1582410591128" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -170,6 +170,28 @@ codes.popitem() # random
 codes.clear()
 codes.update({'shanghai' : '000'})
 dict(a = 1, b = 2)
+
+&gt;&gt;&gt; for key, value in a_dict.items(): # .keys()  .values()
+...     print(key, '-&gt;', value)
+
+&gt;&gt;&gt; for key in a_dict:
+...     print(key, '-&gt;', a_dict[key])
+</code></pre>
+<p><strong>defaultdict</strong></p>
+<pre><code>&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; food_list = 'spam spam spam spam spam spam eggs spam'.split()
+&gt;&gt;&gt; food_count = defaultdict(int) # default value of int is 0
+&gt;&gt;&gt; for food in food_list:
+...     food_count[food] += 1 # increment element's value by 1
+
+
+&gt;&gt;&gt; from collections import defaultdict
+&gt;&gt;&gt; city_list = [('TX','Austin'), ('TX','Houston'), ('NY','Albany'), ('NY', 'Syracuse'), ('NY', 'Buffalo'), ('NY', 'Rochester'), ('TX', 'Dallas'), ('CA','Sacramento'), ('CA', 'Palo Alto'), ('GA', 'Atlanta')]
+&gt;&gt;&gt;
+&gt;&gt;&gt; cities_by_state = defaultdict(list)
+&gt;&gt;&gt; for state, city in city_list:
+...     cities_by_state[state].append(city)
+
 </code></pre>
 <p><strong>Set</strong></p>
 <pre><code>numbers = {1, 2}
