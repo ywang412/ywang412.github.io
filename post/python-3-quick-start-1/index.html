@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 3 quick start - 1 Basics | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1582410591128">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1582415090970">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1582410591128" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1582415090970" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-08-31 ·
+                · 2018-08-30 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -343,6 +343,29 @@ def Stock_pool_2():
     return stock_name     
 
 app.output(u&quot;5G&quot;)
+</code></pre>
+<p><strong>Error handling</strong></p>
+<pre><code>def handle_error_by_throwing_exception():
+    raise Exception(&quot;Meaningful message describing the source of the error&quot;)
+
+
+def handle_error_by_returning_none(input_data):
+    try:
+        return int(input_data)
+    except ValueError:
+        return None
+
+
+def handle_error_by_returning_tuple(input_data):
+    try:
+        return (True, int(input_data))
+    except ValueError:
+        return (False, None)
+
+
+def filelike_objects_are_closed_on_exception(filelike_object):
+    with filelike_object as fobj:
+        fobj.do_something()
 </code></pre>
 <p><strong>multi-threading vs multi process</strong></p>
 <p>Due to python GIL (only one thread will be executed by interpreter), multi-threading is good for IO-intensive. Multi process for CPU-intensive task.</p>
