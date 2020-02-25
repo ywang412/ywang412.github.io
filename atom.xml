@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-25T00:53:27.839Z</updated>
+    <updated>2020-02-25T03:01:13.448Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-03T15:54:53.000Z</updated>
+        <updated>2020-02-03T01:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
@@ -71,6 +71,9 @@ Trips:<br>
 number of completed ride or uber meal deliveries in a period<br>
 Gross bookings:<br>
 total dollar value</p>
+<p>Lyft:<br>
+Active Rider<br>
+Revenue per active rider</p>
 <p>Netflix:<br>
 Paid membership subscription<br>
 average avenue per user</p>
@@ -85,6 +88,21 @@ A logged in user who visit at least one of the family product once on a given da
 MauL<br>
 A logged in user who visit at least one of the family product once in the last 30 days<br>
 ARPU</p>
+<p>Expedia:<br>
+Room night growth<br>
+gross booking: total retail value of transaction booked<br>
+revenue per room night</p>
+<p>Spotify:<br>
+Total monthly active user<br>
+premium subscribers<br>
+ad-supported MAUs<br>
+ARPU</p>
+<p>Twitter:<br>
+Monetizable DAU<br>
+Logged in user that are able to show ads</p>
+<p>Snapchat:<br>
+ARPU<br>
+DAU registered user who opens application at least once during 24 hours</p>
 ]]></content>
     </entry>
     <entry>
