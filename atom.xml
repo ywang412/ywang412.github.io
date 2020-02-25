@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-02-23T17:45:51.068Z</updated>
+    <updated>2020-02-25T00:53:25.991Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-04T05:54:53.000Z</updated>
+        <updated>2020-02-03T15:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
@@ -64,6 +64,27 @@ Ha mu &gt;= 20</p>
 <p>A/B test power-&gt; p(reject H0 | H0 false) = 1 - p(not reject H0 | H0 false) = 1 - Type II error</p>
 <p>A/B test alpha 0.05 -&gt; Significance level. p-value lower than significance level reject null hypothesis</p>
 <p>A/B test p-value -&gt; take sample mean = 25, P(mu &gt;= sample mean| H0 true) &lt; 0.05 reject null hypothesis</p>
+<p>Uber:<br>
+Monthly active platform consumer<br>
+number of unique consumers who completed a ride or received an eats on platform in a given month<br>
+Trips:<br>
+number of completed ride or uber meal deliveries in a period<br>
+Gross bookings:<br>
+total dollar value</p>
+<p>Netflix:<br>
+Paid membership subscription<br>
+average avenue per user</p>
+<p>Pinterest:<br>
+Mau<br>
+authenticated user who visit at least once during 30 days<br>
+ARPU<br>
+total revenue divided by average number of mau in a period</p>
+<p>Facebook:<br>
+DAU:<br>
+A logged in user who visit at least one of the family product once on a given day<br>
+MauL<br>
+A logged in user who visit at least one of the family product once in the last 30 days<br>
+ARPU</p>
 ]]></content>
     </entry>
     <entry>
