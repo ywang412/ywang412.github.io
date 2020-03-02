@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python - Pandas, Numpy and Matplot | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583122130906">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583122420665">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583122130906" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583122420665" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-09-08 ·
+                · 2018-09-07 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/GnJOCYZZE" class="post-tag">
@@ -342,6 +342,12 @@ SettingWithCopyWarning
 
 df[df['A'] &gt; 2]['B'] = new_val  # new_val not set in df
 df.loc[df['A'] &gt; 2, 'B'] = new_val  # correct way
+
+df = df.drop_duplicates(subset='color', keep=&quot;first&quot;) #based on column color
+df.dropna()     #drop all rows that have any NaN values
+df.dropna(how='all')     #drop only if ALL columns are NaN
+df = df[df['EPS'].notna()]
+
 </code></pre>
 <p><strong>CSV</strong></p>
 <pre><code>df_csvload  =  pd.read_csv('C:\\Users\\Administrator\\Desktop\\table.csv',parse_dates=True,index_col=0,encoding='gb2312')
