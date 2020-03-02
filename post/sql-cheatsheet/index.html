@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL cheatsheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583089623596">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583117940571">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583089623596" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583117940571" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-01-17 ·
+                · 2018-01-16 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
@@ -97,7 +97,29 @@
             </div>
             
             <div class="post-content">
-              <p><strong>time function</strong></p>
+              <p><strong>sql select 3 columns and dedupe on two columns</strong></p>
+<pre><code>select instance_oid, bldg, room, min(shelf) group by instance_oid, bldg, room
+
+SELECT emp_name, emp_address, sex, marital_status
+from YourTable a
+WHERE NOT EXISTS (select 1 
+         from YourTable b
+         where b.emp_name = a.emp_name and
+               b.emp_address = a.emp_address and
+               b.sex = a.sex and
+               b.create_date &gt;= a.create_date)
+
+WITH CTE (Col1, Col2, Col3, DuplicateCount)
+AS
+(
+  SELECT Col1, Col2, Col3,
+  ROW_NUMBER() OVER(PARTITION BY Col1, Col2,
+       Col3 ORDER BY Col1) AS DuplicateCount
+  FROM MyTable
+) SELECT * from CTE Where DuplicateCount = 1
+
+</code></pre>
+<p><strong>time function</strong></p>
 <pre><code>both:
 HAVING activity_date &lt;= '2019-07-27' AND activity_date &gt; '2019-06-27'
 WHERE
