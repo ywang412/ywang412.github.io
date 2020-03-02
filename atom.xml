@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-03-02T03:12:03.645Z</updated>
+    <updated>2020-03-02T04:08:54.685Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -110,7 +110,7 @@ DAU registered user who opens application at least once during 24 hours</p>
         <id>https://ywang412.github.io/post/dau-analysis</id>
         <link href="https://ywang412.github.io/post/dau-analysis">
         </link>
-        <updated>2020-01-18T12:39:30.000Z</updated>
+        <updated>2020-01-17T22:39:30.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
 <pre><code>SELECT date_trunc('day', e.occurred_at),
     CASE WHEN flag = 'true' 
@@ -258,6 +258,68 @@ select
 from monthly_active_users this_month
 join monthly_active_users last_month
  on this_month.month = add_months(last_month.month,1)
+</code></pre>
+<p><strong>Sessionization</strong></p>
+<pre><code>SELECT *
+      ,  extract(epoch from mytimestamp)
+         - lag(extract(epoch from mytimestamp))
+         over (PARTITION BY user_id order by mytimestamp) as time_interval
+FROM toy_data_psql;
+
+SELECT *
+  , CASE
+      WHEN EXTRACT(EPOCH FROM mytimestamp)
+           - LAG(EXTRACT(EPOCH FROM mytimestamp))
+           OVER (PARTITION BY user_id ORDER BY mytimestamp) &gt;= 30 * 60
+      THEN 1
+      ELSE 0
+    END as new_session
+FROM
+  toy_data_psql;
+
+SELECT *
+  , user_id || '_' || SUM(new_session)
+  OVER (PARTITION BY user_id ORDER BY mytimestamp) AS session_id
+FROM (
+  SELECT *
+    , CASE
+       WHEN EXTRACT(EPOCH FROM mytimestamp)
+          - LAG(EXTRACT(EPOCH FROM mytimestamp))
+            OVER (PARTITION BY user_id ORDER BY mytimestamp) &gt;= 30 * 60
+       THEN 1
+       ELSE 0
+      END as new_session
+    FROM
+      toy_data_psql
+) s1
+</code></pre>
+<pre><code>import dataiku
+import pandas as pd
+from datetime import timedelta
+
+# define treshold value
+T = timedelta(seconds=30*60)
+
+# load dataset
+toy_data = dataiku.Dataset(&quot;toy_data&quot;).get_dataframe()
+
+# add a column containing previous timestamp
+toy_data =  pd.concat([toy_data,
+                       toy_data.groupby('user_id').transform(lambda x:x.shift(1))]
+                      ,axis=1)
+toy_data.columns = ['user_id','mytimestamp','prev_mytimestamp']
+
+# create the new session column
+toy_data['new_session'] = ((toy_data['mytimestamp']
+                            - toy_data['prev_mytimestamp'])&gt;=T).astype(int)
+
+# create the session_id
+toy_data['increment'] = toy_data.groupby(&quot;user_id&quot;)['new_session'].cumsum()
+toy_data['session_id'] = toy_data['user_id'].astype(str) + '_'
+                                + toy_data['increment'].astype(str)
+
+# to get the same result as with hive/postgresql
+toy_data = toy_data.sort(['user_id','mytimestamp'])
 </code></pre>
 ]]></content>
     </entry>

@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DAU and retention analysis | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583118700108">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583122130906">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583118700108" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583122130906" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,8 +87,12 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-01-18 ·
+                · 2020-01-17 ·
               </time>
+              
+                <a href="https://ywang412.github.io/tag/OVzHofTsS" class="post-tag">
+                  # DataEngineering
+                </a>
               
                 <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
                   # SQL
@@ -244,6 +248,68 @@ select
 from monthly_active_users this_month
 join monthly_active_users last_month
  on this_month.month = add_months(last_month.month,1)
+</code></pre>
+<p><strong>Sessionization</strong></p>
+<pre><code>SELECT *
+      ,  extract(epoch from mytimestamp)
+         - lag(extract(epoch from mytimestamp))
+         over (PARTITION BY user_id order by mytimestamp) as time_interval
+FROM toy_data_psql;
+
+SELECT *
+  , CASE
+      WHEN EXTRACT(EPOCH FROM mytimestamp)
+           - LAG(EXTRACT(EPOCH FROM mytimestamp))
+           OVER (PARTITION BY user_id ORDER BY mytimestamp) &gt;= 30 * 60
+      THEN 1
+      ELSE 0
+    END as new_session
+FROM
+  toy_data_psql;
+
+SELECT *
+  , user_id || '_' || SUM(new_session)
+  OVER (PARTITION BY user_id ORDER BY mytimestamp) AS session_id
+FROM (
+  SELECT *
+    , CASE
+       WHEN EXTRACT(EPOCH FROM mytimestamp)
+          - LAG(EXTRACT(EPOCH FROM mytimestamp))
+            OVER (PARTITION BY user_id ORDER BY mytimestamp) &gt;= 30 * 60
+       THEN 1
+       ELSE 0
+      END as new_session
+    FROM
+      toy_data_psql
+) s1
+</code></pre>
+<pre><code>import dataiku
+import pandas as pd
+from datetime import timedelta
+
+# define treshold value
+T = timedelta(seconds=30*60)
+
+# load dataset
+toy_data = dataiku.Dataset(&quot;toy_data&quot;).get_dataframe()
+
+# add a column containing previous timestamp
+toy_data =  pd.concat([toy_data,
+                       toy_data.groupby('user_id').transform(lambda x:x.shift(1))]
+                      ,axis=1)
+toy_data.columns = ['user_id','mytimestamp','prev_mytimestamp']
+
+# create the new session column
+toy_data['new_session'] = ((toy_data['mytimestamp']
+                            - toy_data['prev_mytimestamp'])&gt;=T).astype(int)
+
+# create the session_id
+toy_data['increment'] = toy_data.groupby(&quot;user_id&quot;)['new_session'].cumsum()
+toy_data['session_id'] = toy_data['user_id'].astype(str) + '_'
+                                + toy_data['increment'].astype(str)
+
+# to get the same result as with hive/postgresql
+toy_data = toy_data.sort(['user_id','mytimestamp'])
 </code></pre>
 
             </div>
