@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Coding tricks using Java syntax  | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1583122420665">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1584471876657">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1583122420665" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1584471876657" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-05-31 ·
+                · 2018-05-30 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -141,6 +141,30 @@ true
             }
         }
         return flatList.toArray(new Integer[flatList.size()]);
+    }
+}
+</code></pre>
+<p><strong>692. Top K Frequent Words</strong></p>
+<pre><code>class Solution {
+    public List&lt;String&gt; topKFrequent(String[] words, int k) {
+        
+        Map&lt;String, Integer&gt; count = new HashMap&lt;&gt;();
+        for (String word : words) {
+            count.put(word, count.getOrDefault(word, 0) + 1);
+        }
+        
+        List&lt;String&gt; list = new ArrayList(count.keySet());
+        
+        Collections.sort(list, new Comparator&lt;String&gt;(){
+            public int compare(String a, String b){
+                if (count.get(a) == count.get(b)) {
+                    return a.compareTo(b);
+                }
+                
+                return -Integer.compare(count.get(a), count.get(b));
+            }
+        });
+        return list.subList(0, k);
     }
 }
 </code></pre>
