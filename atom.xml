@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-03-17T20:04:26.912Z</updated>
+    <updated>2020-03-18T22:00:15.384Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,8 +15,13 @@
         <id>https://ywang412.github.io/post/data-metrics</id>
         <link href="https://ywang412.github.io/post/data-metrics">
         </link>
-        <updated>2020-02-03T01:54:53.000Z</updated>
-        <content type="html"><![CDATA[<p>Grow business -&gt; user retention or user acquisition<br>
+        <updated>2020-02-02T11:54:53.000Z</updated>
+        <content type="html"><![CDATA[<p>meaningful metrics -&gt; daily sessions per user<br>
+time spent/session (the user is idle on the page)<br>
+reactions, comments and shares in newfeed content. Reactions would include: likes, hearts, sad face, angry face etc.<br>
+average number of interactions a user has per visit to the Newsfeed.<br>
+click through rate for ads; this would help us understand whether ads are relevant</p>
+<p>Grow business -&gt; user retention or user acquisition<br>
 user retention -&gt; increasing user engagement -&gt; metrics with time threshold ( Average likes per user per day)</p>
 <p>Improve product -&gt; feature demand that users already doing something despite a complicated user flow. Simplifying the flow will most likely improve your target metrics</p>
 <p>optimize a long term metric like retention rate or lifetime value -&gt; find a short term metric that can predict the long term one</p>
