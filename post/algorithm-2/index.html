@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 2 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1584630421013">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1584919744139">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1584630421013" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1584919744139" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -206,6 +206,59 @@ private int find(int x) {
         }
         if (maxSum &lt; 0) return maxSum;
         return Math.max(maxSum, totalSum - minSum);
+    }
+}
+</code></pre>
+<p><strong>Basic Calculator III</strong></p>
+<pre><code>class Solution {
+    public int calculate(String s) {
+        if (s == null) {
+            return 0;
+        }    
+        s = s.replaceAll(&quot;\\s+&quot;,&quot;&quot;);
+        Queue&lt;Character&gt; q = new LinkedList&lt;&gt;();
+        for (char c : s.toCharArray()) {
+            q.offer(c);
+        }
+        q.offer('+');
+        return cal(q);
+    }
+    
+    private int cal(Queue&lt;Character&gt; q) {
+        char sign = '+';
+        int num = 0;
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        while (!q.isEmpty()) {
+            char c = q.poll();
+            // if (c == ' ') {
+            //     continue;
+            // }
+            if (Character.isDigit(c)) {
+                num = 10 * num + c - '0';
+            } else if (c == '(') {
+                num = cal(q);
+            } else {
+                if (sign == '+') {
+                    stack.push(num);
+                } else if (sign == '-') {
+                    stack.push(-num);
+                } else if (sign == '*') {
+                    stack.push(stack.pop() * num);
+                } else if (sign == '/') {
+                    stack.push(stack.pop() / num);
+                }
+                num = 0;
+                sign = c;
+                if (c == ')') {
+                    break;
+                }
+            }
+        }
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            sum += stack.pop();
+        }
+        return sum;
     }
 }
 </code></pre>
