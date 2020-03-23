@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-trival textbook algorithms - 1 | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1584919744139">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1584929548572">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1584919744139" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1584929548572" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2018-03-25 ·
+                · 2018-03-24 ·
               </time>
               
                 <a href="https://ywang412.github.io/tag/fy8llECIr" class="post-tag">
@@ -513,8 +513,7 @@ static int lcm(int a, int b)
 </code></pre>
 <p><strong>Dijkstra Algorithm</strong></p>
 <p>Shortest distance<br>
-743. Network Delay Time<br>
-787. Cheapest Flights Within K Stops</p>
+743. Network Delay Time</p>
 <pre><code>class Solution {
     public int networkDelayTime(int[][] times, int N, int K) {
         Map&lt;Integer, List&lt;int[]&gt;&gt; graph = new HashMap();
@@ -548,6 +547,34 @@ static int lcm(int a, int b)
             ans = Math.max(ans, cand);
         return ans;
     }
+}
+
+</code></pre>
+<ol start="787">
+<li>Cheapest Flights Within K Stops</li>
+</ol>
+<pre><code>public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+    Map&lt;Integer, Map&lt;Integer, Integer&gt;&gt; prices = new HashMap&lt;&gt;();
+    for (int[] f : flights) {
+        if (!prices.containsKey(f[0])) prices.put(f[0], new HashMap&lt;&gt;());
+        prices.get(f[0]).put(f[1], f[2]);
+    }
+    Queue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; (Integer.compare(a[0], b[0])));
+    pq.add(new int[] {0, src, k + 1});
+    while (!pq.isEmpty()) {
+        int[] top = pq.remove();
+        int price = top[0];
+        int city = top[1];
+        int stops = top[2];
+        if (city == dst) return price;
+        if (stops &gt; 0) {
+            Map&lt;Integer, Integer&gt; adj = prices.getOrDefault(city, new HashMap&lt;&gt;());
+            for (int a : adj.keySet()) {
+                pq.add(new int[] {price + adj.get(a), a, stops - 1});
+            }
+        }
+    }
+    return -1;
 }
 </code></pre>
 <p><strong>Generate Maze</strong></p>
