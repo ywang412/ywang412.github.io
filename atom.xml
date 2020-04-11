@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-11T22:20:32.495Z</updated>
+    <updated>2020-04-11T23:00:05.711Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/javascript-1-function-object-prototype</id>
         <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype">
         </link>
-        <updated>2020-04-11T08:19:39.000Z</updated>
+        <updated>2020-04-10T19:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -133,6 +133,27 @@ console.log(person.constructor === Person); // true
 </code></pre>
 <p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
 <img src="https://ywang412.github.io/post-images/1586643507831.png" alt=""></p>
+<p><strong>function vs object</strong></p>
+<p>function is a object with prototype</p>
+<pre><code>var o1 = {}; 
+var o2 =new Object();
+var o3 = new f1();
+
+function f1(){}; 
+var f2 = function(){};
+var f3 = new Function('str','console.log(str)');
+
+console.log(typeof Object); //function 
+console.log(typeof Function); //function  
+
+console.log(typeof f1); //function 
+console.log(typeof f2); //function 
+console.log(typeof f3); //function   
+
+console.log(typeof o1); //object 
+console.log(typeof o2); //object 
+console.log(typeof o3); //object
+</code></pre>
 ]]></content>
     </entry>
     <entry>
