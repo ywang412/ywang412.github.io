@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-03T14:23:32.173Z</updated>
+    <updated>2020-04-11T22:20:32.495Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,131 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Javascript 1 - function, object, prototype]]></title>
+        <id>https://ywang412.github.io/post/javascript-1-function-object-prototype</id>
+        <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype">
+        </link>
+        <updated>2020-04-11T08:19:39.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
+<pre><code>//函数声明式定义
+function foo(num1,num2){
+    return num1 + num2;
+}
+//函数表达式定义
+var foo = function(num1,num2){
+    return num1 + num2;
+};
+//使用Function构造函数定义
+var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num2&quot;);
+//实际上创建一个Function实例并不一定要赋值给具体的指针，可以直接执行
+(function(x,y){return x+y})(1,2);
+//之所以用圆括号把function(){}括起来是因为js解释器会将function解释为函数声明，而函数声明不能直接跟着(x,y)，我们需要将其转换为函数表达式。
+//(1,2)表示要传递跟函数的参数。
+//上面的例子也可以写成：
+function foo(x,y){
+    return x+y;
+}(1,2);
+//函数声明的方式无法定义匿名函数，因此如果想使用匿名函数，则必须用函数表达式的定义方式。
+</code></pre>
+<p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
+<p><strong>函数作为构造函数进行调用，this指向new出的那个对象</strong></p>
+<pre><code>color = 'red';
+var o = {color: 'blue'};
+function sayColor() {
+    console.log(this.color);
+}
+sayColor(); //red
+sayColor.call(this); //red
+sayColor.call(o); //blue
+
+&lt;script&gt; 
+var x = 0;
+function test(){
+    this.x = 1;
+}
+var obj = new test();
+console.log(obj.x);    //1（说明this指向obj）
+&lt;/script&gt;
+
+</code></pre>
+<p><strong>JavaScript has no overload</strong></p>
+<pre><code>var sum(){
+    return arguments[0] + arguments[1];    //通过arguments对象执行内部操作
+}
+console.log(sum(1, 2));    //3
+
+function add(num1, num2){
+    return num1 + num2;
+}
+function add(value){
+    return value + 100;
+}
+console.log(add(1, 2));    //101
+</code></pre>
+<p><strong>instance.<strong>proto</strong> === constructor.prototype</strong></p>
+<pre><code>var 对象 = new 函数()
+对象.__proto__ === 对象的构造函数.prototype
+
+</code></pre>
+<p>constructor1.prototype = instance2<br>
+鉴于上述游戏规则生效,如果试图引用constructor1构造的实例instance1的某个属性p1:<br>
+1).首先会在instance1内部属性中找一遍;<br>
+2).接着会在instance1.<strong>proto</strong>(constructor1.prototype)中找一遍,而constructor1.prototype 实际上是instance2, 也就是说在instance2中寻找该属性p1;<br>
+3).如果instance2中还是没有,此时程序不会灰心,它会继续在instance2.<strong>proto</strong>(constructor2.prototype)中寻找...直至Object的原型对象</p>
+<p>搜索轨迹: instance1--&gt; instance2 --&gt; constructor2.prototype…--&gt;Object.prototype</p>
+<pre><code>
+function Father(){
+	this.property = true;
+}
+Father.prototype.getFatherValue = function(){
+	return this.property;
+}
+function Son(){
+	this.sonProperty = false;
+}
+//继承 Father
+Son.prototype = new Father();//Son.prototype被重写,导致Son.prototype.constructor也一同被重写
+Son.prototype.getSonVaule = function(){
+	return this.sonProperty;
+}
+var instance = new Son();
+alert(instance.getFatherValue());//true
+ 
+alert(instance instanceof Object);//true
+alert(instance instanceof Father);//true
+alert(instance instanceof Son);//true
+alert(Object.prototype.isPrototypeOf(instance));//true
+alert(Father.prototype.isPrototypeOf(instance));//true
+alert(Son.prototype.isPrototypeOf(instance));//true
+</code></pre>
+<p><strong>New</strong><br>
+第一行，我们创建了一个空对象obj;<br>
+第二行，我们将这个空对象的__proto__成员指向了F函数对象prototype成员对象;<br>
+第三行，我们将F函数对象的this指针替换成obj，然后再调用F函数.</p>
+<pre><code>var obj  = {};
+obj.__proto__ = F.prototype;
+F.call(obj);
+</code></pre>
+<p>Another way:<br>
+subClass.prototype = superClass.prototype;//直接指向超类型prototype</p>
+<pre><code>function Person() {
+
+}
+
+var person = new Person();
+
+console.log(person.__proto__ == Person.prototype) // true
+console.log(Person.prototype.constructor == Person) // true
+// 顺便学习一个ES5的方法,可以获得对象的原型
+console.log(Object.getPrototypeOf(person) === Person.prototype) // true
+
+console.log(person.constructor === Person); // true
+</code></pre>
+<p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
+<img src="https://ywang412.github.io/post-images/1586643507831.png" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Data Metrics]]></title>
         <id>https://ywang412.github.io/post/data-metrics</id>
@@ -3367,35 +3492,6 @@ throws ThreadDeath exception and release lock</li>
 //线程组的异常处理
 //线程类的异常处理
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 5 - ThreadPool and ThreadLocal]]></title>
-        <id>https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal</id>
-        <link href="https://ywang412.github.io/post/java-juc-javautilconcurrent-5-threadpool-and-threadlocal">
-        </link>
-        <updated>2019-07-06T12:19:02.000Z</updated>
-        <content type="html"><![CDATA[<p>Java use Thread Pool pattern to save resources in a multithreaded application, and also to contain the parallelism in certain predefined limits. It controls several re-used threads for executing these tasks.</p>
-<pre><code>ExecutorService executorService = Executors.newCachedThreadPool();
-for (int i = 0; i &lt; 10; i++) {
-		final int index = i;
-		executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-						log.info(&quot;task:{}&quot;, index);
-				}
-		});
-}
-executorService.shutdown();
-</code></pre>
-<p>There are several pre-defined threadpool for various scenarios.</p>
-<pre><code>ExecutorService executorService = Executors.newFixedThreadPool(3);
-ExecutorService executorService = Executors.newSingleThreadExecutor();
-ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
-</code></pre>
-<p>The TheadLocal construct allows us to store data that will be accessible only by a specific thread.</p>
-<pre><code>private final static ThreadLocal&lt;Long&gt; requestHolder = new ThreadLocal&lt;&gt;();
 </code></pre>
 ]]></content>
     </entry>
