@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-11T23:00:05.711Z</updated>
+    <updated>2020-04-12T02:20:03.857Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/javascript-1-function-object-prototype</id>
         <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype">
         </link>
-        <updated>2020-04-10T19:19:39.000Z</updated>
+        <updated>2020-04-10T06:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -153,6 +153,23 @@ console.log(typeof f3); //function
 console.log(typeof o1); //object 
 console.log(typeof o2); //object 
 console.log(typeof o3); //object
+</code></pre>
+<p><strong>prototype</strong></p>
+<pre><code>function Person() {}
+Person.prototype = {
+    name:  'Zaxlct',
+    age: 28,
+    job: 'Software Engineer',
+    sayName: function() {
+        console.log(this.name);
+    }
+}
+
+var person1 = new Person();
+person1.sayName(); // 'Zaxlct'
+var person2 = new Person();
+person2.sayName(); // 'Zaxlct'
+console.log(person1.sayName == person2.sayName); //true
 </code></pre>
 ]]></content>
     </entry>
