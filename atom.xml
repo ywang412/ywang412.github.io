@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-13T23:53:37.585Z</updated>
+    <updated>2020-04-27T19:28:33.521Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -10,6 +10,22 @@
     <logo>https://ywang412.github.io/images/avatar.png</logo>
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
+    <entry>
+        <title type="html"><![CDATA[Javascript 3 - http request]]></title>
+        <id>https://ywang412.github.io/post/javascript-3-http-request</id>
+        <link href="https://ywang412.github.io/post/javascript-3-http-request">
+        </link>
+        <updated>2020-04-27T06:15:49.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015088492.png" alt=""></p>
+<p><strong>dns</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015159663.png" alt=""></p>
+<p><strong>request</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015638581.png" alt=""></p>
+<p><strong>dom</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015705473.png" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 2 - Chrome dev tools]]></title>
         <id>https://ywang412.github.io/post/javascript-2-chrome-dev-tools</id>
@@ -3218,231 +3234,6 @@ The server can push some part of their cache to CDNs and Internet Service Provid
 <p>“Push” model or Fan-out-on-write: For a push system, once a user has published a post, we can immediately push this post to all the followers. The advantage is that when fetching feed you don’t need to go through your friend’s list and get feeds for each of them. It significantly reduces read operations. To efficiently handle this, users have to maintain a Long Poll request with the server for receiving the updates. A possible problem with this approach is that when a user has millions of followers (a celebrity-user) the server has to push updates to a lot of people.</p>
 <p>Hybrid: An alternate method to handle feed data could be to use a hybrid approach, i.e., to do a combination of fan-out-on-write and fan-out-on-load. Specifically, we can stop pushing posts from users with a high number of followers (a celebrity user) and only push data for those users who have a few hundred (or thousand) followers. For celebrity users, we can let the followers pull the updates. Since the push operation can be extremely costly for users who have a lot of friends or followers, by disabling fanout for them, we can save a huge number of resources. Another alternate approach could be that, once a user publishes a post, we can limit the fanout to only her online friends. Also, to get benefits from both the approaches, a combination of ‘push to notify’ and ‘pull for serving’ end users is a great way to go. Purely a push or pull model is less versatile.</p>
 <p>Should we always notify users if there are new posts available for their newsfeed? It could be useful for users to get notified whenever new data is available. However, on mobile devices, where data usage is relatively expensive, it can consume unnecessary bandwidth. Hence, at least for mobile devices, we can choose not to push data, instead, let users “Pull to Refresh” to get new posts.</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java JUC (java.util.concurrent) 7 - Semaphore vs Lock Example]]></title>
-        <id>https://ywang412.github.io/post/semaphore-vs-lock</id>
-        <link href="https://ywang412.github.io/post/semaphore-vs-lock">
-        </link>
-        <updated>2019-07-12T05:36:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>1114. Print in Order</strong></p>
-<pre><code>class Foo {
-    
-    private volatile boolean onePrinted;
-    private volatile boolean twoPrinted;
-
-    public Foo() {
-        onePrinted = false;
-        twoPrinted = false;        
-    }
-
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
-        
-        // printFirst.run() outputs &quot;first&quot;. Do not change or remove this line.
-        printFirst.run();
-        onePrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
-        while(!onePrinted) {
-            wait();
-        }
-        // printSecond.run() outputs &quot;second&quot;. Do not change or remove this line.
-        printSecond.run();
-        twoPrinted = true;
-        notifyAll();
-    }
-
-    public synchronized void third(Runnable printThird) throws InterruptedException {
-        while(!twoPrinted) {
-            wait();
-        }
-        // printThird.run() outputs &quot;third&quot;. Do not change or remove this line.
-        printThird.run();
-    }
-}
-</code></pre>
-<pre><code>import java.util.concurrent.*;
-class Foo {
-    Semaphore run2, run3;
-
-    public Foo() {
-        run2 = new Semaphore(0);
-        run3 = new Semaphore(0);
-    }
-
-    public void first(Runnable printFirst) throws InterruptedException {
-        printFirst.run();
-        run2.release();
-    }
-
-    public void second(Runnable printSecond) throws InterruptedException {
-        run2.acquire();
-        printSecond.run();
-        run3.release();
-    }
-
-    public void third(Runnable printThird) throws InterruptedException {
-        run3.acquire(); 
-        printThird.run();
-    }
-}
-</code></pre>
-<p><strong>1188. Design Bounded Blocking Queue</strong></p>
-<p>When await() is called, the lock associated with this Condition is atomically released and the current thread becomes disabled for thread scheduling purposes. The current thread is assumed to hold the lock associated with this Condition when this method is called.</p>
-<p>newCondition()<br>
-await/signal/signalAll</p>
-<p>synchonized<br>
-wait/notify/notifyAll</p>
-<p>The ReentrantLock is an exclusive lock so only one thread can acquire the lock.<br>
-See #1. When a thread call signal or signalAll, it releases respectively one thread or all threads awaiting for the corresponding Condition such that the thread or those threads will be eligible to acquire the lock again. But for now the lock is still owned by the thread that called signal or signalAll until it releases explicitly the lock by calling lock.unlock(). Then the thread(s) that has/have been released will be able to try to acquire the lock again, the thread that could acquire the lock will be able to check the condition again (by condition this time I mean count == items.length or count == 0 in this example), if it is ok it will proceed otherwise it will await again and release the lock to make it available to another thread.</p>
-<pre><code>class BoundedBlockingQueue {
-    
-    private Queue&lt;Integer&gt; queue;
-    private Semaphore consumerSemaphore;
-    private Semaphore producerSemaphore;
-    private Semaphore mutex;
-
-    public BoundedBlockingQueue(int capacity) {
-        this.queue = new LinkedList&lt;&gt;();
-        this.producerSemaphore = new Semaphore(capacity);
-        this.consumerSemaphore = new Semaphore(0);
-        this.mutex = new Semaphore(1);
-    }
-
-    public void enqueue(int element) throws InterruptedException {
-        this.producerSemaphore.acquire();
-        //use mutex with Linkedlist or use ConcurrentLinkedDeque&lt;Integer&gt; q without mutex
-        this.mutex.acquire();                  
-        this.queue.offer(element);
-        this.mutex.release();
-        this.consumerSemaphore.release();
-    }
-
-    public int dequeue() throws InterruptedException {
-        this.consumerSemaphore.acquire();
-        this.mutex.acquire();
-        Integer res = this.queue.poll();
-        this.mutex.release();
-        this.producerSemaphore.release();
-        return res == null ? -1 : res;
-    }
-
-    public int size() {
-        return this.queue.size();
-    }
-}
-
-
-class BoundedBlockingQueue {
-    
-    private Queue&lt;Integer&gt; queue;
-    
-    private int capacity;
-
-    public BoundedBlockingQueue(int capacity) {
-        this.capacity = capacity;
-        this.queue = new LinkedList&lt;&gt;();
-    }
-    
-    public void enqueue(int element) throws InterruptedException {
-        //object level synchronized so either enqueu or dequeue can run
-        synchronized(this) {
-            while (this.queue.size() == this.capacity) {
-                wait();
-            }
-            this.queue.offer(element);
-            notifyAll();
-        }
-    }
-    
-    public int dequeue() throws InterruptedException {
-        synchronized(this) {
-            while (this.queue.isEmpty()) {
-                wait();
-            }
-            int res = this.queue.poll();
-            notifyAll();
-            return res;
-        }
-    }
-    
-    public int size() {
-        return this.queue.size();
-    }
-}
-
-
-class BoundedBlockingQueue {
-
-    private int[] data;
-    private int capacity = 0, head = 0, tail = 0;
-    private volatile int size = 0;
-    private Lock lock = new ReentrantLock();
-    private Condition isFull = lock.newCondition(), isEmpty = lock.newCondition();
-    
-    public BoundedBlockingQueue(int capacity) {
-        this.data = new int[capacity];
-        this.capacity = capacity;
-    }
-    
-    public void enqueue(int element) throws InterruptedException {
-        try {
-            lock.lock();  
-            while (size == capacity) {
-                isFull.await();     // only one thread will get lock after all threads wake up by signalAll().
-            }
-            data[tail++ % capacity] = element;
-            size++;
-            isEmpty.signalAll();
-        } catch(InterruptedException e) {
-        } finally {
-            lock.unlock();
-        }
-    }
-    
-    public int dequeue() throws InterruptedException {
-        int res = 0;
-        try {
-            lock.lock();
-            while (size == 0) {
-                isEmpty.await();
-            }
-            isFull.signalAll();
-            res = data[head++ % capacity];
-            size--;
-        } catch(InterruptedException e) {
-        } finally {
-            lock.unlock();
-        }
-        return res;
-    }
-    
-    public int size() {
-        return size;
-    }
-}
-</code></pre>
-<p>In order for the two methods to run concurrently they would have to use different locks</p>
-<pre><code>class A {
-    private final Object lockA = new Object();
-    private final Object lockB = new Object();
-
-    public void methodA() {
-        synchronized(lockA) {
-            //method A
-        }
-    }
-
-    public void methodB() {
-        synchronized(lockB) {
-            //method B
-        }
-    }
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
