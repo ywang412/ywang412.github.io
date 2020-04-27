@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-27T20:51:08.261Z</updated>
+    <updated>2020-04-27T20:53:59.856Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,12 +11,29 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
     <entry>
+        <title type="html"><![CDATA[Javascript 3 - http request]]></title>
+        <id>https://ywang412.github.io/post/javascript-3-http-request</id>
+        <link href="https://ywang412.github.io/post/javascript-3-http-request">
+        </link>
+        <updated>2020-04-27T06:15:49.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015088492.png" alt=""></p>
+<p><strong>dns</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015159663.png" alt=""></p>
+<p><strong>request</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015638581.png" alt=""></p>
+<p><strong>dom</strong><br>
+<img src="https://ywang412.github.io/post-images/1588015705473.png" alt=""></p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Javascript 4 - ES6]]></title>
         <id>https://ywang412.github.io/post/javascript-4-es6</id>
         <link href="https://ywang412.github.io/post/javascript-4-es6">
         </link>
-        <updated>2020-04-27T06:51:22.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>let/const block scope</strong></p>
+        <updated>2020-04-26T17:51:22.000Z</updated>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt=""></figure>
+<p><strong>let/const block scope</strong></p>
 <pre><code>let arr = [1,2,3,4]
 for (let i = 0; i &lt; arr.length; i++) {
 }
@@ -85,22 +102,6 @@ let obj = {
 	}
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Javascript 3 - http request]]></title>
-        <id>https://ywang412.github.io/post/javascript-3-http-request</id>
-        <link href="https://ywang412.github.io/post/javascript-3-http-request">
-        </link>
-        <updated>2020-04-27T06:15:49.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015088492.png" alt=""></p>
-<p><strong>dns</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015159663.png" alt=""></p>
-<p><strong>request</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015638581.png" alt=""></p>
-<p><strong>dom</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015705473.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>
