@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-04-27T21:57:56.992Z</updated>
+    <updated>2020-05-26T22:24:21.633Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -120,7 +120,7 @@ ctrl + shift + C select element</p>
         <id>https://ywang412.github.io/post/javascript-1-function-object-prototype</id>
         <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype">
         </link>
-        <updated>2020-04-10T06:19:39.000Z</updated>
+        <updated>2020-04-09T17:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -136,12 +136,9 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 (function(x,y){return x+y})(1,2);
 //之所以用圆括号把function(){}括起来是因为js解释器会将function解释为函数声明，而函数声明不能直接跟着(x,y)，我们需要将其转换为函数表达式。
 //(1,2)表示要传递跟函数的参数。
-//上面的例子也可以写成：
-function foo(x,y){
-    return x+y;
-}(1,2);
-//函数声明的方式无法定义匿名函数，因此如果想使用匿名函数，则必须用函数表达式的定义方式。
+
 </code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590531678788.png" alt=""></figure>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
 <p><strong>函数作为构造函数进行调用，this指向new出的那个对象</strong></p>
 <pre><code>color = 'red';

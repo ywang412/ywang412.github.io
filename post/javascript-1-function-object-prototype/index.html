@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 1 - function, object, prototype | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1588020834800">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590531688052">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1588020834800" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590531688052" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-04-10 ·
+                · 2020-04-09 ·
               </time>
               
             </div>
@@ -108,12 +108,9 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 (function(x,y){return x+y})(1,2);
 //之所以用圆括号把function(){}括起来是因为js解释器会将function解释为函数声明，而函数声明不能直接跟着(x,y)，我们需要将其转换为函数表达式。
 //(1,2)表示要传递跟函数的参数。
-//上面的例子也可以写成：
-function foo(x,y){
-    return x+y;
-}(1,2);
-//函数声明的方式无法定义匿名函数，因此如果想使用匿名函数，则必须用函数表达式的定义方式。
+
 </code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590531678788.png" alt=""></figure>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
 <p><strong>函数作为构造函数进行调用，this指向new出的那个对象</strong></p>
 <pre><code>color = 'red';
