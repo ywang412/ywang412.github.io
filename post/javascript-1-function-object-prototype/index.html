@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 1 - function, object, prototype | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590596404585">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590602874919">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590596404585" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590602874919" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -356,6 +356,24 @@ function Person(name,age){
 var dot = new Person('Dot',2);
 dot.sayAge();//2  
 
+</code></pre>
+<p>Use closure to make variable private</p>
+<pre><code>// 闭包版
+const Student = function(age, sex) {
+    let _age = age, _sex = sex;
+    const setAge = (newAge) =&gt; {
+        _age = 20;
+    }
+    const getAge = () =&gt; {
+        return _age;
+    }
+    return {
+        setAge,
+        getAge
+    }
+}
+const student = new Student(20, 'female');
+console.log(student._age); // undefined
 </code></pre>
 
             </div>

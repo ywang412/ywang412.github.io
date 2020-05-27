@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-05-27T16:30:28.135Z</updated>
+    <updated>2020-05-27T18:08:06.790Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -137,7 +137,7 @@ ctrl + shift + C select element</p>
         <id>https://ywang412.github.io/post/javascript-1-function-object-prototype/</id>
         <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype/">
         </link>
-        <updated>2020-04-08T02:19:39.000Z</updated>
+        <updated>2020-04-07T13:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -401,6 +401,24 @@ function Person(name,age){
 var dot = new Person('Dot',2);
 dot.sayAge();//2  
 
+</code></pre>
+<p>Use closure to make variable private</p>
+<pre><code>// 闭包版
+const Student = function(age, sex) {
+    let _age = age, _sex = sex;
+    const setAge = (newAge) =&gt; {
+        _age = 20;
+    }
+    const getAge = () =&gt; {
+        return _age;
+    }
+    return {
+        setAge,
+        getAge
+    }
+}
+const student = new Student(20, 'female');
+console.log(student._age); // undefined
 </code></pre>
 ]]></content>
     </entry>
