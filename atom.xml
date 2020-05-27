@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-05-27T18:36:41.373Z</updated>
+    <updated>2020-05-27T20:57:12.170Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -48,7 +48,7 @@
         <id>https://ywang412.github.io/post/javascript-4-es6/</id>
         <link href="https://ywang412.github.io/post/javascript-4-es6/">
         </link>
-        <updated>2020-04-26T17:51:22.000Z</updated>
+        <updated>2020-04-26T04:51:22.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt="" loading="lazy"></figure>
 <p><strong>let/const block scope</strong></p>
 <pre><code>let arr = [1,2,3,4]
@@ -67,7 +67,14 @@ var foo = 1;
 </code></pre>
 <p><strong>Arrow function</strong></p>
 <p>Arrow function no this, cannot be constructor, no prototype</p>
-<pre><code>var obj = {
+<pre><code>// 函数声明
+function test() {}
+// 函数表达式
+const test = function() {}
+// 箭头函数
+const test = () =&gt; {}
+
+var obj = {
 	commonFn : function() {
 		console.log(this);
 	},
