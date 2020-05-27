@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-05-27T03:49:42.736Z</updated>
+    <updated>2020-05-27T14:24:00.239Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -12,44 +12,44 @@
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
     <entry>
         <title type="html"><![CDATA[Javascript 5 - DOM]]></title>
-        <id>https://ywang412.github.io/post/javascript-5-dom</id>
-        <link href="https://ywang412.github.io/post/javascript-5-dom">
+        <id>https://ywang412.github.io/post/javascript-5-dom/</id>
+        <link href="https://ywang412.github.io/post/javascript-5-dom/">
         </link>
         <updated>2020-05-24T05:44:38.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590533131285.png" alt=""></figure>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1590533375585.png" alt=""></figure>
-<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1590533753402.png" alt=""></figure>
-<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1590536478146.png" alt=""></figure>
-<p><img src="https://ywang412.github.io/post-images/1590546015133.png" alt=""><br>
-<img src="https://ywang412.github.io/post-images/1590551341532.png" alt=""></p>
-<figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1590551353706.png" alt=""></figure>
-<p><img src="https://ywang412.github.io/post-images/1590551365472.png" alt=""><br>
-<img src="https://ywang412.github.io/post-images/1590551374368.png" alt=""></p>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590533131285.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1590533375585.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1590533753402.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1590536478146.png" alt="" loading="lazy"></figure>
+<p><img src="https://ywang412.github.io/post-images/1590546015133.png" alt="" loading="lazy"><br>
+<img src="https://ywang412.github.io/post-images/1590551341532.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1590551353706.png" alt="" loading="lazy"></figure>
+<p><img src="https://ywang412.github.io/post-images/1590551365472.png" alt="" loading="lazy"><br>
+<img src="https://ywang412.github.io/post-images/1590551374368.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 3 - http request]]></title>
-        <id>https://ywang412.github.io/post/javascript-3-http-request</id>
-        <link href="https://ywang412.github.io/post/javascript-3-http-request">
+        <id>https://ywang412.github.io/post/javascript-3-http-request/</id>
+        <link href="https://ywang412.github.io/post/javascript-3-http-request/">
         </link>
         <updated>2020-04-27T06:15:49.000Z</updated>
         <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015088492.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1588015088492.png" alt="" loading="lazy"></p>
 <p><strong>dns</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015159663.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1588015159663.png" alt="" loading="lazy"></p>
 <p><strong>request</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015638581.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1588015638581.png" alt="" loading="lazy"></p>
 <p><strong>dom</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015705473.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1588015705473.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 4 - ES6]]></title>
-        <id>https://ywang412.github.io/post/javascript-4-es6</id>
-        <link href="https://ywang412.github.io/post/javascript-4-es6">
+        <id>https://ywang412.github.io/post/javascript-4-es6/</id>
+        <link href="https://ywang412.github.io/post/javascript-4-es6/">
         </link>
         <updated>2020-04-26T17:51:22.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt=""></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt="" loading="lazy"></figure>
 <p><strong>let/const block scope</strong></p>
 <pre><code>let arr = [1,2,3,4]
 for (let i = 0; i &lt; arr.length; i++) {
@@ -123,8 +123,8 @@ let obj = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 2 - Chrome dev tools]]></title>
-        <id>https://ywang412.github.io/post/javascript-2-chrome-dev-tools</id>
-        <link href="https://ywang412.github.io/post/javascript-2-chrome-dev-tools">
+        <id>https://ywang412.github.io/post/javascript-2-chrome-dev-tools/</id>
+        <link href="https://ywang412.github.io/post/javascript-2-chrome-dev-tools/">
         </link>
         <updated>2020-04-13T09:32:30.000Z</updated>
         <content type="html"><![CDATA[<p>ctrl + shift + i open dev tools<br>
@@ -134,10 +134,10 @@ ctrl + shift + C select element</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 1 - function, object, prototype]]></title>
-        <id>https://ywang412.github.io/post/javascript-1-function-object-prototype</id>
-        <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype">
+        <id>https://ywang412.github.io/post/javascript-1-function-object-prototype/</id>
+        <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype/">
         </link>
-        <updated>2020-04-09T04:19:39.000Z</updated>
+        <updated>2020-04-08T15:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -155,8 +155,65 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 //(1,2)表示要传递跟函数的参数。
 
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590531678788.png" alt=""></figure>
+<p><strong>IIFE</strong><br>
+<img src="https://ywang412.github.io/post-images/1590531678788.png" alt="" loading="lazy"></p>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
+<p>In jQuery, the fn property is just an alias to the prototype property. jQuery identifier (or $) is just a constructor function.</p>
+<pre><code>function Test() {
+  this.a = 'a';
+}
+Test.prototype.b = 'b';
+
+var test = new Test(); 
+test.a; // &quot;a&quot;, own property
+test.b; // &quot;b&quot;, inherited property
+
+(function() {
+  var foo = function(arg) { // core constructor
+    // ensure to use the `new` operator
+    if (!(this instanceof foo))
+      return new foo(arg);
+    // store an argument for this example
+    this.myArg = arg;
+    //..
+  };
+
+  // create `fn` alias to `prototype` property
+  foo.fn = foo.prototype = {
+    init: function () {/*...*/}
+    //...
+  };
+
+  // expose the library
+  window.foo = foo;
+})();
+
+// Extension:
+
+foo.fn.myPlugin = function () {
+  alert(this.myArg);
+  return this; // return `this` for chainability
+};
+
+foo(&quot;bar&quot;).myPlugin(); // alerts &quot;bar&quot;
+</code></pre>
+<p>Before ES6, to avoid global method name conflicts, add method to a object. After ES6, use commonJS.</p>
+<pre><code>// bad
+let find = () =&gt; {};
+let remove = () =&gt; {};
+
+// good
+$.fn.find = () =&gt; {};
+$.fn.remove = () =&gt; {};
+
+// good
+(function($) {
+    let find = () =&gt; {};
+    let remove = () =&gt; {};
+    $.fn.find = find;
+    $.fn.remove = remove;
+}(jQuery))
+</code></pre>
 <p><strong>函数作为构造函数进行调用，this指向new出的那个对象</strong></p>
 <pre><code>color = 'red';
 var o = {color: 'blue'};
@@ -251,7 +308,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 console.log(person.constructor === Person); // true
 </code></pre>
 <p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
-<img src="https://ywang412.github.io/post-images/1586643507831.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1586643507831.png" alt="" loading="lazy"></p>
 <p><strong>function vs object</strong></p>
 <p>function is a object with prototype</p>
 <pre><code>var o1 = {}; 
@@ -294,8 +351,8 @@ console.log(person1.sayName == person2.sayName); //true
     </entry>
     <entry>
         <title type="html"><![CDATA[Data Metrics]]></title>
-        <id>https://ywang412.github.io/post/data-metrics</id>
-        <link href="https://ywang412.github.io/post/data-metrics">
+        <id>https://ywang412.github.io/post/data-metrics/</id>
+        <link href="https://ywang412.github.io/post/data-metrics/">
         </link>
         <updated>2020-02-02T11:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>meaningful metrics -&gt; daily sessions per user<br>
@@ -394,8 +451,8 @@ DAU registered user who opens application at least once during 24 hours</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[DAU and retention analysis]]></title>
-        <id>https://ywang412.github.io/post/dau-analysis</id>
-        <link href="https://ywang412.github.io/post/dau-analysis">
+        <id>https://ywang412.github.io/post/dau-analysis/</id>
+        <link href="https://ywang412.github.io/post/dau-analysis/">
         </link>
         <updated>2020-01-17T22:39:30.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
@@ -612,11 +669,11 @@ toy_data = toy_data.sort(['user_id','mytimestamp'])
     </entry>
     <entry>
         <title type="html"><![CDATA[NoSQL vs SQL]]></title>
-        <id>https://ywang412.github.io/post/nosql-vs-sql</id>
-        <link href="https://ywang412.github.io/post/nosql-vs-sql">
+        <id>https://ywang412.github.io/post/nosql-vs-sql/</id>
+        <link href="https://ywang412.github.io/post/nosql-vs-sql/">
         </link>
         <updated>2019-11-03T09:25:02.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576386520494.png" alt=""></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576386520494.png" alt="" loading="lazy"></figure>
 <p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -744,7 +801,7 @@ ALL - replicate table on all nodes</p>
 define a colum as sort key</p>
 </li>
 </ul>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1573580426980.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1573580426980.png" alt="" loading="lazy"></figure>
 <pre><code>CREATE TABLE part (
   p_partkey     	integer     	not null	sortkey distkey,
   p_name        	varchar(22) 	not null,
@@ -772,8 +829,8 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
     </entry>
     <entry>
         <title type="html"><![CDATA[Rate limiting fundamentals]]></title>
-        <id>https://ywang412.github.io/post/rate-limiting-fundamentals</id>
-        <link href="https://ywang412.github.io/post/rate-limiting-fundamentals">
+        <id>https://ywang412.github.io/post/rate-limiting-fundamentals/</id>
+        <link href="https://ywang412.github.io/post/rate-limiting-fundamentals/">
         </link>
         <updated>2019-10-17T02:53:52.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Leaky bucket</strong></p>
@@ -887,7 +944,7 @@ public class LeakyBucket extends RateLimiter {
 }
 </code></pre>
 <p><strong>Fixed Window Counter</strong><br>
-<img src="https://ywang412.github.io/post-images/1579461852072.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1579461852072.png" alt="" loading="lazy"></p>
 <pre><code>public class FixedWindowCounter extends RateLimiter {
 
   // TODO: Clean up stale entries
@@ -906,7 +963,7 @@ public class LeakyBucket extends RateLimiter {
 }
 </code></pre>
 <p><strong>Sliding Window Log</strong><br>
-<img src="https://ywang412.github.io/post-images/1579461845782.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1579461845782.png" alt="" loading="lazy"></p>
 <pre><code>public class SlidingWindowLog extends RateLimiter {
 
   private final Queue&lt;Long&gt; log = new LinkedList&lt;&gt;();
@@ -931,7 +988,7 @@ public class LeakyBucket extends RateLimiter {
 </code></pre>
 <p><strong>Sliding Window</strong></p>
 <p>This is still not accurate becasue it assumes that the distribution of requests in previous window is even, which may not be true. But compares to fixed window counter, which only guarantees rate within each window, and sliding window log, which has huge memory footprint, sliding window is more practical.<br>
-<img src="https://ywang412.github.io/post-images/1579461835894.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1579461835894.png" alt="" loading="lazy"></p>
 <pre><code>public class SlidingWindow extends RateLimiter {
 
   // TODO: Clean up stale entries
@@ -963,35 +1020,35 @@ public class LeakyBucket extends RateLimiter {
     </entry>
     <entry>
         <title type="html"><![CDATA[AWS Redshift and Apache Airflow pipeline]]></title>
-        <id>https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline</id>
-        <link href="https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline">
+        <id>https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline/</id>
+        <link href="https://ywang412.github.io/post/aws-redshift-and-apache-airflow-pipeline/">
         </link>
         <updated>2019-08-19T13:10:43.000Z</updated>
         <content type="html"><![CDATA[<p>A reusable production-grade data pipeline that incorporates data quality checks and allows for easy backfills. The source data resides in S3 and needs to be processed in a data warehouse in Amazon Redshift. The source datasets consist of JSON logs that tell about user activity in the application and JSON metadata about the songs the users listen to.</p>
 <ol>
 <li>
 <p>Create AWS redshift cluster and test queries.<br>
-<img src="https://ywang412.github.io/post-images/1573755046671.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573755046671.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>Set up AWS S3 hook<br>
-<img src="https://ywang412.github.io/post-images/1573760821111.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573760821111.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>Set up redshift connection hook<br>
-<img src="https://ywang412.github.io/post-images/1573760949674.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573760949674.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>Set up Airflow job DAG<br>
-<img src="https://ywang412.github.io/post-images/1573778681268.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573778681268.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>Run Airflow scheduler<br>
-<img src="https://ywang412.github.io/post-images/1573778839068.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573778839068.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>See past job statistics<br>
-<img src="https://ywang412.github.io/post-images/1573779317276.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1573779317276.png" alt="" loading="lazy"></p>
 </li>
 </ol>
 ]]></content>

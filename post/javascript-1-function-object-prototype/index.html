@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 1 - function, object, prototype | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590551377383">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590589435042">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590551377383" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590589435042" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -110,8 +110,65 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 //(1,2)表示要传递跟函数的参数。
 
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590531678788.png" alt=""></figure>
+<p><strong>IIFE</strong><br>
+<img src="https://ywang412.github.io/post-images/1590531678788.png" alt="" loading="lazy"></p>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
+<p>In jQuery, the fn property is just an alias to the prototype property. jQuery identifier (or $) is just a constructor function.</p>
+<pre><code>function Test() {
+  this.a = 'a';
+}
+Test.prototype.b = 'b';
+
+var test = new Test(); 
+test.a; // &quot;a&quot;, own property
+test.b; // &quot;b&quot;, inherited property
+
+(function() {
+  var foo = function(arg) { // core constructor
+    // ensure to use the `new` operator
+    if (!(this instanceof foo))
+      return new foo(arg);
+    // store an argument for this example
+    this.myArg = arg;
+    //..
+  };
+
+  // create `fn` alias to `prototype` property
+  foo.fn = foo.prototype = {
+    init: function () {/*...*/}
+    //...
+  };
+
+  // expose the library
+  window.foo = foo;
+})();
+
+// Extension:
+
+foo.fn.myPlugin = function () {
+  alert(this.myArg);
+  return this; // return `this` for chainability
+};
+
+foo(&quot;bar&quot;).myPlugin(); // alerts &quot;bar&quot;
+</code></pre>
+<p>Before ES6, to avoid global method name conflicts, add method to a object. After ES6, use commonJS.</p>
+<pre><code>// bad
+let find = () =&gt; {};
+let remove = () =&gt; {};
+
+// good
+$.fn.find = () =&gt; {};
+$.fn.remove = () =&gt; {};
+
+// good
+(function($) {
+    let find = () =&gt; {};
+    let remove = () =&gt; {};
+    $.fn.find = find;
+    $.fn.remove = remove;
+}(jQuery))
+</code></pre>
 <p><strong>函数作为构造函数进行调用，this指向new出的那个对象</strong></p>
 <pre><code>color = 'red';
 var o = {color: 'blue'};
@@ -206,7 +263,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 console.log(person.constructor === Person); // true
 </code></pre>
 <p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
-<img src="https://ywang412.github.io/post-images/1586643507831.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1586643507831.png" alt="" loading="lazy"></p>
 <p><strong>function vs object</strong></p>
 <p>function is a object with prototype</p>
 <pre><code>var o1 = {}; 
@@ -253,7 +310,7 @@ console.log(person1.sayName == person2.sayName); //true
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/data-metrics">
+            <a href="https://ywang412.github.io/post/data-metrics/">
               <h3 class="post-title">
                 Data Metrics
               </h3>

@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SQL 1 - Optimization and Best Practice | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590551377383">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590589435042">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590551377383" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590589435042" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -90,7 +90,7 @@
                 · 2018-10-02 ·
               </time>
               
-                <a href="https://ywang412.github.io/tag/DHSWEEVTK" class="post-tag">
+                <a href="https://ywang412.github.io/tag/DHSWEEVTK/" class="post-tag">
                   # SQL
                 </a>
               
@@ -151,10 +151,10 @@ select sleep(10);
 </code></pre>
 <p><strong>Use explain to analyze SQL query</strong></p>
 <p><code>mysql&gt; explain select * from t1 where b=100;</code></p>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1570332651442.png" alt=""></figure>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1570332651442.png" alt="" loading="lazy"></figure>
 <p><strong>Scenario where Index won't be used</strong></p>
 <p><code>mysql&gt; explain select * from t1 where date(c) ='2019-05-21';</code><br>
-<img src="https://ywang412.github.io/post-images/1570334471167.png" alt=""></p>
+<img src="https://ywang412.github.io/post-images/1570334471167.png" alt="" loading="lazy"></p>
 <p>Using native data format will use index condition.</p>
 <p><code>mysql&gt; explain select * from t1 where c&gt;='2019-05-21 00:00:00' and c&lt;='2019-05-21 23:59:59';</code></p>
 <p>Implicit conversion won't use index. tele_phone is Varchar(20)</p>
@@ -167,7 +167,7 @@ select sleep(10);
 <p>b -1 = 100 won't and b = 100 + 1 can.</p>
 <pre><code>mysql&gt; explain select * from t1 where b-1 =1000;
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1570337862625.png" alt=""></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1570337862625.png" alt="" loading="lazy"></figure>
 <p><strong>Batch insert submission</strong></p>
 <p>Insert multiple rows at a time</p>
 <p>create the batch insert sql</p>
@@ -280,7 +280,7 @@ get t1_count
 <p>problem: different session can read inaccurate result.</p>
 <ol start="3">
 <li>Add inno db counting table<br>
-<img src="https://ywang412.github.io/post-images/1570402853197.png" alt=""></li>
+<img src="https://ywang412.github.io/post-images/1570402853197.png" alt="" loading="lazy"></li>
 </ol>
 
             </div>
@@ -290,7 +290,7 @@ get t1_count
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/java-io-stream">
+            <a href="https://ywang412.github.io/post/java-io-stream/">
               <h3 class="post-title">
                 Java IO stream
               </h3>
