@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 1 - function, object, prototype | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590589435042">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590596404585">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590589435042" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590596404585" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-04-08 ·
+                · 2020-04-07 ·
               </time>
               
             </div>
@@ -301,6 +301,61 @@ person1.sayName(); // 'Zaxlct'
 var person2 = new Person();
 person2.sayName(); // 'Zaxlct'
 console.log(person1.sayName == person2.sayName); //true
+</code></pre>
+<p>问：为什么 [1, 2, 3].map(parseInt) 返回 [1,NaN,NaN]?<br>
+答：parseInt 函数的第二个参数表示要解析的数字的基数。该值介于 2 ~ 36 之间。map will pass both value and index.</p>
+<p>... for shallow copy<br>
+var a = { name: 'ygy', age: 20 };<br>
+var b = { ...a };</p>
+<p>use &amp;&amp; to replace if<br>
+// old<br>
+if (callback) callback();<br>
+// new<br>
+callback &amp;&amp; callback();</p>
+<p>// use &amp;&amp; to get value<br>
+var obj = {<br>
+info: {<br>
+name: 'ygy'<br>
+}<br>
+}<br>
+obj.info &amp;&amp; obj.info.name; // 'ygy'</p>
+<p>|| to get default value<br>
+var b = a || 10; // 如果a是空值，那么b就是10</p>
+<p><strong>This</strong></p>
+<pre><code>var a = 1;
+var obj1 = {
+    a:2,
+    fn:function(){
+        console.log(this.a);
+    }
+}
+var fn1 = obj1.fn;
+var fn1bind = fn1.bind(obj1);
+fn1();//1    //window
+obj1.fn();//2   //object 
+fn1bind();//2
+fn1.call(obj1);//2
+fn1.apply(obj1);//2
+
+document.addEventListener('click', function(e){
+    console.log(this);  //document
+    setTimeout(function(){
+        console.log(this); //window
+    }, 200);
+}, false); 
+
+//constructor的this都指向实例
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+    this.sayAge = function(){
+        console.log(this.age);
+    }
+}
+ 
+var dot = new Person('Dot',2);
+dot.sayAge();//2  
+
 </code></pre>
 
             </div>

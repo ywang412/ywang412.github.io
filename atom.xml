@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-05-27T14:24:00.239Z</updated>
+    <updated>2020-05-27T16:20:08.822Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -137,7 +137,7 @@ ctrl + shift + C select element</p>
         <id>https://ywang412.github.io/post/javascript-1-function-object-prototype/</id>
         <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype/">
         </link>
-        <updated>2020-04-08T15:19:39.000Z</updated>
+        <updated>2020-04-08T02:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
 <pre><code>//函数声明式定义
 function foo(num1,num2){
@@ -346,6 +346,61 @@ person1.sayName(); // 'Zaxlct'
 var person2 = new Person();
 person2.sayName(); // 'Zaxlct'
 console.log(person1.sayName == person2.sayName); //true
+</code></pre>
+<p>问：为什么 [1, 2, 3].map(parseInt) 返回 [1,NaN,NaN]?<br>
+答：parseInt 函数的第二个参数表示要解析的数字的基数。该值介于 2 ~ 36 之间。map will pass both value and index.</p>
+<p>... for shallow copy<br>
+var a = { name: 'ygy', age: 20 };<br>
+var b = { ...a };</p>
+<p>use &amp;&amp; to replace if<br>
+// old<br>
+if (callback) callback();<br>
+// new<br>
+callback &amp;&amp; callback();</p>
+<p>// use &amp;&amp; to get value<br>
+var obj = {<br>
+info: {<br>
+name: 'ygy'<br>
+}<br>
+}<br>
+obj.info &amp;&amp; obj.info.name; // 'ygy'</p>
+<p>|| to get default value<br>
+var b = a || 10; // 如果a是空值，那么b就是10</p>
+<p><strong>This</strong></p>
+<pre><code>var a = 1;
+var obj1 = {
+    a:2,
+    fn:function(){
+        console.log(this.a);
+    }
+}
+var fn1 = obj1.fn;
+var fn1bind = fn1.bind(obj1);
+fn1();//1    //window
+obj1.fn();//2   //object 
+fn1bind();//2
+fn1.call(obj1);//2
+fn1.apply(obj1);//2
+
+document.addEventListener('click', function(e){
+    console.log(this);  //document
+    setTimeout(function(){
+        console.log(this); //window
+    }, 200);
+}, false); 
+
+//constructor的this都指向实例
+function Person(name,age){
+    this.name = name;
+    this.age = age;
+    this.sayAge = function(){
+        console.log(this.age);
+    }
+}
+ 
+var dot = new Person('Dot',2);
+dot.sayAge();//2  
+
 </code></pre>
 ]]></content>
     </entry>
