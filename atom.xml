@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-05-27T21:07:12.092Z</updated>
+    <updated>2020-05-29T19:47:11.109Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/javascript-5-dom/</id>
         <link href="https://ywang412.github.io/post/javascript-5-dom/">
         </link>
-        <updated>2020-05-24T05:44:38.000Z</updated>
+        <updated>2020-05-23T03:44:38.000Z</updated>
         <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590533131285.png" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1590533375585.png" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1590533753402.png" alt="" loading="lazy"></figure>
@@ -25,6 +25,23 @@
 <figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1590551353706.png" alt="" loading="lazy"></figure>
 <p><img src="https://ywang412.github.io/post-images/1590551365472.png" alt="" loading="lazy"><br>
 <img src="https://ywang412.github.io/post-images/1590551374368.png" alt="" loading="lazy"></p>
+<p>position: absolute;<br>
+An element with position: absolute; is positioned relative to the nearest positioned ancestor</p>
+<p>position: relative;<br>
+An element with position: relative; is positioned relative to its normal position.</p>
+<div id="box1"><!--参照定位的元素-->
+    <div id="box2">相对参照元素进行定位</div><!--相对定位元素-->
+</div>
+<p>#box1{<br>
+width:200px;<br>
+height:200px;<br>
+position:relative;<br>
+}<br>
+#box2{<br>
+position:absolute;<br>
+top:20px;<br>
+left:30px;<br>
+}</p>
 ]]></content>
     </entry>
     <entry>
