@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 5 - DOM | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590781959326">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590795746041">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590781959326" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590795746041" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-05-22 ·
+                · 2020-05-21 ·
               </time>
               
             </div>
@@ -120,6 +120,65 @@ An element with position: relative; is positioned relative to its normal positio
     top:20px;
     left:30px;         
 }
+</code></pre>
+<p>**已知宽高实现盒子水平垂直居中 **</p>
+<pre><code>&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;已知宽高实现盒子水平垂直居中&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .box {
+        border: 1px solid #00ee00;
+        height: 300px;
+        position: relative;
+    }
+
+    .box1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -100px 0px 0px -100px;
+        
+        width: 200px;
+        height: 200px;
+        border: 1px solid red;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;box&quot;&gt;
+        &lt;div class=&quot;box1&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>宽高不定实现盒子水平垂直居中</p>
+<pre><code>&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;宽高不定实现盒子水平垂直居中&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    .box {
+        border: 1px solid #00ee00;
+        height: 300px;
+        position: relative;
+    }
+
+    .box1 {
+        border: 1px solid red;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;box&quot;&gt;
+        &lt;div class=&quot;box1&quot;&gt;
+            网网网网网网网网网网网网网网网网网网网网网网
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
 </code></pre>
 
             </div>
