@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Javascript 5 - DOM | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590781623936">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1590781959326">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590781623936" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1590781959326" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -106,19 +106,21 @@
 An element with position: absolute; is positioned relative to the nearest positioned ancestor</p>
 <p>position: relative;<br>
 An element with position: relative; is positioned relative to its normal position.</p>
-<div id="box1"><!--参照定位的元素-->
-    <div id="box2">相对参照元素进行定位</div><!--相对定位元素-->
-</div>
-<p>#box1{<br>
-width:200px;<br>
-height:200px;<br>
-position:relative;<br>
-}<br>
-#box2{<br>
-position:absolute;<br>
-top:20px;<br>
-left:30px;<br>
-}</p>
+<pre><code>&lt;div id=&quot;box1&quot;&gt;&lt;!--参照定位的元素--&gt;
+    &lt;div id=&quot;box2&quot;&gt;相对参照元素进行定位&lt;/div&gt;&lt;!--相对定位元素--&gt;
+&lt;/div&gt;
+
+#box1{
+    width:200px;
+    height:200px;
+    position:relative;        
+} 
+#box2{
+    position:absolute;
+    top:20px;
+    left:30px;         
+}
+</code></pre>
 
             </div>
           </article>
