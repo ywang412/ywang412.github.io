@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-17T17:30:12.240Z</updated>
+    <updated>2020-07-17T22:39:50.589Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,13 +15,15 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-14T00:05:38.000Z</updated>
+        <updated>2020-07-12T09:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
 ls --all     multiple char long param<br>
 command -p 10<br>
-command --parameter=10</p>
+command --parameter=10<br>
+Ctrl + A 光标跳到一行命令的开头。一般来说，Home 键有相同的效果；<br>
+Ctrl + E 光标跳到一行命令的结尾。一般来说，End 键有相同的效果；</p>
 <p>Directory shortcuts</p>
 <pre><code>.. parent
 - child
@@ -62,6 +64,10 @@ Fetching /tecmint/SettlementReport_1-10th.xls to SettlementReport_1-10th.xls</p>
 export var=&quot;var1&quot;</p>
 <p>su username<br>
 sudo su - switch to the su account</p>
+<p>ln hard<br>
+<img src="https://ywang412.github.io/post-images/1595025466695.png" alt="" loading="lazy"></p>
+<p>ln -s soft<br>
+<img src="https://ywang412.github.io/post-images/1595025473247.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
