@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-19T04:58:33.080Z</updated>
+    <updated>2020-07-19T18:28:45.716Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-10T05:05:38.000Z</updated>
+        <updated>2020-07-09T16:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
@@ -48,6 +48,7 @@ locate filename</p>
 du -h</p>
 <p>grep -i ignore case<br>
 grep -v invert match</p>
+<p>uniq test.txt  - only remove consecutive lines</p>
 <p>cut -d delimiter<br>
 cut -f N dispay the nth field<br>
 cut -d'  ' -f2<br>
@@ -72,6 +73,13 @@ sudo su - switch to the superuser account</p>
 <p>sudo updatedb<br>
 locate newly_created_file<br>
 find /var/log -name &quot;syslog&quot;</p>
+<p>0 stdin<br>
+1 stdout<br>
+2 stderr<br>
+cat not_exist_file.csv &gt; results.txt 2&gt; errors.log<br>
+cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1<br>
+cat not_exist_file.csv &gt;&gt; results.txt 2&gt;&amp;1    - append</p>
+<p>nohup cp node-v10.15.3.tar.gz node-v10.15.3-copy.tar.gz &amp;</p>
 ]]></content>
     </entry>
     <entry>
