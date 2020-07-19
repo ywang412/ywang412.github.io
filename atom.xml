@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-19T19:57:28.118Z</updated>
+    <updated>2020-07-19T20:41:33.432Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-08T01:05:38.000Z</updated>
+        <updated>2020-07-07T12:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
@@ -80,10 +80,9 @@ cat not_exist_file.csv &gt; results.txt 2&gt; errors.log<br>
 cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1<br>
 cat not_exist_file.csv &gt;&gt; results.txt 2&gt;&amp;1    - append</p>
 <p>nohup cp node-v10.15.3.tar.gz node-v10.15.3-copy.tar.gz &amp;</p>
-<pre><code>&amp;&amp;：&amp;&amp; 号前的命令执行成功，才会执行后面的命令。
-||：|| 号前的命令执行失败，才会执行后面的命令。
-分号：不论分号前的命令执行成功与否，都执行分号后的命令。前后命令之间没有相关性。
-</code></pre>
+<p>&amp;&amp;：&amp;&amp; 号前的命令执行成功，才会执行后面的命令。<br>
+||：|| 号前的命令执行失败，才会执行后面的命令。<br>
+分号：不论分号前的命令执行成功与否，都执行分号后的命令。前后命令之间没有相关性。</p>
 <p>tar -cvf sorting.tar sorting/       - create<br>
 tar -xvf sorting.tar          -extract</p>
 <p>tar -zcvf<br>
