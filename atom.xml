@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-20T19:29:15.873Z</updated>
+    <updated>2020-07-20T21:38:34.161Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-03T17:05:38.000Z</updated>
+        <updated>2020-07-03T04:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
@@ -94,8 +94,10 @@ zcat，zmore，zless      -  add gunzip</p>
 en  ethernet<br>
 lo loopback<br>
 wlan wireless network</p>
-<p>' '  ignore special chars<br>
-&quot; &quot;  takes $, <code>, and \</code> ` execute</p>
+<pre><code>' '  ignore special chars
+&quot; &quot;  takes $, `, and \
+` ` execute 
+</code></pre>
 <pre><code>#!/bin/bash
 
 message='Hello World'
@@ -178,6 +180,82 @@ done
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<pre><code>#!/bin/bash
+
+# Verification of parameter（验证参数）
+# If no parameter, use a default value（如果没有给出参数，那么用默认值 gallery.html ）
+if [ -z $1 ]
+then
+    output='gallery.html'
+else
+    output=$1
+fi
+
+# Preparation of files and folders（准备文件和目录）
+echo '' &gt; $output
+
+if [ ! -e thumbnails ]
+then
+    mkdir thumbnails
+fi
+
+# Beginning of HTML（HTML 文件的开头）
+echo '&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Gallery&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;' &gt;&gt; $output
+
+# Generation of thumbnails and the HTML web page（生成图片的缩略图和 HTML 的页面主体）
+for image in `ls *.jpg *.png *.jpeg *.gif 2&gt;/dev/null`
+do
+    convert $image -thumbnail '200x200&gt;' thumbnails/$image
+    echo '      &lt;a href=&quot;'$image'&quot;&gt;&lt;img src=&quot;thumbnails/'$image'&quot; alt=&quot;&quot;/&gt;&lt;/a&gt;' &gt;&gt; $output
+done
+
+# End of HTML（HTML 文件的结尾）
+echo '    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;' &gt;&gt; $output
+</code></pre>
+<pre><code>#!/bin/bash
+
+# Verification of parameter
+# 确认参数
+if [ -z $1 ]
+then
+    echo &quot;Please enter the file of dictionary !&quot;
+    exit
+fi
+
+# Verification of file existence
+# 确认文件存在
+if [ ! -e $1 ]
+then
+    echo &quot;Please make sure that the file of dictionary exists !&quot;
+    exit
+fi
+
+# Definition of function
+# 函数定义
+statistics () {
+  for char in {a..z}
+  do
+    echo &quot;$char - `grep -io &quot;$char&quot; $1 | wc -l`&quot; | tr /a-z/ /A-Z/ &gt;&gt; tmp.txt
+  done
+  sort -rn -k 2 -t - tmp.txt
+  rm tmp.txt
+}
+
+# Use of function
+# 函数使用
+statistics $1
+</code></pre>
+<p>其中 -r 和 -n 参数我们比较熟悉，-n 参数用于对数字排序，-r 参数用于倒序排列。<br>
+-k 参数用于指定根据哪几列进行排序，这里用 -k 2 表示根据第 2 列来排序。<br>
+-t 参数用于指定列和列之间用什么作为分隔符，这里用 -t - 表示分隔符是 - 。</p>
 ]]></content>
     </entry>
     <entry>

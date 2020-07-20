@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux quick note | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1595273350835">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1595281108328">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1595273350835" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1595281108328" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-07-03 ·
+                · 2020-07-02 ·
               </time>
               
             </div>
@@ -171,8 +171,10 @@ zcat，zmore，zless      -  add gunzip</p>
 en  ethernet<br>
 lo loopback<br>
 wlan wireless network</p>
-<p>' '  ignore special chars<br>
-&quot; &quot;  takes $, <code>, and \</code> ` execute</p>
+<pre><code>' '  ignore special chars
+&quot; &quot;  takes $, `, and \
+` ` execute 
+</code></pre>
 <pre><code>#!/bin/bash
 
 message='Hello World'
@@ -255,6 +257,82 @@ done
 </code></pre>
 <figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
 <figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<pre><code>#!/bin/bash
+
+# Verification of parameter（验证参数）
+# If no parameter, use a default value（如果没有给出参数，那么用默认值 gallery.html ）
+if [ -z $1 ]
+then
+    output='gallery.html'
+else
+    output=$1
+fi
+
+# Preparation of files and folders（准备文件和目录）
+echo '' &gt; $output
+
+if [ ! -e thumbnails ]
+then
+    mkdir thumbnails
+fi
+
+# Beginning of HTML（HTML 文件的开头）
+echo '&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Gallery&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;' &gt;&gt; $output
+
+# Generation of thumbnails and the HTML web page（生成图片的缩略图和 HTML 的页面主体）
+for image in `ls *.jpg *.png *.jpeg *.gif 2&gt;/dev/null`
+do
+    convert $image -thumbnail '200x200&gt;' thumbnails/$image
+    echo '      &lt;a href=&quot;'$image'&quot;&gt;&lt;img src=&quot;thumbnails/'$image'&quot; alt=&quot;&quot;/&gt;&lt;/a&gt;' &gt;&gt; $output
+done
+
+# End of HTML（HTML 文件的结尾）
+echo '    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;' &gt;&gt; $output
+</code></pre>
+<pre><code>#!/bin/bash
+
+# Verification of parameter
+# 确认参数
+if [ -z $1 ]
+then
+    echo &quot;Please enter the file of dictionary !&quot;
+    exit
+fi
+
+# Verification of file existence
+# 确认文件存在
+if [ ! -e $1 ]
+then
+    echo &quot;Please make sure that the file of dictionary exists !&quot;
+    exit
+fi
+
+# Definition of function
+# 函数定义
+statistics () {
+  for char in {a..z}
+  do
+    echo &quot;$char - `grep -io &quot;$char&quot; $1 | wc -l`&quot; | tr /a-z/ /A-Z/ &gt;&gt; tmp.txt
+  done
+  sort -rn -k 2 -t - tmp.txt
+  rm tmp.txt
+}
+
+# Use of function
+# 函数使用
+statistics $1
+</code></pre>
+<p>其中 -r 和 -n 参数我们比较熟悉，-n 参数用于对数字排序，-r 参数用于倒序排列。<br>
+-k 参数用于指定根据哪几列进行排序，这里用 -k 2 表示根据第 2 列来排序。<br>
+-t 参数用于指定列和列之间用什么作为分隔符，这里用 -t - 表示分隔符是 - 。</p>
 
             </div>
           </article>
