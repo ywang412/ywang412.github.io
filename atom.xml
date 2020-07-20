@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-19T23:02:40.692Z</updated>
+    <updated>2020-07-20T03:33:04.926Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-06T23:05:38.000Z</updated>
+        <updated>2020-07-06T10:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
@@ -40,7 +40,8 @@ D - delete from current position to line end<br>
 p - paste<br>
 / - search forward<br>
 ? - search hehind<br>
-u - undo</p>
+u - undo<br>
+😒/旧字符串/新字符串/g</p>
 <p>find a file<br>
 find /path filename<br>
 locate filename</p>
@@ -89,6 +90,10 @@ tar -xvf sorting.tar          -extract</p>
 tar -zxvf         -  add gunzip<br>
 zcat，zmore，zless      -  add gunzip</p>
 <p>rsync -arv --delete Images/ oscar@89.231.45.67:backups/</p>
+<p>ifconfig<br>
+en  ethernet<br>
+lo loopback<br>
+wlan wireless network</p>
 ]]></content>
     </entry>
     <entry>
