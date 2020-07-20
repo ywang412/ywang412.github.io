@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1595260890989">
+<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1595266727550">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
@@ -29,7 +29,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1595260890989" alt="">
+  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1595266727550" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,7 +87,7 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-07-05 ·
+                · 2020-07-04 ·
               </time>
               
             </div>
@@ -185,6 +185,53 @@ echo &quot;You are in the directory $message&quot;
 </code></pre>
 <p>在 Bash 中，所有的变量都是字符串</p>
 <p>env  - show environment variable</p>
+<p>./variable.sh 参数1 参数2 参数3 ...<br>
+$# ：包含参数的数目。<br>
+$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
+$1：包含第一个参数。<br>
+$2：包含第二个参数。</p>
+<pre><code>#!/bin/bash
+
+array=('value0' 'value1' 'value2')
+array[5]='value5'
+echo ${array[1]}
+</code></pre>
+<p>if [ 条件测试 ]; then<br>
+做这个<br>
+fi</p>
+<p>if [ 条件测试 1 ]<br>
+then<br>
+做事情 1<br>
+elif [ 条件测试 2 ]<br>
+then<br>
+做事情 2<br>
+elif [ 条件测试 3 ]<br>
+then<br>
+做事情 3<br>
+else<br>
+做其他事情<br>
+fi</p>
+<pre><code>#!/bin/bash
+
+if [ $# -ge 1 ] &amp;&amp; [ $1 = 'love' ]
+then
+    echo &quot;Great !&quot;
+    echo &quot;You know the password&quot;
+else
+    echo &quot;You do not know the password&quot;
+fi
+</code></pre>
+<pre><code>#!/bin/bash
+
+read -p 'Enter a file : ' file
+
+if [ ! -e $file ]
+then
+    echo &quot;$file does not exist&quot;
+else
+    echo &quot;$file exists&quot;
+fi
+</code></pre>
 
             </div>
           </article>

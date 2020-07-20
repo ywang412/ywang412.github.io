@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-20T16:01:35.186Z</updated>
+    <updated>2020-07-20T17:38:55.169Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-05T21:05:38.000Z</updated>
+        <updated>2020-07-04T19:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>whoami<br>
 hostname</p>
 <p>ls -a      one char short param<br>
@@ -108,6 +108,53 @@ echo &quot;You are in the directory $message&quot;
 </code></pre>
 <p>在 Bash 中，所有的变量都是字符串</p>
 <p>env  - show environment variable</p>
+<p>./variable.sh 参数1 参数2 参数3 ...<br>
+$# ：包含参数的数目。<br>
+$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
+$1：包含第一个参数。<br>
+$2：包含第二个参数。</p>
+<pre><code>#!/bin/bash
+
+array=('value0' 'value1' 'value2')
+array[5]='value5'
+echo ${array[1]}
+</code></pre>
+<p>if [ 条件测试 ]; then<br>
+做这个<br>
+fi</p>
+<p>if [ 条件测试 1 ]<br>
+then<br>
+做事情 1<br>
+elif [ 条件测试 2 ]<br>
+then<br>
+做事情 2<br>
+elif [ 条件测试 3 ]<br>
+then<br>
+做事情 3<br>
+else<br>
+做其他事情<br>
+fi</p>
+<pre><code>#!/bin/bash
+
+if [ $# -ge 1 ] &amp;&amp; [ $1 = 'love' ]
+then
+    echo &quot;Great !&quot;
+    echo &quot;You know the password&quot;
+else
+    echo &quot;You do not know the password&quot;
+fi
+</code></pre>
+<pre><code>#!/bin/bash
+
+read -p 'Enter a file : ' file
+
+if [ ! -e $file ]
+then
+    echo &quot;$file does not exist&quot;
+else
+    echo &quot;$file exists&quot;
+fi
+</code></pre>
 ]]></content>
     </entry>
     <entry>
