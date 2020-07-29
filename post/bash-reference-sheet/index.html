@@ -4,10 +4,10 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bash reference sheet | Yu&#39;s Github</title>
-<link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1596065480019">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1596067150954">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link rel="stylesheet" href="https://ywang412.github.io/styles/main.css">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
 
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
@@ -28,8 +28,8 @@
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://ywang412.github.io">
-  <img class="avatar" src="https://ywang412.github.io/images/avatar.png?v=1596065480019" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1596067150954" alt="">
   </a>
   <h1 class="site-title">
     Yu&#39;s Github
@@ -87,19 +87,23 @@
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-07-29 ·
+                · 2020-07-28 ·
               </time>
               
             </div>
             
             <div class="post-content">
-              <pre><code>' '  ignore special chars
+              <p>.bashrc</p>
+<pre><code>alias var=&quot;var1&quot;
+export var=&quot;var1&quot;
+</code></pre>
+<p><code>env</code> - show environment variable</p>
+<p>Escape special character:</p>
+<pre><code>' '  ignore special chars
 &quot; &quot;  takes $, `, and \
 ` ` execute 
-</code></pre>
-<p>alias var=&quot;var1&quot;<br>
-export var=&quot;var1&quot;</p>
-<pre><code>#!/bin/bash
+ 
+#!/bin/bash
 
 message='Hello World'
 echo &quot;The message is $message&quot;
@@ -108,20 +112,19 @@ echo &quot;The message is $message&quot;
 
 message=`pwd`
 echo &quot;You are in the directory $message&quot;
-</code></pre>
-<p>在 Bash 中，所有的变量都是字符串</p>
-<p>env  - show environment variable</p>
-<p>./variable.sh 参数1 参数2 参数3 ...<br>
-$# ：包含参数的数目。<br>
-$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
-$1：包含第一个参数。<br>
-$2：包含第二个参数。</p>
-<pre><code>#!/bin/bash
+
+#!/bin/bash
 
 array=('value0' 'value1' 'value2')
 array[5]='value5'
 echo ${array[1]}
 </code></pre>
+<p>在 Bash 中，所有的变量都是字符串<br>
+./variable.sh 参数1 参数2 参数3 ...<br>
+$# ：包含参数的数目。<br>
+$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
+$1：包含第一个参数。<br>
+$2：包含第二个参数。</p>
 <p>if [ 条件测试 ]; then<br>
 做这个<br>
 fi</p>
@@ -145,9 +148,9 @@ then
     echo &quot;You know the password&quot;
 else
     echo &quot;You do not know the password&quot;
-fi
-</code></pre>
-<pre><code>#!/bin/bash
+fi 
+
+#!/bin/bash
 
 read -p 'Enter a file : ' file
 
@@ -158,6 +161,7 @@ else
     echo &quot;$file exists&quot;
 fi
 </code></pre>
+<p>For and While loop:</p>
 <pre><code>#!/bin/bash
 
 for animal in 'dog' 'cat' 'pig'
@@ -179,8 +183,9 @@ do
     read -p 'Say yes : ' response
 done
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<p><img src="http://localhost:4000/post-images/1595273313606.PNG" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1595273330569.PNG" alt="" loading="lazy"></p>
+<p>Generate HTML:</p>
 <pre><code>#!/bin/bash
 
 # Verification of parameter（验证参数）
@@ -221,6 +226,7 @@ echo '    &lt;/p&gt;
   &lt;/body&gt;
 &lt;/html&gt;' &gt;&gt; $output
 </code></pre>
+<p>Character statistics:</p>
 <pre><code>#!/bin/bash
 
 # Verification of parameter
@@ -265,7 +271,7 @@ statistics $1
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/linux/">
+            <a href="http://localhost:4000/post/linux/">
               <h3 class="post-title">
                 Linux reference sheet
               </h3>
@@ -300,7 +306,7 @@ var dsqjs = new DisqusJS(options)
 
         <div class="site-footer">
    | 
-  <a class="rss" href="https://ywang412.github.io/atom.xml" target="_blank">RSS</a>
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">RSS</a>
 </div>
 
 <script>

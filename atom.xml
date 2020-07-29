@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://ywang412.github.io</id>
+    <id>http://localhost:4000</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-29T23:31:25.000Z</updated>
+    <updated>2020-07-29T23:59:19.008Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://ywang412.github.io"/>
-    <link rel="self" href="https://ywang412.github.io/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>Java, SQL, Python and a little bit of Scala </subtitle>
-    <logo>https://ywang412.github.io/images/avatar.png</logo>
-    <icon>https://ywang412.github.io/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
     <entry>
         <title type="html"><![CDATA[Bash reference sheet]]></title>
-        <id>https://ywang412.github.io/post/bash-reference-sheet/</id>
-        <link href="https://ywang412.github.io/post/bash-reference-sheet/">
+        <id>http://localhost:4000/post/bash-reference-sheet/</id>
+        <link href="http://localhost:4000/post/bash-reference-sheet/">
         </link>
-        <updated>2020-07-29T10:31:01.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>' '  ignore special chars
+        <updated>2020-07-28T21:31:01.000Z</updated>
+        <content type="html"><![CDATA[<p>.bashrc</p>
+<pre><code>alias var=&quot;var1&quot;
+export var=&quot;var1&quot;
+</code></pre>
+<p><code>env</code> - show environment variable</p>
+<p>Escape special character:</p>
+<pre><code>' '  ignore special chars
 &quot; &quot;  takes $, `, and \
 ` ` execute 
-</code></pre>
-<p>alias var=&quot;var1&quot;<br>
-export var=&quot;var1&quot;</p>
-<pre><code>#!/bin/bash
+ 
+#!/bin/bash
 
 message='Hello World'
 echo &quot;The message is $message&quot;
@@ -31,20 +35,19 @@ echo &quot;The message is $message&quot;
 
 message=`pwd`
 echo &quot;You are in the directory $message&quot;
-</code></pre>
-<p>在 Bash 中，所有的变量都是字符串</p>
-<p>env  - show environment variable</p>
-<p>./variable.sh 参数1 参数2 参数3 ...<br>
-$# ：包含参数的数目。<br>
-$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
-$1：包含第一个参数。<br>
-$2：包含第二个参数。</p>
-<pre><code>#!/bin/bash
+
+#!/bin/bash
 
 array=('value0' 'value1' 'value2')
 array[5]='value5'
 echo ${array[1]}
 </code></pre>
+<p>在 Bash 中，所有的变量都是字符串<br>
+./variable.sh 参数1 参数2 参数3 ...<br>
+$# ：包含参数的数目。<br>
+$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
+$1：包含第一个参数。<br>
+$2：包含第二个参数。</p>
 <p>if [ 条件测试 ]; then<br>
 做这个<br>
 fi</p>
@@ -68,9 +71,9 @@ then
     echo &quot;You know the password&quot;
 else
     echo &quot;You do not know the password&quot;
-fi
-</code></pre>
-<pre><code>#!/bin/bash
+fi 
+
+#!/bin/bash
 
 read -p 'Enter a file : ' file
 
@@ -81,6 +84,7 @@ else
     echo &quot;$file exists&quot;
 fi
 </code></pre>
+<p>For and While loop:</p>
 <pre><code>#!/bin/bash
 
 for animal in 'dog' 'cat' 'pig'
@@ -102,8 +106,9 @@ do
     read -p 'Say yes : ' response
 done
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<p><img src="http://localhost:4000/post-images/1595273313606.PNG" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1595273330569.PNG" alt="" loading="lazy"></p>
+<p>Generate HTML:</p>
 <pre><code>#!/bin/bash
 
 # Verification of parameter（验证参数）
@@ -144,6 +149,7 @@ echo '    &lt;/p&gt;
   &lt;/body&gt;
 &lt;/html&gt;' &gt;&gt; $output
 </code></pre>
+<p>Character statistics:</p>
 <pre><code>#!/bin/bash
 
 # Verification of parameter
@@ -184,8 +190,8 @@ statistics $1
     </entry>
     <entry>
         <title type="html"><![CDATA[Linux reference sheet]]></title>
-        <id>https://ywang412.github.io/post/linux/</id>
-        <link href="https://ywang412.github.io/post/linux/">
+        <id>http://localhost:4000/post/linux/</id>
+        <link href="http://localhost:4000/post/linux/">
         </link>
         <updated>2020-07-02T15:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>User info:</p>
@@ -263,9 +269,9 @@ zcat，zmore，zless, zgrep      -  add gunzip
 </code></pre>
 <p>Link:<br>
 <code>ln</code> hard link to same inode<br>
-<img src="https://ywang412.github.io/post-images/1595025466695.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1595025466695.png" alt="" loading="lazy"></p>
 <p><code>ln -s</code> soft link creates a new inode pointing  to old filename<br>
-<img src="https://ywang412.github.io/post-images/1595025473247.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1595025473247.png" alt="" loading="lazy"></p>
 <p>0 stdin, 1 stdout, 2 stderr:</p>
 <pre><code>cat not_exist_file.csv &gt; results.txt 2&gt; errors.log
 cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1
@@ -367,8 +373,8 @@ do
     read -p 'Say yes : ' response
 done
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
 <pre><code>#!/bin/bash
 
 # Verification of parameter（验证参数）
@@ -449,19 +455,19 @@ statistics $1
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 5 - DOM]]></title>
-        <id>https://ywang412.github.io/post/javascript-5-dom/</id>
-        <link href="https://ywang412.github.io/post/javascript-5-dom/">
+        <id>http://localhost:4000/post/javascript-5-dom/</id>
+        <link href="http://localhost:4000/post/javascript-5-dom/">
         </link>
         <updated>2020-05-22T01:44:38.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590533131285.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1590533375585.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1590533753402.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1590536478146.png" alt="" loading="lazy"></figure>
-<p><img src="https://ywang412.github.io/post-images/1590546015133.png" alt="" loading="lazy"><br>
-<img src="https://ywang412.github.io/post-images/1590551341532.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1590551353706.png" alt="" loading="lazy"></figure>
-<p><img src="https://ywang412.github.io/post-images/1590551365472.png" alt="" loading="lazy"><br>
-<img src="https://ywang412.github.io/post-images/1590551374368.png" alt="" loading="lazy"></p>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1590533131285.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1590533375585.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1590533753402.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1590536478146.png" alt="" loading="lazy"></figure>
+<p><img src="http://localhost:4000/post-images/1590546015133.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1590551341532.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1590551353706.png" alt="" loading="lazy"></figure>
+<p><img src="http://localhost:4000/post-images/1590551365472.png" alt="" loading="lazy"><br>
+<img src="http://localhost:4000/post-images/1590551374368.png" alt="" loading="lazy"></p>
 <p>position: absolute;<br>
 An element with position: absolute; is positioned relative to the nearest positioned ancestor</p>
 <p>position: relative;<br>
@@ -544,27 +550,27 @@ An element with position: relative; is positioned relative to its normal positio
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 3 - http request]]></title>
-        <id>https://ywang412.github.io/post/javascript-3-http-request/</id>
-        <link href="https://ywang412.github.io/post/javascript-3-http-request/">
+        <id>http://localhost:4000/post/javascript-3-http-request/</id>
+        <link href="http://localhost:4000/post/javascript-3-http-request/">
         </link>
         <updated>2020-04-27T06:15:49.000Z</updated>
         <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015088492.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1588015088492.png" alt="" loading="lazy"></p>
 <p><strong>dns</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015159663.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1588015159663.png" alt="" loading="lazy"></p>
 <p><strong>request</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015638581.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1588015638581.png" alt="" loading="lazy"></p>
 <p><strong>dom</strong><br>
-<img src="https://ywang412.github.io/post-images/1588015705473.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1588015705473.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 4 - ES6]]></title>
-        <id>https://ywang412.github.io/post/javascript-4-es6/</id>
-        <link href="https://ywang412.github.io/post/javascript-4-es6/">
+        <id>http://localhost:4000/post/javascript-4-es6/</id>
+        <link href="http://localhost:4000/post/javascript-4-es6/">
         </link>
         <updated>2020-04-25T15:51:22.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1588020833158.png" alt="" loading="lazy"></figure>
 <p><strong>let/const block scope</strong></p>
 <pre><code>let arr = [1,2,3,4]
 for (let i = 0; i &lt; arr.length; i++) {
@@ -645,8 +651,8 @@ let obj = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 2 - Chrome dev tools]]></title>
-        <id>https://ywang412.github.io/post/javascript-2-chrome-dev-tools/</id>
-        <link href="https://ywang412.github.io/post/javascript-2-chrome-dev-tools/">
+        <id>http://localhost:4000/post/javascript-2-chrome-dev-tools/</id>
+        <link href="http://localhost:4000/post/javascript-2-chrome-dev-tools/">
         </link>
         <updated>2020-04-13T09:32:30.000Z</updated>
         <content type="html"><![CDATA[<p>ctrl + shift + i open dev tools<br>
@@ -656,8 +662,8 @@ ctrl + shift + C select element</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 1 - function, object, prototype]]></title>
-        <id>https://ywang412.github.io/post/javascript-1-function-object-prototype/</id>
-        <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype/">
+        <id>http://localhost:4000/post/javascript-1-function-object-prototype/</id>
+        <link href="http://localhost:4000/post/javascript-1-function-object-prototype/">
         </link>
         <updated>2020-04-07T13:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
@@ -678,7 +684,7 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 
 </code></pre>
 <p><strong>IIFE</strong><br>
-<img src="https://ywang412.github.io/post-images/1590531678788.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1590531678788.png" alt="" loading="lazy"></p>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
 <p>In jQuery, the fn property is just an alias to the prototype property. jQuery identifier (or $) is just a constructor function.</p>
 <pre><code>function Test() {
@@ -830,7 +836,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 console.log(person.constructor === Person); // true
 </code></pre>
 <p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
-<img src="https://ywang412.github.io/post-images/1586643507831.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1586643507831.png" alt="" loading="lazy"></p>
 <p><strong>function vs object</strong></p>
 <p>function is a object with prototype</p>
 <pre><code>var o1 = {}; 
@@ -946,8 +952,8 @@ console.log(student._age); // undefined
     </entry>
     <entry>
         <title type="html"><![CDATA[Data Metrics]]></title>
-        <id>https://ywang412.github.io/post/data-metrics/</id>
-        <link href="https://ywang412.github.io/post/data-metrics/">
+        <id>http://localhost:4000/post/data-metrics/</id>
+        <link href="http://localhost:4000/post/data-metrics/">
         </link>
         <updated>2020-02-02T11:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>meaningful metrics -&gt; daily sessions per user<br>
@@ -1046,8 +1052,8 @@ DAU registered user who opens application at least once during 24 hours</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[DAU and retention analysis]]></title>
-        <id>https://ywang412.github.io/post/dau-analysis/</id>
-        <link href="https://ywang412.github.io/post/dau-analysis/">
+        <id>http://localhost:4000/post/dau-analysis/</id>
+        <link href="http://localhost:4000/post/dau-analysis/">
         </link>
         <updated>2020-01-17T22:39:30.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
@@ -1264,11 +1270,11 @@ toy_data = toy_data.sort(['user_id','mytimestamp'])
     </entry>
     <entry>
         <title type="html"><![CDATA[NoSQL vs SQL]]></title>
-        <id>https://ywang412.github.io/post/nosql-vs-sql/</id>
-        <link href="https://ywang412.github.io/post/nosql-vs-sql/">
+        <id>http://localhost:4000/post/nosql-vs-sql/</id>
+        <link href="http://localhost:4000/post/nosql-vs-sql/">
         </link>
         <updated>2019-11-03T09:25:02.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576386520494.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1576386520494.png" alt="" loading="lazy"></figure>
 <p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -1396,7 +1402,7 @@ ALL - replicate table on all nodes</p>
 define a colum as sort key</p>
 </li>
 </ul>
-<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1573580426980.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1573580426980.png" alt="" loading="lazy"></figure>
 <pre><code>CREATE TABLE part (
   p_partkey     	integer     	not null	sortkey distkey,
   p_name        	varchar(22) 	not null,
