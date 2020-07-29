@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-20T21:56:21.015Z</updated>
+    <updated>2020-07-29T23:31:25.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ywang412.github.io"/>
     <link rel="self" href="https://ywang412.github.io/atom.xml"/>
@@ -11,93 +11,282 @@
     <icon>https://ywang412.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Yu&apos;s Github</rights>
     <entry>
-        <title type="html"><![CDATA[Linux quick note]]></title>
+        <title type="html"><![CDATA[Bash reference sheet]]></title>
+        <id>https://ywang412.github.io/post/bash-reference-sheet/</id>
+        <link href="https://ywang412.github.io/post/bash-reference-sheet/">
+        </link>
+        <updated>2020-07-29T10:31:01.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>' '  ignore special chars
+&quot; &quot;  takes $, `, and \
+` ` execute 
+</code></pre>
+<p>alias var=&quot;var1&quot;<br>
+export var=&quot;var1&quot;</p>
+<pre><code>#!/bin/bash
+
+message='Hello World'
+echo &quot;The message is $message&quot;
+
+#!/bin/bash
+
+message=`pwd`
+echo &quot;You are in the directory $message&quot;
+</code></pre>
+<p>在 Bash 中，所有的变量都是字符串</p>
+<p>env  - show environment variable</p>
+<p>./variable.sh 参数1 参数2 参数3 ...<br>
+$# ：包含参数的数目。<br>
+$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
+$1：包含第一个参数。<br>
+$2：包含第二个参数。</p>
+<pre><code>#!/bin/bash
+
+array=('value0' 'value1' 'value2')
+array[5]='value5'
+echo ${array[1]}
+</code></pre>
+<p>if [ 条件测试 ]; then<br>
+做这个<br>
+fi</p>
+<p>if [ 条件测试 1 ]<br>
+then<br>
+做事情 1<br>
+elif [ 条件测试 2 ]<br>
+then<br>
+做事情 2<br>
+elif [ 条件测试 3 ]<br>
+then<br>
+做事情 3<br>
+else<br>
+做其他事情<br>
+fi</p>
+<pre><code>#!/bin/bash
+
+if [ $# -ge 1 ] &amp;&amp; [ $1 = 'love' ]
+then
+    echo &quot;Great !&quot;
+    echo &quot;You know the password&quot;
+else
+    echo &quot;You do not know the password&quot;
+fi
+</code></pre>
+<pre><code>#!/bin/bash
+
+read -p 'Enter a file : ' file
+
+if [ ! -e $file ]
+then
+    echo &quot;$file does not exist&quot;
+else
+    echo &quot;$file exists&quot;
+fi
+</code></pre>
+<pre><code>#!/bin/bash
+
+for animal in 'dog' 'cat' 'pig'
+do
+    echo &quot;Animal being analyzed : $animal&quot; 
+done
+ 
+#!/bin/bash
+
+for file in `ls *.sh`
+do
+    cp $file $file-copy
+done
+
+#!/bin/bash
+
+while [ -z $response ] || [ $response != 'yes' ]
+do
+    read -p 'Say yes : ' response
+done
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<pre><code>#!/bin/bash
+
+# Verification of parameter（验证参数）
+# If no parameter, use a default value（如果没有给出参数，那么用默认值 gallery.html ）
+if [ -z $1 ]
+then
+    output='gallery.html'
+else
+    output=$1
+fi
+
+# Preparation of files and folders（准备文件和目录）
+echo '' &gt; $output
+
+if [ ! -e thumbnails ]
+then
+    mkdir thumbnails
+fi
+
+# Beginning of HTML（HTML 文件的开头）
+echo '&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Gallery&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;' &gt;&gt; $output
+
+# Generation of thumbnails and the HTML web page（生成图片的缩略图和 HTML 的页面主体）
+for image in `ls *.jpg *.png *.jpeg *.gif 2&gt;/dev/null`
+do
+    convert $image -thumbnail '200x200&gt;' thumbnails/$image
+    echo '      &lt;a href=&quot;'$image'&quot;&gt;&lt;img src=&quot;thumbnails/'$image'&quot; alt=&quot;&quot;/&gt;&lt;/a&gt;' &gt;&gt; $output
+done
+
+# End of HTML（HTML 文件的结尾）
+echo '    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;' &gt;&gt; $output
+</code></pre>
+<pre><code>#!/bin/bash
+
+# Verification of parameter
+# 确认参数
+if [ -z $1 ]
+then
+    echo &quot;Please enter the file of dictionary !&quot;
+    exit
+fi
+
+# Verification of file existence
+# 确认文件存在
+if [ ! -e $1 ]
+then
+    echo &quot;Please make sure that the file of dictionary exists !&quot;
+    exit
+fi
+
+# Definition of function
+# 函数定义
+statistics () {
+  for char in {a..z}
+  do
+    echo &quot;$char - `grep -io &quot;$char&quot; $1 | wc -l`&quot; | tr /a-z/ /A-Z/ &gt;&gt; tmp.txt
+  done
+  sort -rn -k 2 -t - tmp.txt
+  rm tmp.txt
+}
+
+# Use of function
+# 函数使用
+statistics $1
+</code></pre>
+<p>其中 -r 和 -n 参数我们比较熟悉，-n 参数用于对数字排序，-r 参数用于倒序排列。<br>
+-k 参数用于指定根据哪几列进行排序，这里用 -k 2 表示根据第 2 列来排序。<br>
+-t 参数用于指定列和列之间用什么作为分隔符，这里用 -t - 表示分隔符是 - 。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Linux reference sheet]]></title>
         <id>https://ywang412.github.io/post/linux/</id>
         <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-03T04:05:38.000Z</updated>
-        <content type="html"><![CDATA[<p>whoami<br>
-hostname</p>
-<p>ls -a      one char short param<br>
-ls --all     multiple char long param<br>
-command -p 10<br>
-command --parameter=10<br>
-Ctrl + A 光标跳到一行命令的开头。一般来说，Home 键有相同的效果；<br>
-Ctrl + E 光标跳到一行命令的结尾。一般来说，End 键有相同的效果；</p>
-<p>Directory shortcuts</p>
-<pre><code>.. parent
-- child
+        <updated>2020-07-02T15:05:38.000Z</updated>
+        <content type="html"><![CDATA[<p>User info:</p>
+<pre><code>whoami
+hostname
+su username
+sudo date
+sudo su - switch to the superuser account
 </code></pre>
-<p>To execute commands outside of $PATH<br>
-/full/path/to/command<br>
-./command-in-this-dir</p>
-<p>chmod ugoa +-= rwx</p>
-<p>vi<br>
-x - delete char<br>
-dd - delete line<br>
-yy - copy line<br>
-D - delete from current position to line end<br>
-p - paste<br>
-/ - search forward<br>
-? - search hehind<br>
-u - undo<br>
-😒/旧字符串/新字符串/g</p>
-<p>find a file<br>
-find /path filename<br>
-locate filename</p>
-<p>disk usage<br>
-du -h</p>
-<p>grep -i ignore case<br>
-grep -v invert match</p>
-<p>uniq test.txt  - only remove consecutive lines</p>
-<p>cut -d delimiter<br>
-cut -f N dispay the nth field<br>
-cut -d'  ' -f2<br>
-grep bob /etc/passwd | cut -d: -f1,5 | sort | tr &quot;:&quot; &quot; &quot;</p>
-<p>SCP and SFTP<br>
-scp username@from_host:file.txt /local/directory/<br>
-scp file.txt username@to_host:/remote/directory/</p>
-<p>sftp tecmint@27.48.137.6<br>
-sftp&gt; put local.profile<br>
-Uploading local.profile to /tecmint/local.profile<br>
-sftp&gt; get SettlementReport_1-10th.xls<br>
-Fetching /tecmint/SettlementReport_1-10th.xls to SettlementReport_1-10th.xls</p>
-<p>alias var=&quot;var1&quot;<br>
-export var=&quot;var1&quot;</p>
-<p>su username<br>
-sudo date<br>
-sudo su - switch to the superuser account</p>
-<p>ln hard<br>
+<p>Command parameter format:</p>
+<pre><code>command -p 10
+command --parameter=10
+
+ls -a      single character parameter name
+ls --all     full parameter name
+</code></pre>
+<p>Hotkey:</p>
+<pre><code>ctrl + A  //光标跳到一行命令的开头。Home 键有相同的效果；
+ctrl + E   //光标跳到一行命令的结尾。End 键有相同的效果；
+</code></pre>
+<p>Command execution outside of $PATH:</p>
+<pre><code>/full/path/to/command
+./command-in-this-dir
+</code></pre>
+<p>Chmod:</p>
+<pre><code>chmod ugoa+-=rwx file 
+</code></pre>
+<p>vi:</p>
+<pre><code>x - delete a character
+dd - delete a line
+yy - copy a line
+D - delete from current position till line end
+p - paste
+/ - search forward
+? - search hehind
+u - undo
+:s/旧字符串/新字符串/g 
+</code></pre>
+<p>find a file:</p>
+<pre><code>find /var/log -name &quot;syslog&quot;
+sudo updatedb
+locate filename | grep `pwd`
+</code></pre>
+<p>System monitoring:</p>
+<pre><code>du -h  \\disk usage
+</code></pre>
+<p>Text manipulation:</p>
+<pre><code>grep -i #ignore case
+grep -v #invert match
+cut -d delimiter
+cut -f N dispay the nth field
+cut -d'  ' -f2
+grep bob /etc/passwd | cut -d: -f1,5 | sort | tr &quot;:&quot; &quot; &quot;
+uniq test.txt  - only remove consecutive lines
+</code></pre>
+<p>SCP, RSYNC and SFTP:</p>
+<pre><code>scp username@from_host:file.txt /local/directory/
+scp file.txt username@to_host:/remote/directory/
+
+sftp tecmint@27.48.137.6
+sftp&gt; put local.profile
+Uploading local.profile to /tecmint/local.profile
+sftp&gt; get SettlementReport_1-10th.xls
+Fetching /tecmint/SettlementReport_1-10th.xls to SettlementReport_1-10th.xls
+
+rsync -arv --delete Images/ oscar@89.231.45.67:backups/
+</code></pre>
+<p>Tar:</p>
+<pre><code>tar -cvf sorting.tar sorting/       - create
+tar -xvf sorting.tar          -extract
+
+tar -zcvf
+tar -zxvf         -  add gunzip 
+zcat，zmore，zless, zgrep      -  add gunzip 
+</code></pre>
+<p>Link:<br>
+<code>ln</code> hard link to same inode<br>
 <img src="https://ywang412.github.io/post-images/1595025466695.png" alt="" loading="lazy"></p>
-<p>ln -s soft<br>
+<p><code>ln -s</code> soft link creates a new inode pointing  to old filename<br>
 <img src="https://ywang412.github.io/post-images/1595025473247.png" alt="" loading="lazy"></p>
-<p>sudo updatedb<br>
-locate newly_created_file<br>
-find /var/log -name &quot;syslog&quot;</p>
-<p>0 stdin<br>
-1 stdout<br>
-2 stderr<br>
-cat not_exist_file.csv &gt; results.txt 2&gt; errors.log<br>
-cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1<br>
-cat not_exist_file.csv &gt;&gt; results.txt 2&gt;&amp;1    - append</p>
-<p>nohup cp node-v10.15.3.tar.gz node-v10.15.3-copy.tar.gz &amp;</p>
+<p>0 stdin, 1 stdout, 2 stderr:</p>
+<pre><code>cat not_exist_file.csv &gt; results.txt 2&gt; errors.log
+cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1
+cat not_exist_file.csv &gt;&gt; results.txt 2&gt;&amp;1    - append
+</code></pre>
+<p>nohup continues after user has logged out:</p>
+<pre><code>nohup cp node-v10.15.3.tar.gz node-v10.15.3-copy.tar.gz &amp; 
+</code></pre>
 <p>&amp;&amp;：&amp;&amp; 号前的命令执行成功，才会执行后面的命令。<br>
 ||：|| 号前的命令执行失败，才会执行后面的命令。<br>
 分号：不论分号前的命令执行成功与否，都执行分号后的命令。前后命令之间没有相关性。</p>
-<p>tar -cvf sorting.tar sorting/       - create<br>
-tar -xvf sorting.tar          -extract</p>
-<p>tar -zcvf<br>
-tar -zxvf         -  add gunzip<br>
-zcat，zmore，zless      -  add gunzip</p>
-<p>rsync -arv --delete Images/ oscar@89.231.45.67:backups/</p>
-<p>ifconfig<br>
-en  ethernet<br>
-lo loopback<br>
-wlan wireless network</p>
+<p><code>ifconfig</code><br>
+en:  ethernet<br>
+lo: loopback<br>
+wlan: wireless network</p>
 <pre><code>' '  ignore special chars
 &quot; &quot;  takes $, `, and \
 ` ` execute 
 </code></pre>
+<p>alias var=&quot;var1&quot;<br>
+export var=&quot;var1&quot;</p>
 <pre><code>#!/bin/bash
 
 message='Hello World'
@@ -1230,197 +1419,6 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
 (user)-[:PURCHASED]-&gt;(product)&lt;-[:PURCHASED]-()-[:PURCHASED]-&gt;(otherProduct)
 // Tree navigation 
 (root)&lt;-[:PARENT*]-(leaf:Category)-[:ITEM]-&gt;(data:Product)
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Rate limiting fundamentals]]></title>
-        <id>https://ywang412.github.io/post/rate-limiting-fundamentals/</id>
-        <link href="https://ywang412.github.io/post/rate-limiting-fundamentals/">
-        </link>
-        <updated>2019-10-17T02:53:52.000Z</updated>
-        <content type="html"><![CDATA[<p><strong>Leaky bucket</strong></p>
-<pre><code>public abstract class RateLimiter {
-
-  protected final int maxRequestPerSec;
-  protected RateLimiter(int maxRequestPerSec) {
-    this.maxRequestPerSec = maxRequestPerSec;
-  }
-
-  abstract boolean allow();
-}
-
-public class LeakyBucket extends RateLimiter {
-
-  private long nextAllowedTime;
-  private final long REQUEST_INTERVAL_MILLIS;
-
-  protected LeakyBucket(int maxRequestPerSec) {
-    super(maxRequestPerSec);
-    REQUEST_INTERVAL_MILLIS = 1000 / maxRequestPerSec;
-    nextAllowedTime = System.currentTimeMillis();
-  }
-
-  @Override
-  boolean allow() {
-    long curTime = System.currentTimeMillis();
-    synchronized (this) {
-      if (curTime &gt;= nextAllowedTime) {
-        nextAllowedTime = curTime + REQUEST_INTERVAL_MILLIS;
-        return true;
-      }
-      return false;
-    }
-  }
-}
-</code></pre>
-<p><strong>Token Bucket</strong></p>
-<p>Eager mode</p>
-<pre><code>public class TokenBucket extends RateLimiter {
-
-  private int tokens;
-
-  public TokenBucket(int maxRequestsPerSec) {
-    super(maxRequestsPerSec);
-    this.tokens = maxRequestsPerSec;
-    new Thread(() -&gt; {
-      while (true) {
-        try {
-          TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-        refillTokens(maxRequestsPerSec);
-      }
-    }).start();
-  }
-
-  @Override
-  public boolean allow() {
-    synchronized (this) {
-      if (tokens == 0) {
-        return false;
-      }
-      tokens--;
-      return true;
-    }
-  }
-
-  private void refillTokens(int cnt) {
-    synchronized (this) {
-      tokens = Math.min(tokens + cnt, maxRequestPerSec);
-      notifyAll();
-    }
-  }
-}
-</code></pre>
-<p>Lazy mode</p>
-<pre><code>public class TokenBucketLazyRefill extends RateLimiter {
-
-  private int tokens;
-  private long lastRefillTime;
-
-  public TokenBucketLazyRefill(int maxRequestPerSec) {
-    super(maxRequestPerSec);
-    this.tokens = maxRequestPerSec;
-    this.lastRefillTime = System.currentTimeMillis();
-  }
-
-  @Override
-  public boolean allow() {
-    synchronized (this) {
-      refillTokens();
-      if (tokens == 0) {
-        return false;
-      }
-      tokens--;
-      return true;
-    }
-  }
-
-  private void refillTokens() {
-    long curTime = System.currentTimeMillis();
-    double secSinceLastRefill = (curTime - lastRefillTime) / 1000.0;
-    int cnt = (int) (secSinceLastRefill * maxRequestPerSec);
-    if (cnt &gt; 0) {
-      tokens = Math.min(tokens + cnt, maxRequestPerSec);
-      lastRefillTime = curTime;
-    }
-  }
-}
-</code></pre>
-<p><strong>Fixed Window Counter</strong><br>
-<img src="https://ywang412.github.io/post-images/1579461852072.png" alt="" loading="lazy"></p>
-<pre><code>public class FixedWindowCounter extends RateLimiter {
-
-  // TODO: Clean up stale entries
-  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
-
-  protected FixedWindowCounter(int maxRequestPerSec) {
-    super(maxRequestPerSec);
-  }
-
-  @Override
-  boolean allow() {
-    long windowKey = System.currentTimeMillis() / 1000 * 1000;
-    windows.putIfAbsent(windowKey, new AtomicInteger(0));
-    return windows.get(windowKey).incrementAndGet() &lt;= maxRequestPerSec;
-  }
-}
-</code></pre>
-<p><strong>Sliding Window Log</strong><br>
-<img src="https://ywang412.github.io/post-images/1579461845782.png" alt="" loading="lazy"></p>
-<pre><code>public class SlidingWindowLog extends RateLimiter {
-
-  private final Queue&lt;Long&gt; log = new LinkedList&lt;&gt;();
-
-  protected SlidingWindowLog(int maxRequestPerSec) {
-    super(maxRequestPerSec);
-  }
-
-  @Override
-  boolean allow() {
-    long curTime = System.currentTimeMillis();
-    long boundary = curTime - 1000;
-    synchronized (log) {
-      while (!log.isEmpty() &amp;&amp; log.element() &lt;= boundary) {
-        log.poll();
-      }
-      log.add(curTime);
-      return log.size() &lt;= maxRequestPerSec;
-    }
-  }
-}
-</code></pre>
-<p><strong>Sliding Window</strong></p>
-<p>This is still not accurate becasue it assumes that the distribution of requests in previous window is even, which may not be true. But compares to fixed window counter, which only guarantees rate within each window, and sliding window log, which has huge memory footprint, sliding window is more practical.<br>
-<img src="https://ywang412.github.io/post-images/1579461835894.png" alt="" loading="lazy"></p>
-<pre><code>public class SlidingWindow extends RateLimiter {
-
-  // TODO: Clean up stale entries
-  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
-
-  protected SlidingWindow(int maxRequestPerSec) {
-    super(maxRequestPerSec);
-  }
-
-  @Override
-  boolean allow() {
-    long curTime = System.currentTimeMillis();
-    long curWindowKey = curTime / 1000 * 1000;
-    windows.putIfAbsent(curWindowKey, new AtomicInteger(0));
-    long preWindowKey = curWindowKey - 1000;
-    AtomicInteger preCount = windows.get(preWindowKey);
-    if (preCount == null) {
-      return windows.get(curWindowKey).incrementAndGet() &lt;= maxRequestPerSec;
-    }
-
-    double preWeight = 1 - (curTime - curWindowKey) / 1000.0;
-    long count = (long) (preCount.get() * preWeight
-        + windows.get(curWindowKey).incrementAndGet());
-    return count &lt;= maxRequestPerSec;
-  }
-}
 </code></pre>
 ]]></content>
     </entry>

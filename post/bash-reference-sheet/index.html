@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Linux reference sheet | Yu&#39;s Github</title>
+<title>Bash reference sheet | Yu&#39;s Github</title>
 <link rel="shortcut icon" href="https://ywang412.github.io/favicon.ico?v=1596065480019">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
@@ -83,110 +83,17 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Linux reference sheet
+              Bash reference sheet
             </h2>
             <div class="post-info">
               <time class="post-time">
-                · 2020-07-02 ·
+                · 2020-07-29 ·
               </time>
               
             </div>
             
             <div class="post-content">
-              <p>User info:</p>
-<pre><code>whoami
-hostname
-su username
-sudo date
-sudo su - switch to the superuser account
-</code></pre>
-<p>Command parameter format:</p>
-<pre><code>command -p 10
-command --parameter=10
-
-ls -a      single character parameter name
-ls --all     full parameter name
-</code></pre>
-<p>Hotkey:</p>
-<pre><code>ctrl + A  //光标跳到一行命令的开头。Home 键有相同的效果；
-ctrl + E   //光标跳到一行命令的结尾。End 键有相同的效果；
-</code></pre>
-<p>Command execution outside of $PATH:</p>
-<pre><code>/full/path/to/command
-./command-in-this-dir
-</code></pre>
-<p>Chmod:</p>
-<pre><code>chmod ugoa+-=rwx file 
-</code></pre>
-<p>vi:</p>
-<pre><code>x - delete a character
-dd - delete a line
-yy - copy a line
-D - delete from current position till line end
-p - paste
-/ - search forward
-? - search hehind
-u - undo
-:s/旧字符串/新字符串/g 
-</code></pre>
-<p>find a file:</p>
-<pre><code>find /var/log -name &quot;syslog&quot;
-sudo updatedb
-locate filename | grep `pwd`
-</code></pre>
-<p>System monitoring:</p>
-<pre><code>du -h  \\disk usage
-</code></pre>
-<p>Text manipulation:</p>
-<pre><code>grep -i #ignore case
-grep -v #invert match
-cut -d delimiter
-cut -f N dispay the nth field
-cut -d'  ' -f2
-grep bob /etc/passwd | cut -d: -f1,5 | sort | tr &quot;:&quot; &quot; &quot;
-uniq test.txt  - only remove consecutive lines
-</code></pre>
-<p>SCP, RSYNC and SFTP:</p>
-<pre><code>scp username@from_host:file.txt /local/directory/
-scp file.txt username@to_host:/remote/directory/
-
-sftp tecmint@27.48.137.6
-sftp&gt; put local.profile
-Uploading local.profile to /tecmint/local.profile
-sftp&gt; get SettlementReport_1-10th.xls
-Fetching /tecmint/SettlementReport_1-10th.xls to SettlementReport_1-10th.xls
-
-rsync -arv --delete Images/ oscar@89.231.45.67:backups/
-</code></pre>
-<p>Tar:</p>
-<pre><code>tar -cvf sorting.tar sorting/       - create
-tar -xvf sorting.tar          -extract
-
-tar -zcvf
-tar -zxvf         -  add gunzip 
-zcat，zmore，zless, zgrep      -  add gunzip 
-</code></pre>
-<p>Link:<br>
-<code>ln</code> hard link to same inode<br>
-<img src="https://ywang412.github.io/post-images/1595025466695.png" alt="" loading="lazy"></p>
-<p><code>ln -s</code> soft link creates a new inode pointing  to old filename<br>
-<img src="https://ywang412.github.io/post-images/1595025473247.png" alt="" loading="lazy"></p>
-<p>0 stdin, 1 stdout, 2 stderr:</p>
-<pre><code>cat not_exist_file.csv &gt; results.txt 2&gt; errors.log
-cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1
-cat not_exist_file.csv &gt;&gt; results.txt 2&gt;&amp;1    - append
-</code></pre>
-<p>nohup continues after user has logged out:</p>
-<pre><code>nohup cp node-v10.15.3.tar.gz node-v10.15.3-copy.tar.gz &amp; 
-</code></pre>
-<p>&amp;&amp;：&amp;&amp; 号前的命令执行成功，才会执行后面的命令。<br>
-||：|| 号前的命令执行失败，才会执行后面的命令。<br>
-分号：不论分号前的命令执行成功与否，都执行分号后的命令。前后命令之间没有相关性。</p>
-<p><code>ifconfig</code><br>
-en:  ethernet<br>
-lo: loopback<br>
-wlan: wireless network</p>
-<pre><code>' '  ignore special chars
+              <pre><code>' '  ignore special chars
 &quot; &quot;  takes $, `, and \
 ` ` execute 
 </code></pre>
@@ -358,9 +265,9 @@ statistics $1
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://ywang412.github.io/post/javascript-5-dom/">
+            <a href="https://ywang412.github.io/post/linux/">
               <h3 class="post-title">
-                Javascript 5 - DOM
+                Linux reference sheet
               </h3>
             </a>
           </div>
