@@ -1,199 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://ywang412.github.io</id>
     <title>Yu&apos;s Github</title>
-    <updated>2020-07-29T23:59:19.008Z</updated>
+    <updated>2021-03-29T22:42:21.553Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://ywang412.github.io"/>
+    <link rel="self" href="https://ywang412.github.io/atom.xml"/>
     <subtitle>Java, SQL, Python and a little bit of Scala </subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
-    <rights>All rights reserved 2020, Yu&apos;s Github</rights>
-    <entry>
-        <title type="html"><![CDATA[Bash reference sheet]]></title>
-        <id>http://localhost:4000/post/bash-reference-sheet/</id>
-        <link href="http://localhost:4000/post/bash-reference-sheet/">
-        </link>
-        <updated>2020-07-28T21:31:01.000Z</updated>
-        <content type="html"><![CDATA[<p>.bashrc</p>
-<pre><code>alias var=&quot;var1&quot;
-export var=&quot;var1&quot;
-</code></pre>
-<p><code>env</code> - show environment variable</p>
-<p>Escape special character:</p>
-<pre><code>' '  ignore special chars
-&quot; &quot;  takes $, `, and \
-` ` execute 
- 
-#!/bin/bash
-
-message='Hello World'
-echo &quot;The message is $message&quot;
-
-#!/bin/bash
-
-message=`pwd`
-echo &quot;You are in the directory $message&quot;
-
-#!/bin/bash
-
-array=('value0' 'value1' 'value2')
-array[5]='value5'
-echo ${array[1]}
-</code></pre>
-<p>在 Bash 中，所有的变量都是字符串<br>
-./variable.sh 参数1 参数2 参数3 ...<br>
-$# ：包含参数的数目。<br>
-$0 ：包含被运行的脚本的名称 （我们的示例中就是 variable.sh ）。<br>
-$1：包含第一个参数。<br>
-$2：包含第二个参数。</p>
-<p>if [ 条件测试 ]; then<br>
-做这个<br>
-fi</p>
-<p>if [ 条件测试 1 ]<br>
-then<br>
-做事情 1<br>
-elif [ 条件测试 2 ]<br>
-then<br>
-做事情 2<br>
-elif [ 条件测试 3 ]<br>
-then<br>
-做事情 3<br>
-else<br>
-做其他事情<br>
-fi</p>
-<pre><code>#!/bin/bash
-
-if [ $# -ge 1 ] &amp;&amp; [ $1 = 'love' ]
-then
-    echo &quot;Great !&quot;
-    echo &quot;You know the password&quot;
-else
-    echo &quot;You do not know the password&quot;
-fi 
-
-#!/bin/bash
-
-read -p 'Enter a file : ' file
-
-if [ ! -e $file ]
-then
-    echo &quot;$file does not exist&quot;
-else
-    echo &quot;$file exists&quot;
-fi
-</code></pre>
-<p>For and While loop:</p>
-<pre><code>#!/bin/bash
-
-for animal in 'dog' 'cat' 'pig'
-do
-    echo &quot;Animal being analyzed : $animal&quot; 
-done
- 
-#!/bin/bash
-
-for file in `ls *.sh`
-do
-    cp $file $file-copy
-done
-
-#!/bin/bash
-
-while [ -z $response ] || [ $response != 'yes' ]
-do
-    read -p 'Say yes : ' response
-done
-</code></pre>
-<p><img src="http://localhost:4000/post-images/1595273313606.PNG" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1595273330569.PNG" alt="" loading="lazy"></p>
-<p>Generate HTML:</p>
-<pre><code>#!/bin/bash
-
-# Verification of parameter（验证参数）
-# If no parameter, use a default value（如果没有给出参数，那么用默认值 gallery.html ）
-if [ -z $1 ]
-then
-    output='gallery.html'
-else
-    output=$1
-fi
-
-# Preparation of files and folders（准备文件和目录）
-echo '' &gt; $output
-
-if [ ! -e thumbnails ]
-then
-    mkdir thumbnails
-fi
-
-# Beginning of HTML（HTML 文件的开头）
-echo '&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;My Gallery&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;p&gt;' &gt;&gt; $output
-
-# Generation of thumbnails and the HTML web page（生成图片的缩略图和 HTML 的页面主体）
-for image in `ls *.jpg *.png *.jpeg *.gif 2&gt;/dev/null`
-do
-    convert $image -thumbnail '200x200&gt;' thumbnails/$image
-    echo '      &lt;a href=&quot;'$image'&quot;&gt;&lt;img src=&quot;thumbnails/'$image'&quot; alt=&quot;&quot;/&gt;&lt;/a&gt;' &gt;&gt; $output
-done
-
-# End of HTML（HTML 文件的结尾）
-echo '    &lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;' &gt;&gt; $output
-</code></pre>
-<p>Character statistics:</p>
-<pre><code>#!/bin/bash
-
-# Verification of parameter
-# 确认参数
-if [ -z $1 ]
-then
-    echo &quot;Please enter the file of dictionary !&quot;
-    exit
-fi
-
-# Verification of file existence
-# 确认文件存在
-if [ ! -e $1 ]
-then
-    echo &quot;Please make sure that the file of dictionary exists !&quot;
-    exit
-fi
-
-# Definition of function
-# 函数定义
-statistics () {
-  for char in {a..z}
-  do
-    echo &quot;$char - `grep -io &quot;$char&quot; $1 | wc -l`&quot; | tr /a-z/ /A-Z/ &gt;&gt; tmp.txt
-  done
-  sort -rn -k 2 -t - tmp.txt
-  rm tmp.txt
-}
-
-# Use of function
-# 函数使用
-statistics $1
-</code></pre>
-<p>其中 -r 和 -n 参数我们比较熟悉，-n 参数用于对数字排序，-r 参数用于倒序排列。<br>
--k 参数用于指定根据哪几列进行排序，这里用 -k 2 表示根据第 2 列来排序。<br>
--t 参数用于指定列和列之间用什么作为分隔符，这里用 -t - 表示分隔符是 - 。</p>
-]]></content>
-    </entry>
+    <logo>https://ywang412.github.io/images/avatar.png</logo>
+    <icon>https://ywang412.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, Yu&apos;s Github</rights>
     <entry>
         <title type="html"><![CDATA[Linux reference sheet]]></title>
-        <id>http://localhost:4000/post/linux/</id>
-        <link href="http://localhost:4000/post/linux/">
+        <id>https://ywang412.github.io/post/linux/</id>
+        <link href="https://ywang412.github.io/post/linux/">
         </link>
-        <updated>2020-07-02T15:05:38.000Z</updated>
+        <updated>2020-07-02T02:05:38.000Z</updated>
         <content type="html"><![CDATA[<p>User info:</p>
 <pre><code>whoami
 hostname
@@ -269,9 +91,9 @@ zcat，zmore，zless, zgrep      -  add gunzip
 </code></pre>
 <p>Link:<br>
 <code>ln</code> hard link to same inode<br>
-<img src="http://localhost:4000/post-images/1595025466695.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1595025466695.png" alt="" loading="lazy"></p>
 <p><code>ln -s</code> soft link creates a new inode pointing  to old filename<br>
-<img src="http://localhost:4000/post-images/1595025473247.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1595025473247.png" alt="" loading="lazy"></p>
 <p>0 stdin, 1 stdout, 2 stderr:</p>
 <pre><code>cat not_exist_file.csv &gt; results.txt 2&gt; errors.log
 cat not_exist_file.csv &gt; results.txt 2&gt;&amp;1
@@ -373,8 +195,8 @@ do
     read -p 'Say yes : ' response
 done
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1595273313606.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1595273330569.PNG" alt="" loading="lazy"></figure>
 <pre><code>#!/bin/bash
 
 # Verification of parameter（验证参数）
@@ -455,19 +277,19 @@ statistics $1
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 5 - DOM]]></title>
-        <id>http://localhost:4000/post/javascript-5-dom/</id>
-        <link href="http://localhost:4000/post/javascript-5-dom/">
+        <id>https://ywang412.github.io/post/javascript-5-dom/</id>
+        <link href="https://ywang412.github.io/post/javascript-5-dom/">
         </link>
         <updated>2020-05-22T01:44:38.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1590533131285.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1590533375585.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="http://localhost:4000/post-images/1590533753402.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="4"><img src="http://localhost:4000/post-images/1590536478146.png" alt="" loading="lazy"></figure>
-<p><img src="http://localhost:4000/post-images/1590546015133.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1590551341532.png" alt="" loading="lazy"></p>
-<figure data-type="image" tabindex="5"><img src="http://localhost:4000/post-images/1590551353706.png" alt="" loading="lazy"></figure>
-<p><img src="http://localhost:4000/post-images/1590551365472.png" alt="" loading="lazy"><br>
-<img src="http://localhost:4000/post-images/1590551374368.png" alt="" loading="lazy"></p>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1590533131285.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1590533375585.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://ywang412.github.io/post-images/1590533753402.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://ywang412.github.io/post-images/1590536478146.png" alt="" loading="lazy"></figure>
+<p><img src="https://ywang412.github.io/post-images/1590546015133.png" alt="" loading="lazy"><br>
+<img src="https://ywang412.github.io/post-images/1590551341532.png" alt="" loading="lazy"></p>
+<figure data-type="image" tabindex="5"><img src="https://ywang412.github.io/post-images/1590551353706.png" alt="" loading="lazy"></figure>
+<p><img src="https://ywang412.github.io/post-images/1590551365472.png" alt="" loading="lazy"><br>
+<img src="https://ywang412.github.io/post-images/1590551374368.png" alt="" loading="lazy"></p>
 <p>position: absolute;<br>
 An element with position: absolute; is positioned relative to the nearest positioned ancestor</p>
 <p>position: relative;<br>
@@ -550,27 +372,27 @@ An element with position: relative; is positioned relative to its normal positio
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 3 - http request]]></title>
-        <id>http://localhost:4000/post/javascript-3-http-request/</id>
-        <link href="http://localhost:4000/post/javascript-3-http-request/">
+        <id>https://ywang412.github.io/post/javascript-3-http-request/</id>
+        <link href="https://ywang412.github.io/post/javascript-3-http-request/">
         </link>
         <updated>2020-04-27T06:15:49.000Z</updated>
         <content type="html"><![CDATA[<p><strong>url parsing</strong><br>
-<img src="http://localhost:4000/post-images/1588015088492.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1588015088492.png" alt="" loading="lazy"></p>
 <p><strong>dns</strong><br>
-<img src="http://localhost:4000/post-images/1588015159663.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1588015159663.png" alt="" loading="lazy"></p>
 <p><strong>request</strong><br>
-<img src="http://localhost:4000/post-images/1588015638581.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1588015638581.png" alt="" loading="lazy"></p>
 <p><strong>dom</strong><br>
-<img src="http://localhost:4000/post-images/1588015705473.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1588015705473.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 4 - ES6]]></title>
-        <id>http://localhost:4000/post/javascript-4-es6/</id>
-        <link href="http://localhost:4000/post/javascript-4-es6/">
+        <id>https://ywang412.github.io/post/javascript-4-es6/</id>
+        <link href="https://ywang412.github.io/post/javascript-4-es6/">
         </link>
         <updated>2020-04-25T15:51:22.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1588020833158.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1588020833158.png" alt="" loading="lazy"></figure>
 <p><strong>let/const block scope</strong></p>
 <pre><code>let arr = [1,2,3,4]
 for (let i = 0; i &lt; arr.length; i++) {
@@ -651,8 +473,8 @@ let obj = {
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 2 - Chrome dev tools]]></title>
-        <id>http://localhost:4000/post/javascript-2-chrome-dev-tools/</id>
-        <link href="http://localhost:4000/post/javascript-2-chrome-dev-tools/">
+        <id>https://ywang412.github.io/post/javascript-2-chrome-dev-tools/</id>
+        <link href="https://ywang412.github.io/post/javascript-2-chrome-dev-tools/">
         </link>
         <updated>2020-04-13T09:32:30.000Z</updated>
         <content type="html"><![CDATA[<p>ctrl + shift + i open dev tools<br>
@@ -662,8 +484,8 @@ ctrl + shift + C select element</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Javascript 1 - function, object, prototype]]></title>
-        <id>http://localhost:4000/post/javascript-1-function-object-prototype/</id>
-        <link href="http://localhost:4000/post/javascript-1-function-object-prototype/">
+        <id>https://ywang412.github.io/post/javascript-1-function-object-prototype/</id>
+        <link href="https://ywang412.github.io/post/javascript-1-function-object-prototype/">
         </link>
         <updated>2020-04-07T13:19:39.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Function definition</strong></p>
@@ -684,7 +506,7 @@ var foo = new Function(&quot;num1&quot;,&quot;num2&quot;,&quot;return num1 + num
 
 </code></pre>
 <p><strong>IIFE</strong><br>
-<img src="http://localhost:4000/post-images/1590531678788.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1590531678788.png" alt="" loading="lazy"></p>
 <p>An IIFE (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it is defined. (function () { statements })();.</p>
 <p>In jQuery, the fn property is just an alias to the prototype property. jQuery identifier (or $) is just a constructor function.</p>
 <pre><code>function Test() {
@@ -836,7 +658,7 @@ console.log(Object.getPrototypeOf(person) === Person.prototype) // true
 console.log(person.constructor === Person); // true
 </code></pre>
 <p>当获取 person.constructor 时，其实 person 中并没有 constructor 属性,当不能读取到constructor 属性时，会从 person 的原型也就是 Person.prototype 中读取，正好原型中有该属性，所以：person.constructor === Person.prototype.constructor<br>
-<img src="http://localhost:4000/post-images/1586643507831.png" alt="" loading="lazy"></p>
+<img src="https://ywang412.github.io/post-images/1586643507831.png" alt="" loading="lazy"></p>
 <p><strong>function vs object</strong></p>
 <p>function is a object with prototype</p>
 <pre><code>var o1 = {}; 
@@ -952,8 +774,8 @@ console.log(student._age); // undefined
     </entry>
     <entry>
         <title type="html"><![CDATA[Data Metrics]]></title>
-        <id>http://localhost:4000/post/data-metrics/</id>
-        <link href="http://localhost:4000/post/data-metrics/">
+        <id>https://ywang412.github.io/post/data-metrics/</id>
+        <link href="https://ywang412.github.io/post/data-metrics/">
         </link>
         <updated>2020-02-02T11:54:53.000Z</updated>
         <content type="html"><![CDATA[<p>meaningful metrics -&gt; daily sessions per user<br>
@@ -1052,8 +874,8 @@ DAU registered user who opens application at least once during 24 hours</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[DAU and retention analysis]]></title>
-        <id>http://localhost:4000/post/dau-analysis/</id>
-        <link href="http://localhost:4000/post/dau-analysis/">
+        <id>https://ywang412.github.io/post/dau-analysis/</id>
+        <link href="https://ywang412.github.io/post/dau-analysis/">
         </link>
         <updated>2020-01-17T22:39:30.000Z</updated>
         <content type="html"><![CDATA[<p><strong>Comparing test and control groups</strong></p>
@@ -1270,11 +1092,11 @@ toy_data = toy_data.sort(['user_id','mytimestamp'])
     </entry>
     <entry>
         <title type="html"><![CDATA[NoSQL vs SQL]]></title>
-        <id>http://localhost:4000/post/nosql-vs-sql/</id>
-        <link href="http://localhost:4000/post/nosql-vs-sql/">
+        <id>https://ywang412.github.io/post/nosql-vs-sql/</id>
+        <link href="https://ywang412.github.io/post/nosql-vs-sql/">
         </link>
         <updated>2019-11-03T09:25:02.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="http://localhost:4000/post-images/1576386520494.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://ywang412.github.io/post-images/1576386520494.png" alt="" loading="lazy"></figure>
 <p><strong>RDMBS</strong></p>
 <p>Benefit</p>
 <ul>
@@ -1402,7 +1224,7 @@ ALL - replicate table on all nodes</p>
 define a colum as sort key</p>
 </li>
 </ul>
-<figure data-type="image" tabindex="2"><img src="http://localhost:4000/post-images/1573580426980.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://ywang412.github.io/post-images/1573580426980.png" alt="" loading="lazy"></figure>
 <pre><code>CREATE TABLE part (
   p_partkey     	integer     	not null	sortkey distkey,
   p_name        	varchar(22) 	not null,
@@ -1425,6 +1247,197 @@ path = shortestPath( (user)-[:KNOWS*..5]-(other) )
 (user)-[:PURCHASED]-&gt;(product)&lt;-[:PURCHASED]-()-[:PURCHASED]-&gt;(otherProduct)
 // Tree navigation 
 (root)&lt;-[:PARENT*]-(leaf:Category)-[:ITEM]-&gt;(data:Product)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Rate limiting fundamentals]]></title>
+        <id>https://ywang412.github.io/post/rate-limiting-fundamentals/</id>
+        <link href="https://ywang412.github.io/post/rate-limiting-fundamentals/">
+        </link>
+        <updated>2019-10-17T02:53:52.000Z</updated>
+        <content type="html"><![CDATA[<p><strong>Leaky bucket</strong></p>
+<pre><code>public abstract class RateLimiter {
+
+  protected final int maxRequestPerSec;
+  protected RateLimiter(int maxRequestPerSec) {
+    this.maxRequestPerSec = maxRequestPerSec;
+  }
+
+  abstract boolean allow();
+}
+
+public class LeakyBucket extends RateLimiter {
+
+  private long nextAllowedTime;
+  private final long REQUEST_INTERVAL_MILLIS;
+
+  protected LeakyBucket(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    REQUEST_INTERVAL_MILLIS = 1000 / maxRequestPerSec;
+    nextAllowedTime = System.currentTimeMillis();
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    synchronized (this) {
+      if (curTime &gt;= nextAllowedTime) {
+        nextAllowedTime = curTime + REQUEST_INTERVAL_MILLIS;
+        return true;
+      }
+      return false;
+    }
+  }
+}
+</code></pre>
+<p><strong>Token Bucket</strong></p>
+<p>Eager mode</p>
+<pre><code>public class TokenBucket extends RateLimiter {
+
+  private int tokens;
+
+  public TokenBucket(int maxRequestsPerSec) {
+    super(maxRequestsPerSec);
+    this.tokens = maxRequestsPerSec;
+    new Thread(() -&gt; {
+      while (true) {
+        try {
+          TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        refillTokens(maxRequestsPerSec);
+      }
+    }).start();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens(int cnt) {
+    synchronized (this) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      notifyAll();
+    }
+  }
+}
+</code></pre>
+<p>Lazy mode</p>
+<pre><code>public class TokenBucketLazyRefill extends RateLimiter {
+
+  private int tokens;
+  private long lastRefillTime;
+
+  public TokenBucketLazyRefill(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+    this.tokens = maxRequestPerSec;
+    this.lastRefillTime = System.currentTimeMillis();
+  }
+
+  @Override
+  public boolean allow() {
+    synchronized (this) {
+      refillTokens();
+      if (tokens == 0) {
+        return false;
+      }
+      tokens--;
+      return true;
+    }
+  }
+
+  private void refillTokens() {
+    long curTime = System.currentTimeMillis();
+    double secSinceLastRefill = (curTime - lastRefillTime) / 1000.0;
+    int cnt = (int) (secSinceLastRefill * maxRequestPerSec);
+    if (cnt &gt; 0) {
+      tokens = Math.min(tokens + cnt, maxRequestPerSec);
+      lastRefillTime = curTime;
+    }
+  }
+}
+</code></pre>
+<p><strong>Fixed Window Counter</strong><br>
+<img src="https://ywang412.github.io/post-images/1579461852072.png" alt="" loading="lazy"></p>
+<pre><code>public class FixedWindowCounter extends RateLimiter {
+
+  // TODO: Clean up stale entries
+  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
+
+  protected FixedWindowCounter(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long windowKey = System.currentTimeMillis() / 1000 * 1000;
+    windows.putIfAbsent(windowKey, new AtomicInteger(0));
+    return windows.get(windowKey).incrementAndGet() &lt;= maxRequestPerSec;
+  }
+}
+</code></pre>
+<p><strong>Sliding Window Log</strong><br>
+<img src="https://ywang412.github.io/post-images/1579461845782.png" alt="" loading="lazy"></p>
+<pre><code>public class SlidingWindowLog extends RateLimiter {
+
+  private final Queue&lt;Long&gt; log = new LinkedList&lt;&gt;();
+
+  protected SlidingWindowLog(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    long boundary = curTime - 1000;
+    synchronized (log) {
+      while (!log.isEmpty() &amp;&amp; log.element() &lt;= boundary) {
+        log.poll();
+      }
+      log.add(curTime);
+      return log.size() &lt;= maxRequestPerSec;
+    }
+  }
+}
+</code></pre>
+<p><strong>Sliding Window</strong></p>
+<p>This is still not accurate becasue it assumes that the distribution of requests in previous window is even, which may not be true. But compares to fixed window counter, which only guarantees rate within each window, and sliding window log, which has huge memory footprint, sliding window is more practical.<br>
+<img src="https://ywang412.github.io/post-images/1579461835894.png" alt="" loading="lazy"></p>
+<pre><code>public class SlidingWindow extends RateLimiter {
+
+  // TODO: Clean up stale entries
+  private final ConcurrentMap&lt;Long, AtomicInteger&gt; windows = new ConcurrentHashMap&lt;&gt;();
+
+  protected SlidingWindow(int maxRequestPerSec) {
+    super(maxRequestPerSec);
+  }
+
+  @Override
+  boolean allow() {
+    long curTime = System.currentTimeMillis();
+    long curWindowKey = curTime / 1000 * 1000;
+    windows.putIfAbsent(curWindowKey, new AtomicInteger(0));
+    long preWindowKey = curWindowKey - 1000;
+    AtomicInteger preCount = windows.get(preWindowKey);
+    if (preCount == null) {
+      return windows.get(curWindowKey).incrementAndGet() &lt;= maxRequestPerSec;
+    }
+
+    double preWeight = 1 - (curTime - curWindowKey) / 1000.0;
+    long count = (long) (preCount.get() * preWeight
+        + windows.get(curWindowKey).incrementAndGet());
+    return count &lt;= maxRequestPerSec;
+  }
+}
 </code></pre>
 ]]></content>
     </entry>
